@@ -1,0 +1,16 @@
+node_modules/
+dist/
+__pycache__/
+.DS_Store
+.idea/
+
+# Of the reference material only our own work is tracked: the indexes and notes, later the transcribed tables.
+# The downloaded documents (Scouting Nederland insignes and veiligheidsbladen, historical texts) stay out.
+reference/**
+!reference/**/
+!reference/**/*.md
+!reference/**/*.csv
+!reference/**/*.json
+
+# Eigen notities en onderzoek (niet in de repo, wel naast de code zichtbaar)
+notities/

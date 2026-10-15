@@ -1,0 +1,17 @@
+{
+  "name": "scoutingtechnieken-web",
+  "private": true,
+  "version": "0.1.0",
+  "license": "CC-BY-NC-SA-4.0",
+  "type": "module",
+  "scripts": {
+    "dev": "vite",
+    "build": "node scripts/check.mjs && vite build",
+    "preview": "vite preview",
+    "check": "node scripts/check.mjs",
+    "icons": "node scripts/icons.mjs"
+  },
+  "devDependencies": {
+    "vite": "^8.3.0"
+  }
+}
