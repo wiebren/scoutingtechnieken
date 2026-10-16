@@ -65,7 +65,7 @@ export function overView({ installeer }) {
           h('h2', 'Installeren'),
           h('p', 'Zet de app op je beginscherm of in je dock. Hij opent dan in een eigen venster en werkt ook zonder internet: in het bos, op een hike.'),
           h('button.knop.hoofd', { type: 'button', onclick: installeer }, 'Installeer als app')),
-        h('section.over-blok',
+        UPDATES.length > 0 && h('section.over-blok',
           h('h2', 'Updates'),
           UPDATES.map((u) => h('div.update', h('h3', datum(u.datum)), h('ul', u.punten.map((p) => h('li', p)))))),
         h('section.over-blok',
@@ -84,7 +84,7 @@ export function overView({ installeer }) {
 
   return {
     el,
-    update() { zetUpdatesGezien(UPDATES[0].datum); tekenGegevens(); },   // a report may have kept a name since
+    update() { if (UPDATES.length) zetUpdatesGezien(UPDATES[0].datum); tekenGegevens(); },   // a report may have kept a name since
     titel: () => 'Instellingen',
   };
 }

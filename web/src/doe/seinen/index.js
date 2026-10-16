@@ -1,10 +1,12 @@
 // The interactive pieces of seinen and geheimschrift, merged into DOE in ../index.js. Same shape: { naam: { titel,
-// laad, opties?, bekijk? } }. The Codeermachine opens on another code per blad (code-<id>; the ids and names of CODES in
-// ./lib/geheim.js, written out here so that list stays out of the main bundle). Only the codes a blad opens on are
-// listed: the verschuiving and A=1 have their own piece (../geheimschrift.js), and the seinvlaggen are learned in
+// laad, opties?, bekijk? } }. Each geheimschrift blad has an exercise in its own code (code-<id>, ./kraak.js: Kraak de
+// code, mostly also Zet in code), with the Codeermachine on that code behind the last chip; the ids and names of CODES
+// in ./lib/geheim.js are written out here so that list stays out of the main bundle. Only the codes a blad opens on
+// are listed: the verschuiving and A=1 have their own piece (../geheimschrift.js), and the seinvlaggen are learned in
 // ./seinvlaggen.js; the machine itself still has every code.
 
 const codeermachine = () => import('./codeermachine.js');
+const kraak = () => import('./kraak.js');
 const CODE_NAMEN = {
   rot13: 'Rot13', atbash: 'Omgekeerd alfabet', codewoord: 'Codewoord', vigenere: 'Vigenère',
   sms: 'SMS-code', polybius: 'Polybius', bacon: 'Bacon-code', binair: 'Binaire code', woordwaarde: 'Woordwaarde',
@@ -15,19 +17,22 @@ const CODE_NAMEN = {
 
 export default {
   semafoor: { titel: 'Zet de armen van de seiner', laad: () => import('./semafoor.js') },
-  'semafoor-woord': { titel: 'Sein een woord in semafoor', laad: () => import('./semafoor.js'), opties: { modus: 'woord' } },
+  'semafoor-bericht': { titel: 'Sein een bericht in semafoor', laad: () => import('./semafoor.js'), opties: { modus: 'bericht' } },
   vreede: { titel: 'Sein met Vreede', laad: () => import('./semafoor.js'), opties: { stelsel: 'vreede' } },
   seinvlaggen: { titel: 'Ken je de seinvlaggen?', laad: () => import('./seinvlaggen.js') },
-  'seinvlaggen-spellen': { titel: 'Spel een woord in vlaggen', laad: () => import('./seinvlaggen.js'), opties: { modus: 'spellen' } },
+  'seinvlaggen-cijfers': { titel: 'Ken je de cijferwimpels?', laad: () => import('./seinvlaggen.js'), opties: { modus: 'cijfer' } },
   'morse-koch': { titel: 'Leer morse op het gehoor', laad: () => import('./morsetrainer.js') },
   morseboom: { titel: 'Tik morse in de boom', laad: () => import('./morseboom.js') },
   'morse-hulpwoorden': { titel: 'Woorden met een o', laad: () => import('./hulpwoord.js'), bekijk: true },
   'morse-sos': { titel: 'Sein SOS', laad: () => import('../morse.js'), opties: { tekst: 'SOS' } },
   fluitsignalen: { titel: 'Luister naar de fluit', laad: () => import('./fluit.js') },
   portofoon: { titel: 'Praat over de portofoon', laad: () => import('./portofoon.js') },
-  codeermachine: { titel: 'Codeermachine', laad: codeermachine },
-  ...Object.fromEntries(Object.entries(CODE_NAMEN).map(([id, naam]) => [`code-${id}`, { titel: `Codeermachine: ${naam}`, laad: codeermachine, opties: { code: id } }])),
-  codeschijf: { titel: 'Draai de codeschijf', laad: () => import('./codeschijf.js') },
-  roostercode: { titel: 'Leg het sjabloon erop', laad: () => import('./roostercode.js') },
+  // the Codeermachine on its own turns text into code and back, with nothing to get wrong: a tool (bekijk). The
+  // pieces of the codes, the codeschijf and the roostercode give a message to crack, and have their tool on a chip.
+  codeermachine: { titel: 'Codeermachine', laad: codeermachine, bekijk: true },
+  ...Object.fromEntries(Object.entries(CODE_NAMEN).map(([id, naam]) => [`code-${id}`,
+    { titel: id === 'woordwaarde' ? 'Reken de woordwaarde uit' : `Kraak de code: ${naam}`, laad: kraak, opties: { code: id } }])),
+  codeschijf: { titel: 'Kraak de code met de codeschijf', laad: kraak, opties: { code: 'verschuiving', hulpmiddel: 'codeschijf' } },
+  roostercode: { titel: 'Kraak de code met het sjabloon', laad: kraak, opties: { code: 'rooster', hulpmiddel: 'roostercode' } },
   'onzichtbare-inkt': { titel: 'Maak de inkt zichtbaar', laad: () => import('./inkt.js'), bekijk: true },
 };

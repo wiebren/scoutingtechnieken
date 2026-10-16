@@ -1,4 +1,5 @@
-// Line icons on a 24 grid, drawn in currentColor: the four pages of the navigation and the fourteen categories.
+// Line icons on a 24 grid, drawn in currentColor: the four pages of the navigation and the fourteen categories
+// (their groepen: src/groepiconen.js).
 // Plain shapes only: no emblem or logo of an organisation.
 
 const PADEN = {
@@ -36,12 +37,15 @@ const PADEN = {
 };
 
 /** An icon as an <svg> element; `klasse` for its size and colour in CSS. */
-export function icoon(naam, klasse = 'icoon') {
+export const icoon = (naam, klasse = 'icoon') => svgIcoon(PADEN[naam] ?? '', klasse);
+
+/** An <svg> element of the given shapes on the 24 grid (also for the groep icons, src/groepiconen.js). */
+export function svgIcoon(paden, klasse = 'icoon') {
   const ns = 'http://www.w3.org/2000/svg';
   const svg = document.createElementNS(ns, 'svg');
   svg.setAttribute('viewBox', '0 0 24 24');
   svg.setAttribute('aria-hidden', 'true');
   svg.setAttribute('class', klasse);
-  svg.innerHTML = PADEN[naam] ?? '';
+  svg.innerHTML = paden;
   return svg;
 }

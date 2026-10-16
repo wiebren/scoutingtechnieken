@@ -120,6 +120,21 @@ export function wolkTekening(id, metNaam = true) {
   return svg(300, 180, metNaam ? `${w.naam} (${w.ook || w.laag}): ${w.kenmerk}` : 'Een wolk; welke is het?', uit);
 }
 
+/** Fog: a cloud lying on the ground. Trees near by are still to be seen, those further away fade into it. */
+function mist() {
+  let uit = '<rect width="300" height="180" rx="12" class="w-lucht"/>' + grond(300, 180);
+  // trees further away first, then the fog over them, thicker near the ground; the near trees in front of it
+  uit += boompje(118, 160, 1.3) + boompje(150, 158, 1.1) + boompje(196, 158, 0.9) + boompje(226, 160, 1.2);
+  uit += '<defs><linearGradient id="w-mist-verloop" x1="0" y1="0" x2="0" y2="1"><stop offset="0" stop-color="#e4e8ec" stop-opacity="0"/>'
+    + '<stop offset="0.55" stop-color="#e4e8ec" stop-opacity="0.55"/><stop offset="1" stop-color="#e4e8ec" stop-opacity="0.8"/></linearGradient></defs>';
+  uit += '<rect y="20" width="300" height="160" rx="12" fill="url(#w-mist-verloop)"/>';
+  uit += boompje(34, 168, 1.2) + boompje(58, 170, 0.9) + boompje(270, 168, 1.1);
+  const t = 'Mist · op de grond';
+  const breed = Math.round(t.length * 6.2 + 20);
+  uit += `<rect x="${150 - breed / 2}" y="150" width="${breed}" height="24" rx="12" class="w-kaartje"/>${tekst(150, 166, t, { maat: 10.5, klasse: 'vet' })}`;
+  return svg(300, 180, 'Mist: een wolk die op de grond ligt; bomen dichtbij zie je nog, verder weg verdwijnen ze', uit);
+}
+
 /** The clouds by height: low, middle and high, with cumulus and cumulonimbus growing up through them. */
 function wolkenlagen() {
   const y = (km) => r1(392 - km * 28);                             // 0 km at 392, 13 km at 28
@@ -727,6 +742,7 @@ export default {
   'iss-baan': issBaan,
   'planeten-avond': planetenAvond,
   ...Object.fromEntries(WOLKEN.map((w) => [`wolk-${w.id}`, () => wolkTekening(w.id)])),
+  'wolk-mist': mist,
   wolkenlagen,
   windrichting,
   zeewind,

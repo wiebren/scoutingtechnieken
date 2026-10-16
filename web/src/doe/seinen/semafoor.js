@@ -1,7 +1,8 @@
 // Semafoor (or the old Vreede-stelsel) with a figure whose arms you set yourself. Drag a hand round, tap where a
 // flag should go, or use the buttons; the piece says what letter the arms make. Sein een woord: make the letters of
-// a word one by one. Lees het teken: the figure shows a letter and you pick which. As the reader sees it: the arm on
-// your left is the seiner's right arm. Data and figure: ./lib/seinpop.js (NAV §4b; Vreede: reference/boeken).
+// a word one by one. Sein een bericht (semafoor only): the procedure of the blad semafoor-procedure. Lees het teken:
+// the figure shows a letter and you pick which. As the reader sees it: the arm on your left is the seiner's right
+// arm. Data and figure: ./lib/seinpop.js (NAV §4b; Vreede: reference/boeken).
 import { h } from '../../dom.js';
 import { WOORDEN, willekeurig } from '../codes.js';
 import { keuze } from '../knoppen.js';
@@ -16,12 +17,47 @@ const NS = 'http://www.w3.org/2000/svg';
 const SEMAFOOR_WOORDEN = WOORDEN;
 const VREEDE_WOORDEN = WOORDEN.filter((w) => !w.includes('X'));
 
+// -- Sein een bericht, as the blad semafoor-procedure teaches it (NAV §4b: TSA, IMP-Sein): ask for aandacht (wave
+// both flags between schuin omhoog and schuin omlaag, that is between U and N), sein the words with rust between
+// them, put right a mistake the piece plants (annuleren for one sign, eight times E for a whole word), then read the
+// answer of the other one and say C: begrepen. A sign counts when the arms arrive at it, so the signs you pass on
+// the way do no harm. No word starts with U or N (they would look like the waving) and no word has a letter twice
+// in a row; a new word (`anders`) does not start with E.
+const BERICHTEN = [
+  { woorden: ['KOM', 'HIER'], anders: [1, 'SNEL'] },
+  { woorden: ['BRUG', 'DICHT'], anders: [0, 'HEK'] },
+  { woorden: ['WACHT', 'HIER'], anders: [0, 'BLIJF'] },
+  { woorden: ['ETEN', 'OM', 'ZES'], anders: [2, 'ACHT'] },
+];
+const ANTWOORDEN = [['PRIMA'], ['GOED', 'ZO'], ['WE', 'KOMEN'], ['OK', 'DANK']];
+const STAPPEN = ['Vraag aandacht', 'Sein het bericht, met rust tussen de woorden', 'Herstel de fout', 'Lees het antwoord', 'Sein C: begrepen'];
+const STAP_NR = { aandacht: 0, seinen: 1, annuleer: 2, woordfout: 2, ontvangen: 3, lezen: 3, c: 4 };
+const GOLVEN = 4;              // aandacht: arrive at U or N this many times (twice there and back)
+const E_FOUT = 8;              // a whole word wrong: eight times E
+
+/** A letter one arm off from `letter`: what the receiver reads when the wind pushes a flag aside. */
+function verschoven(letter) {
+  const a = armen(SEMAFOOR[letter]);
+  const buren = [];
+  for (const arm of ['links', 'rechts']) for (const d of [-45, 45]) {
+    const b = { ...a, [arm]: (a[arm] + d + 360) % 360 };
+    const l = semafoorLetter(b.links, b.rechts);
+    if (l && l.length === 1 && l !== letter) buren.push(l);
+  }
+  return willekeurig(buren.length ? buren : Object.keys(SEMAFOOR).filter((x) => x !== letter));
+}
+const tekenStand = (s) => (s === 'rust' ? { links: 180, rechts: 180 } : armen(SEMAFOOR[s] ?? SEMAFOOR_TEKEN[s].vlaggen));
+
 export default function semafoor({ stelsel = 'semafoor', modus: beginModus = 'seinen' } = {}) {
   const vreede = stelsel === 'vreede';
   let modus = beginModus;
   // semafoor: an angle per arm; vreede: a stand (0-4) per arm. links = the arm on your left.
   const stand = vreede ? { links: 0, rechts: 0 } : { links: 180, rechts: 180 };
   let woord = null;              // { tekst, i } in Sein een woord
+  let bericht = null;            // Sein een bericht: see nieuwBericht()
+  let berichtFout = Math.random() < 0.5 ? 'letter' : 'woord';   // the mistake to plant; takes turns
+  let speelt = 0;                // the answer being played (a newer number stops an older one)
+  let wachtTimer = 0;
   let vraag = null;              // { letter, klaar } in Lees het teken
   let goed = 0;
   let gevraagd = 0;
@@ -68,6 +104,29 @@ export default function semafoor({ stelsel = 'semafoor', modus: beginModus = 'se
       h('button.knop.klein', { type: 'button', onclick: () => nieuwWoord() }, 'Ander woord')),
     h('div.sf-eigenrij', eigen, h('button.knop.klein', { type: 'button', onclick: () => nieuwWoord(eigen.value) }, 'Sein dit')));
 
+  // -- Sein een bericht
+  const stappenLijst = h('ol.sf-stappen', { 'aria-label': 'De stappen' });
+  const briefje = h('div.sf-briefje', { 'aria-hidden': 'true' });
+  const band = h('p.sf-band');
+  const berichtMelding = h('p.doe-melding', { 'aria-live': 'polite' });
+  const berichtHint = h('p.doe-stil');
+  const anderFiguur = document.createElementNS(NS, 'svg');
+  anderFiguur.setAttribute('viewBox', `0 0 ${BREED} ${HOOG}`);
+  anderFiguur.setAttribute('class', 'sf-figuur sf-klein');
+  anderFiguur.setAttribute('role', 'img');
+  const anderTekst = h('p.doe-stil');
+  const anderBand = h('p.sf-band');
+  const ontvang = h('button.knop.klein', { type: 'button', onclick: () => speelAntwoord() }, 'Ontvang het antwoord');
+  const nogEens = h('button.knop.klein', { type: 'button', onclick: () => speelAntwoord() }, 'Nog eens');
+  const ander = h('div.sf-ander', anderFiguur, h('div.sf-paneel', h('p', h('b', 'De ander')), anderTekst, anderBand, h('div.knop-rij', ontvang, nogEens)));
+  const berichtPaneel = h('div.sf-paneel',
+    stappenLijst,
+    h('div', h('p.doe-stil', 'Jouw bericht:'), briefje),
+    band, berichtMelding, berichtHint, ander,
+    h('div.knop-rij',
+      h('button.knop.klein', { type: 'button', onclick: () => toonBerichtHint() }, 'Hoe?'),
+      h('button.knop.klein', { type: 'button', onclick: () => nieuwBericht() }, 'Ander bericht')));
+
   // -- Lees het teken
   const leesFiguur = document.createElementNS(NS, 'svg');
   leesFiguur.setAttribute('viewBox', `0 0 ${BREED} ${HOOG}`);
@@ -84,10 +143,10 @@ export default function semafoor({ stelsel = 'semafoor', modus: beginModus = 'se
     if (k >= 1 && k <= 4 && !vraag?.klaar) { e.preventDefault(); opties.children[k - 1]?.click(); }
   });
 
-  const zelf = h('div.sf-zelf', h('div.sf-links', figuur, bediening), h('div.sf-paneel', uitkomst, standTekst, lezer, woordPaneel));
+  const zelf = h('div.sf-zelf', h('div.sf-links', figuur, bediening), h('div.sf-paneel', uitkomst, standTekst, lezer, woordPaneel, berichtPaneel));
   const el = h('div.doe-semafoor',
     h('div.chips', { role: 'group', 'aria-label': 'Wat wil je doen?' },
-      keuze([['seinen', 'Zelf seinen'], ['woord', 'Sein een woord'], ['lezen', 'Lees het teken']], modus, zetModus)),
+      keuze([['seinen', 'Zelf seinen'], ['woord', 'Sein een woord'], ...(vreede ? [] : [['bericht', 'Sein een bericht']]), ['lezen', 'Lees het teken']], modus, zetModus)),
     zelf, leesPaneel,
     h('p.doe-stil', 'Je kijkt naar de seiner: zijn rechterarm zie je links.'));
 
@@ -104,6 +163,7 @@ export default function semafoor({ stelsel = 'semafoor', modus: beginModus = 'se
     figuur.setAttribute('aria-label', `De seiner. ${standTekst.textContent}`);
     if (dooriemand) lezer.textContent = `${n ? `Dit is ${n}` : 'Dit is geen letter'}. ${standTekst.textContent}`;
     if (modus === 'woord' && woord) controleerWoord(l);
+    if (modus === 'bericht' && bericht) controleerBericht(l);
   }
 
   function punt(e) {
@@ -192,8 +252,188 @@ export default function semafoor({ stelsel = 'semafoor', modus: beginModus = 'se
     }
   }
 
+  // -- Sein een bericht
+  function nieuwBericht() {
+    speelt++;
+    clearTimeout(wachtTimer);
+    let keus;
+    do keus = willekeurig(BERICHTEN); while (keus.woorden === bericht?.bron);
+    const fout = berichtFout;
+    berichtFout = fout === 'letter' ? 'woord' : 'letter';
+    // the letter the wind blows aside: never the first of a word
+    const w = Math.floor(Math.random() * keus.woorden.length);
+    const i = 1 + Math.floor(Math.random() * (keus.woorden[w].length - 1));
+    bericht = {
+      bron: keus.woorden, woorden: [...keus.woorden], fout, anders: keus.anders, plek: [w, i], geplant: false, mis: null, oud: null,
+      stap: 'aandacht', gedaan: new Set(), w: 0, i: 0, rust: false, golf: null, golven: 0, e: 0,
+      band: [[]], antwoord: willekeurig(ANTWOORDEN), vorig: letterNu(),
+    };
+    anderFiguur.innerHTML = pop({ ...tekenStand('rust'), soort: 'semafoor' });
+    anderFiguur.setAttribute('aria-label', 'De ander staat in rust.');
+    anderTekst.textContent = '';
+    meld(`Sein ${bericht.woorden.join(' ')}. Vraag eerst aandacht: zwaai beide vlaggen van schuin omhoog naar schuin omlaag en terug.`);
+    toonBericht();
+  }
+
+  function meld(tekst, fout = false) {
+    berichtMelding.textContent = tekst;
+    berichtMelding.classList.toggle('fout', fout);
+  }
+  /** Say what step went wrong, but only when the arms stay on that sign: not for a sign passed on the way. */
+  function waarschuw(tekst, l) {
+    clearTimeout(wachtTimer);
+    wachtTimer = setTimeout(() => { if (el.isConnected && modus === 'bericht' && bericht?.vorig === l) meld(tekst, true); }, 700);
+  }
+
+  function controleerBericht(l) {
+    const b = bericht;
+    if (l === b.vorig) return;
+    b.vorig = l;
+    clearTimeout(wachtTimer);
+    if (!l) return;
+    const doel = b.woorden[b.w][b.i];
+    if (b.stap === 'aandacht') {
+      if (l === 'U' || l === 'N') {
+        if (l !== b.golf) { b.golf = l; b.golven++; }
+        if (b.golven < GOLVEN) meld(`Zwaai door: nog ${GOLVEN - b.golven} keer.`);
+        else { b.gedaan.add(0); b.stap = 'seinen'; meld(`Goed: de ontvanger kijkt naar je. Sein nu ${b.woorden[0]}. Begin met de ${doel}.`); }
+      } else if (l === doel) waarschuw('Vraag eerst aandacht: zwaai beide vlaggen van schuin omhoog naar schuin omlaag en terug.', l);
+    } else if (b.stap === 'seinen') {
+      const nieuwWoord = b.i === 0 && b.w > 0 && !b.rust;
+      if (l === 'rust' && nieuwWoord) { b.rust = true; b.band.push([]); meld(`Rust: de ontvanger weet dat het woord af is. Sein nu ${b.woorden[b.w]}.`); }
+      else if (l === doel && nieuwWoord) waarschuw('Ga eerst naar rust: zo ziet de ontvanger dat er een nieuw woord komt.', l);
+      else if (l === doel) neemLetter(l);
+    } else if (b.stap === 'annuleer') {
+      if (l === 'annuleren') { b.band.at(-1).pop(); b.stap = 'seinen'; b.gedaan.add(2); meld(`Goed: de ontvanger vergeet de ${b.mis}. Sein de ${doel} nog eens.`); }
+      else if (l === doel) waarschuw(`Eerst annuleren: de ontvanger heeft de ${b.mis} nog staan.`, l);
+      else if (l === 'E' && ++b.e >= 2) waarschuw('Acht keer E is voor een heel woord. Voor één fout teken sein je annuleren.', l);
+    } else if (b.stap === 'woordfout') {
+      if (l === 'E' && ++b.e < E_FOUT) meld(`E: ${b.e} van de ${E_FOUT}.`);
+      else if (l === 'E') {
+        b.band.pop();
+        b.band.push([]);
+        b.stap = 'seinen';
+        b.gedaan.add(2);
+        meld(`Goed: de ontvanger schrapt ${b.oud}. Sein nu ${b.woorden[b.w]}.`);
+      } else if (l === 'annuleren') waarschuw('Annuleren haalt maar één teken weg. Het hele woord is fout: sein acht keer de E.', l);
+      else if (l === doel) waarschuw(`Eerst acht keer de E (je hebt er ${b.e}). Dan weet de ontvanger dat het woord fout is.`, l);
+    } else if (b.stap === 'ontvangen' || b.stap === 'lezen') {
+      if (l === 'C') waarschuw(b.stap === 'lezen' ? 'Wacht tot het hele antwoord binnen is. Daarna sein je C.' : 'Ontvang eerst het antwoord van de ander. Daarna sein je C.', l);
+    } else if (b.stap === 'c' && l === 'C') {
+      b.gedaan.add(4);
+      b.stap = 'klaar';
+      meld(`Goed! De ander seinde ${b.antwoord.join(' ')}. Met C zeg je dat je het begrepen hebt. Het bericht is rond.`);
+    }
+    toonBericht();
+  }
+
+  /** The right letter: on the band it goes, unless this is where the piece plants a mistake. */
+  function neemLetter(l) {
+    const b = bericht;
+    const woordNu = b.woorden[b.w];
+    if (b.fout === 'letter' && !b.geplant && b.w === b.plek[0] && b.i === b.plek[1]) {
+      b.geplant = true;
+      b.mis = verschoven(l);
+      b.band.at(-1).push({ l: b.mis, fout: true });
+      b.stap = 'annuleer';
+      b.e = 0;
+      meld(`Oei, de wind blies je vlag opzij: de ontvanger las een ${b.mis} in plaats van een ${l}. Herstel dat ene teken.`, true);
+      return;
+    }
+    b.band.at(-1).push({ l });
+    b.i++;
+    if (b.i < woordNu.length) { meld(`Goed! Nu de ${woordNu[b.i]}.`); return; }
+    if (b.fout === 'woord' && !b.geplant && b.w === b.anders[0]) {
+      b.geplant = true;
+      b.oud = woordNu;
+      b.woorden[b.w] = b.anders[1];
+      b.i = 0;
+      b.rust = true;
+      for (const x of b.band.at(-1)) x.fout = true;
+      b.stap = 'woordfout';
+      b.e = 0;
+      meld(`De leiding roept: niet ${woordNu}, maar ${b.anders[1]}! Dit hele woord is nu fout. Herstel het.`, true);
+      return;
+    }
+    if (b.w < b.woorden.length - 1) { b.w++; b.i = 0; b.rust = false; meld(`Goed! Ga naar rust en sein dan ${b.woorden[b.w]}.`); return; }
+    b.gedaan.add(1);
+    b.stap = 'ontvangen';
+    anderFiguur.innerHTML = pop({ ...tekenStand('C'), soort: 'semafoor' });
+    anderFiguur.setAttribute('aria-label', 'De ander seint C.');
+    anderTekst.textContent = 'Hij seint C: begrepen.';
+    meld('Je bericht is over. De ontvanger seint C: hij heeft het begrepen. Nu seint hij jou een antwoord.');
+    ontvang.hidden = false;
+    ontvang.focus();
+  }
+
+  /** The other one asks for aandacht and signs his answer; at the end you say C. */
+  function speelAntwoord() {
+    const b = bericht;
+    const nr = ++speelt;
+    b.stap = 'lezen';
+    const reeks = [];
+    for (let k = 0; k < GOLVEN; k++) reeks.push(['aandacht', k % 2 ? 'N' : 'U']);
+    b.antwoord.forEach((w, j) => { if (j) reeks.push(['tussen', 'rust']); for (const l of w) reeks.push(['letter', l]); });
+    reeks.push(['einde', 'rust']);
+    let k = 0;
+    const volgende = () => {
+      if (nr !== speelt || !el.isConnected) return;
+      if (k >= reeks.length) {
+        b.gedaan.add(3);
+        b.stap = 'c';
+        meld(letterNu() === 'C' ? 'Heb je het gelezen? Sein dan C: ga even naar rust en zet je vlaggen weer op C.' : 'Heb je het gelezen? Sein dan C: begrepen.');
+        toonBericht();
+        return;
+      }
+      const [fase, s] = reeks[k++];
+      const a = tekenStand(s);
+      anderFiguur.innerHTML = pop({ ...a, soort: 'semafoor' });
+      anderFiguur.setAttribute('aria-label', s === 'rust' ? 'De ander staat in rust.' : `De ander: vlaggen ${inWoorden(a.links)} en ${inWoorden(a.rechts)}.`);
+      anderTekst.textContent = { aandacht: 'Hij vraagt aandacht.', tussen: 'Rust: er komt een nieuw woord.', einde: 'Rust: klaar.', letter: 'Hij seint.' }[fase];
+      setTimeout(volgende, fase === 'aandacht' ? 450 : s === 'rust' ? 900 : 1300);
+    };
+    meld('Kijk naar de ander. Hij vraagt eerst aandacht en seint dan zijn antwoord.');
+    toonBericht();
+    volgende();
+  }
+
+  function toonBericht() {
+    const b = bericht;
+    const nu = STAP_NR[b.stap];
+    stappenLijst.replaceChildren(...STAPPEN.map((s, k) => h('li', { class: b.gedaan.has(k) ? 'klaar' : k === nu ? 'nu' : '', 'aria-current': k === nu ? 'step' : null }, s)));
+    const verzonden = b.gedaan.has(1);
+    briefje.replaceChildren(...b.woorden.map((w, j) => h('p.sf-woord', [...w].map((l, k) => h('span', {
+      class: verzonden || j < b.w || (j === b.w && k < b.i) ? 'klaar' : (b.stap === 'seinen' || b.stap === 'annuleer') && j === b.w && k === b.i ? 'nu' : '' }, l)))));
+    const gelezen = b.band.filter((w) => w.length);
+    band.replaceChildren(h('span.doe-stil', 'De ontvanger leest: '),
+      ...(gelezen.length ? gelezen.flatMap((w, j) => [j ? ' ' : '', ...w.map((x) => (x.fout ? h('span.sf-mis', x.l) : x.l))]) : [h('span.doe-stil', 'nog niets')]));
+    ander.hidden = !verzonden;
+    ontvang.hidden = b.stap !== 'ontvangen';
+    nogEens.hidden = b.stap !== 'c';
+    anderBand.textContent = b.stap === 'klaar' ? `Hij seinde: ${b.antwoord.join(' ')}` : '';
+    if (berichtHint.dataset.stap !== b.stap) berichtHint.textContent = '';
+  }
+
+  function toonBerichtHint() {
+    const b = bericht;
+    if (!b) return;
+    const vlaggen = (s) => { const a = tekenStand(s); return `één vlag ${inWoorden(a.links)}, de andere ${inWoorden(a.rechts)}`; };
+    const doel = b.woorden[b.w]?.[b.i];
+    berichtHint.dataset.stap = b.stap;
+    berichtHint.textContent = {
+      aandacht: `Zwaai van U (${vlaggen('U')}) naar N (${vlaggen('N')}) en terug, twee keer.`,
+      seinen: b.i === 0 && b.w > 0 && !b.rust ? 'Rust: beide vlaggen omlaag, gekruist voor je benen. Gebruik de knop Rust.' : `${doel}: ${vlaggen(doel)}.`,
+      annuleer: `Annuleren: ${vlaggen('annuleren')}. Daarna sein je de ${doel} nog eens.`,
+      woordfout: `E: ${vlaggen('E')}. Draai een arm even weg en weer terug, tot je acht keer E hebt geseind. Daarna sein je ${b.woorden[b.w]}.`,
+      ontvangen: 'Druk op Ontvang het antwoord en kijk naar de ander.',
+      lezen: 'Kijk naar de ander. Na het zwaaien komen de letters; bij rust begint een nieuw woord.',
+      c: `C: ${vlaggen('C')}.`,
+      klaar: 'Klaar! Kies Ander bericht om nog eens te oefenen.',
+    }[b.stap];
+  }
+
   // -- Lees het teken
-  const alleLetters = () => (vreede ? VREEDE.flat().filter((l) => l !== 'rust') : Object.keys(SEMAFOOR));
+  const alleLetters =() => (vreede ? VREEDE.flat().filter((l) => l !== 'rust') : Object.keys(SEMAFOOR));
   function nieuweVraag(focus) {
     let letter;
     do letter = willekeurig(alleLetters()); while (letter === vraag?.letter);
@@ -231,7 +471,11 @@ export default function semafoor({ stelsel = 'semafoor', modus: beginModus = 'se
     zelf.hidden = m === 'lezen';
     leesPaneel.hidden = m !== 'lezen';
     woordPaneel.hidden = m !== 'woord';
+    berichtPaneel.hidden = m !== 'bericht';
+    if (m !== 'bericht') { speelt++; clearTimeout(wachtTimer); }
     if (m === 'woord' && !woord) nieuwWoord();
+    if (m === 'bericht' && !bericht) nieuwBericht();
+    else if (m === 'bericht') { bericht.vorig = letterNu(); if (bericht.stap === 'lezen') speelAntwoord(); }
     if (m === 'lezen' && !vraag) nieuweVraag(false);
   }
 

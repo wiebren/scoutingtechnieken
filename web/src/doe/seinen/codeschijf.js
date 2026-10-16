@@ -1,6 +1,7 @@
 // A codeschijf to turn: the outer ring is the gewone alphabet, the inner ring the geheime. Drag the inner disc round
 // (or use the arrow keys or the buttons); every letter outside then lines up with its code inside. Under it, type a
-// text and read it in code. The verschuivingscode of NAV §5a; the codewiel is the tool for it.
+// text and read it in code (not with `alleenSchijf`: kraak.js puts the disc next to its own exercise). The
+// verschuivingscode of NAV §5a; the codewiel is the tool for it.
 import { h } from '../../dom.js';
 import { letterOp, verschuif } from '../codes.js';
 import '../vorm.css';
@@ -13,7 +14,7 @@ const [C, RB, RI] = [160, 136, 100];
 const r1 = (n) => Math.round(n * 10) / 10;
 const pol = (r, g) => [r1(C + r * Math.sin((g * Math.PI) / 180)), r1(C - r * Math.cos((g * Math.PI) / 180))];
 
-export default function codeschijf() {
+export default function codeschijf({ alleenSchijf = false } = {}) {
   let n = 3;
   let draai = -n * STAP;         // the angle of the inner disc, in degrees
   let sleep = null;
@@ -99,9 +100,10 @@ export default function codeschijf() {
     h('div.knop-rij.cs-knoppen',
       h('button.knop.klein', { type: 'button', 'aria-label': 'Eén terug', onclick: () => { draai += STAP; zet(n - 1); } }, '↺ terug'),
       h('button.knop.klein', { type: 'button', 'aria-label': 'Eén verder', onclick: () => { draai -= STAP; zet(n + 1); } }, 'verder ↻')),
-    h('label.doe-label', 'Gewone tekst', gewoon),
-    h('div.doe-label', 'Met de schijf wordt het', geheim),
-    h('p.doe-stil', 'Maak hem zelf: twee rondjes karton, de kleinste erop, en een splitpen door het midden.'));
+    !alleenSchijf && [
+      h('label.doe-label', 'Gewone tekst', gewoon),
+      h('div.doe-label', 'Met de schijf wordt het', geheim),
+      h('p.doe-stil', 'Maak hem zelf: twee rondjes karton, de kleinste erop, en een splitpen door het midden.')]);
 
   zet(n);
   return el;

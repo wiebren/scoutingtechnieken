@@ -21,3 +21,13 @@
 .plaatje .tekst.wn-op-zand { fill: #3b2d16; }
 .plaatje .lijn.wn-zandlijn { stroke: #3b2d16; }
 .plaatje .lijn.wn-zoek { stroke: #0b6b35; stroke-width: 2; }
+/* the landscape sketches (soorten-schetsen): the skyline filled dark, and the colours of the panoramaschets */
+.plaatje .wn-silhouet { fill: var(--inkt); }
+.plaatje .wn-silhouet-lijn { stroke: var(--inkt); fill: none; }
+.plaatje .wn-boom { fill: color-mix(in srgb, var(--fam-natuur) 55%, var(--paneel)); stroke: var(--fam-natuur); stroke-width: 0.8; }
+.plaatje .wn-dak { fill: #b5523b; }
+.plaatje .wn-wolk { fill: #ffffff; stroke: #c3ccd4; stroke-width: 0.8; }
+.plaatje .wn-bord { fill: #2f6fb5; }
+.plaatje .wn-koe { fill: #ffffff; stroke: #333; stroke-width: 0.7; }
+.plaatje .wn-vlek { fill: #333; }
+.plaatje .wn-schaduw { fill: rgb(0 0 0 / 0.25); }

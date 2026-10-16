@@ -9,8 +9,9 @@ import { animeerPad } from './loop.js';
 const p = (n) => Math.round(n * 10) / 10;
 const pad = (punten) => punten.map((q, i) => `${i ? 'L' : 'M'}${p(q.x)} ${p(-q.y)}`).join('');
 
-/** The roads, narrow paths and landmarks of a network, in world coordinates with y flipped (north up). */
-function wegenLaag(net, { bakens = true } = {}) {
+/** The roads, narrow paths and landmarks of a network, in world coordinates with y flipped (north up). Also the map
+ *  of ../kompas3d/peilkaart.js. */
+export function wegenLaag(net, { bakens = true } = {}) {
   const g = s('g', { class: 'rk-wegen' });
   for (const pd of net.paadjes) {
     const k = net.knopen[pd.knoop];

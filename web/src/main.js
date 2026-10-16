@@ -17,6 +17,7 @@ import './plaatjes/weer.css';
 import './plaatjes/veiligheid.css';
 import './plaatjes/touw.css';
 import './plaatjes/sjorren.css';
+import './plaatjes/kaart.css';
 import { inKeuze } from './data/niveaus.js';
 import { UPDATES } from './data/updates.js';
 import { h } from './dom.js';
@@ -110,7 +111,7 @@ opWijziging(({ pagina: p, params }) => {
     navLinks[q].href = q === p ? href(q) : href(q, laatst[q]);
     if (q === p) navLinks[q].setAttribute('aria-current', 'page'); else navLinks[q].removeAttribute('aria-current');
   }
-  navLinks.over.classList.toggle('nieuws', p !== 'over' && updatesGezien() < UPDATES[0].datum);
+  navLinks.over.classList.toggle('nieuws', p !== 'over' && UPDATES.length > 0 && updatesGezien() < UPDATES[0].datum);
   document.title = titelVan(plek);
 });
 

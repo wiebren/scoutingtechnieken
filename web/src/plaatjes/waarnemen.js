@@ -23,7 +23,63 @@ function voet(x, y, draai, links, teen, hiel) {
     + '</g>';
 }
 
+/**
+ * The same view in the three landscape sketches, from little to much detail (160 x 120, for the tiles of
+ * soorten-schetsen): 0 = horizonschets (only the skyline, filled dark), 1 = recognografische schets (everything that
+ * stays put, in lines), 2 = panoramaschets (everything you see, in colour, with clouds, cows and a cyclist).
+ * Above the first two: boxes with the compass direction and the distance of the striking points.
+ */
+function landschapsschets(detail) {
+  const hor = 86;
+  const kleur = detail === 2;
+  const kroon = (d) => `<path d="${d}" class="${detail === 0 ? 'wn-silhouet' : kleur ? 'wn-boom' : 'vlak'}"/>${detail === 1 ? `<path d="${d}" class="lijn dun"/>` : ''}`;
+  const vorm = (d, kl) => `<path d="${d}" class="${detail === 0 ? 'wn-silhouet' : kleur ? kl : 'vlak'}"/>${detail ? `<path d="${d}" class="lijn dun"/>` : ''}`;
+  let uit = `<rect x="1" y="1" width="158" height="118" rx="3" class="${kleur ? 'wn-lucht' : 'vlak'}"/>`;
+  if (kleur) uit += `<rect x="1" y="${hor}" width="158" height="${119 - hor}" class="wn-oever"/>`
+    + '<path d="M104 26 Q108 18 116 21 Q122 14 130 20 Q138 18 138 26Z" class="wn-wolk"/>';
+  // the skyline: a wood, a house, a church with its tower, a mill, a few trees
+  uit += kroon(`M6 ${hor} V70 Q10 62 16 66 Q20 58 27 63 Q32 56 38 63 Q44 60 48 68 V${hor}Z`);
+  uit += vorm(`M56 ${hor} V74 H76 V${hor}Z`, 'vlak') + vorm('M54 74 L66 63 L78 74Z', 'wn-dak');
+  uit += vorm(`M84 ${hor} V74 H106 V${hor}Z`, 'vlak') + vorm('M89 50 L93 36 L97 50Z', 'wn-dak') + vorm(`M89 50 H97 V${hor} H89Z`, 'vlak2');
+  uit += vorm(`M118 ${hor} L121 62 H127 L130 ${hor}Z`, 'vlak2') + vorm('M120 62 Q124 56 128 62Z', 'wn-dak');
+  uit += `<path d="M113 49 L135 71 M135 49 L113 71" class="${detail === 0 ? 'wn-silhouet-lijn' : 'lijn'}" stroke-width="2.4"/>`;
+  uit += kroon(`M136 ${hor} V74 Q140 66 146 70 Q150 64 154 72 V${hor}Z`);
+  uit += `<path d="M4 ${hor} H156" class="lijn"/>`;
+  if (detail) {
+    // what stays put: a road, a fence, a sign, windows and a door
+    uit += `<path d="M58 119 L79 ${hor} M100 119 L83 ${hor}" class="lijn dun"/>`;
+    if (kleur) uit += `<path d="M58 119 L79 ${hor} H83 L100 119Z" class="vlak2"/>`;
+    for (let x = 8; x <= 48; x += 8) uit += `<path d="M${x} ${hor + 12} v12" class="lijn dun"/>`;
+    uit += `<path d="M8 ${hor + 15} H48 M8 ${hor + 20} H48" class="lijn dun"/>`;
+    uit += `<path d="M106 ${hor + 22} v-12" class="lijn dun"/><rect x="101" y="${hor + 4}" width="11" height="7" class="${kleur ? 'wn-bord' : 'vlak'}"/><rect x="101" y="${hor + 4}" width="11" height="7" class="lijn dun"/>`;
+    uit += '<rect x="59" y="77" width="4" height="4" class="lijn dun"/><rect x="69" y="77" width="4" height="4" class="lijn dun"/><path d="M64 86 V80 H68 V86" class="lijn dun"/>';
+    uit += '<path d="M92 56 h2 v5 h-2Z M100 77 v5 M102 77 v5" class="lijn dun"/>';
+  }
+  if (kleur) {
+    // and what moves: cows in the meadow, a cyclist on the road; the shade of the house
+    for (const [x, y] of [[18, 108], [38, 111]]) {
+      uit += `<path d="M${x - 4} ${y + 2} v5 M${x + 4} ${y + 2} v5" class="lijn dun"/><ellipse cx="${x}" cy="${y}" rx="6" ry="3.4" class="wn-koe"/>`;
+      uit += `<circle cx="${x + 7}" cy="${y - 2.5}" r="2.2" class="wn-koe"/><circle cx="${x - 2}" cy="${y - 0.5}" r="1.6" class="wn-vlek"/>`;
+    }
+    uit += '<circle cx="86" cy="108" r="3" class="lijn dun" fill="none"/><circle cx="94" cy="108" r="3" class="lijn dun" fill="none"/><path d="M86 108 L90 103 L94 108 M90 103 V98" class="lijn dun"/><circle cx="90" cy="96" r="1.8" class="wn-vlek"/>';
+    uit += `<path d="M76 74 L80 76 V${hor} H76Z" class="wn-schaduw"/>`;
+  } else {
+    // the boxes with the compass direction and the estimated distance
+    for (const [x, px, py, graden, m] of [[14, 27, 58, '290°', '800 m'], [72, 93, 34, '355°', '1,2 km'], [128, 124, 46, '20°', '900 m']]) {
+      uit += `<path d="M${x + 10} 21 L${px} ${py - 2}" class="lijn haar"/><rect x="${x}" y="4" width="22" height="17" class="vlak"/><rect x="${x}" y="4" width="22" height="17" class="lijn dun"/>`;
+      uit += tekst(x + 11, 11.5, graden, { maat: 6 }) + tekst(x + 11, 18.5, m, { maat: 6 });
+    }
+  }
+  const wat = ['Een horizonschets: alleen de luchtlijn van het landschap, donker ingekleurd, met vakjes voor richting en afstand',
+    'Een recognografische schets: alles wat blijft staan, in lijnen, met vakjes voor richting en afstand',
+    'Een panoramaschets: alles wat je ziet, in kleur, ook de wolken, de koeien en een fietser'][detail];
+  return svg(160, 120, wat, uit);
+}
+
 export default {
+  'soort-horizonschets': () => landschapsschets(0),
+  'soort-recognografische-schets': () => landschapsschets(1),
+  'soort-panoramaschets': () => landschapsschets(2),
   lichaamsmaten: () => {
     // a hand with the span, a forearm with the el, and a figure with arms spread
     const hand = '<path d="M40 150 Q30 120 34 96 Q36 86 44 92 L50 118 L52 70 Q54 60 62 64 L64 112 L68 58 Q72 50 79 56 L78 112 L86 66 Q92 60 97 68 L92 120 L104 92 Q112 84 115 94 L102 140 Q96 160 80 166 Q56 170 40 150Z" class="wn-huid"/>';
@@ -92,7 +148,7 @@ export default {
     const kol = [[0, 42, 'Tijd'], [42, 108, 'Beschrijving'], [108, 150, 'Afstand'], [150, 192, 'Totaal'], [192, 236, 'Richting'], [236, 380, 'Tekening']];
     let d = '<rect x="0" y="0" width="380" height="290" class="vlak"/>';
     d += '<rect x="0.5" y="0.5" width="379" height="34" class="vlak2 lijn dun"/>';
-    d += tekst(8, 14, 'Start: RD 155.20 – 463.10   Door: Sam   Datum: 4-5   Kompas: Recta, oost-om   Schaal: 1:10.000', { maat: 7.6, anker: 'start' });
+    d += tekst(8, 14, 'Start: RD 155.20 – 463.10   Door: Sam   Datum: 4-5   Kompas: spiegel, oost-om   Schaal: 1:10.000', { maat: 7.6, anker: 'start' });
     d += tekst(8, 27, 'Lees van onder naar boven', { maat: 7.6, anker: 'start', klasse: 'stil' });
     d += '<rect x="0.5" y="34.5" width="379" height="18" class="vlak2 lijn dun"/>';
     for (const [a, b, n] of kol) {

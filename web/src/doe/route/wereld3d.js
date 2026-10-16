@@ -71,24 +71,15 @@ function tekstSprite(tekst, { breed = 256, hoog = 64, achter = '#ffffff', kleur 
   return sp;
 }
 
-export function maakWereld3d(plek, net, route, { opKeuze, beweging, donker }) {
+/**
+ * The world without the route: sky, ground, roads, trees, the landmarks at the junctions and the fences at dead
+ * ends, added to `scene`. Shared with the spiegelkompas piece (../kompas3d/), which stands in this world at eye height.
+ * `open`: points where no tree may stand (within 7 m); `vrij(q)`: an extra test for where a tree may stand.
+ * Returns the materials and builders, so a caller can add things of its own in the same style.
+ */
+export function bouwLandschap(scene, net, { donker = false, open = [], vrij: magBoom = () => true } = {}) {
   const K = donker ? KLEUREN.donker : KLEUREN.licht;
-  const renderer = new WebGLRenderer({ antialias: true, powerPreference: 'low-power' });
-  renderer.setPixelRatio(Math.min(window.devicePixelRatio || 1, 2));
-  const canvas = renderer.domElement;
-  canvas.className = 'rw-canvas';
-  plek.append(canvas);
-
-  const scene = new Scene();
-  scene.background = new Color(K.horizon);
-  scene.fog = new Fog(K.horizon, 70, 240);
-  const camera = new PerspectiveCamera(60, 4 / 3, 0.5, 700);
-
-  scene.add(new HemisphereLight(K.hemel, K.grond, K.hemelSterk));
-  const zon = new DirectionalLight(K.zon, K.zonSterk);
-  zon.position.set(-60, 120, 40);
-  scene.add(zon);
-
+  let lucht; let grond;
   // the area of the network
   const xs = net.levend.map((k) => k.x); const ys = net.levend.map((k) => k.y);
   const midden = { x: (Math.min(...xs) + Math.max(...xs)) / 2, y: (Math.min(...ys) + Math.max(...ys)) / 2 };
@@ -101,7 +92,7 @@ export function maakWereld3d(plek, net, route, { opKeuze, beweging, donker }) {
     const kleur = []; const pos = g.attributes.position;
     for (let i = 0; i < pos.count; i++) { const t = Math.max(0, pos.getY(i) / 520); const c = onder.clone().lerp(boven, Math.pow(t, 0.6)); kleur.push(c.r, c.g, c.b); }
     g.setAttribute('color', new Float32BufferAttribute(kleur, 3));
-    const lucht = new Mesh(g, new MeshBasicMaterial({ vertexColors: true, side: BackSide, fog: false, depthWrite: false }));
+    lucht = new Mesh(g, new MeshBasicMaterial({ vertexColors: true, side: BackSide, fog: false, depthWrite: false }));
     lucht.position.set(midden.x, 0, -midden.y);
     scene.add(lucht);
   }
@@ -113,7 +104,7 @@ export function maakWereld3d(plek, net, route, { opKeuze, beweging, donker }) {
     const a = new Color(K.gras); const b = new Color(K.gras2); const kleur = [];
     for (let i = 0; i < g.attributes.position.count; i++) { const c = a.clone().lerp(b, r()); kleur.push(c.r, c.g, c.b); }
     g.setAttribute('color', new Float32BufferAttribute(kleur, 3));
-    const grond = new Mesh(g, new MeshLambertMaterial({ vertexColors: true }));
+    grond = new Mesh(g, new MeshLambertMaterial({ vertexColors: true }));
     grond.position.set(midden.x, 0, -midden.y);
     scene.add(grond);
   }
@@ -153,7 +144,7 @@ export function maakWereld3d(plek, net, route, { opKeuze, beweging, donker }) {
     const vrij = (q) => lijnen.every(([a, b, m]) => afstandTotLijn(q, a, b) > m)
       && net.levend.every((k) => k.wegen.length < 3 || Math.hypot(q.x - k.x, q.y - k.y) > 12)
       && net.bakens.every((b) => Math.hypot(q.x - b.x, q.y - b.y) > (b.soort === 'kerk' ? 14 : b.soort === 'huis' ? 11 : 6))
-      && [route.start, route.eind].every((b) => Math.hypot(q.x - b.x, q.y - b.y) > 7);
+      && open.every((b) => Math.hypot(q.x - b.x, q.y - b.y) > 7) && magBoom(q);
     const bomen = [];
     for (let i = 0; i < 2600 && bomen.length < 520; i++) {
       const q = { x: midden.x + (r() - 0.5) * 560, y: midden.y + (r() - 0.5) * 560 };
@@ -242,6 +233,29 @@ export function maakWereld3d(plek, net, route, { opKeuze, beweging, donker }) {
     const hek = bouw.hek(); hek.position.set(k.x, 0, -k.y); hek.rotation.y = -peiling(ander, k) * RAD; hek.scale.x = (SOORTEN[w.soort].breed + 1.5) / 6.4;
     scene.add(hek);
   }
+
+  return { K, M, doos, bouw, midden, lucht, grond };
+}
+
+export function maakWereld3d(plek, net, route, { opKeuze, beweging, donker }) {
+  const K = donker ? KLEUREN.donker : KLEUREN.licht;
+  const renderer = new WebGLRenderer({ antialias: true, powerPreference: 'low-power' });
+  renderer.setPixelRatio(Math.min(window.devicePixelRatio || 1, 2));
+  const canvas = renderer.domElement;
+  canvas.className = 'rw-canvas';
+  plek.append(canvas);
+
+  const scene = new Scene();
+  scene.background = new Color(K.horizon);
+  scene.fog = new Fog(K.horizon, 70, 240);
+  const camera = new PerspectiveCamera(60, 4 / 3, 0.5, 700);
+
+  scene.add(new HemisphereLight(K.hemel, K.grond, K.hemelSterk));
+  const zon = new DirectionalLight(K.zon, K.zonSterk);
+  zon.position.set(-60, 120, 40);
+  scene.add(zon);
+
+  const { M, doos } = bouwLandschap(scene, net, { donker, open: [route.start, route.eind] });
 
   // -- start and post
   function vlag(q, groot) {

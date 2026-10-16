@@ -1,8 +1,9 @@
 // Checks the data before a build (`pnpm check`, and the first step of `pnpm build`): every id once, every blad in
-// a groep its category has, every link to a blad that exists, and the insignelaag pointing only at bladen that
-// are there, and no interactive piece hiding another of the same name. A mistake stops the build with a list of what
-// is wrong; what is only odd (a piece or a drawing no blad uses) is listed, and the build goes on. At the end: how
-// many bladen each niveau of the menu shows (src/data/niveaus.js).
+// a groep its category has, every link to a blad that exists (also from a tile of `soorten`, with its drawing),
+// the insignelaag pointing only at bladen that are there, every zonderBlad key once and every old key
+// (oude-sleutels.js) leading to one, and no interactive piece hiding another of the same name. A mistake stops the build with a list of what is wrong; what is only odd (a piece
+// or a drawing no blad uses) is listed, and the build goes on. At the end: how many bladen each niveau of the menu
+// shows (src/data/niveaus.js).
 import { existsSync, readdirSync, readFileSync } from 'node:fs';
 import { BEELDEN, BRONNEN } from '../src/data/beelden.js';
 import { BLAD, BLADEN } from '../src/data/bladen/index.js';
@@ -11,6 +12,7 @@ import { CATEGORIE } from '../src/data/categorieen.js';
 import { GROEPEN } from '../src/doe/legenda/index.js';
 import { insigneBeeld, INSIGNES, NIVEAUS } from '../src/data/insignes.js';
 import { KEUZES, niveausVan } from '../src/data/niveaus.js';
+import { nuGeldig, OUDE_SLEUTELS } from '../src/data/oude-sleutels.js';
 import { PLAATJES } from '../src/plaatjes.js';
 import { UPDATES } from '../src/data/updates.js';
 
@@ -33,6 +35,12 @@ for (const b of BLADEN) {
   for (const v of b.verwijs ?? []) if (!/^https:\/\//.test(v.url ?? '') || !v.naam) fout(waar, 'verwijs heeft een naam en een https-adres nodig');
   if (b.letterlijk && (!b.bron || !b.bronDatum)) fout(waar, 'een regel toont zijn bron en datum: geef ze allebei');
   if (b.plaatje && !PLAATJES[b.plaatje]) fout(waar, `plaatje bestaat niet: ${b.plaatje}`);
+  for (const x of b.soorten ?? []) {
+    if (!x.naam || !x.plaatje) fout(waar, 'een soort heeft een naam en een plaatje nodig');
+    if (x.plaatje && !PLAATJES[x.plaatje]) fout(waar, `soort ${x.naam}: plaatje bestaat niet: ${x.plaatje}`);
+    if (x.blad && !BLAD[x.blad]) fout(waar, `soort ${x.naam}: naar een blad dat er niet is: ${x.blad}`);
+    if (x.blad === b.id) fout(waar, `soort ${x.naam} verwijst naar zichzelf`);
+  }
   if (b.doe && !DOE[b.doe]) fout(waar, `doe bestaat niet: ${b.doe} (src/doe/index.js)`);
   for (const x of b.beelden ?? []) if (!BEELDEN[x.beeld]) fout(waar, `beeld bestaat niet: ${x.beeld}`);
   if (b.beelden?.some((x) => x.titel) && !b.beelden.every((x) => x.titel)) fout(waar, 'geef elk beeld een titel, of geen enkel');
@@ -58,6 +66,30 @@ for (const i of INSIGNES) {
   if (i.compleet && NIVEAUS.some(({ niveau }) => !i.niveaus[niveau]?.kort)) fout(`insigne ${i.id}`, 'compleet, maar niet elk niveau heeft een korte omschrijving');
 }
 
+// the zonderBlad lines: a tick is stored under the key, so every key once, and never the id of a blad
+const eisen = new Set();
+for (const i of INSIGNES) {
+  for (const [nr, n] of Object.entries(i.niveaus)) for (const d of n.delen) for (const regel of d.zonderBlad ?? []) {
+    const waar = `insigne ${i.id} niveau ${nr}, ${d.titel}`;
+    const { k, t } = typeof regel === 'object' ? regel : {};
+    if (!t) { fout(waar, 'een zonderBlad-regel is { k, t }: een sleutel en een tekst'); continue; }
+    if (!/^[a-z0-9]+(-[a-z0-9]+)*$/.test(k ?? '') || !k.startsWith(`${i.id}-`)) fout(waar, `sleutel "${k}" moet beginnen met "${i.id}-" en uit kleine letters, cijfers en streepjes bestaan`);
+    if (eisen.has(k)) fout(waar, `sleutel komt twee keer voor: ${k}`);
+    if (BLAD[k]) fout(waar, `sleutel is ook de id van een blad: ${k}`);
+    if (Object.hasOwn(OUDE_SLEUTELS, k)) fout(waar, `sleutel ${k} staat ook in OUDE_SLEUTELS: een regel is weg of hij blijft`);
+    eisen.add(k);
+  }
+}
+// the old keys (src/data/oude-sleutels.js): each one ends at a line or a blad that is there, without going round
+for (const [oud, doel] of Object.entries(OUDE_SLEUTELS)) {
+  if (BLAD[oud]) fout(`oude sleutel ${oud}`, 'is de id van een blad: dan verdwijnt een vinkje bij dat blad');
+  if (![doel].flat().length) fout(`oude sleutel ${oud}`, 'wijst nergens naar');
+  for (const k of nuGeldig(oud)) {
+    if (Object.hasOwn(OUDE_SLEUTELS, k)) fout(`oude sleutel ${oud}`, `komt via ${k} weer bij zichzelf uit`);
+    else if (!eisen.has(k) && !BLAD[k]) fout(`oude sleutel ${oud}`, `wijst naar ${k}: geen regel en geen blad`);
+  }
+}
+
 for (const g of GROEPEN) {
   if (g.tekens.length < 3) fout(`legenda ${g.id}`, 'te weinig tekens om uit te raden');
   const namen = g.tekens.map((x) => x.naam);
@@ -77,7 +109,7 @@ for (const naam of new Set(doeNamen.filter((n, k) => doeNamen.indexOf(n) !== k))
 
 const gebruikt = (veld) => new Set(BLADEN.map((b) => b[veld]).filter(Boolean));
 const doeGebruikt = gebruikt('doe');
-const plaatjeGebruikt = gebruikt('plaatje');
+const plaatjeGebruikt = new Set([...gebruikt('plaatje'), ...BLADEN.flatMap((b) => (b.soorten ?? []).map((x) => x.plaatje))]);
 const beeldGebruikt = new Set(BLADEN.flatMap((b) => (b.beelden ?? []).map((x) => x.beeld)));
 for (const naam of Object.keys(DOE)) if (!doeGebruikt.has(naam)) opmerkingen.push(`doe ${naam}: geen blad gebruikt het`);
 for (const naam of Object.keys(PLAATJES)) if (!plaatjeGebruikt.has(naam)) opmerkingen.push(`plaatje ${naam}: geen blad gebruikt het`);

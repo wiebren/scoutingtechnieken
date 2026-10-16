@@ -1,0 +1,18 @@
+/* Point at the parts of the baseplate compass (kompaswijzen.js); the compass itself is styled by kompas.css. */
+.doe-kompaswijzen { display: flex; flex-direction: column; gap: 12px; }
+.doe-kompaswijzen p { margin: 0; }
+.kd-oefen { display: grid; gap: 12px; }
+.kd-oefen[hidden], .kd-draai[hidden] { display: none; }
+@container (min-width: 520px) { .kd-oefen { grid-template-columns: minmax(0, 230px) minmax(0, 1fr); align-items: start; } }
+.kd-beeld { width: min(100%, 230px); margin: 0 auto; }
+.kd-svg { display: block; width: 100%; height: auto; user-select: none; -webkit-user-select: none; }
+.kd-tekst { display: flex; flex-direction: column; gap: 10px; min-width: 0; }
+.kd-vraag { font-size: 17px; }
+
+.kd-raak { fill: transparent; stroke: transparent; pointer-events: all; }
+.kd-deel { cursor: pointer; outline: none; }
+.kd-deel:hover > :not(.kd-raak), .kd-deel:focus-visible > :not(.kd-raak) { filter: drop-shadow(0 0 2px var(--blauw)) drop-shadow(0 0 1px var(--blauw)); }
+.kd-deel:focus-visible > .kd-raak { stroke: var(--blauw); stroke-width: 1.5; stroke-dasharray: 3 2; }
+.kd-deel.goed > :not(.kd-raak) { filter: drop-shadow(0 0 3px var(--accent)) drop-shadow(0 0 1px var(--accent)); }
+.kd-deel.goed > .kd-raak { stroke: var(--accent); stroke-width: 2; }
+.kd-deel.fout > :not(.kd-raak) { filter: drop-shadow(0 0 3px var(--rood)); }

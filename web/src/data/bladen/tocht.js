@@ -456,11 +456,12 @@ export default [
     ],
     naar: [{ blad: 'kompasroute' }, { blad: 'bolletjesroute' }, { blad: 'greep-1' }] },
   { id: 'kompasschieten', naam: 'Kompasschieten', ook: ['richting schieten', 'vizieren'], groep: 'metkompas', bron: 'NAV §2e',
-    plaatje: 'tocht-kompasschieten',
+    plaatje: 'tocht-kompasschieten', doe: 'kompas-schieten-plaat',
     uitleg: [
       'Een richting nauwkeurig uitzetten en die volgen. Zet de koers op je kompas, houd het voor je, draai tot de naald in de oriëntatiepijl staat en kijk langs de richtingspijl. Kies iets opvallends in die richting, een boom of een paal, en loop erheen. Daar schiet je opnieuw.',
       'Omgekeerd kun je ook de koers naar iets in de verte schieten: richtingspijl erop, kompashuis draaien tot de naald in de oriëntatiepijl staat, aflezen.',
     ],
+    letOp: 'Bij Scoutpedia, en in deze app, is een koers lopen greep 1 en de koers naar iets schieten greep 2. Andere groepen en boeken tellen anders: daar heet kompas schieten soms greep 3. Kijk naar wat je doet, niet alleen naar het nummer.',
     naar: [{ blad: 'greep-1' }, { blad: 'greep-2' }, { blad: 'kompas-onbetrouwbaar' }] },
   { id: 'doorsteek', naam: 'Doorsteek', ook: ['kompasrichting met hindernissen', 'doorsteek met kaart'], groep: 'metkompas', bron: 'NAV §2e',
     plaatje: 'tocht-doorsteek',

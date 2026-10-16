@@ -49,11 +49,11 @@ function branders() {
   // spirit burner in a windshield
   uit += `<path d="M24 ${voet}V100H96V${voet}Z" class="vk-metaal"/><ellipse cx="60" cy="${voet - 12}" rx="16" ry="5" class="vk-metaal"/>`;
   uit += `<path d="M48 ${voet - 16}q6 -16 12 -22q6 6 12 22" class="vk-pijl" opacity="0.5"/>`;
-  uit += tekst(60, 171, 'spiritus', { maat: 13, klasse: 'vet' }) + tekst(60, 188, '(Trangia)', { maat: 12, klasse: 'stil' });
+  uit += tekst(60, 171, 'spiritus', { maat: 13, klasse: 'vet' }) + tekst(60, 188, '(met potje)', { maat: 12, klasse: 'stil' });
   // Esbit: a folding stand with a tablet
   uit += `<path d="M126 ${voet}V112H196V${voet}" class="vk-metaal-lijn"/><path d="M126 112H196" class="vk-metaal-lijn" stroke-width="3"/>`;
   uit += `<rect x="150" y="${voet - 10}" width="22" height="8" rx="1" fill="#f4f4f0" stroke="#999"/>` + vlam(161, voet - 10, 24, 18);
-  uit += tekst(161, 171, 'Esbit', { maat: 13, klasse: 'vet' }) + tekst(161, 188, '(tabletten)', { maat: 12, klasse: 'stil' });
+  uit += tekst(161, 171, 'tablet', { maat: 13, klasse: 'vet' }) + tekst(161, 188, '(brandtablet)', { maat: 12, klasse: 'stil' });
   // gas: canister with a burner on top
   uit += `<path d="M232 ${voet}V108Q232 98 248 96H272Q288 98 288 108V${voet}Z" class="vk-metaal"/><rect x="254" y="82" width="12" height="14" class="vk-metaal"/>`;
   uit += `<path d="M236 82H284M244 82L238 72M276 82L282 72" class="vk-metaal-lijn"/>` + `<path d="M248 80q12 -18 24 0" fill="#5aa0e6" opacity="0.8"/>`;
@@ -62,7 +62,7 @@ function branders() {
   uit += `<rect x="318" y="98" width="30" height="${voet - 98}" rx="8" class="rood"/><rect x="326" y="88" width="14" height="10" class="vk-metaal"/>`;
   uit += `<path d="M340 92Q380 92 392 ${voet - 6}" class="vk-metaal-lijn"/><path d="M376 ${voet}L392 118L408 ${voet}M378 118H406" class="vk-metaal-lijn"/><path d="M382 116q10 -18 20 0" fill="#5aa0e6" opacity="0.8"/>`;
   uit += tekst(370, 171, 'benzine', { maat: 13, klasse: 'vet' }) + tekst(370, 188, '(met pomp)', { maat: 12, klasse: 'stil' });
-  return svg(440, 196, 'Vier soorten branders: een spiritusbrander in een windscherm, een Esbitstandaard met een tablet, een gasbrander op een gasbus, en een benzinebrander met een fles en een pomp', uit);
+  return svg(440, 196, 'Vier soorten branders: een spiritusbrander in een windscherm, een standaard met een brandtablet, een gasbrander op een gasbus, en een benzinebrander met een fles en een pomp', uit);
 }
 
 /** The Dutch oven with the rule of thumb for a 12-inch pot: 16 briquettes on the lid, 8 under it. */

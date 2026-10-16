@@ -5,13 +5,13 @@
 
 export default [
   // Mes
-  { id: 'zakmes', naam: 'Het zakmes', ook: ['zakmes', 'vouwmes', 'Zwitsers zakmes', 'Opinel', 'scoutsmes'], en: 'pocket knife', groep: 'mes', bron: 'VKG SN-H, SN-HS, SW-MES',
+  { id: 'zakmes', naam: 'Het zakmes', ook: ['zakmes', 'vouwmes', 'Zwitsers zakmes', 'scoutsmes'], zoekOok: ['Opinel', 'Victorinox'], en: 'pocket knife', groep: 'mes', bron: 'VKG SN-H, SN-HS, SW-MES',
     plaatje: 'zakmes',
     uitleg: [
       'Een zakmes is een mes dat je kunt dichtklappen. Het blad klapt dan in het handvat. Dit zijn de delen:',
       '- Lemmet: het blad van het mes. De scherpe kant heet de snede (of snijkant). De botte kant heet de rug. Voorop zit de punt.',
       '- Heft: het handvat, waar je het mes vasthoudt.',
-      '- Slot of beveiliging: dit zet het lemmet vast als het open is. Zo klapt het niet dicht op je vingers. Bij een Opinel draai je een ring. Bij andere messen druk je een veertje of knopje in om het weer dicht te doen.',
+      '- Slot of beveiliging: dit zet het lemmet vast als het open is. Zo klapt het niet dicht op je vingers. Bij sommige messen draai je een ring. Bij andere druk je een veertje of knopje in om het weer dicht te doen.',
       'Een Zwitsers zakmes heeft er meer gereedschap bij: een blikopener, een schroevendraaier, een priem, een kurkentrekker. Gebruik elk deel waarvoor het bedoeld is. Een blik open je met de blikopener, niet met het lemmet.',
       'Openen: houd het heft vast. Pak het lemmet bij de nagelgleuf (het gleufje voor je nagel) en klap het open. Houd je vingers uit de buurt van de snede.', 'Dichtklappen: zet de beveiliging los. Duw op de rug van het lemmet om het dicht te klappen. Houd je vingers niet onder de snede.',
     ],
@@ -166,7 +166,7 @@ export default [
       'Een handbijl houd je met één hand vast; een grote bijl, met een lange steel, met twee handen. Handbijlen zijn er in soorten: een kleine bijl voor aanmaakhout, een iets grotere universele bijl voor aanmaakhout en kleine blokken, en een kleine kloofbijl.',
       'Grote bijlen zijn er om te vellen (aks, velbijl, bosbijl) en om te kloven (kloofbijl, kloofhamer). Een velbijl heeft bijvoorbeeld een steel van zo’n 65 cm en een kop van ruim een kilo. Een kloofhamer weegt meer dan 3 kilo.',
     ],
-    letOp: 'Een wig sla je in met een moker of de achterkant van een kloofhamer. Gränsfors, een Zweedse bijlenmaker, zegt: ook niet met een kloofbijl, die is daar niet voor gemaakt.',
+    letOp: 'Een wig sla je in met een moker of de achterkant van een kloofhamer. Een Zweedse bijlenmaker zegt: ook niet met een kloofbijl, die is daar niet voor gemaakt.',
     naar: [{ blad: 'kloven' }, { blad: 'bijl-onderhoud' }, { blad: 'kindling-cracker' }] },
 
   // Zaag
@@ -209,7 +209,7 @@ export default [
     uitleg: [
       'Een scherp mes is veiliger dan een bot mes: je hoeft minder te duwen, dus het schiet minder snel uit.',
       '- Leg de slijpsteen stevig neer. Sommige stenen maak je eerst nat: kijk wat er bij jouw steen hoort.',
-      '- Houd het lemmet schuin op de steen. Victorinox geeft voor zijn zakmessen 15 tot 20 graden per kant.',
+      '- Houd het lemmet schuin op de steen. De maker van het Zwitserse zakmes geeft 15 tot 20 graden per kant.',
       '- Haal het lemmet met gelijke halen over de steen, alsof je een dun plakje eraf wilt snijden, van de punt tot het heft.',
       '- Slijp beide kanten even vaak, eerst op de grove kant van de steen, dan op de fijne.',
       '- Klaar? Een scherpe snede zie je niet. Waar je een glimmend randje ziet als je er recht op kijkt, is hij nog bot.',
@@ -299,6 +299,7 @@ export default [
   // Regels
   { id: 'messenwet', naam: 'Messen en de wet', ook: ['wapenwet', 'Wet wapens en munitie', 'Wwm', '28 cm', 'messenverbod'], groep: 'regels', letterlijk: true,
     plaatje: 'mes-wet',
+    doe: 'mes-mee',
     bron: 'Wet wapens en munitie, artikel 2, 26 en 27 (wetten.overheid.nl/BWBR0008804)', bronDatum: 'geldend vanaf 01-07-2026, geraadpleegd 16-10-2026',
     waarvoor: 'Weten welke messen in Nederland verboden zijn, en wanneer een gewoon mes toch als wapen kan gelden.',
     uitleg: [

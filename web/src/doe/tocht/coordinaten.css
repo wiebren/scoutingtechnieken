@@ -1,4 +1,5 @@
-/* Coördinatenroute, kruispeiling and passerroute on a piece of RD map (coordinaten.js). */
+/* Coördinatenroute, kruispeiling and passerroute on a piece of RD map (coordinaten.js). Zoomed in, the svg sets
+   --z (how much larger it shows): lines that must stay thin divide by it. */
 .doe-coordinaten { display: flex; flex-direction: column; gap: 10px; }
 .doe-coordinaten p { margin: 0; }
 .co-boven { display: flex; flex-wrap: wrap; gap: 8px 16px; align-items: flex-start; }
@@ -6,11 +7,14 @@
 .co-lijst li.nu { color: var(--blauw); font-weight: 700; }
 .co-lijst li.gedaan { color: var(--stil); }
 .co-opdracht { flex: 1 1 220px; }
-.co-svg { display: block; width: 100%; height: auto; touch-action: none; user-select: none; -webkit-user-select: none; cursor: crosshair; }
+.co-kaart { width: 100%; }
+.co-svg { display: block; width: 100%; height: auto; margin: 0 auto; touch-action: none; user-select: none; -webkit-user-select: none; cursor: crosshair; }
+.co-svg.zoom { max-width: 440px; cursor: grab; }
+.co-svg.zoom.sleept { cursor: grabbing; }
 .co-svg:focus-visible { outline: 3px solid var(--accent); outline-offset: 2px; border-radius: 4px; }
 .co-bediening { display: flex; flex-wrap: wrap; gap: 8px; align-items: center; justify-content: space-between; }
 .co-pijlen { display: flex; gap: 6px; }
-.co-pijlen[hidden] { display: none; }
+.co-pijlen[hidden], .co-bediening .knop[hidden] { display: none; }
 .co-pijlen .knop { min-width: 44px; }
 
 .co-grond { fill: color-mix(in srgb, #e9dfb6 45%, var(--paneel)); }
@@ -18,14 +22,39 @@
 .co-water { fill: color-mix(in srgb, var(--blauw) 30%, var(--paneel)); }
 .co-weg { fill: none; stroke: var(--lijn-sterk); stroke-width: 5; }
 .co-weg.smal { stroke-width: 3; stroke-dasharray: 6 4; }
-.co-lijn { fill: none; stroke: var(--inkt); stroke-width: 1; }
+.co-lijn { fill: none; stroke: var(--inkt); stroke-width: calc(1px / var(--z, 1)); }
 .co-getal { fill: var(--inkt); font-size: 11px; font-variant-numeric: tabular-nums; }
+.co-svg.zoom .co-getal { display: none; }
+.co-lijn.boven { stroke-width: calc(1.3px / var(--z, 1)); opacity: 0.75; }
 .co-hulp path { fill: none; stroke: var(--blauw); stroke-width: 1.6; }
 .co-kruis { fill: none; stroke: var(--rood); stroke-width: 2; }
 .co-kruis-punt { fill: var(--rood); }
 .co-punt { fill: var(--inkt); }
-.co-naam { fill: var(--inkt); font-size: 11px; font-weight: 700; }
-.co-route { fill: none; stroke: var(--rood); stroke-width: 2.5; stroke-dasharray: 7 4; }
-.co-peil { fill: none; stroke: var(--blauw); stroke-width: 2; }
+.co-naam { fill: var(--inkt); font-size: calc(11px / var(--z, 1)); font-weight: 700; paint-order: stroke; stroke: var(--paneel); stroke-width: calc(3px / var(--z, 1)); stroke-linejoin: round; }
+.co-route { fill: none; stroke: var(--rood); stroke-width: calc(2.5px / var(--z, 1)); stroke-dasharray: 7 4; }
+.co-peil { fill: none; stroke: var(--blauw); stroke-width: calc(2px / var(--z, 1)); }
 .co-cirkel { fill: none; stroke: var(--blauw); stroke-width: 1.4; stroke-dasharray: 5 3; }
 .co-vlag { fill: var(--rood); stroke: var(--rood); stroke-width: 2; }
+
+/* choosing the km-square */
+.co-vak { fill: color-mix(in srgb, var(--blauw) 14%, transparent); stroke: var(--blauw); stroke-width: 2; }
+.co-vak.fout { fill: color-mix(in srgb, var(--rood) 14%, transparent); stroke: var(--rood); }
+.co-randen text { fill: var(--inkt); font-weight: 700; font-variant-numeric: tabular-nums; paint-order: stroke; stroke: var(--paneel); stroke-width: calc(4px / var(--z, 1)); stroke-linejoin: round; }
+
+/* the kaarthoekmeter: clear plastic, printed in the ink of the theme (the classes of ../../plaatjes/kaarthoekmeter.js) */
+.co-kaartje .vlak { fill: var(--paneel); }
+.co-kaartje .lijn { fill: none; stroke: var(--inkt); stroke-width: 1.4; vector-effect: non-scaling-stroke; }
+.co-kaartje .lijn.dun { stroke-width: 1; }
+.co-kaartje .lijn.haar { stroke-width: 0.7; }
+.co-kaartje .lijn.stil { stroke: var(--stil); }
+.co-kaartje .tekst { fill: var(--inkt); }
+.co-kaartje .tekst.stil { fill: var(--stil); }
+.co-kaartje .vet { font-weight: 700; }
+
+/* the gradenring to turn a course line */
+.co-ring-vlak { fill: color-mix(in srgb, var(--paneel) 55%, transparent); stroke: var(--inkt); stroke-width: 1px; vector-effect: non-scaling-stroke; }
+.co-ring-streep { stroke: var(--inkt); stroke-width: 1.2px; vector-effect: non-scaling-stroke; }
+.co-ring-streep.dun { stroke-width: 0.6px; }
+.co-ring-getal { fill: var(--inkt); font-size: 5.4px; font-weight: 700; font-variant-numeric: tabular-nums; }
+.co-draailijn { stroke: var(--rood); stroke-width: 2px; vector-effect: non-scaling-stroke; stroke-dasharray: 6 3; }
+.co-draaigreep { fill: var(--rood); }

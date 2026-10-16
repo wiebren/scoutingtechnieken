@@ -1,0 +1,10 @@
+/* The colours of the small kaart and kompas drawings (./kaart.js) that style.css does not have. */
+.plaatje .kk-huid { fill: #e9b98f; stroke: #a8745a; stroke-width: 1; }
+.plaatje .kk-nagel { fill: #f6dcc6; stroke: #a8745a; stroke-width: 0.8; }
+.plaatje .kk-plaat { fill: color-mix(in srgb, var(--blauw) 7%, transparent); }
+.plaatje .kk-spiegel { fill: color-mix(in srgb, var(--blauw) 22%, var(--zacht)); }
+.plaatje .kk-spiegel-rand { fill: none; stroke: color-mix(in srgb, var(--blauw) 45%, var(--zacht)); stroke-width: 6; stroke-linecap: round; }
+.plaatje .kk-glans { fill: none; stroke: rgb(255 255 255 / 0.7); stroke-width: 1.6; stroke-linecap: round; }
+.plaatje .kk-zon { fill: #ffd84a; stroke: #e09400; stroke-width: 1.2; }
+.plaatje .kk-maan { fill: #f4ebc3; stroke: #b8a35a; stroke-width: 1; }
+.plaatje .kk-stok { fill: #a0703c; }

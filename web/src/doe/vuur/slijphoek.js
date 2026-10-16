@@ -14,7 +14,7 @@ const rad = (g) => (g * Math.PI) / 180;
 export function oordeel(hoek) {
   if (hoek < 10) return { soort: 'fout', tekst: 'Zo plat slijp je het lemmet zelf weg, niet de snede. De snede wordt dun als papier en brokkelt of buigt meteen om.' };
   if (hoek < MIN) return { soort: 'half', tekst: 'Een dunne, heel scherpe snede, maar die wordt snel bot of buigt om. Voor een zakmes iets steiler.' };
-  if (hoek <= MAX) return { soort: 'goed', tekst: `Goed: ${hoek}° per kant, samen een snijhoek van ${2 * hoek}°. Victorinox geeft voor zijn zakmessen 15 tot 20 graden per kant.` };
+  if (hoek <= MAX) return { soort: 'goed', tekst: `Goed: ${hoek}° per kant, samen een snijhoek van ${2 * hoek}°. De maker van het Zwitserse zakmes geeft 15 tot 20 graden per kant.` };
   if (hoek <= 28) return { soort: 'half', tekst: 'Een stevige, maar stompere snede. Het mes snijdt minder makkelijk, en je moet harder duwen.' };
   return { soort: 'fout', tekst: 'Zo steil slijp je een botte wig. Daar snijd je bijna niet meer mee.' };
 }

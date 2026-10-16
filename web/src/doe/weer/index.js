@@ -23,5 +23,6 @@ export default {
   'sterrenkaart-tweelingen': { titel: 'Zoek de Tweelingen', laad: () => import('./sterrenkaart.js'), opties: { beeld: ['tweelingen', 'orion'] }, bekijk: true },
   'sterrenkaart-stier': { titel: 'Zoek de Stier en de Plejaden', laad: () => import('./sterrenkaart.js'), opties: { beeld: ['stier', 'orion'] }, bekijk: true },
   sterrenbeelden: { titel: 'Welk sterrenbeeld is dit?', laad: () => import('./sterrenbeelden.js') },
-  'zon-maan-aarde': { titel: 'Zon, maan en aarde: waar staat de maan?', laad: () => import('./zon-maan-aarde.js') },
+  'zon-maan-aarde': { titel: 'Springtij en doodtij: waar staat de maan?', laad: () => import('./zon-maan-aarde.js'), opties: { over: 'getij' } },
+  'zon-maan-verduistering': { titel: 'Verduistering: waar staat de maan?', laad: () => import('./zon-maan-aarde.js'), opties: { over: 'verduistering' } },
 };

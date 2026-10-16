@@ -59,5 +59,40 @@ const eenheid = 0.1;
 const startTweede = tl.find((s) => s.teken === 5).van;
 console.log('PARIS second word starts at', startTweede / eenheid, 'units (want 50)');
 // verschuif / getallen
+
+// Kraak de code (seinen/lib/kraak.js): every exercise has sentences, and every message can be read back to its sentence
+const K = await import(W + 'seinen/lib/kraak.js');
+const kfout = (...a) => { log('KRAAK FOUT', ...a); fouten++; };
+for (const id of Object.keys(K.OPGAVEN)) {
+  if (K.zinnenVoor(id).length < 4) kfout(id, 'te weinig zinnen', K.zinnenVoor(id).length);
+  const c = CODES[id];
+  for (let p = 0; p < 150; p++) {
+    const o = K.nieuweOpgave(id, null, p % 2 === 1);
+    const juist = K.antwoordLetters(id, o.zin);
+    if (K.vergelijk(K.antwoordLetters(id, o.zin.toUpperCase(), juist.length), juist).aantal) kfout(id, 'eigen zin niet goed', o.zin);
+    if (c?.decodeer) {
+      const terug = c.decodeer(o.geheim, o.s);
+      if (typeof terug !== 'string' || K.antwoordLetters(id, terug, juist.length).join('') !== juist.join('')) kfout(id, JSON.stringify(o.s), o.zin, '->', o.geheim, '->', terug);
+    } else if (c?.tekens && c.tekens(o.zin).filter(Boolean).join('') !== letters(o.zin)) kfout(id, 'tekens', o.zin);
+    else if (id === 'husselen' && [...letters(o.geheim)].sort().join('') !== [...letters(o.zin)].sort().join('')) kfout(id, o.zin, o.geheim);
+    else if (id === 'woordwaarde' && !o.geheim.endsWith(`= ${K.woordwaarde(o.zin)}`)) kfout(id, o.zin, o.geheim);
+    const t = K.OPGAVEN[id].terug;
+    if (t) {
+      const stukken = K.STUKKEN[t];
+      // what a scout may type: without the spaces between the pieces, with a dot and a hyphen for morse, in other capitals
+      const getypt = { sms: o.geheim.replace(/ \/ /g, ' '), paren: o.geheim.replace(/[ /]/g, ''), bacon: o.geheim.replace(/[ /]/g, '').toLowerCase(),
+        binair: o.geheim.replace(/[ /]/g, ''), morse: o.geheim.replaceAll('·', '.').replaceAll('–', '-') }[t] ?? o.geheim.toLowerCase();
+      if (K.vergelijk(stukken(getypt), stukken(o.geheim)).aantal) kfout(id, 'zet in code', o.geheim, '|', getypt, stukken(getypt), stukken(o.geheim));
+    }
+  }
+}
+// the comparison: what is off, and where
+const v1 = K.vergelijk([...'KAMPVUUR'], [...'KAMPVUUR']);
+const v2 = K.vergelijk([...'KANPVUUR'], [...'KAMPVUUR']);
+const v3 = K.vergelijk([...'KAPVUUR'], [...'KAMPVUUR']);
+const v4 = K.vergelijk([...'KAMMPVUUR'], [...'KAMPVUUR']);
+if (v1.aantal || v2.aantal !== 1 || !v2.fout.has(2) || v3.aantal !== 1 || v3.mist.get(2) !== 1 || v4.aantal !== 1 || v4.fout.size !== 1) kfout('vergelijk', v2, v3, v4);
+if (K.woordwaarde('Scout') !== 78) kfout('woordwaarde', K.woordwaarde('Scout'));
+if (K.antwoordLetters('blokmethode', 'pionierhoutxxxxx', 11).join('') !== 'PIONIERHOUT') kfout('opvulling');
 log(`Codeermachine: ${fouten} fouten`);
 process.exit(fouten ? 1 : 0);

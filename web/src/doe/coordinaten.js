@@ -1,16 +1,20 @@
 // One place in three systems: type it in RD, in degrees (any of the three ways) or in UTM, and the other two follow;
-// MGRS and the Plus Code are shown too, written out only.
+// MGRS and the Plus Code are shown too, written out only. what3words can't be worked out (the words are the
+// company's): the two known places carry their words, looked up once on what3words.com; for any other place it is a
+// link that opens their site there, and only then does the place leave the device.
 // Two known places to start from, and "Waar ben ik?" with the location of the phone (asked only on a tap, and it
 // stays on the device).
 import { h } from '../dom.js';
+import { icoon } from '../iconen.js';
 import { gradenNaarMgrs, gradenNaarPlusCode, gradenNaarRd, gradenNaarUtm, inNederland, leesGraden, leesRd, leesUtm, rdNaarGraden, schrijfGraden, schrijfRd, utmNaarGraden } from './geo.js';
 import './vorm.css';
 import './coordinaten.css';
 
 const PLEKKEN = [
-  ['De toren van Amersfoort', { lat: 52.1551744, lon: 5.38720621 }],
+  ['De toren van Amersfoort', { lat: 52.1551744, lon: 5.38720621, w3w: { en: 'purest.cheer.silks' } }],
   ['De Dam in Amsterdam', utmNaarGraden({ zone: 31, oost: 628830, noord: 5804225 })],
 ];
+const W3W_TAAL = { nl: 'Nederlands', en: 'Engels' };
 
 export default function coordinaten({ nadruk = null } = {}) {
   const melding = h('p.doe-melding', { 'aria-live': 'polite' });
@@ -35,7 +39,11 @@ export default function coordinaten({ nadruk = null } = {}) {
       h('dt', 'Graden, minuten, seconden'), h('dd', g.dms),
       h('dt', 'Graden en minuten (geocaching)'), h('dd', g.ddm),
       h('dt', 'MGRS (vakje van 10 m)'), h('dd', Math.abs(plek.lat) < 80 ? gradenNaarMgrs(plek.lat, plek.lon) : '–'),
-      h('dt', 'Plus Code'), h('dd', gradenNaarPlusCode(plek.lat, plek.lon)));
+      h('dt', 'Plus Code'), h('dd', gradenNaarPlusCode(plek.lat, plek.lon)),
+      h('dt', 'what3words'), h('dd', plek.w3w
+        ? Object.entries(plek.w3w).map(([taal, w], i) => [i > 0 && h('br'), `///${w}`, h('span.doe-stil', ` (${W3W_TAAL[taal]})`)])
+        : h('a', { href: `https://what3words.com/${plek.lat.toFixed(6)},${plek.lon.toFixed(6)}`, target: '_blank', rel: 'noopener' },
+          'Opzoeken op what3words.com', icoon('extern', 'icoon klein'))));
     melding.classList.toggle('fout', !inNederland(r));
     melding.textContent = inNederland(r)
       ? `UTM-zone ${u.zone}: ${u.zone === 31 ? 'het westen van Nederland, tot ongeveer Apeldoorn' : u.zone === 32 ? 'het oosten van Nederland, vanaf ongeveer Apeldoorn' : 'buiten Nederland'}.`
@@ -75,5 +83,5 @@ export default function coordinaten({ nadruk = null } = {}) {
   return h('div.doe-coordinaten',
     h('div.chips', { role: 'group', 'aria-label': 'Kies een plek' }, knoppen),
     h('div.co-velden', volgorde), schrijfwijzen, melding,
-    h('p.doe-stil', 'Omgerekend met formules die RD benaderen: tot op ongeveer een meter precies. Je plek blijft op je telefoon.'));
+    h('p.doe-stil', 'Omgerekend met formules die RD benaderen: tot op ongeveer een meter precies. Je plek blijft op je telefoon, tenzij je hem opzoekt op what3words.com.'));
 }

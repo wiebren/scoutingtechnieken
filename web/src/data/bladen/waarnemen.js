@@ -172,7 +172,14 @@ export default [
         ['veel', 'Fotoschets: ook mensen, wolken, licht en schaduw', 'Luchtfotoschets: van bovenaf, in kleur', 'Panoramaschets: alles wat je ziet, in kleur'],
       ],
     },
-    naar: [{ blad: 'situatieschets' }, { blad: 'routeschets' }, { blad: 'horizonschets' }, { blad: 'recognografische-schets' }, { blad: 'panoramaschets' }] },
+    soorten: [
+      { naam: 'Situatieschets', plaatje: 'situatieschets', blad: 'situatieschets', bij: 'Van bovenaf: hoe kom je ergens? Niet op schaal.' },
+      { naam: 'Routeschets', plaatje: 'routeschets', blad: 'routeschets', bij: 'Een verslag van een gelopen route, op een formulier met kolommen.' },
+      { naam: 'Horizonschets', plaatje: 'soort-horizonschets', blad: 'horizonschets', bij: 'Alleen de lijn van het landschap tegen de lucht, donker ingekleurd.' },
+      { naam: 'Recognografische schets', plaatje: 'soort-recognografische-schets', blad: 'recognografische-schets', bij: 'Het landschap met alles wat blijft staan, zoals wegen, hekken en huizen.' },
+      { naam: 'Panoramaschets', plaatje: 'soort-panoramaschets', blad: 'panoramaschets', bij: 'Alles wat je ziet, in kleur: ook de koeien, de fietser en de wolken.' },
+    ],
+    naar: [{ blad: 'afstand-schatten' }] },
   { id: 'situatieschets', naam: 'Situatieschets', ook: ['schetskaart'], en: 'sketch map', groep: 'schetsen', bron: 'WU PT, JV, WH',
     plaatje: 'situatieschets',
     uitleg: [
@@ -195,7 +202,7 @@ export default [
       '- De tekening van de weg, van bovenaf.',
       'Je leest en schrijft van onder naar boven, net als een stripkaart. Loopt de tekening van het papier, trek dan een streep over het hele formulier en ga in een nieuwe rij verder.',
     ],
-    naar: [{ blad: 'stripkaart' }, { blad: 'situatieschets' }, { blad: 'passen-tellen' }] },
+    naar: [{ blad: 'stripkaart' }, { blad: 'situatieschets' }, { blad: 'passen-tellen' }, { blad: 'soorten-schetsen' }] },
   { id: 'horizonschets', naam: 'Horizonschets', ook: ['luchtlijnschets', 'kimschets'], en: 'skyline sketch', groep: 'schetsen', bron: 'WU WH, JV, PT',
     doe: 'schets-horizon',
     uitleg: [
@@ -204,7 +211,7 @@ export default [
       '- Teken daarboven de luchtlijn, en kleur het stuk tussen horizon en luchtlijn donker.',
       '- Zet bij opvallende punten de kompasrichting en de geschatte afstand, in vakjes boven de tekening.',
     ],
-    naar: [{ blad: 'recognografische-schets' }, { blad: 'panoramaschets' }, { blad: 'afstand-schatten' }] },
+    naar: [{ blad: 'recognografische-schets' }, { blad: 'panoramaschets' }, { blad: 'afstand-schatten' }, { blad: 'soorten-schetsen' }] },
   { id: 'recognografische-schets', naam: 'Recognografische schets', ook: ['herkenningsschets', 'terreinschets'], en: 'landscape sketch', groep: 'schetsen', bron: 'WU WH, JV, PT',
     doe: 'schets-recognografisch',
     uitleg: [
@@ -214,14 +221,14 @@ export default [
       '- Net als bij de horizonschets: kompasrichtingen en geschatte afstanden bij opvallende punten.',
     ],
     letOp: 'Over kleur verschillen de bronnen: de Winterhike zegt geen kleur, het handboek van Johannes Vianney zegt wel kleuren. Vraag wat de opdracht wil.',
-    naar: [{ blad: 'horizonschets' }, { blad: 'panoramaschets' }] },
+    naar: [{ blad: 'horizonschets' }, { blad: 'panoramaschets' }, { blad: 'soorten-schetsen' }] },
   { id: 'panoramaschets', naam: 'Panoramaschets', ook: ['landschapsschets'], en: 'panorama sketch', groep: 'schetsen', bron: 'WU WH, JV, PT',
     doe: 'schets-panorama',
     uitleg: [
       'Een uitgewerkte recognografische schets: je tekent nu álles wat je ziet, ook de koeien in de wei, de fietser en de wolken. Eigenlijk een getekende foto, in kleur en met licht en schaduw.',
       'Ook hier zet je bij opvallende punten de kompasrichting en de geschatte afstand.',
     ],
-    naar: [{ blad: 'recognografische-schets' }, { blad: 'horizonschets' }] },
+    naar: [{ blad: 'recognografische-schets' }, { blad: 'horizonschets' }, { blad: 'soorten-schetsen' }] },
 
   // Spoorzoeken
   { id: 'sporen-lezen', naam: 'Een spoor lezen', ook: ['spoorlezen', 'voetsporen', 'prenten'], en: 'reading tracks', groep: 'spoorzoeken', bron: 'WU SfB 1908',

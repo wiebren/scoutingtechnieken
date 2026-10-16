@@ -3,14 +3,24 @@
 // (a private window): the app works without it, it just forgets.
 
 import { ALLE } from './data/niveaus.js';
+import { nuGeldig } from './data/oude-sleutels.js';
 
 const SLEUTEL = { afgevinkt: 'scoutingtechnieken.afgevinkt.v1', updates: 'scoutingtechnieken.updates.v1', niveaus: 'scoutingtechnieken.niveaus.v1', thema: 'scoutingtechnieken.thema.v1', gekregen: 'scoutingtechnieken.gekregen.v1' };
 
 const lees = (key, standaard) => { try { return JSON.parse(localStorage.getItem(key) ?? 'null') ?? standaard; } catch { return standaard; } };
 const schrijf = (key, value) => { try { localStorage.setItem(key, JSON.stringify(value)); } catch { /* it works without */ } };
 
-// -- afgevinkt: a blad by its id ("kan ik"), a requirement without a blad by its key (src/data/insignes.js)
-let afgevinkt = new Set(lees(SLEUTEL.afgevinkt, []));
+// -- afgevinkt: a blad by its id ("kan ik"), a requirement without a blad by its key (src/data/insignes.js). A key
+// that has changed since it was ticked becomes what it is now (src/data/oude-sleutels.js); the first read writes
+// that back, so it happens once.
+function leesAfgevinkt(terugschrijven) {
+  const keys = lees(SLEUTEL.afgevinkt, []);
+  if (!Array.isArray(keys)) return new Set();
+  const nu = new Set(keys.flatMap((k) => nuGeldig(k)));
+  if (terugschrijven && (nu.size !== keys.length || keys.some((k) => !nu.has(k)))) schrijf(SLEUTEL.afgevinkt, [...nu]);
+  return nu;
+}
+let afgevinkt = leesAfgevinkt(true);
 const volgers = new Set();
 const bewaar = () => { schrijf(SLEUTEL.afgevinkt, [...afgevinkt]); for (const fn of volgers) fn(); };
 
@@ -32,7 +42,7 @@ export const aantalGekregen = () => gekregen.size;
 addEventListener('storage', (e) => {
   if (e.key === SLEUTEL.gekregen) { gekregen = new Set(lees(SLEUTEL.gekregen, [])); for (const fn of volgers) fn(); return; }
   if (e.key !== SLEUTEL.afgevinkt) return;
-  afgevinkt = new Set(lees(SLEUTEL.afgevinkt, []));
+  afgevinkt = leesAfgevinkt(false);
   for (const fn of volgers) fn();
 });
 

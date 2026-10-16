@@ -57,6 +57,24 @@ function patrouilletent() {
   return svg(340, 214, 'Een patrouilletent van voren: dak, wanden, staander in de deur, scheerlijnen en haringen', uit);
 }
 
+/** A boat tent on a vlet, from the side: from the bow up to the mast, then along the sail on the boom to the stern;
+ *  sandbags along the edge, and at anchor. */
+function dektent() {
+  let uit = '<path d="M28 116 Q160 140 312 122 L304 158 Q170 166 46 160Z" class="vol"/>';
+  uit += '<path d="M28 116 Q160 140 312 122" class="lijn"/>';
+  uit += '<path d="M110 22 L30 116" class="lijn dun"/>';
+  uit += '<path d="M34 118 L110 68 H298 L308 122 Q160 138 34 118Z" class="kp-doek2"/>';
+  uit += '<path d="M110 68 H298" class="lijn"/><path d="M110 18 V68" class="kp-paal"/>';
+  for (const x of [70, 120, 170, 220, 270]) {
+    const t = (308 - x) / 274; // along the lower edge of the cloth, from the stern
+    const y = (1 - t) ** 2 * 122 + 2 * t * (1 - t) * 138 + t ** 2 * 118;
+    uit += `<rect x="${x - 6}" y="${Math.round(y - 4)}" width="12" height="8" rx="3" class="vol-licht"/>`;
+  }
+  uit += '<path d="M30 120 Q16 140 6 176" class="lijn dun stil"/>';
+  uit += '<rect x="0" y="150" width="340" height="50" class="kp-water"/><path d="M0 150 Q40 144 80 150 T160 150 T240 150 T340 150" class="kp-water-lijn"/>';
+  return svg(340, 200, 'Een dektent op een vlet, van opzij: het doek loopt van de boeg naar de mast en dan over het opgedoekte grootzeil naar achter, met zandzakjes langs de rand; de boot ligt voor anker', uit);
+}
+
 /** A bell tent: round, one pole in the middle, low walls, guy lines all around. */
 function belltent() {
   let uit = grond(0, 340, 178);
@@ -662,6 +680,7 @@ export default {
   'tent-tunnel': tunneltent,
   'tent-trekker': trekkerstent,
   'tent-party': partytent,
+  'tent-dektent': dektent,
   'tent-onderdelen': tentOnderdelen,
   'tent-haringen': haringen,
   'tent-scheerlijn': scheerlijnHaring,

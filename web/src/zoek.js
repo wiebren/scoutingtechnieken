@@ -2,7 +2,8 @@
 // name, the category and groep, or the text. A hit in the name counts most - the whole name or a whole word of it
 // more than a piece of a word - then the other names, then English, then the groep, then the text. Accents and
 // case do not matter: "coordinaten" finds Coördinaten. A plural finds the singular: "tenten" finds Tent,
-// "bomen" Boom.
+// "bomen" Boom. Words in `zoekOok` count as other names but are not shown on the card: brand names, so that
+// "recta" finds the spiegelpeilkompas.
 import { BLADEN } from './data/bladen/index.js';
 import { CATEGORIE, groepNaam } from './data/categorieen.js';
 
@@ -12,14 +13,14 @@ const woordenVan = (s) => new Set(s.split(/[^a-z0-9]+/).filter(Boolean));
 
 const INDEX = BLADEN.map((blad) => {
   const naam = normaal(blad.naam);
-  const ook = normaal(tekst(blad.ook));
+  const ook = normaal(tekst([...(blad.ook ?? []), ...(blad.zoekOok ?? [])]));
   return {
     blad,
     naam, naamWoorden: woordenVan(naam),
     ook, ookWoorden: woordenVan(ook),
     en: normaal(blad.en),
     groep: normaal(`${CATEGORIE[blad.categorie]?.naam ?? ''} ${groepNaam(blad.categorie, blad.groep)}`),
-    tekst: normaal([tekst(blad.uitleg), blad.waarvoor, blad.letOp, ...(blad.tabel?.rijen.flat() ?? [])].join(' ')),
+    tekst: normaal([tekst(blad.uitleg), blad.waarvoor, blad.letOp, ...(blad.tabel?.rijen.flat() ?? []), ...(blad.soorten?.flatMap((s) => [s.naam, s.bij]) ?? [])].join(' ')),
   };
 });
 

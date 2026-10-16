@@ -84,21 +84,25 @@ export function insignesView() {
         stand(i, nr) === 'alles' && icoon('hoed', 'icoon niveau-tab-teken'), stand(i, nr) === 'gekregen' && icoon('ster', 'icoon niveau-tab-teken is-ster')))));
 
     const { klaar, totaal } = voortgang(i, niveau);
+    // a requirement without a blad is an "opdracht": the label, and once on the page what that means
+    const opdrachten = n?.delen.some((d) => d.zonderBlad?.length);
     const vink = (key, label, link) => h('div.vinkrij',
       h('label.vink', h('input', { type: 'checkbox', checked: isAfgevinkt(key), 'data-key': key, 'aria-label': `${label}: kan ik`,
-        onchange: (e) => zetAfgevinkt(key, e.target.checked) }),
+        'aria-describedby': link ? null : 'opdracht-uitleg', onchange: (e) => zetAfgevinkt(key, e.target.checked) }),
         h('span.vinkje', icoon('vink'))),
       link ? h('a.rij', { href: linkNaar(key), 'data-blad': key }, h('span.rij-naam', label), icoon('verder', 'icoon rij-pijl'))
-        : h('span.rij.zonder', h('span.rij-naam', label)));
+        : h('span.rij.zonder', h('span.rij-naam', label), h('span.label.opdracht', { 'aria-hidden': 'true' }, 'opdracht')));
 
     vul(sv.lijstInhoud,
       i.over && niveau === 1 && h('p.intro', i.over),
       n?.kort && h('p.niveau-kort', { 'data-niveau': niveau }, n.kort),
       !i.compleet && h('p.melding', 'Dit insigne is nog in opbouw: hier staan alleen de onderwerpen die al in de app zitten.'),
       totaal > 0 && standBlok(i, niveau),
-      n?.delen.length ? n.delen.map((d, di) => h('section.groep', h('h2.groep-kop', d.titel),
+      opdrachten && h('p.opdracht-uitleg', { id: 'opdracht-uitleg' }, h('span.label.opdracht', 'opdracht'),
+        ' Dit doe je zelf of met je groep. Er staat geen uitleg over in de app.'),
+      n?.delen.length ? n.delen.map((d) => h('section.groep', h('h2.groep-kop', d.titel),
         h('div.rijen', d.bladen.filter((id) => BLAD[id]).map((id) => vink(id, BLAD[id].naam, true)),
-          (d.zonderBlad ?? []).map((tekst, j) => vink(`${i.id}:${niveau}:${di}:${j}`, tekst, false)))))
+          (d.zonderBlad ?? []).map(({ k, t }) => vink(k, t, false)))))
         : h('p.leeg', 'Voor dit niveau staat er nog niets in de app.'),
       voetnoot());
   }

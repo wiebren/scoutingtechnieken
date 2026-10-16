@@ -15,12 +15,25 @@ import './codeermachine.css';
 const GROEPEN = [['vervangen', 'Vervangen'], ['cijfers', 'Cijfers en roosters'], ['verwisselen', 'Verwisselen'], ['verbergen', 'Verbergen'], ['tekens', 'Tekenalfabetten'], ['seinen', 'Seinen als code']];
 const ABC = [...'ABCDEFGHIJKLMNOPQRSTUVWXYZ'];
 
-/** One letter of a tekenalfabet as an <svg> string, about `maat` px high. */
-function teken(soort, letter, maat) {
+/** One letter of a tekenalfabet as an <svg> string, about `maat` px high (kraak.js draws them too). */
+export function teken(soort, letter, maat) {
   const svg = (w, hh, inhoud) => `<svg viewBox="0 0 ${w} ${hh}" height="${maat}" width="${Math.round((maat * w) / hh)}" aria-hidden="true" xmlns="http://www.w3.org/2000/svg">${inhoud}</svg>`;
   if (soort === 'semafoor') { const a = armen(SEMAFOOR[letter]); return svg(BREED, HOOG, pop({ links: a.links, rechts: a.rechts })); }
   if (soort === 'vlaggen') { const o = LETTERVLAG[letter].ontwerp; return svg(breedte(o, 40) + 2, 42, vlag(o, 1, 1, 40)); }
   return svg(40, 40, TEKENSCHRIFT[soort].teken(letter));
+}
+
+/** The `rooster` of a code (./lib/geheim.js) as a table that scrolls sideways when it is too wide. */
+export function roosterTabel(r) {
+  const tabel = h('table.cm-rooster', { class: [r.toetsen && 'toetsen', r.kolomKleur && 'kolomkleur', r.rijKleur && 'rijkleur'].filter(Boolean).join(' ') },
+    r.boven && h('thead', h('tr', r.links && h('th'), r.boven.map((b) => h('th', { scope: 'col' }, b)))),
+    h('tbody', r.rijen.map((rij, i) => h('tr',
+      r.links && h('th', { scope: 'row' }, r.links[i]),
+      rij.map((cel) => h('td', {
+        class: [cel.nu && 'nu', cel.geheim && 'geheim', cel.stil && 'stil', cel.leeg && 'cm-leeg'].filter(Boolean).join(' ') || null,
+        'data-k': cel.kolom ?? cel.rij ?? null,
+      }, cel.t))))));
+  return h('div.cm-rooster-wrap', tabel);
 }
 
 export default function codeermachine({ code: beginCode = 'verschuiving' } = {}) {
@@ -140,15 +153,7 @@ export default function codeermachine({ code: beginCode = 'verschuiving' } = {})
     const r = c.rooster?.(tekst, sleutels);
     hoe.hidden = !r;
     if (!r) return;
-    const tabel = h('table.cm-rooster', { class: [r.toetsen && 'toetsen', r.kolomKleur && 'kolomkleur', r.rijKleur && 'rijkleur'].filter(Boolean).join(' ') },
-      r.boven && h('thead', h('tr', r.links && h('th'), r.boven.map((b) => h('th', { scope: 'col' }, b)))),
-      h('tbody', r.rijen.map((rij, i) => h('tr',
-        r.links && h('th', { scope: 'row' }, r.links[i]),
-        rij.map((cel) => h('td', {
-          class: [cel.nu && 'nu', cel.geheim && 'geheim', cel.stil && 'stil', cel.leeg && 'cm-leeg'].filter(Boolean).join(' ') || null,
-          'data-k': cel.kolom ?? cel.rij ?? null,
-        }, cel.t))))));
-    hoe.replaceChildren(h('p.cm-hoekop', 'Zo werkt het'), h('div.cm-rooster-wrap', tabel));
+    hoe.replaceChildren(h('p.cm-hoekop', 'Zo werkt het'), roosterTabel(r));
   }
 
   async function kopieren() {

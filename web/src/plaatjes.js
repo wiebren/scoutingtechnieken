@@ -1,9 +1,11 @@
 // Drawings for the cards, made here as SVG: no licences to look after, sharp at any size, and in the colours of
 // the theme (style.css, .plaatje). A blad names one with `plaatje: 'windroos-16'`; scripts/check.mjs checks that
 // it exists. They are strings, not elements, so the check can run them without a browser. The drawings of kaart
-// and kompas are here; the other categories each have their own file in ./plaatjes/.
+// and kompas are here (their small tile drawings in ./plaatjes/kaart.js); the other categories each have their own
+// file in ./plaatjes/.
 
 import { pol, r1, svg, tekst } from './plaatjes/basis.js';
+import { HOEK, KAART, kaartje } from './plaatjes/kaarthoekmeter.js';
 import tocht from './plaatjes/tocht.js';
 import waarnemen from './plaatjes/waarnemen.js';
 import seinen from './plaatjes/seinen.js';
@@ -17,6 +19,7 @@ import weer from './plaatjes/weer.js';
 import veiligheid from './plaatjes/veiligheid.js';
 import touw from './plaatjes/touw.js';
 import sjorren from './plaatjes/sjorren.js';
+import kaart from './plaatjes/kaart.js';
 
 /** The 32 Dutch points of the compass, clockwise from north; "t" is "ten" (NtO: noord ten oosten). */
 export const STREKEN = ['N', 'NtO', 'NNO', 'NOtN', 'NO', 'NOtO', 'ONO', 'OtN', 'O', 'OtZ', 'OZO', 'ZOtO', 'ZO', 'ZOtZ', 'ZZO', 'ZtO',
@@ -223,7 +226,7 @@ function spiegelkompas() {
   uit += label(172, 58, 'over de bovenkant mik je', 'middle') + label(307, 150, 'je doel', 'middle');
   uit += label(32, 96, 'je oog', 'middle') + label(196, 108, 'het doosje', 'middle');
   uit += label(134, 152, 'de spiegel: daarin zie je', 'middle') + label(134, 166, 'het huis met de naald', 'middle');
-  return svg(340, 176, 'Een spiegelkompas van opzij: je mikt over de bovenkant en ziet het kompashuis in de spiegel eronder', uit);
+  return svg(340, 176, 'Een spiegelpeilkompas van opzij: je mikt over de bovenkant en ziet het kompashuis in de spiegel eronder', uit);
 }
 
 /**
@@ -597,36 +600,35 @@ function multicache() {
   return svg(380, 170, 'Een multicache: bij de start krijg je een coördinaat, op elke stop een aanwijzing voor de volgende, tot de doos.', uit);
 }
 
-/** A kaarthoekmeter on a km square: corner on the point, the scales left and down, read where the km-lines cross. */
+/**
+ * A kaarthoekmeter laid on a 1:25.000 map: a clear card the size of a bank card, with in its top right corner the
+ * scales for 1:25.000 (outside) and 1:50.000 (inside), a protractor and a cm ruler. The corner of the 1:25.000 scale
+ * is on the point; km-line 155 crosses the top scale at 40 (400 m), km-line 463 the right one at 70 (700 m).
+ */
 function kaarthoekmeter() {
-  const [x0, y0, km] = [80, 250, 200];                       // the square 155-156 / 463-464, 2 units a 10 m
-  const [px, py] = [x0 + 0.4 * km, y0 - 0.7 * km];           // 155.400 - 463.700
-  const st = km / 10;                                        // 100 m
-  let uit = `<rect x="${x0}" y="${y0 - km}" width="${km}" height="${km}" class="vlak2"/>`;
-  uit += `<path d="M${x0 - 16} ${y0}H${x0 + km + 16}M${x0 - 16} ${y0 - km}H${x0 + km + 16}M${x0} ${y0 + 16}V${y0 - km - 16}M${x0 + km} ${y0 + 16}V${y0 - km - 16}" class="lijn"/>`;
-  uit += tekst(x0, y0 + 30, '155', { maat: 12 }) + tekst(x0 + km, y0 + 30, '156', { maat: 12 });
-  uit += tekst(x0 - 20, y0 + 4, '463', { maat: 12, anker: 'end' }) + tekst(x0 - 20, y0 - km + 4, '464', { maat: 12, anker: 'end' });
-  // the card: a strip to the left of the point (0-500 m) and one down from it (0-800 m)
-  const kaartje = `M${px} ${py}H${px - 5.5 * st}V${py + 18}H${px - 18}V${py + 8.5 * st}H${px}Z`;
-  uit += `<path d="${kaartje}" class="vlak" opacity="0.85"/><path d="${kaartje}" class="lijn dun"/>`;
-  for (let i = 0; i <= 5; i++) {
-    uit += `<path d="M${px - i * st} ${py}v${i % 5 ? 6 : 9}" class="lijn dun"/>`;
-    if (i < 5) for (let j = 1; j < 10; j++) uit += `<path d="M${r1(px - (i + j / 10) * st)} ${py}v3" class="lijn haar"/>`;
-    if (i) uit += tekst(px - i * st, py + 16, String(i), { maat: 8.5 });
-  }
-  for (let i = 0; i <= 8; i++) {
-    uit += `<path d="M${px} ${py + i * st}h${i % 5 ? -6 : -9}" class="lijn dun"/>`;
-    if (i < 8) for (let j = 1; j < 10; j++) uit += `<path d="M${px} ${r1(py + (i + j / 10) * st)}h-3" class="lijn haar"/>`;
-    if (i) uit += tekst(px - 12, py + i * st + 3, String(i), { maat: 8.5 });
-  }
-  uit += `<circle cx="${x0}" cy="${py}" r="6" class="accent" opacity="0.5"/><circle cx="${px}" cy="${y0}" r="6" class="blauw" opacity="0.5"/>`;
+  const U = 4.2; const X0 = 32; const Y0 = 34;               // units a mm; the card's top left corner
+  const H = KAART[1];
+  const px = r1(X0 + HOEK[25].x * U); const py = r1(Y0 + HOEK[25].y * U);   // the corner of the 1:25.000 scale
+  const kmLijn = HOEK[25].km * U;
+  const x155 = r1(px - 0.4 * kmLijn); const x154 = r1(x155 - kmLijn); const y463 = r1(py + 0.7 * kmLijn);
+
+  // the map underneath, with the km-lines 154, 155 and 463
+  let uit = `<rect x="0" y="0" width="400" height="${r1(Y0 + H * U + 14)}" rx="6" class="vlak2"/>`;
+  uit += `<path d="M${x154} 0V${r1(Y0 + H * U + 14)}M${x155} 0V${r1(Y0 + H * U + 14)}M0 ${y463}H400" class="lijn"/>`;
+  uit += tekst(x154 + 4, 14, '154', { anker: 'start', maat: 12 }) + tekst(x155 + 4, 14, '155', { anker: 'start', maat: 12 });
+  uit += tekst(4, y463 - 4, '463', { anker: 'start', maat: 12 });
+
+  uit += kaartje(U, X0, Y0);
+
+  // the readings and the point
+  uit += `<circle cx="${x155}" cy="${py}" r="7" class="accent" opacity="0.45"/><circle cx="${px}" cy="${y463}" r="7" class="blauw" opacity="0.45"/>`;
   uit += `<circle cx="${px}" cy="${py}" r="4.5" class="rood"/>`;
-  uit += `<path d="M${px + 6} ${py - 6} L${px + 30} ${py - 30}" class="lijn dun stil"/>` + tekst(px + 34, py - 32, 'het punt', { anker: 'start' });
-  uit += `<path d="M${px - 60} ${py + 18} L${px - 70} ${py + 46}" class="lijn dun stil"/>` + tekst(px - 72, py + 58, 'kaarthoekmeter', { anker: 'middle', maat: 10.5, klasse: 'stil' });
-  uit += tekst(x0 - 4, py - 15, 'lijn 155 → 400 m', { anker: 'start', maat: 10.5, klasse: 'accent-tekst vet' });
-  uit += tekst(px + 8, y0 - 8, 'lijn 463 → 700 m', { anker: 'start', maat: 10.5, klasse: 'blauw-tekst vet' });
-  uit += tekst(190, 300, '155.400 – 463.700', { maat: 14, klasse: 'vet' });
-  return svg(380, 312, 'Een kaarthoekmeter met zijn hoek op het punt, de schalen naar links en naar beneden. Lijn 155 kruist de liggende schaal bij 400 meter, lijn 463 de staande bij 700 meter: het punt ligt op 155.400 – 463.700.', uit);
+  uit += `<path d="M${px} ${py - 6} V${py - 20}" class="lijn dun stil"/>` + tekst(396, py - 25, 'het punt', { anker: 'end', maat: 12, klasse: 'vet' });
+  const onder = r1(Y0 + H * U + 14);
+  uit += tekst(200, onder + 24, 'lijn 155 kruist de bovenste schaal bij 40: 400 m', { maat: 12.5, klasse: 'accent-tekst vet' });
+  uit += tekst(200, onder + 43, 'lijn 463 kruist de rechter schaal bij 70: 700 m', { maat: 12.5, klasse: 'blauw-tekst vet' });
+  uit += tekst(200, onder + 69, '155.400 – 463.700', { maat: 15, klasse: 'vet' });
+  return svg(400, onder + 80, 'Een kaarthoekmeter op een kaart van 1:25.000: een doorzichtig kaartje met rechtsboven een hoek met schalen voor 1:25.000 en daarbinnen een voor 1:50.000, verder een gradenboog en een liniaal in centimeters. Het hoekpunt van de schaal 1:25.000 ligt op het punt. Kilometerlijn 155 kruist de bovenste schaal bij 40, dat is 400 meter; lijn 463 kruist de rechter schaal bij 70, dat is 700 meter. Het punt ligt op 155.400 – 463.700.', uit);
 }
 
 /** A winding road measured with a string: lay it along, then pull it straight along the ruler. */
@@ -902,4 +904,5 @@ export const PLAATJES = {
   ...veiligheid,
   ...touw,
   ...sjorren,
+  ...kaart,
 };

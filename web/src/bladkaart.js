@@ -77,14 +77,39 @@ function beelden(lijst) {
 /** The drawings are a chunk of their own (several hundred kB of SVG), loaded with the first card that has one. */
 let PLAATJES = null;
 let plaatjesLaden = null;
-function plaatje(naam) {
-  const fig = h('figure.figuur');
-  if (PLAATJES) fig.innerHTML = PLAATJES[naam]();
+function metPlaatjes(teken) {
+  if (PLAATJES) teken();
   else {
     plaatjesLaden ??= import('./plaatjes.js').then((m) => { PLAATJES = m.PLAATJES; });
-    plaatjesLaden.then(() => { fig.innerHTML = PLAATJES[naam](); }).catch(() => { plaatjesLaden = null; dispatchEvent(new Event('laadfout')); });
+    plaatjesLaden.then(teken).catch(() => { plaatjesLaden = null; dispatchEvent(new Event('laadfout')); });
   }
+}
+function plaatje(naam) {
+  const fig = h('figure.figuur');
+  metPlaatjes(() => { fig.innerHTML = PLAATJES[naam](); });
   return fig;
+}
+
+/** The kinds of a thing side by side (`soorten: [{ naam, plaatje, blad?, bij }]`): a small drawing, the name and a
+ *  line each. A kind with a blad of its own is a link to it; the others are not. The drawing is decoration there:
+ *  the name and the line say what it shows. */
+function soorten(lijst, label, linkNaar) {
+  const plekken = [];
+  const tegels = lijst.map((s) => {
+    const plek = h('span.soort-plaatje');
+    plekken.push([plek, s.plaatje]);
+    const naam = h('span.soort-naam', h('span', s.naam));
+    const link = s.blad && BLAD[s.blad];
+    if (link) naam.append(icoon('verder', 'icoon klein'));
+    return h('li', h(link ? 'a.soort' : 'div.soort', { href: link ? linkNaar(s.blad) : null }, plek, naam, s.bij && h('span.soort-bij', s.bij)));
+  });
+  metPlaatjes(() => {
+    for (const [plek, naam] of plekken) {
+      plek.innerHTML = PLAATJES[naam]();
+      plek.firstElementChild?.setAttribute('aria-hidden', 'true');
+    }
+  });
+  return h('ul.soorten', { 'aria-label': label }, tegels);
 }
 
 /** A line on a card opened outside the niveaus chosen in the menu (a link still opens it); src/main.js shows or
@@ -132,6 +157,7 @@ export function bladKaart(blad, { linkNaar }) {
     buitenNiveau(blad.id),
     blad.waarvoor && h('section.waarvoor', h('h3', 'Waarvoor'), h('p', blad.waarvoor)),
     blad.uitleg && h('section.uitleg', blad.waarvoor && h('h3', 'Uitleg'), alinea(blad.uitleg)),
+    blad.soorten?.length > 0 && soorten(blad.soorten, blad.naam, linkNaar),
     blad.plaatje && plaatje(blad.plaatje),
     blad.beelden?.length > 0 && beelden(blad.beelden),
     blad.doe && doe(blad.doe),

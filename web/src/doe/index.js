@@ -23,9 +23,11 @@ import vuur from './vuur/index.js';
 import kamperen from './kamperen/index.js';
 import natuur from './natuur/index.js';
 import sjorren from './sjorren/index.js';
+import kompas3d from './kompas3d/index.js';
 
 export const DOE = {
   kompas: { titel: 'Draai het kompas', laad: () => import('./kompas.js'), bekijk: true },
+  'kompas-aanwijzen': { titel: 'Wijs de delen van het kompas aan', laad: () => import('./kompaswijzen.js') },
   'kompas-koers': { titel: 'Loop een koers', laad: () => import('./kompas.js'), opties: { opdracht: 'koers' } },
   'kompas-peilen': { titel: 'Peil een doel', laad: () => import('./kompas.js'), opties: { opdracht: 'peilen' } },
   'kompas-terug': { titel: 'Terug op je spoor', laad: () => import('./kompas.js'), opties: { opdracht: 'terug' } },
@@ -36,7 +38,9 @@ export const DOE = {
   'windroos-16': { titel: 'Oefen de zestien windrichtingen', laad: () => import('./windroos.js'), opties: { n: 16 } },
   'windroos-32': { titel: 'Oefen de 32 streken', laad: () => import('./windroos.js'), opties: { n: 32 } },
   schaal: { titel: 'Reken met de schaal', laad: () => import('./schaal.js'), bekijk: true },
+  kronkelweg: { titel: 'Meet de kronkelweg', laad: () => import('./kronkelweg.js') },
   rdkaart: { titel: 'Lees coördinaten op de kaart', laad: () => import('./rdkaart.js') },
+  kaarthoekmeter: { titel: 'Lees af met de kaarthoekmeter', laad: () => import('./kaarthoekmeter.js') },
   morse: { titel: 'Sein en luister morse', laad: () => import('./morse.js') },
   verschuivingscode: { titel: 'Codeer met een verschuiving', laad: () => import('./geheimschrift.js'), opties: { soort: 'verschuiving' } },
   'a-is-1': { titel: 'Letters worden getallen', laad: () => import('./geheimschrift.js'), opties: { soort: 'a-is-1' } },
@@ -66,4 +70,5 @@ export const DOE = {
   ...kamperen,
   ...natuur,
   ...sjorren,
+  ...kompas3d,
 };

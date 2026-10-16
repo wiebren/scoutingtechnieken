@@ -17,3 +17,9 @@
 .sv-hijs { display: flex; flex-direction: column; gap: 4px; margin: 0; padding: 0 0 0 14px; list-style: none; border-left: 3px solid var(--lijn-sterk); }
 .sv-hijs li { display: flex; align-items: center; gap: 10px; font-size: 14px; }
 .sv-hijs li svg { flex: none; }
+
+/* Welk cijfer? */
+.sv-groot { font-size: 56px; font-weight: 800; line-height: 1; color: var(--accent); }
+.sv-groot.lang { font-size: 20px; text-align: center; hyphens: manual; }
+.sv-opties.wimpels .sv-optie { justify-content: center; min-height: 52px; }
+.sv-opties.wimpels .sv-optie svg { display: block; }

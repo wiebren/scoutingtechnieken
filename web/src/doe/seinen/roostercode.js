@@ -10,7 +10,8 @@ import './roostercode.css';
 const N = 6;
 const VUL = 'ABDEEGHIKLMNNOPRSTTUVWZ';     // filling, a little like Dutch text
 
-function maak(boodschap) {
+/** A square for a message: the letters, the holes of the sjabloon, and the message as it is read (kraak.js uses it too). */
+export function maak(boodschap) {
   const letters = [...kaal(boodschap).replace(/[^A-Z]/g, '')].slice(0, N * N - 6);
   const vakken = Array.from({ length: N * N }, (_, i) => i);
   // the holes: random places, read from top left to bottom right

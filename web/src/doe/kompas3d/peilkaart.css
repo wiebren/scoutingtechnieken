@@ -1,0 +1,31 @@
+/* Peil en zet uit op de kaart (peilkaart.js): the map of the world of the tochten with the compass on it. Sizes in
+   the map are in metres; --pk-maat is one screen pixel of a map 300 px wide, set by the piece. */
+.pk-deel[hidden], .pk-knoppen[hidden], .pk-uitslag[hidden] { display: none; }
+.pk-deel { display: grid; gap: 10px; min-width: 0; }
+.pk-kaartvak { display: flex; justify-content: center; }
+.pk-kaart {
+  display: block; width: 100%; max-width: 560px; height: auto; border: 1px solid var(--lijn); border-radius: var(--radius);
+  background: var(--paneel); touch-action: manipulation; user-select: none; -webkit-user-select: none;
+}
+.pk-kaart.kompas-aan { touch-action: none; }
+.pk-kaart:focus-visible { outline: 3px solid var(--accent); outline-offset: 2px; }
+.pk-kaart .pk-kompas { cursor: grab; }
+.pk-kaart.sleept .pk-kompas { cursor: grabbing; }
+.pk-papier { fill: color-mix(in srgb, var(--accent) 7%, var(--paneel)); }
+.pk-noordlijn { stroke: var(--blauw); stroke-opacity: 0.75; }
+.pk-ooslijn { stroke: var(--lijn-sterk); stroke-opacity: 0.6; }
+.pk-baken { fill: var(--inkt); }
+.pk-lijntje { fill: none; stroke: var(--inkt); stroke-width: 2; stroke-linecap: round; }
+.pk-boom { fill: color-mix(in srgb, var(--fam-natuur) 80%, var(--inkt)); }
+.pk-gat { fill: var(--paneel); }
+.pk-naam { fill: var(--inkt); font-size: 11px; font-weight: 700; paint-order: stroke; stroke: var(--paneel); stroke-width: 3px; }
+.pk-noordpijl { fill: var(--rood); }
+.pk-lijn { fill: none; stroke: var(--rood); stroke-linecap: round; }
+.pk-echt { fill: none; stroke: var(--accent); stroke-linecap: round; }
+.pk-jij { fill: var(--blauw); stroke: var(--paneel); }
+.pk-tik { fill: none; stroke: var(--inkt); stroke-linecap: round; }
+.pk-huiswaarde { margin: 0; text-align: center; font-size: 14px; color: var(--stil); }
+.pk-huiswaarde strong { color: var(--inkt); font-variant-numeric: tabular-nums; }
+.pk-knoppen { display: grid; gap: 10px; }
+.pk-lijst { margin: 4px 0 0; padding-left: 20px; font-size: 14px; }
+.pk-lijst li + li { margin-top: 4px; }

@@ -1,0 +1,46 @@
+/* Measure a winding road with a string (kronkelweg.js). */
+.doe-kronkelweg { display: flex; flex-direction: column; gap: 10px; }
+.doe-kronkelweg p { margin: 0; }
+.kw-opdracht { font-size: 16px; }
+.kw-beeld { width: 100%; max-width: 640px; }
+.kw-svg { display: block; width: 100%; height: auto; touch-action: none; user-select: none; -webkit-user-select: none; cursor: crosshair; }
+.kw-svg:focus-visible { outline: 3px solid var(--accent); outline-offset: 2px; border-radius: 6px; }
+
+.kw-grond { fill: color-mix(in srgb, #e9dfb6 45%, var(--paneel)); stroke: var(--lijn-sterk); }
+.kw-bos { fill: color-mix(in srgb, var(--fam-natuur) 26%, var(--paneel)); }
+.kw-sloot { fill: none; stroke: var(--blauw); stroke-width: 2; }
+.kw-raster { fill: none; stroke: var(--inkt); stroke-width: 0.6; opacity: 0.45; }
+.kw-schaalvak { fill: var(--paneel); stroke: var(--lijn-sterk); }
+.kw-schaal { fill: var(--inkt); font-size: 13px; font-weight: 700; font-variant-numeric: tabular-nums; }
+.kw-weg-rand { fill: none; stroke: var(--inkt); stroke-width: 9; stroke-linecap: round; stroke-linejoin: round; opacity: 0.55; }
+.kw-weg { fill: none; stroke: color-mix(in srgb, #f2c230 70%, var(--paneel)); stroke-width: 6; stroke-linecap: round; stroke-linejoin: round; }
+.kw-punt { fill: var(--paneel); stroke: var(--inkt); stroke-width: 2.5; }
+.kw-naam { fill: var(--inkt); font-size: 15px; font-weight: 700; paint-order: stroke; stroke: var(--paneel); stroke-width: 4px; stroke-linejoin: round; }
+
+.kw-touw { fill: none; stroke: var(--rood); stroke-width: 2.6; stroke-linecap: round; stroke-linejoin: round; }
+.kw-knoop { fill: var(--rood); }
+.kw-cursor path { fill: none; stroke: var(--blauw); stroke-width: 2.5; }
+.kw-echt { stroke: var(--accent); stroke-width: 3; stroke-dasharray: 6 4; }
+
+.kw-liniaal { fill: var(--zacht); stroke: var(--lijn-sterk); }
+.kw-streep { stroke: var(--inkt); stroke-width: 1.1; }
+.kw-streep.dun { stroke-width: 0.6; }
+.kw-cijfer { fill: var(--inkt); font-size: 11px; font-variant-numeric: tabular-nums; }
+.kw-klein { fill: var(--stil); font-size: 10px; }
+
+.kw-antwoord[hidden] { display: none; }
+.kw-antwoord { display: flex; flex-direction: column; gap: 10px; }
+.kw-velden { display: grid; gap: 10px; }
+@container (min-width: 420px) { .kw-velden { grid-template-columns: repeat(2, minmax(0, 1fr)); } }
+.kw-getal { font-variant-numeric: tabular-nums; }
+.kw-uitleg { color: var(--stil); font-size: 14px; }
+.kw-uitleg:empty { display: none; }
+.doe-kronkelweg .knop-rij[hidden] { display: none; }
+
+/* on a phone the map is small: larger numbers and letters, so they stay readable */
+@container (max-width: 460px) {
+  .kw-cijfer { font-size: 20px; }
+  .kw-klein { font-size: 14px; }
+  .kw-naam { font-size: 26px; }
+  .kw-schaal { font-size: 19px; }
+}

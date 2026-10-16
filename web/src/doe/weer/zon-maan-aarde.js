@@ -1,6 +1,7 @@
 // Zon, maan en aarde: the orbit of the moon seen from above, the sun far away on the right (as in the drawing
 // maanfasen). A question asks for a situation: a solar eclipse, a lunar eclipse, spring tide, neap tide, or a phase.
-// Tap (or choose with Tab and Enter) the place of the moon. Blad getijden and blad verduisteringen.
+// Tap (or choose with Tab and Enter) the place of the moon. Blad getijden and blad verduisteringen: `over` ('getij'
+// or 'verduistering') leaves out the questions of the other blad; the phases are asked on both.
 import { h } from '../../dom.js';
 import { pol, s } from '../kompasdelen.js';
 import '../vorm.css';
@@ -13,13 +14,13 @@ const hoek = (i) => 90 - i * 45;                                  // degrees clo
 const WAAR = ['rechts, tussen de aarde en de zon', 'rechtsboven', 'boven', 'linksboven', 'links, aan de andere kant van de aarde', 'linksonder', 'onder', 'rechtsonder'];
 
 const VRAGEN = [
-  { vraag: 'Waar staat de maan bij een zonsverduistering?', goed: [0],
+  { over: 'verduistering', vraag: 'Waar staat de maan bij een zonsverduistering?', goed: [0],
     uitleg: 'Bij nieuwe maan staat de maan tussen de zon en de aarde. Staan ze precies op één lijn, dan valt de schaduw van de maan op de aarde.' },
-  { vraag: 'Waar staat de maan bij een maansverduistering?', goed: [4],
+  { over: 'verduistering', vraag: 'Waar staat de maan bij een maansverduistering?', goed: [4],
     uitleg: 'Bij volle maan staat de aarde tussen de zon en de maan. Staan ze precies op één lijn, dan schuift de maan door de schaduw van de aarde.' },
-  { vraag: 'Waar kan de maan staan bij springtij? (Er zijn twee goede plekken.)', goed: [0, 4],
-    uitleg: 'Springtij komt bij nieuwe én bij volle maan: zon, maan en aarde op één lijn, zodat zon en maan samen trekken.' },
-  { vraag: 'Waar kan de maan staan bij doodtij? (Er zijn twee goede plekken.)', goed: [2, 6],
+  { over: 'getij', vraag: 'Waar kan de maan staan bij springtij? (Er zijn twee goede plekken.)', goed: [0, 4],
+    uitleg: 'Springtij hoort bij nieuwe én bij volle maan: zon, maan en aarde op één lijn, zodat zon en maan samen trekken. Het hoogste water komt ruim twee dagen later.' },
+  { over: 'getij', vraag: 'Waar kan de maan staan bij doodtij? (Er zijn twee goede plekken.)', goed: [2, 6],
     uitleg: 'Doodtij komt bij eerste en laatste kwartier: de maan staat haaks op de zon, zodat ze elkaar tegenwerken.' },
   { vraag: 'Waar staat de maan als je hem de hele nacht als volle maan ziet?', goed: [4],
     uitleg: 'Volle maan: de maan staat tegenover de zon, dus je kijkt tegen de hele verlichte kant aan.' },
@@ -29,7 +30,8 @@ const VRAGEN = [
     uitleg: 'Laatste kwartier: nog een kwart rondje te gaan tot de volgende nieuwe maan.' },
 ];
 
-export default function zonMaanAarde() {
+export default function zonMaanAarde({ over = null } = {}) {
+  const vragen = over ? VRAGEN.filter((v) => !v.over || v.over === over) : VRAGEN;
   let volgorde = []; let nu = null; let gedaan = 0; let goedTeller = 0; let klaar = false;
 
   const svg = s('svg', { viewBox: '0 0 320 260', class: 'zma-svg', role: 'group', 'aria-label': 'De baan van de maan om de aarde, van bovenaf. De zon staat ver weg rechts.' });
@@ -59,7 +61,7 @@ export default function zonMaanAarde() {
   const verder = h('button.knop.klein', { type: 'button', hidden: true, onclick: volgende }, 'Volgende vraag');
 
   function volgende() {
-    if (!volgorde.length) volgorde = [...VRAGEN].sort(() => Math.random() - 0.5);
+    if (!volgorde.length) volgorde = [...vragen].sort(() => Math.random() - 0.5);
     nu = volgorde.pop(); klaar = false;
     vraag.textContent = nu.vraag; melding.textContent = ''; melding.classList.remove('fout');
     manen.forEach((m) => m.classList.remove('goed', 'fout'));

@@ -123,7 +123,7 @@ export default [
     ],
     naar: [{ blad: 'semafoor' }] },
   { id: 'semafoor-procedure', naam: 'Semafoor: een bericht seinen', ook: ['attentie', 'begrepen', 'foutteken'], groep: 'semafoor', bron: 'NAV §4b (TSA, IMP-Sein)',
-    doe: 'semafoor-woord',
+    doe: 'semafoor-bericht',
     uitleg: [
       'Zo gaat een bericht in semafoor:',
       '- De seiner vraagt aandacht: hij beweegt beide vlaggen steeds van schuin omhoog naar schuin omlaag en terug.',
@@ -152,10 +152,10 @@ export default [
     naar: [{ blad: 'cijferwimpels' }, { blad: 'noodseinen-water' }, { blad: 'spelalfabet' }] },
   { id: 'cijferwimpels', naam: 'Cijferwimpels en vervangwimpels', ook: ['onderscheidingswimpel', 'vervanger', 'wimpels'], groep: 'vlaggen', bron: 'VLET',
     plaatje: 'cijferwimpels',
-    doe: 'seinvlaggen-spellen',
+    doe: 'seinvlaggen-cijfers',
     uitleg: [
       'Naast de lettervlaggen zijn er tien wimpels voor de cijfers 0 tot en met 9. Ze zijn smal en lopen taps toe.',
-      'Aan boord heb je van elke vlag er maar één. Komt in een sein een letter twee keer voor, dan hang je een vervangwimpel: de eerste vervangwimpel herhaalt de bovenste vlag, de tweede de tweede vlag van boven, de derde de derde.',
+      'Aan boord heb je van elke vlag er maar één. Komt in een sein een letter of cijfer twee keer voor, dan hang je een vervangwimpel. Die herhaalt een vlag van dezelfde soort (letters of cijfers) die er direct boven hangt: de eerste vervangwimpel de bovenste, de tweede de tweede van boven, de derde de derde. Elke vervangwimpel mag maar één keer in een sein. Het getal 1100 is dus: 1, eerste vervangwimpel, 0, derde vervangwimpel.',
       'Met de rood-witte onderscheidingswimpel antwoord je: halverwege de lijn betekent ‘ik zie je sein’, helemaal boven ‘ik heb het begrepen’.',
     ],
     naar: [{ blad: 'seinvlaggen' }] },
