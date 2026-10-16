@@ -30,7 +30,7 @@
 .k3-plaat-rand { fill: none; stroke: #111518; stroke-width: 1.5; }
 .k3-plaat-punt { fill: #d9f5c8; stroke: #111518; stroke-width: 1; }
 
-.k3-spiegel, .k3-plaatkompas, .k3-boven { font-family: system-ui, sans-serif; }
+.k3-spiegel, .k3-plaatkompas, .k3-doosje { font-family: system-ui, sans-serif; }
 /* what you turn: the top of the housing (spiegel) or the plaatkompas itself */
 .k3-draaibaar { pointer-events: auto; touch-action: none; cursor: grab; border-radius: 12px; }
 .k3-draaibaar.sleept { cursor: grabbing; }
@@ -73,15 +73,16 @@
 .k3-getal.klein { font-size: 10px; }
 .k3-orientatiepijl { fill: none; stroke: #d1141b; stroke-width: 2.2; stroke-linejoin: round; }
 
-/* the top of the housing of the spiegelpeilkompas: the control, with ↺ ↻ beside it */
+/* the open spiegelpeilkompas from above: the control, with ↺ ↻ beside it */
 .k3-draai { display: flex; align-items: center; gap: 10px; }
-.k3-draai-midden { display: flex; flex-direction: column; align-items: center; gap: 2px; }
-.k3-boven { display: block; width: 148px; height: auto; }
-.k3-boven-greep { fill: #2e3438; }
-.k3-boven-rib { stroke: #5b656c; stroke-width: 1.4; }
-.k3-boven-vlak { fill: #1f2427; }
-.k3-boven-streep { stroke: #e9e6dc; stroke-width: 1.2; }
-.k3-boven-getal { fill: #e9e6dc; font-size: 11px; font-weight: 600; }
-.k3-boven-midden { fill: #3a4247; stroke: #15181a; stroke-width: 1; }
-.k3-boven-pijl { fill: none; stroke: #c9d0d4; stroke-width: 2.4; stroke-linecap: round; }
-.k3-boven-index { fill: var(--inkt); }
+.k3-draai-midden { display: flex; flex-direction: column; align-items: center; gap: 2px; text-align: center; }
+.k3-doosje { display: block; width: 176px; height: auto; }
+.k3-doos { fill: #2e3438; stroke: #15181a; stroke-width: 1.5; }
+.k3-doos-lijn { stroke: #d9f5c8; stroke-width: 2; stroke-linecap: round; opacity: 0.8; }
+.k3-schuif { fill: #3a4247; stroke: #15181a; stroke-width: 1.5; }
+.k3-wand { fill: rgb(46 52 56 / 0.5); stroke: #15181a; stroke-width: 1; }
+.k3-eind { fill: #2e3438; stroke: #15181a; stroke-width: 1.5; }
+.k3-doos-midden { fill: #3a4247; stroke: #15181a; stroke-width: 1; }
+.k3-doos-pijl { fill: none; stroke: #c9d0d4; stroke-width: 3; stroke-linecap: round; }
+.k3-rib-vlak { fill: #3d454b; }
+.k3-rib { stroke: #15181a; stroke-width: 1.4; }

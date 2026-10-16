@@ -2,7 +2,8 @@
 // (landschap3d.js, or the flat landschap2d.js without WebGL) with the four landmarks of a field (veld.js), and over
 // it the compass as you hold it (kompasbeeld.js):
 // - 'spiegel': the spiegelpeilkompas at eye height, the sight notch on the horizon, the mirror under it. You turn the
-//   housing on its top (a control under the view: the ring as your fingers feel it); the mirror follows.
+//   housing by its ribbed edge, where it sticks out of the slide (a control under the view: the open compass seen
+//   from above); the mirror follows.
 // - 'plaat': the plaatkompas held flat in front of you, the direction arrow pointing into the landscape; you turn
 //   the housing on the compass itself.
 // Drag the landscape (or ← → on it, or ◀ ▶) to turn yourself. The needle keeps pointing north, swings a little and
@@ -10,7 +11,7 @@
 import { h } from '../../dom.js';
 import { BAKENS, inVizier, zijde, graden } from './veld.js';
 import { maakLandschap2d } from './landschap2d.js';
-import { tekenEindplaat, tekenSpiegel, tekenBovenkant, tekenPlaatkompas } from './kompasbeeld.js';
+import { tekenEindplaat, tekenSpiegel, tekenDoosje, tekenPlaatkompas } from './kompasbeeld.js';
 import '../vorm.css';
 import './schieten.css';
 
@@ -27,7 +28,7 @@ export const SOORT = {
     index: 'bij de index, bovenaan in de spiegel',
     kijkVraag: 'Wat zie je midden in de inkeping?',
     kijkNog: 'Kijk nog eens door de inkeping',
-    hulp: 'Je mikt over de inkeping en ziet tegelijk in de spiegel het huis met de naald. Het huis draai je bovenop het kompas, met je vingers; in de spiegel draait het mee. De spiegel laat de onderkant van het huis zien en keert dat nog eens om: zo lees je de schaal gewoon, met de klok mee, net als van bovenaf. De cijfers zijn tientallen: 12 is 120°. Elk streepje is 2°.',
+    hulp: 'Je mikt over de inkeping en ziet tegelijk in de spiegel het huis met de naald, schuin van onderen. Het huis draai je met je duim aan de ribbels, waar de ring aan de zijkant uit het kompas steekt; in de spiegel draait de ring mee. Duw je de ribbels rechts van je af, dan komt er een hoger getal bij de index. In de spiegel zie je de ring zelf, en die lees je gewoon: met de klok mee, de kant van je doel bovenaan. De cijfers zijn tientallen: 12 is 120°. Elk streepje is 2°.',
   },
   plaat: {
     tol: { richt: 4, naald: 3, lees: 3, kijk: 8 },
@@ -98,15 +99,15 @@ export function maakKijker({ kompas = 'spiegel', veld, stil = false, opDraai = (
   const naamLabels = [];
   const zicht = h('div.k3-zicht', { role: 'slider', tabindex: '0', 'aria-valuemin': '0', 'aria-valuemax': '359',
     'aria-label': 'Jouw kijkrichting. Sleep over het landschap of gebruik pijltjes links en rechts om je te draaien.' });
-  let kompasBox; let schalen; let naald; let draaiEl; let draaiMidden; let spiegelSvg = null; let boven = null;
+  let kompasBox; let schalen; let naald; let draaiEl; let draaiMidden; let spiegelSvg = null; let doosje = null;
   if (kompas === 'spiegel') {
     const sp = tekenSpiegel(id);
-    boven = tekenBovenkant();
+    doosje = tekenDoosje();
     spiegelSvg = sp.svg;
     kompasBox = h('div.k3-kompas.spiegel', tekenEindplaat(), sp.svg);
-    schalen = [[sp.ring, sp.cx, sp.cy], [boven.ring, boven.cx, boven.cy]];
+    schalen = [[sp.ring, sp.cx, sp.cy], [doosje.ring, doosje.cx, doosje.cy]];
     naald = [sp.naald, sp.cx, sp.cy];
-    draaiEl = boven.svg; draaiMidden = boven;
+    draaiEl = doosje.svg; draaiMidden = { ...doosje.draaiMidden, vak: doosje.vak };
   } else {
     const pk = tekenPlaatkompas();
     kompasBox = h('div.k3-kompas.plaat', pk.svg);
@@ -125,7 +126,7 @@ export function maakKijker({ kompas = 'spiegel', veld, stil = false, opDraai = (
   const mee = houd('Draai het huis met de klok mee', '↻', () => zetHuis(huis - 1));
   const bediening = kompas === 'spiegel'
     ? h('div.k3-bediening', jij,
-      h('div.k3-draai', { role: 'group', 'aria-label': 'Draai het huis' }, tegen, h('div.k3-draai-midden', boven.svg, h('span.k3-groep-label', 'Draai het huis')), mee))
+      h('div.k3-draai', { role: 'group', 'aria-label': 'Draai het huis' }, tegen, h('div.k3-draai-midden', doosje.svg, h('span.k3-groep-label', 'Draai het huis aan de ribbels')), mee))
     : h('div.k3-bediening', jij, h('div.k3-groep', { role: 'group', 'aria-label': 'Draai het huis' }, h('span.k3-groep-label', 'Huis'), tegen, mee));
 
   // -- the state on screen
@@ -222,7 +223,7 @@ export function maakKijker({ kompas = 'spiegel', veld, stil = false, opDraai = (
     const sc = kompasB / 240;
     const lucht = Math.round(Math.min(200, Math.max(110, breed * 0.3)));
     const top = kompas === 'spiegel' ? lucht - 14 * sc : lucht + 16 * sc;
-    const hoog = Math.round(top + (kompas === 'spiegel' ? 50 + 252 : 330) * sc + 6);
+    const hoog = Math.round(top + (kompas === 'spiegel' ? 50 + 196 : 330) * sc + 6);
     const hfov = breed < 520 ? 54 : 64;
     if (!altijd && breed === maten.breed && hoog === maten.hoog) return;
     maten = { breed, hoog, lucht, hfov };
