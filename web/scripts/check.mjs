@@ -111,7 +111,11 @@ const gebruikt = (veld) => new Set(BLADEN.map((b) => b[veld]).filter(Boolean));
 const doeGebruikt = gebruikt('doe');
 const plaatjeGebruikt = new Set([...gebruikt('plaatje'), ...BLADEN.flatMap((b) => (b.soorten ?? []).map((x) => x.plaatje))]);
 const beeldGebruikt = new Set(BLADEN.flatMap((b) => (b.beelden ?? []).map((x) => x.beeld)));
-for (const naam of Object.keys(DOE)) if (!doeGebruikt.has(naam)) opmerkingen.push(`doe ${naam}: geen blad gebruikt het`);
+// a piece another piece opens inside itself (`binnen`) is used when that one is
+for (const [naam, x] of Object.entries(DOE)) if (x.binnen && !DOE[x.binnen]) fout(`doe ${naam}`, `binnen een doe dat er niet is: ${x.binnen}`);
+for (const [naam, x] of Object.entries(DOE)) {
+  if (!doeGebruikt.has(naam) && !doeGebruikt.has(x.binnen)) opmerkingen.push(`doe ${naam}: geen blad gebruikt het${x.binnen ? ` (en ook ${x.binnen} niet)` : ''}`);
+}
 for (const naam of Object.keys(PLAATJES)) if (!plaatjeGebruikt.has(naam)) opmerkingen.push(`plaatje ${naam}: geen blad gebruikt het`);
 for (const naam of Object.keys(BEELDEN)) if (!beeldGebruikt.has(naam)) opmerkingen.push(`beeld ${naam}: geen blad gebruikt het`);
 

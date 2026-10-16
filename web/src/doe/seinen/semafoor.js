@@ -53,7 +53,7 @@ export default function semafoor({ stelsel = 'semafoor', modus: beginModus = 'se
   let modus = beginModus;
   // semafoor: an angle per arm; vreede: a stand (0-4) per arm. links = the arm on your left.
   const stand = vreede ? { links: 0, rechts: 0 } : { links: 180, rechts: 180 };
-  let woord = null;              // { tekst, i } in Sein een woord
+  let woord = null;              // { tekst, i, vorig } in Sein een woord
   let bericht = null;            // Sein een bericht: see nieuwBericht()
   let berichtFout = Math.random() < 0.5 ? 'letter' : 'woord';   // the mistake to plant; takes turns
   let speelt = 0;                // the answer being played (a newer number stops an older one)
@@ -219,7 +219,7 @@ export default function semafoor({ stelsel = 'semafoor', modus: beginModus = 'se
     let tekst = (eigenWoord ?? '').normalize('NFD').replace(/[^A-Za-z]/g, '').toUpperCase().slice(0, 12);
     if (vreede) tekst = tekst.replace(/X/g, 'KS');
     if (!tekst) do tekst = willekeurig(lijst); while (tekst === woord?.tekst);
-    woord = { tekst, i: 0 };
+    woord = { tekst, i: 0, vorig: null };
     eigen.value = '';
     hint.textContent = '';
     woordMelding.textContent = `Sein ${tekst}. Begin met de ${tekst[0]}.`;
@@ -233,12 +233,23 @@ export default function semafoor({ stelsel = 'semafoor', modus: beginModus = 'se
   function toonWoord() {
     woordRij.replaceChildren(...[...woord.tekst].map((l, i) => h('span', { class: i < woord.i ? 'klaar' : i === woord.i ? 'nu' : '' }, l)));
   }
+  /**
+   * A letter counts when the arms arrive at it, as in Sein een bericht: letting go of a drag, or a button that
+   * changes nothing, is not a new sign. So a double letter (VUUR, KNOOP) is the same with the hand and with the
+   * buttons: the arms go somewhere else and come back.
+   */
   function controleerWoord(l) {
+    if (l === woord.vorig) return;
+    woord.vorig = l;
     if (woord.i >= woord.tekst.length || l !== doel()) return;
     woord.i++;
     hint.textContent = '';
     toonWoord();
-    woordMelding.textContent = woord.i >= woord.tekst.length ? `Goed! Je hebt ${woord.tekst} geseind.` : `Goed! Nu de ${woord.tekst[woord.i]}.`;
+    if (woord.i >= woord.tekst.length) { woordMelding.textContent = `Goed! Je hebt ${woord.tekst} geseind.`; return; }
+    const volgend = woord.tekst[woord.i];
+    woordMelding.textContent = doel() !== l ? `Goed! Nu de ${volgend}.`
+      : vreede ? `Goed! Nu nog een ${volgend}: ga eerst terug naar rust, dan weer naar de ${volgend}.`
+        : `Goed! Nu nog een ${volgend}: draai een arm even weg en weer terug, zodat de ontvanger twee tekens ziet.`;
   }
   function toonHint() {
     if (!woord || woord.i >= woord.tekst.length) return;
@@ -250,6 +261,7 @@ export default function semafoor({ stelsel = 'semafoor', modus: beginModus = 'se
       const a = armen(SEMAFOOR[l]);
       hint.textContent = `${l}: één vlag ${inWoorden(a.links)}, de andere ${inWoorden(a.rechts)}.`;
     }
+    if (woord.i > 0 && woord.vorig === doel()) hint.textContent += vreede ? ' Je staat er al: ga eerst terug naar rust en dan weer hierheen.' : ' Je staat er al: draai een arm even weg en weer terug.';
   }
 
   // -- Sein een bericht
@@ -362,6 +374,7 @@ export default function semafoor({ stelsel = 'semafoor', modus: beginModus = 'se
     anderFiguur.setAttribute('aria-label', 'De ander seint C.');
     anderTekst.textContent = 'Hij seint C: begrepen.';
     meld('Je bericht is over. De ontvanger seint C: hij heeft het begrepen. Nu seint hij jou een antwoord.');
+    ander.hidden = false;          // before focus: a button in a hidden block takes no focus
     ontvang.hidden = false;
     ontvang.focus();
   }

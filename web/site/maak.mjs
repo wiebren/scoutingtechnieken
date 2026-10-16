@@ -12,7 +12,8 @@
 //   (src/style.css .plaatje and src/plaatjes/*.css), so the drawings here look as they do in the app;
 // - between <!-- maak:soort arg --> and <!-- /maak -->: the header (kop), the footer (voet), the list of the
 //   handleiding (handleiding) and the way on (volgende), a drawing (plaatje naam), an icon (icoon naam), the
-//   categories (categorieen, mockup) and counts (aantal, oefeningen);
+//   categories (categorieen, mockup) and counts (aantal: the bladen, doen: the pieces on them,
+//   oefeningen: the exercises in Oefenen);
 // - every link into the app: <a data-app="#/zoeken"> gets href = the way up to web/site/ + APP + "#/zoeken".
 import { mkdirSync, readdirSync, readFileSync, statSync, writeFileSync } from 'node:fs';
 import { dirname, join, relative, resolve } from 'node:path';
@@ -147,6 +148,11 @@ function plaatje(naam) {
   return PLAATJES[naam]();
 }
 
+/** The pieces the bladen show (src/doe/), and of those the exercises that Oefenen lists: the ones without `bekijk`
+ *  (src/oefenen.js). */
+const stukken = [...new Set(BLADEN.map((b) => b.doe).filter((d) => d && DOE[d]))];
+const oefeningen = stukken.filter((d) => !DOE[d].bekijk);
+
 const MAKERS = {
   kop: (_, b, d) => kop(b, d),
   voet: (_, b, d) => voet(b, d),
@@ -157,7 +163,8 @@ const MAKERS = {
   categorieen,
   mockup,
   aantal: () => `ruim ${omlaag(BLADEN.length)}`,
-  oefeningen: () => `ruim ${omlaag10(Object.keys(DOE).length)}`,
+  oefeningen: () => `ruim ${omlaag10(oefeningen.length)}`,
+  doen: () => `ruim ${omlaag10(stukken.length)}`,
 };
 
 // -- every page

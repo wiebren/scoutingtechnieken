@@ -56,7 +56,7 @@
 .k3-bediening { display: flex; flex-wrap: wrap; justify-content: center; gap: 8px 22px; }
 .k3-groep { display: flex; align-items: center; gap: 6px; }
 .k3-groep-label { color: var(--stil); font-size: 14px; font-weight: 600; }
-.k3-rond { min-width: 48px; min-height: 44px; padding: 0 10px; font-size: 20px; line-height: 1; touch-action: manipulation; user-select: none; -webkit-user-select: none; }
+.knop.klein.k3-rond { min-width: 48px; min-height: 44px; padding: 0 10px; font-size: 20px; line-height: 1; touch-action: manipulation; user-select: none; -webkit-user-select: none; }
 
 .k3-antwoord { display: flex; flex-wrap: wrap; align-items: flex-end; gap: 8px 10px; }
 .k3-antwoord[hidden] { display: none; }

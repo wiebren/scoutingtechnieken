@@ -11,6 +11,8 @@
 
 .kd-raak { fill: transparent; stroke: transparent; pointer-events: all; }
 .kd-deel { cursor: pointer; outline: none; }
+/* not the app's square focus ring ([tabindex]:focus-visible): on a turned part it is a tilted box; the glow shows focus */
+.kd-svg .kd-deel:focus-visible { outline: none; }
 .kd-deel:hover > :not(.kd-raak), .kd-deel:focus-visible > :not(.kd-raak) { filter: drop-shadow(0 0 2px var(--blauw)) drop-shadow(0 0 1px var(--blauw)); }
 .kd-deel:focus-visible > .kd-raak { stroke: var(--blauw); stroke-width: 1.5; stroke-dasharray: 3 2; }
 .kd-deel.goed > :not(.kd-raak) { filter: drop-shadow(0 0 3px var(--accent)) drop-shadow(0 0 1px var(--accent)); }

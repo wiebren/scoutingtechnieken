@@ -407,7 +407,7 @@ export default [
     uitleg: [
       'Twee lijnen op de kaart; waar ze elkaar snijden, ligt de post.',
       '- Met vier coördinaten: zoek w, x, y en z op, trek een lijn van w naar x en een van y naar z.',
-      '- Met twee coördinaten en twee koersen: trek vanaf elk punt een lijn in de gegeven richting.',
+      '- Met twee coördinaten en twee koersen: trek vanaf elk punt een lijn in de gegeven richting. Die meet je vanaf het kaartnoorden: langs de staande kilometerlijnen omhoog is 0°.',
       'Werk netjes met een scherp potlood en een liniaal: een lijn die een millimeter scheef staat, kost op 1:25.000 al snel tientallen meters.',
     ],
     letOp: 'Kruispeiling heet ook de manier om je eigen plek te vinden met twee kompaspeilingen naar herkenbare punten. Dat staat bij achterwaartse insnijding.',

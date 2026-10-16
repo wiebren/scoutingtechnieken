@@ -34,7 +34,7 @@ export function niveauMenu() {
   const samenvatting = h('p.niveau-nu');
   const pop = h('div.niveau-pop', { id: 'niveau-keuze', popover: 'auto', role: 'dialog', 'aria-labelledby': 'niveau-pop-titel' },
     h('h2', { id: 'niveau-pop-titel' }, 'Welk niveau?'),
-    h('p.niveau-uitleg', 'Tik een niveau aan. Dan zie je alleen wat bij dat niveau van de insignes hoort. Extra is alles wat in geen insigne zit. Niets aangetikt? Dan zie je alles.'),
+    h('p.niveau-uitleg', 'Tik een of meer niveaus aan. Dan zie je alleen wat bij die niveaus van de insignes hoort. Extra is alles wat in geen insigne zit. Niets aangetikt? Dan zie je alles.'),
     schakelaars(), samenvatting);
   const zij = h('section.niveau-zij', { 'aria-labelledby': 'niveau-zij-titel' },
     h('h2.niveau-zij-kop', { id: 'niveau-zij-titel' }, 'Niveau'), schakelaars());

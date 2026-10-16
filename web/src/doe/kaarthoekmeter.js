@@ -193,7 +193,13 @@ export default function kaarthoekmeter() {
   function kijkNa() {
     if (klaar) return;
     const gx = leesGetal(xVeld.value); const gy = leesGetal(yVeld.value);
-    if (Number.isNaN(gx) && Number.isNaN(gy)) { uitkomst.className = 'kh-uitkomst fout'; uitkomst.textContent = 'Schrijf eerst x en y op.'; xVeld.focus(); return; }
+    // an empty field is not a wrong answer yet (Enter in x would otherwise judge before y is typed): ask for it
+    const leeg = [xVeld, yVeld].find((v) => !v.value.trim());
+    if (leeg) {
+      uitkomst.className = 'kh-uitkomst';
+      uitkomst.textContent = leeg === yVeld && xVeld.value.trim() ? 'Schrijf nu ook y op.' : 'Schrijf eerst x en y op.';
+      leeg.focus(); return;
+    }
     klaar = true; gevraagd++;
     const ox = oordeel(doel.x, gx, 'x'); const oy = oordeel(doel.y, gy, 'y');
     const om = !ox.goed && !oy.goed && Math.abs(gx - doel.y) <= MARGE && Math.abs(gy - doel.x) <= MARGE;

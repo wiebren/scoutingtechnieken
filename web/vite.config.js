@@ -16,11 +16,13 @@ const filesIn = (dir) => readdirSync(dir).flatMap((name) => {
 /** The service worker keeps everything the app needs, so it also starts without internet - in the woods, on a
  *  hike. Its version is a hash of all of that: any change to the build makes another sw.js, and the app takes
  *  it in (src/main.js offers to start again with it). As in vlet (web/demo/sw.js). */
+let outDir = resolve(here, 'dist');   // build.outDir, also when given on the command line (--outDir)
 const serviceWorker = {
   name: 'scoutingtechnieken-sw',
   apply: 'build',
+  configResolved(config) { outDir = resolve(config.root, config.build.outDir); },
   closeBundle() {
-    const out = resolve(here, 'dist');
+    const out = outDir;
     const files = filesIn(out).filter((f) => f !== 'sw.js' && !f.endsWith('.map')).sort();
     const hash = createHash('sha256');
     for (const file of files) hash.update(file).update(readFileSync(join(out, file)));

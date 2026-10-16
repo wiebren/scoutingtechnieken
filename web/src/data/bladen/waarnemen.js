@@ -175,7 +175,7 @@ export default [
     soorten: [
       { naam: 'Situatieschets', plaatje: 'situatieschets', blad: 'situatieschets', bij: 'Van bovenaf: hoe kom je ergens? Niet op schaal.' },
       { naam: 'Routeschets', plaatje: 'routeschets', blad: 'routeschets', bij: 'Een verslag van een gelopen route, op een formulier met kolommen.' },
-      { naam: 'Horizonschets', plaatje: 'soort-horizonschets', blad: 'horizonschets', bij: 'Alleen de lijn van het landschap tegen de lucht, donker ingekleurd.' },
+      { naam: 'Horizonschets', plaatje: 'soort-horizonschets', blad: 'horizonschets', bij: 'Alleen de lijn van het landschap tegen de lucht, ingekleurd.' },
       { naam: 'Recognografische schets', plaatje: 'soort-recognografische-schets', blad: 'recognografische-schets', bij: 'Het landschap met alles wat blijft staan, zoals wegen, hekken en huizen.' },
       { naam: 'Panoramaschets', plaatje: 'soort-panoramaschets', blad: 'panoramaschets', bij: 'Alles wat je ziet, in kleur: ook de koeien, de fietser en de wolken.' },
     ],

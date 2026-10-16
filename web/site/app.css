@@ -176,6 +176,18 @@
 /* src/plaatjes/gereedschap.css */
 /* Classes for the drawings of gereedschap (./gereedschap.js): they share the vk-* classes in ./vuur.css. */
 
+/* src/plaatjes/kaart.css */
+/* The colours of the small kaart and kompas drawings (./kaart.js) that style.css does not have. */
+.plaatje .kk-huid { fill: #e9b98f; stroke: #a8745a; stroke-width: 1; }
+.plaatje .kk-nagel { fill: #f6dcc6; stroke: #a8745a; stroke-width: 0.8; }
+.plaatje .kk-plaat { fill: color-mix(in srgb, var(--blauw) 7%, transparent); }
+.plaatje .kk-spiegel { fill: color-mix(in srgb, var(--blauw) 22%, var(--zacht)); }
+.plaatje .kk-spiegel-rand { fill: none; stroke: color-mix(in srgb, var(--blauw) 45%, var(--zacht)); stroke-width: 6; stroke-linecap: round; }
+.plaatje .kk-glans { fill: none; stroke: rgb(255 255 255 / 0.7); stroke-width: 1.6; stroke-linecap: round; }
+.plaatje .kk-zon { fill: #ffd84a; stroke: #e09400; stroke-width: 1.2; }
+.plaatje .kk-maan { fill: #f4ebc3; stroke: #b8a35a; stroke-width: 1; }
+.plaatje .kk-stok { fill: #a0703c; }
+
 /* src/plaatjes/kamperen.css */
 /* Classes for the drawings of kamperen (./kamperen.js), next to .plaatje in src/style.css. Mixed from the theme
    colours, so they follow the dark theme by themselves. */
@@ -902,6 +914,16 @@
 .plaatje .tekst.wn-op-zand { fill: #3b2d16; }
 .plaatje .lijn.wn-zandlijn { stroke: #3b2d16; }
 .plaatje .lijn.wn-zoek { stroke: #0b6b35; stroke-width: 2; }
+/* the landscape sketches (soorten-schetsen): the skyline filled dark, and the colours of the panoramaschets */
+.plaatje .wn-silhouet { fill: var(--inkt); }
+.plaatje .wn-silhouet-lijn { stroke: var(--inkt); fill: none; }
+.plaatje .wn-boom { fill: color-mix(in srgb, var(--fam-natuur) 55%, var(--paneel)); stroke: var(--fam-natuur); stroke-width: 0.8; }
+.plaatje .wn-dak { fill: #b5523b; }
+.plaatje .wn-wolk { fill: #ffffff; stroke: #c3ccd4; stroke-width: 0.8; }
+.plaatje .wn-bord { fill: #2f6fb5; }
+.plaatje .wn-koe { fill: #ffffff; stroke: #333; stroke-width: 0.7; }
+.plaatje .wn-vlek { fill: #333; }
+.plaatje .wn-schaduw { fill: rgb(0 0 0 / 0.25); }
 
 /* src/plaatjes/weer.css */
 /* Classes for the drawings of weer (./weer.js), next to .plaatje in src/style.css. Mixed from the colour tokens, so

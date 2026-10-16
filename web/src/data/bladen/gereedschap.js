@@ -318,7 +318,7 @@ export default [
       '- „Het is personen die de leeftijd van achttien jaren nog niet hebben bereikt verboden een wapen van categorie IV voorhanden te hebben.”',
     ],
     letOp: 'Je gemeente kan op sommige plekken alle messen verbieden (in de APV). Meestal geldt zo\'n verbod niet voor een mes dat zo is ingepakt dat je het niet meteen kunt gebruiken. In juni 2026 vroeg de Tweede Kamer het kabinet om een landelijk verbod op messen dragen op straat; dat is er nog niet (oktober 2026). Kijk naar de regels van nu, en neem je mes alleen mee als je het nodig hebt.',
-    verwijs: [{ naam: 'Wet wapens en munitie (wetten.overheid.nl)', url: 'https://wetten.overheid.nl/BWBR0008804' }, { naam: 'Rijksoverheid: wapens en munitie', url: 'https://www.rijksoverheid.nl/onderwerpen/wapens-en-munitie' }, { naam: 'Scouting Nederland: messenverbod in de APV', url: 'https://www.scouting.nl/updates/messenverbod-model-apv-voor-gemeenten' }],
+    verwijs: [{ naam: 'Wet wapens en munitie (wetten.overheid.nl)', url: 'https://wetten.overheid.nl/BWBR0008804' }, { naam: 'Scouting Nederland: messenverbod in de APV', url: 'https://www.scouting.nl/updates/messenverbod-model-apv-voor-gemeenten' }],
     naar: [{ blad: 'scouting-messen' }] },
   { id: 'scouting-messen', naam: 'Messen bij Scouting', ook: ['afspraken mes', 'ScoutShop'], groep: 'regels', letterlijk: true,
     bron: 'Scouting Nederland, infoblad Messen en de wapenwet', bronDatum: '2020',
@@ -336,7 +336,6 @@ export default [
     ],
     verwijs: [
       { naam: 'Scouting Nederland: Messen en de wapenwet (pdf)', url: 'https://www.scouting.nl/assets/uploads/doorzoekbareBestanden/06.Ondersteuning/Regelgeving/Messen_en_de_wapenwet-2020.pdf' },
-      { naam: 'Rijksoverheid: wapens en munitie', url: 'https://www.rijksoverheid.nl/onderwerpen/wapens-en-munitie' },
     ],
     naar: [{ blad: 'messenwet' }, { blad: 'messenlintje' }] },
   { id: 'regels-bijl-zaag', naam: 'Regels voor bijl en zaag', ook: ['kettingzaag', 'veiligheidsblad', 'hakken en zagen'], groep: 'regels', letterlijk: true,

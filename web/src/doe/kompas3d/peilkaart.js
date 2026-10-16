@@ -113,7 +113,7 @@ export default function peilkaart({ modus: start = 'twee', stil = false } = {}) 
     h('div.knop-rij',
       h('button.knop.klein', { type: 'button', onclick: () => nieuw() }, 'Opnieuw, ergens anders'),
       h('button.knop.klein', { type: 'button', onclick: () => { veld = maakVeld(1 + Math.floor(Math.random() * 99999)); kijker.zetVeld(veld); tekenKaart(); nieuw(); } }, 'Ander landschap')),
-    h('p.doe-stil.k3-hulp', 'Op de kaart doet de naald niet mee: je legt het kompas met de noordlijnen langs de blauwe noord-zuidlijnen. De lijn loopt van het baken naar jou, dus je zet de terugkoers uit: je peiling plus of min 180°.'));
+    h('p.doe-stil.k3-hulp', 'Op de kaart doet de naald niet mee: je legt het kompas met de noordlijnen langs de blauwe noord-zuidlijnen. De lijn loopt van het baken naar jou, dus je zet de terugkoers uit: je peiling plus of min 180°. Hier wijst de naald precies langs de noord-zuidlijnen; in het echt wijst hij in Nederland ongeveer 3° oostelijker (declinatie), en dat merk je over een paar honderd meter nauwelijks.'));
 
   // -- the map: roads, grid, landmarks; north up, y flipped
   function tekenKaart() {
@@ -185,7 +185,6 @@ export default function peilkaart({ modus: start = 'twee', stil = false } = {}) 
   svg.addEventListener('pointerdown', (e) => {
     if (e.button) return;
     const q = naarKaartPunt(e); if (!q) return;
-    if (fase === 'tik') { tik = q; cursor = { ...q }; tekenTik(); uitkomst(); return; }
     if (fase !== 'kaart' || !e.target.closest('.pk-kompas')) return;
     const m = huisMidden();
     const opHuis = afstand(q, m) < 72 * SCHAAL;
@@ -199,6 +198,12 @@ export default function peilkaart({ modus: start = 'twee', stil = false } = {}) 
     const a = hoek(sleep.opHuis ? huisMidden() : doel(), q);
     const d = zijde(a, sleep.hoek); sleep.hoek = a;
     if (sleep.opHuis) zetKaartHuis(kaartHuis - d); else zetPlaat(plaatHoek + d);
+  });
+  // the tap on a click, not on pointerdown: a finger that scrolls the page over the map places nothing
+  svg.addEventListener('click', (e) => {
+    if (fase !== 'tik') return;
+    const q = naarKaartPunt(e); if (!q) return;
+    tik = q; cursor = { ...q }; tekenTik(); uitkomst();
   });
   const laatLos = (e) => { if (sleep && e.pointerId === sleep.id) { sleep = null; svg.classList.remove('sleept'); } };
   svg.addEventListener('pointerup', laatLos);
@@ -215,7 +220,17 @@ export default function peilkaart({ modus: start = 'twee', stil = false } = {}) 
       else if (e.key === 'Enter' || e.key === ' ') { e.preventDefault(); plaatsCursor(); }
     }
   });
-  function plaatsCursor() { cursor ??= { x: vak.x0 + vak.w / 2, y: vak.y0 + vak.h / 2 }; tik = { ...cursor }; tekenTik(); uitkomst(); }
+  function plaatsCursor() {
+    if (fase !== 'tik') return;
+    if (!cursor) {
+      // nothing chosen yet: show the cross in the middle, rather than guess for the scout
+      cursor = { x: vak.x0 + vak.w / 2, y: vak.y0 + vak.h / 2 }; tekenTik();
+      zeg('Tik op de kaart waar je staat. Of schuif het kruisje met de pijltjes en druk op Enter.', false);
+      svg.focus({ preventScroll: true });
+      return;
+    }
+    tik = { ...cursor }; tekenTik(); uitkomst();
+  }
   function tekenTik() {
     const q = tik ?? cursor; tikLaag.replaceChildren();
     if (!q) return;
@@ -228,6 +243,14 @@ export default function peilkaart({ modus: start = 'twee', stil = false } = {}) 
   }
 
   /** A ray on the map from a landmark, in direction g, to the edge of the map. */
+  // where two drawn lines cross (from each landmark in the direction of the plate), or null when they hardly cross
+  function kruising(a, b) {
+    const da = [Math.sin(a.plaat * RAD), Math.cos(a.plaat * RAD)]; const db = [Math.sin(b.plaat * RAD), Math.cos(b.plaat * RAD)];
+    const n = da[0] * db[1] - da[1] * db[0];
+    if (Math.abs(n) < 0.2) return null;
+    const t = ((b.baken.x - a.baken.x) * db[1] - (b.baken.y - a.baken.y) * db[0]) / n;
+    return t > 0 ? { x: a.baken.x + t * da[0], y: a.baken.y + t * da[1] } : null;
+  }
   const straal = (b, g, klasse) => {
     const m = vak.w / 300; const l = 2 * Math.hypot(vak.w, vak.h);
     return s('path', { d: `M${p(b.x)} ${p(-b.y)}l${p(l * Math.sin(g * RAD))} ${p(-l * Math.cos(g * RAD))}`, class: klasse,
@@ -289,7 +312,7 @@ export default function peilkaart({ modus: start = 'twee', stil = false } = {}) 
     opdrachtRegel.textContent = 'Waar sta jij?';
     stappen.replaceChildren(h('li', modus === 'twee'
       ? 'Tik op de kaart waar de twee lijnen elkaar kruisen: daar sta jij.'
-      : 'Je staat op een kruispunt op je lijn. Tik op dat kruispunt. Kijk in het landschap als je twijfelt welke kant.'),
+      : 'Je staat op een kruispunt op je lijn. Tik op dat kruispunt.'),
     h('li', 'Met het toetsenbord: pijltjes verschuiven een kruisje, Enter zet het neer.'));
     svg.focus({ preventScroll: true });
   }
@@ -307,7 +330,7 @@ export default function peilkaart({ modus: start = 'twee', stil = false } = {}) 
     const scheef = zijde(m.plaat, m.kaartHuis);
     if (Math.abs(scheef) >= 170) uit.push('De oriëntatiepijl wees naar de onderkant van de kaart: dan draait je lijn een halve slag.');
     else if (Math.abs(scheef) > 3) uit.push(`Het kompas lag ${Math.round(Math.abs(scheef))}° scheef: de noordlijnen liepen niet gelijk met de noord-zuidlijnen van de kaart.`);
-    if (!uit.length) uit.push(`De lijn vanaf ${naam} wijkt ${Math.round(Math.abs(zijde(m.plaat, juist)))}° af.`);
+    if (!uit.length) uit.push(`De lijn vanaf ${naam} wijkt ${Math.round(Math.abs(zijde(m.plaat, juist)))}° af: ${naam} lag vanaf jouw plek op ${m.baken.peiling}°. Een paar graden bij het peilen en een paar op de kaart tellen samen op.`);
     return uit;
   }
 
@@ -318,12 +341,16 @@ export default function peilkaart({ modus: start = 'twee', stil = false } = {}) 
     const m = vak.w / 300;
     for (const x of metingen) echtLaag.append(straal(x.baken, x.baken.peiling + 180, 'pk-echt'));
     echtLaag.append(s('circle', { cx: p(stand.x), cy: p(-stand.y), r: p(6 * m), class: 'pk-jij' }),
-      s('text', { x: p(stand.x), y: p(-stand.y - 10 * m), 'text-anchor': 'middle', class: 'pk-naam pk-jij-naam', 'font-size': p(12 * m) }, 'hier stond je'));
+      // scaled like the names of the landmarks: the css font size is in screen pixels of a map 300 px wide
+      s('g', { transform: `translate(${p(stand.x)} ${p(-stand.y)}) scale(${p(m)})` },
+        s('text', { y: -10, 'text-anchor': 'middle', class: 'pk-naam pk-jij-naam' }, 'hier stond je')));
     const d = Math.round(afstand(tik, stand));
-    const goed = d <= TOL_PLEK;
     const lijnen = metingen.map((x) => ({ naam: BAKENS[x.baken.soort].de, fouten: lijnFouten(x) }));
     const lijnenGoed = lijnen.every((x) => !x.fouten.length);
-    zeg(goed ? `Goed! Je stond hier: je tikte ${d} meter ernaast.`
+    // lines within their margin still cross a little beside the real spot: a tap on your own crossing counts too
+    const eigen = modus === 'twee' && lijnenGoed ? kruising(metingen[0], metingen[1]) : null;
+    const goed = d <= TOL_PLEK || (eigen !== null && afstand(tik, eigen) <= TOL_PLEK);
+    zeg(goed ? `Goed! Je stond hier: je tikte ${d} meter ernaast.${d > TOL_PLEK ? ' Je tikte waar jouw lijnen kruisen; een paar graden verschil bij het peilen schuift dat punt een stukje op.' : ''}`
       : `Je stond op de blauwe stip, ${d} meter van waar je tikte.${lijnenGoed ? (modus === 'twee' ? ' Je lijnen klopten: je plek is waar ze elkaar kruisen.' : ' Je lijn klopte: je plek is het kruispunt op die lijn waar je stond.') : ''}`, goed);
     uitslag.replaceChildren(
       h('p.doe-stil', 'Groen gestippeld: de goede lijnen. Rood: jouw lijnen.'),

@@ -58,7 +58,7 @@ export default function zonMaanAarde({ over = null } = {}) {
   const vraag = h('p.zma-vraag');
   const melding = h('p.doe-melding', { 'aria-live': 'polite' });
   const stand = h('p.doe-stil');
-  const verder = h('button.knop.klein', { type: 'button', hidden: true, onclick: volgende }, 'Volgende vraag');
+  const verder = h('button.knop.klein', { type: 'button', hidden: true, onclick: () => { volgende(); manen[0].focus(); } }, 'Volgende vraag');
 
   function volgende() {
     if (!volgorde.length) volgorde = [...vragen].sort(() => Math.random() - 0.5);
@@ -79,6 +79,7 @@ export default function zonMaanAarde({ over = null } = {}) {
       melding.textContent = `Goed: ${PLEKKEN[i]}. ${nu.uitleg}`;
       stand.textContent = `In één keer goed: ${goedTeller} van ${gedaan}.`;
       verder.hidden = false;
+      verder.focus();
     } else {
       melding.classList.add('fout');
       melding.textContent = `Nee, daar is het ${PLEKKEN[i]}. Probeer het nog eens.`;

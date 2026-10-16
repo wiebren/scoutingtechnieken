@@ -155,7 +155,7 @@ export default [
     doe: 'seinvlaggen-cijfers',
     uitleg: [
       'Naast de lettervlaggen zijn er tien wimpels voor de cijfers 0 tot en met 9. Ze zijn smal en lopen taps toe.',
-      'Aan boord heb je van elke vlag er maar één. Komt in een sein een letter of cijfer twee keer voor, dan hang je een vervangwimpel. Die herhaalt een vlag van dezelfde soort (letters of cijfers) die er direct boven hangt: de eerste vervangwimpel de bovenste, de tweede de tweede van boven, de derde de derde. Elke vervangwimpel mag maar één keer in een sein. Het getal 1100 is dus: 1, eerste vervangwimpel, 0, derde vervangwimpel.',
+      'Aan boord heb je van elke vlag er maar één. Komt in een sein een letter of cijfer twee keer voor, dan hang je een vervangwimpel. Die herhaalt een vlag uit het rijtje letters of cijfers direct erboven: de eerste vervangwimpel de bovenste van dat rijtje, de tweede de tweede, de derde de derde. Elke vervangwimpel mag maar één keer in een sein. Het getal 1100 is dus: 1, eerste vervangwimpel, 0, derde vervangwimpel.',
       'Met de rood-witte onderscheidingswimpel antwoord je: halverwege de lijn betekent ‘ik zie je sein’, helemaal boven ‘ik heb het begrepen’.',
     ],
     naar: [{ blad: 'seinvlaggen' }] },

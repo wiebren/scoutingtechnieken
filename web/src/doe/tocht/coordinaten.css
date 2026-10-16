@@ -15,7 +15,10 @@
 .co-bediening { display: flex; flex-wrap: wrap; gap: 8px; align-items: center; justify-content: space-between; }
 .co-pijlen { display: flex; gap: 6px; }
 .co-pijlen[hidden], .co-bediening .knop[hidden] { display: none; }
-.co-pijlen .knop { min-width: 44px; }
+.co-pijlen .knop { min-width: 44px; min-height: 44px; }
+/* passer: a button per point, to set its circle */
+.co-lijst.co-passers { flex: 1 1 100%; list-style: none; padding: 0; display: flex; flex-wrap: wrap; gap: 6px; }
+.co-passers .chip { min-height: 44px; }
 
 .co-grond { fill: color-mix(in srgb, #e9dfb6 45%, var(--paneel)); }
 .co-bos { fill: color-mix(in srgb, var(--fam-natuur) 26%, var(--paneel)); }
@@ -26,7 +29,6 @@
 .co-getal { fill: var(--inkt); font-size: 11px; font-variant-numeric: tabular-nums; }
 .co-svg.zoom .co-getal { display: none; }
 .co-lijn.boven { stroke-width: calc(1.3px / var(--z, 1)); opacity: 0.75; }
-.co-hulp path { fill: none; stroke: var(--blauw); stroke-width: 1.6; }
 .co-kruis { fill: none; stroke: var(--rood); stroke-width: 2; }
 .co-kruis-punt { fill: var(--rood); }
 .co-punt { fill: var(--inkt); }
@@ -34,6 +36,11 @@
 .co-route { fill: none; stroke: var(--rood); stroke-width: calc(2.5px / var(--z, 1)); stroke-dasharray: 7 4; }
 .co-peil { fill: none; stroke: var(--blauw); stroke-width: calc(2px / var(--z, 1)); }
 .co-cirkel { fill: none; stroke: var(--blauw); stroke-width: 1.4; stroke-dasharray: 5 3; }
+/* on a phone the map is shown smaller than drawn: larger numbers and names keep them readable */
+@media (max-width: 520px) {
+  .co-getal { font-size: 14px; }
+  .co-naam { font-size: calc(14px / var(--z, 1)); }
+}
 .co-vlag { fill: var(--rood); stroke: var(--rood); stroke-width: 2; }
 
 /* choosing the km-square */

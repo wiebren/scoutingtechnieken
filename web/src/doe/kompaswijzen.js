@@ -54,7 +54,7 @@ function kompasMetDelen() {
 export default function kompaswijzen() {
   let rij = []; let vraag = null; let goed = 0; let gehad = 0; let wacht = false; let draaien = null;
 
-  const vraagTekst = h('p.kd-vraag');
+  const vraagTekst = h('p.kd-vraag', { 'aria-live': 'polite' });   // the next question comes by itself: say it
   const melding = h('p.doe-melding', { 'aria-live': 'polite' });
   const score = h('p.doe-stil');
   const svg = kompasMetDelen();

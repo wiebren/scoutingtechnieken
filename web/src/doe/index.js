@@ -8,11 +8,12 @@
 // keyboard, and stays readable for a screen reader (a line of text says what the picture shows). The pieces of
 // most categories live in their own folder here, with their own list in <folder>/index.js.
 //
-// An entry is { titel, laad, opties?, bekijk? }. `bekijk: true` marks a piece that is to look at or to reckon with,
-// not an exercise: a viewer (the bouwwerken in 3D, the sterrenkaart), a calculator or converter, a planner, a
-// checklist, a demonstration where nothing can go wrong. Oefenen lists only the exercises (where the scout answers,
-// chooses, places or estimates and hears whether it is right); the cards show every piece, and
-// #/oefenen?doe=<naam> opens any of them.
+// An entry is { titel, laad, opties?, bekijk?, binnen? }. `bekijk: true` marks a piece that is to look at or to
+// reckon with, not an exercise: a viewer (the bouwwerken in 3D, the sterrenkaart), a calculator or converter, a
+// planner, a checklist, a demonstration where nothing can go wrong. Oefenen lists only the exercises (where the scout
+// answers, chooses, places or estimates and hears whether it is right); the cards show every piece, and
+// #/oefenen?doe=<naam> opens any of them. `binnen` names the piece that opens this one inside itself (behind a chip),
+// for a piece no blad names on its own; scripts/check.mjs counts it as used then.
 
 import route from './route/index.js';
 import tocht from './tocht/index.js';
@@ -26,7 +27,7 @@ import sjorren from './sjorren/index.js';
 import kompas3d from './kompas3d/index.js';
 
 export const DOE = {
-  kompas: { titel: 'Draai het kompas', laad: () => import('./kompas.js'), bekijk: true },
+  kompas: { titel: 'Draai het kompas', laad: () => import('./kompas.js'), bekijk: true, binnen: 'kompas-aanwijzen' },
   'kompas-aanwijzen': { titel: 'Wijs de delen van het kompas aan', laad: () => import('./kompaswijzen.js') },
   'kompas-koers': { titel: 'Loop een koers', laad: () => import('./kompas.js'), opties: { opdracht: 'koers' } },
   'kompas-peilen': { titel: 'Peil een doel', laad: () => import('./kompas.js'), opties: { opdracht: 'peilen' } },

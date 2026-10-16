@@ -16,6 +16,13 @@ import '../vorm.css';
 import './roostercode.css';
 import './kraak.css';
 
+/** Zet deze zin …: the name of each code in a sentence (the names of the Codeermachine are titles). */
+const ZET_IN = {
+  verschuiving: 'in de verschuivingscode', rot13: 'in Rot13', atbash: 'in het omgekeerde alfabet', codewoord: 'in code met het codewoord',
+  vigenere: 'in de Vigenère-code', sms: 'in de SMS-code', polybius: 'in de Polybius-code', bacon: 'in de Bacon-code', binair: 'in binaire code',
+  leet: 'in cijfers voor letters', achterstevoren: 'achterstevoren', blokmethode: 'in code met de blokmethode', jaartal: 'in jaartalgeheimschrift',
+  kolom: 'in code met kolomtranspositie', zigzag: 'in de zigzagcode', ptaal: 'in P-taal', morse: 'in morse',
+};
 const meervoud = (n, een, meer) => `${n} ${n === 1 ? een : meer}`;
 const sr = (t) => h('span.doe-sr', t);
 
@@ -148,8 +155,10 @@ export default function kraak({ code: id = 'rot13', hulpmiddel = 'codeermachine'
     oplossing: (opgave) => (o.som ? `${opgave.geheim}.` : `Er staat: ${opgave.zin}.`),
     kijkNa(opgave, invoer) {
       if (o.som) {
-        if (!invoer.trim()) return { tekst: 'Typ eerst een getal.' };
-        const getal = Number(invoer.replace(/\D/g, ''));
+        // the last number counts, so a sum written out ("19 + 3 + 15 = 37") is read as its answer
+        const getallen = invoer.match(/\d+/g);
+        if (!getallen) return { tekst: 'Typ eerst een getal.' };
+        const getal = Number(getallen.at(-1));
         const juist = woordwaarde(opgave.zin);
         return getal === juist ? { tekst: `Goed! ${opgave.geheim}.`, goed: true }
           : { tekst: `Nog niet: ${getal} is te ${getal > juist ? 'hoog' : 'laag'}. Tel elke letter nog eens na.`, goed: false };
@@ -177,7 +186,7 @@ export default function kraak({ code: id = 'rot13', hulpmiddel = 'codeermachine'
       morse: 'Typ een punt (.) en een streepje (-), met een spatie tussen de letters en een / tussen de woorden.',
     }[o.terug];
     return paneel({
-      vraag: `Zet deze zin in ${id === 'verschuiving' ? 'de verschuivingscode' : c.naam.toLowerCase().replace(/^sms/, 'SMS')}.`,
+      vraag: `Zet deze zin ${ZET_IN[id] ?? `in code: ${c.naam}`}.`,
       label: 'Typ de code', kort: true, nieuwKnop: 'Nieuwe zin',
       toonOpgave: (opgave) => h('p.kr-boodschap.gewoon', opgave.zin),
       hintVan: () => [o.opvulling && 'Vul het laatste stuk op met X’en.', tip].filter(Boolean).join(' '),

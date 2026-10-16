@@ -156,7 +156,7 @@ export default [
     uitleg: [
       'Je kunt een vuur op veel manieren opbouwen. Welke je kiest, hangt af van wat je met het vuur wilt.',
       '- Aansteken: begin met een piramidevuur. De Zwitserse methode steek je juist van boven aan.',
-      '- Warmte en licht: een blokhutvuur of een pagodevuur is een mooi kampvuur. Een stervuur en een Fins logvuur branden lang met weinig hout. Een reflectorvuur kaatst de warmte naar je toe.',
+      '- Warmte en licht: een blokhutvuur of een pagodevuur is een mooi kampvuur. Een stervuur brandt lang met weinig hout. Een Fins logvuur gloeit heel lang door. Een reflectorvuur kaatst de warmte naar je toe.',
       '- Koken: dan wil je een vuur waar je pan stevig op staat. Bijvoorbeeld een jagersvuur, een sleutelgatvuur of een blikvuurtje.',
       'Tik op een vuur. Dan zie je hoe je het bouwt.',
     ],

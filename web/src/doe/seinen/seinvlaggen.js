@@ -167,7 +167,7 @@ export default function seinvlaggen({ modus: beginModus = 'letter' } = {}) {
     }));
     hijs.setAttribute('aria-label', `De vlaggen voor ${tekens.join('')}`);
     spelUitleg.textContent = [
-      lijst.some((x) => x.vervang !== undefined) && 'Aan boord heb je van elke vlag er maar één. Komt een letter of cijfer terug, dan hang je een vervangwimpel. Die herhaalt een vlag van dezelfde soort (letters of cijfers) die er direct boven hangt: de eerste vervangwimpel de bovenste, de tweede de tweede en de derde de derde, van boven geteld. Elke vervangwimpel mag maar één keer in een sein.',
+      lijst.some((x) => x.vervang !== undefined) && 'Aan boord heb je van elke vlag er maar één. Komt een letter of cijfer terug, dan hang je een vervangwimpel. Die herhaalt een vlag uit het rijtje letters of cijfers direct erboven: de eerste vervangwimpel de bovenste van dat rijtje, de tweede de tweede, de derde de derde. Elke vervangwimpel mag maar één keer in een sein.',
       lijst.some((x) => x.teVer) && 'Komt een teken terug dat je niet zo kunt vervangen, dan heb je een tweede set vlaggen nodig.',
     ].filter(Boolean).join(' ');
   }

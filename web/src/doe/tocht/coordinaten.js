@@ -97,6 +97,7 @@ export default function coordinaten({ soort = 'coordinaten' } = {}) {
   let hoek = null;              // the corner of the card's 1:25.000 scale, in km
   let draai = 0;                // the course line being turned
   let zoom = 1;
+  let passers = [];             // passer: a button per point, made once per opgave
 
   const kaart = s('g'); const vakG = s('g'); const lagen = s('g'); const kaartjeG = s('g', { class: 'co-kaartje' });
   const ringG = s('g', { class: 'co-ring' }); const markerG = s('g'); const randen = s('g', { class: 'co-randen' });
@@ -106,7 +107,7 @@ export default function coordinaten({ soort = 'coordinaten' } = {}) {
   kaartjeG.append(kaartjeVorm);
 
   const opdracht = h('p.co-opdracht');
-  const lijst = h('ol.co-lijst');
+  const lijst = h(soort === 'passer' ? 'ul.co-lijst.co-passers' : 'ol.co-lijst');
   const melding = h('p.doe-melding', { 'aria-live': 'polite' });
   const stand = h('p.doe-sr', { 'aria-live': 'polite' });
   const schuif = (dx, dy) => () => { if (fase === 'kaart') { zetHoek([hoek[0] + dx, hoek[1] + dy]); meldHoek(); } };
@@ -226,7 +227,7 @@ export default function coordinaten({ soort = 'coordinaten' } = {}) {
       for (const [n, p, m] of og.punten) {
         const [x, y] = px(p);
         if (cirkels.has(n)) lagen.append(s('circle', { cx: x, cy: y, r: r1((m / 1000) * KM), class: 'co-cirkel' }));
-        lagen.append(s('circle', { cx: x, cy: y, r: 4, class: 'co-punt' }), s('text', { x: x > B - 70 ? x - 7 : x + 7, y: y - 6, class: 'co-naam', 'text-anchor': x > B - 70 ? 'end' : 'start' }, `${n} ${m} m`));
+        lagen.append(s('circle', { cx: x, cy: y, r: 4, class: 'co-punt' }), s('text', { x: x > B - 80 ? x - 7 : x + 7, y: y - 6, class: 'co-naam', 'text-anchor': x > B - 80 ? 'end' : 'start' }, `${n} ${m} m`));
       }
     }
     for (const [n, p] of gevonden) { const [x, y] = px(p); lagen.append(s('circle', { cx: x, cy: y, r: r(4), class: 'co-punt' }), s('text', { x: x + r(7), y: y - r(6), class: 'co-naam' }, n)); }
@@ -235,7 +236,12 @@ export default function coordinaten({ soort = 'coordinaten' } = {}) {
 
   function tekenLijst() {
     if (soort === 'passer') {
-      lijst.replaceChildren(...og.punten.map(([n, , m]) => h('li', { class: cirkels.has(n) ? 'gedaan' : null }, h('strong', n), `: cirkel van ${m} m`)));
+      // kept between redraws, so a button keeps the focus
+      if (!passers.length) {
+        passers = og.punten.map(([n, , m]) => h('button.chip', { type: 'button', 'aria-label': `Cirkel van ${m} m om ${n}`, onclick: () => passer(n) }, h('span', h('strong', n), `: ${m} m`)));
+        lijst.replaceChildren(...passers.map((k) => h('li', k)));
+      }
+      passers.forEach((k, i) => k.setAttribute('aria-pressed', String(cirkels.has(og.punten[i][0]))));
       return;
     }
     lijst.replaceChildren(...og.punten.map(([n, p, g], i) => h('li', { class: i === stap ? 'nu' : i < stap ? 'gedaan' : null },
@@ -243,9 +249,12 @@ export default function coordinaten({ soort = 'coordinaten' } = {}) {
   }
 
   function zetOpdracht() {
+    const focus = document.activeElement;
     pijlen.hidden = fase !== 'kaart';
     draaiers.hidden = fase !== 'koers';
     controleer.hidden = fase === 'vak' || fase === 'klaar';
+    // a button that hides itself under a keyboard user: keep the focus in the piece, not lost on the page
+    if (focus?.closest('.co-bediening [hidden]')) (fase === 'klaar' ? opnieuw : svg).focus({ preventScroll: true });
     controleer.textContent = fase === 'koers' ? 'Trek de lijn' : 'Hier is het';
     const [n, p, g] = og.punten[stap] ?? [];
     if (fase === 'klaar') opdracht.textContent = '';
@@ -286,7 +295,7 @@ export default function coordinaten({ soort = 'coordinaten' } = {}) {
   }
 
   function begin() {
-    og = opgave(soort, variant); stap = 0; gevonden = []; lijnen = []; cirkels = new Set();
+    og = opgave(soort, variant); stap = 0; gevonden = []; lijnen = []; cirkels = new Set(); passers = [];
     melding.textContent = ''; melding.classList.remove('fout');
     tekenKaart();
     if (soort === 'passer') { fase = 'snij'; marker = null; bekijk(null); zetLabel(); tekenAlles(); } else verder();
@@ -337,8 +346,13 @@ export default function coordinaten({ soort = 'coordinaten' } = {}) {
         stap++; verder(); return;
       }
       const fout = [];
-      if (Math.abs(a - da) > TOL * 100) fout.push(`Lijn ${vak[0]} kruist de bovenste schaal nu bij ${a}; je zoekt ${da}. Schuif ${Math.abs(a - da) * 10} m naar ${a < da ? 'rechts' : 'links'}.`);
-      if (Math.abs(b - db) > TOL * 100) fout.push(`Lijn ${vak[1]} kruist de rechter schaal nu bij ${b}; je zoekt ${db}. Schuif ${Math.abs(b - db) * 10} m ${b < db ? 'omhoog' : 'omlaag'}.`);
+      const raak = (x, y) => Math.abs(x - y) <= TOL * 100;
+      if (raak(a, db) && raak(b, da) && !raak(da, db)) {
+        fout.push(`Je hebt de getallen omgewisseld. De ${da} van het eerste getal hoort op de bovenste schaal, de ${db} van het tweede op de rechter: eerst naar rechts, dan omhoog.`);
+      } else {
+        if (!raak(a, da)) fout.push(`Lijn ${vak[0]} kruist de bovenste schaal nu bij ${a}; je zoekt ${da}. Schuif ${Math.abs(a - da) * 10} m naar ${a < da ? 'rechts' : 'links'}.`);
+        if (!raak(b, db)) fout.push(`Lijn ${vak[1]} kruist de rechter schaal nu bij ${b}; je zoekt ${db}. Schuif ${Math.abs(b - db) * 10} m ${b < db ? 'omhoog' : 'omlaag'}.`);
+      }
       melding.classList.add('fout'); melding.textContent = fout.join(' ');
       return;
     }
@@ -351,6 +365,7 @@ export default function coordinaten({ soort = 'coordinaten' } = {}) {
       }
       const d = ((g - draai + 540) % 360) - 180;
       melding.classList.add('fout');
+      if (verschil(draai, g) >= 180 - GRADEN) { melding.textContent = `Je lijn wijst de andere kant op: ${draai}° is de koers terug naar ${n}. Draai hem een halve slag, naar ${g}°.`; return; }
       melding.textContent = `Je lijn staat op ${draai}°, je zoekt ${g}°. Draai hem ${Math.abs(d)}° ${d > 0 ? 'rechtsom' : 'linksom'}. Tel de streepjes vanaf het getal ervoor: een streepje is 1°, een lange streep 10°.`;
       return;
     }
@@ -363,6 +378,11 @@ export default function coordinaten({ soort = 'coordinaten' } = {}) {
       melding.classList.remove('fout'); melding.textContent = `Gevonden! De post staat op ${fmt(og.doel.map(rond))}. Jij zat er ${a} m naast.`;
     } else { melding.classList.add('fout'); melding.textContent = `Nog niet: dat is ${a} m van het punt waar ${soort === 'passer' ? 'de cirkels' : 'de lijnen'} elkaar snijden.`; }
     tekenAlles();
+  }
+
+  function passer(n) {
+    if (fase !== 'snij') return;
+    cirkels.add(n); stand.textContent = `Cirkel om ${n} getekend.`; tekenAlles();
   }
 
   // -- pointer: tap a square; pull the card along from where you took it; turn the line; set the marker
@@ -379,8 +399,8 @@ export default function coordinaten({ soort = 'coordinaten' } = {}) {
     const p = plek(e);
     if (fase === 'vak') { if (opKaart(p)) kiesVak([Math.min(X0 + 2, Math.floor(p[0])), Math.min(Y0 + 1, Math.floor(p[1]))]); return; }
     if (fase === 'snij' && soort === 'passer') {
-      const raak = og.punten.find(([, q]) => afstand(p, q) < 0.09);
-      if (raak) { cirkels.add(raak[0]); stand.textContent = `Cirkel om ${raak[0]} getekend.`; tekenAlles(); return; }
+      const raak = og.punten.find(([, q]) => afstand(p, q) < 0.15);
+      if (raak) { passer(raak[0]); return; }
     }
     if (fase === 'snij' && !opKaart(p)) return;
     greep = { p, hoek };
