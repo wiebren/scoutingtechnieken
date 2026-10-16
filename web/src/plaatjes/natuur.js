@@ -213,13 +213,13 @@ function bolster(r, { stekels = 40, lang = 6, klasse = 'nt-bolster', dun = false
 export const BOMEN = {
   zomereik: {
     naam: 'Zomereik', vak: [-42, -128, 84, 136],
-    blad: () => blad({ lengte: 120, breedte: 66, a: 0.85, b: 0.9, lob: { n: 4.5, diep: 0.45 }, hart: [0.07, 0.07], steel: 4, nerven: 4 }),
+    blad: () => blad({ lengte: 120, breedte: 66, a: 1.2, b: 0.75, lob: { n: 4.5, diep: 0.45 }, hart: [0.07, 0.07], steel: 4, nerven: 4 }),
     vrucht: () => '<path d="M0 -30 V10" class="nt-steeltje"/>' + g(-6, 10, 15, eikel()) + g(6, 10, -15, eikel()),
     regels: ['blad bijna zonder steel, met oortjes', 'eikels aan een lange steel'],
   },
   wintereik: {
     naam: 'Wintereik', vak: [-40, -120, 80, 150],
-    blad: () => blad({ lengte: 104, breedte: 60, a: 0.8, b: 0.9, lob: { n: 5, diep: 0.32 }, steel: 22, nerven: 5 }),
+    blad: () => blad({ lengte: 104, breedte: 60, a: 0.8, b: 0.9, lob: { n: 6, diep: 0.28 }, steel: 22, nerven: 5 }),
     vrucht: () => '<path d="M0 -10 V2" class="nt-steeltje"/>' + g(-6, 0, 25, eikel()) + g(6, 0, -25, eikel()) + g(0, 8, 0, eikel()),
     regels: ['blad met een steel', 'eikels zonder steel'],
   },
@@ -852,7 +852,7 @@ export const VOGELS = {
   'turkse-tortel': { naam: 'Turkse tortel', rug: '#cbb6a0', kop: '#d4c2b0', nekband: '#1a1a1a', vleugel: '#b9a28a', staart: '#a89079', staartLang: 44, snavel: 'duif', snavelKleur: '#2a2a2a', kopmaat: 0.8, poot: '#c4566a' },
   'zwarte-kraai': { naam: 'Zwarte kraai', rug: '#141414', kop: '#141414', vleugel: '#1b1b1b', staart: '#111', snavel: 'kraai', snavelKleur: '#0e0e0e', dik: 1.1, poot: '#111' },
   gaai: { naam: 'Gaai (Vlaamse gaai)', rug: '#c3a08f', kop: '#d3b4a4', kap: '#d9d0c8', keel: '#f2ece6', vleugel: '#1d1d1d', vlek: '#3a7fd0', staart: '#141414', snavel: 'merel', snavelKleur: '#222', oogstreep: '#111' },
-  winterkoning: { naam: 'Winterkoning', rug: '#8a6440', buik: '#c8a98a', kop: '#8a6440', vleugel: '#7a5634', streep: ['#5a3c22', '#5a3c22'], staart: '#6f4e30', staartLang: 22, staartHoek: 220, staartBreed: 5, schaal: 0.7, oogstreep: '#d9c3a6' },
+  winterkoning: { naam: 'Winterkoning', rug: '#8a6440', buik: '#c8a98a', kop: '#8a6440', vleugel: '#7a5634', streep: ['#5a3c22', '#5a3c22'], staart: '#6f4e30', staartLang: 34, staartHoek: 245, staartBreed: 5.5, schaal: 0.7, oogstreep: '#d9c3a6' },
   'grote-bonte-specht': { naam: 'Grote bonte specht', rug: '#151515', buik: '#ece8e0', kop: '#ffffff', kap: '#151515', wang: '#ffffff', nekrood: '#d3202a', vleugel: '#151515', vlek: '#ffffff', rood: '#d3202a', staart: '#151515', snavel: 'specht', snavelKleur: '#3a3a3a', rechtop: true, staartLang: 30, poot: '#555' },
   boomklever: { naam: 'Boomklever', rug: '#6f86a3', buik: '#e7b88a', kop: '#6f86a3', wang: '#ffffff', oogstreep: '#111', vleugel: '#5e7593', staart: '#5e7593', staartLang: 18, snavel: 'specht', snavelKleur: '#3a3a3a', schaal: 0.85 },
   tjiftjaf: { naam: 'Tjiftjaf', rug: '#8c8e5a', buik: '#ebe7c9', kop: '#8c8e5a', oogstreep: '#e8e2b0', vleugel: '#7c7e4d', staart: '#717346', schaal: 0.7, poot: '#2a2a2a' },
@@ -907,7 +907,8 @@ const teekFig = (vol = false) => {
     : `${poten}<path d="M-3 -12 L0 -18 L3 -12Z" class="nt-teek-kop"/><ellipse cx="0" cy="2" rx="8" ry="11" class="nt-teek-lijf"/><ellipse cx="0" cy="-5" rx="6" ry="5" class="nt-teek-schild"/>`;
 };
 function teek() {
-  let uit = '';
+  // A light patch behind the figures: dark legs and heads would vanish on the dark theme.
+  let uit = '<rect x="4" y="6" width="312" height="98" rx="12" class="nt-lucht"/>';
   uit += g(52, 74, 0, teekFig(), 0.35) + tekst(52, 120, 'nimf', { maat: 11, klasse: 'vet' }) + tekst(52, 134, 'als een maanzaadje', { maat: 10, klasse: 'stil' });
   uit += g(150, 74, 0, teekFig(), 1) + tekst(150, 120, 'volwassen', { maat: 11, klasse: 'vet' }) + tekst(150, 134, 'een paar millimeter', { maat: 10, klasse: 'stil' });
   uit += g(258, 66, 0, teekFig(true), 1.2) + tekst(258, 120, 'vol bloed', { maat: 11, klasse: 'vet' }) + tekst(258, 134, 'dik en grijs', { maat: 10, klasse: 'stil' });
@@ -925,7 +926,14 @@ function insect({ lijf, banden, borst, kop, harig = false, lang = 30, taille = f
   }
   const ax = -lang / 2 - (taille ? 14 : 10);
   uit += `<ellipse cx="${ax}" cy="2" rx="${lang / 2}" ry="${lang / 3.2}" fill="${lijf}"/>`;
-  banden.forEach(([dx, w, kleur]) => { uit += `<path d="M${ax + dx} ${2 - lang / 3.4} q${w / 2} ${lang / 3.4} 0 ${lang / 1.7} h${w} q${w / 2} ${-lang / 3.4} 0 ${-lang / 1.7}z" fill="${kleur}"/>`; });
+  // A band follows the outline of the abdomen, so one near the tip does not stick out.
+  const rx = lang / 2; const ry = lang / 3.2;
+  const halfHoog = (x) => ry * Math.sqrt(Math.max(0, 1 - ((x - ax) / rx) ** 2));
+  banden.forEach(([dx, w, kleur]) => {
+    const x0 = Math.max(ax - rx, ax + dx); const x1 = Math.min(ax + rx, ax + dx + w);
+    const xs = Array.from({ length: 7 }, (_, i) => x0 + ((x1 - x0) * i) / 6);
+    uit += `<path d="${lijn([...xs.map((x) => [x, 2 - halfHoog(x)]), ...xs.reverse().map((x) => [x, 2 + halfHoog(x)])])}Z" fill="${kleur}"/>`;
+  });
   uit += `<ellipse cx="${ax}" cy="2" rx="${lang / 2}" ry="${lang / 3.2}" fill="none" class="nt-insectlijn"/>`;
   if (taille) uit += '<path d="M-14 2 H-8" stroke="#222" stroke-width="3"/>';
   uit += `<circle cx="0" cy="0" r="9" fill="${borst}" class="nt-insectlijn"/>`;
@@ -935,20 +943,22 @@ function insect({ lijf, banden, borst, kop, harig = false, lang = 30, taille = f
   return uit;
 }
 function wespBijHommel() {
-  let uit = '';
-  uit += g(80, 70, 0, insect({ lijf: '#f2c919', banden: [[2, 4, '#1a1a1a'], [9, 4, '#1a1a1a'], [16, 4, '#1a1a1a']], borst: '#1a1a1a', kop: '#f2c919', taille: true, lang: 30 }), 1.5);
+  let uit = '<rect x="4" y="8" width="372" height="104" rx="12" class="nt-lucht"/>';
+  uit += g(80, 70, 0, insect({ lijf: '#f2c919', banden: [[-10, 3, '#1a1a1a'], [-3, 3.5, '#1a1a1a'], [4, 4, '#1a1a1a'], [11, 5, '#1a1a1a']], borst: '#1a1a1a', kop: '#f2c919', taille: true, lang: 30 }), 1.5);
   uit += tekst(70, 132, 'Wesp', { maat: 12, klasse: 'vet' }) + tekst(70, 146, 'glad, fel geel-zwart', { maat: 10, klasse: 'stil' }) + tekst(70, 159, 'smal middel', { maat: 10, klasse: 'stil' });
-  uit += g(206, 70, 0, insect({ lijf: '#c98a3a', banden: [[3, 4, '#3a2a1a'], [10, 4, '#3a2a1a'], [17, 4, '#3a2a1a']], borst: '#8a6a40', kop: '#3a2a1a', harig: true, lang: 28 }), 1.35);
+  uit += g(206, 70, 0, insect({ lijf: '#c98a3a', banden: [[-14, 4, '#3a2a1a'], [-6, 3.5, '#3a2a1a'], [1, 3.5, '#3a2a1a']], borst: '#8a6a40', kop: '#3a2a1a', harig: true, lang: 28 }), 1.35);
   uit += tekst(196, 132, 'Honingbij', { maat: 12, klasse: 'vet' }) + tekst(196, 146, 'bruin met banden', { maat: 10, klasse: 'stil' }) + tekst(196, 159, 'angel blijft achter', { maat: 10, klasse: 'stil' });
-  uit += g(326, 70, 0, insect({ lijf: '#1c1c1c', banden: [[2, 6, '#f2d23a'], [16, 8, '#f8f6f0']], borst: '#f2d23a', kop: '#1c1c1c', harig: true, lang: 34 }), 1.4);
+  uit += g(326, 70, 0, insect({ lijf: '#1c1c1c', banden: [[6, 6, '#f2d23a'], [-17, 9, '#f8f6f0']], borst: '#f2d23a', kop: '#1c1c1c', harig: true, lang: 34 }), 1.4);
   uit += tekst(318, 132, 'Hommel', { maat: 12, klasse: 'vet' }) + tekst(318, 146, 'rond en harig', { maat: 10, klasse: 'stil' }) + tekst(318, 159, 'steekt bijna nooit', { maat: 10, klasse: 'stil' });
   return svg(380, 170, 'Wesp, honingbij en hommel naast elkaar', uit);
 }
 function hoornaars() {
-  let uit = '';
-  uit += g(110, 70, 0, insect({ lijf: '#2a2420', banden: [[10, 6, '#e8862a'], [3, 2, '#e8c040']], borst: '#141414', kop: '#e8862a', taille: true, lang: 32, poot: '#2a2420', pootPunt: '#f0d040' }), 1.6);
+  let uit = '<rect x="4" y="8" width="362" height="108" rx="12" class="nt-lucht"/>';
+  // Bands count from the tip (dx < 0) to the waist (dx > 0): the Asian hornet has a thin yellow edge by the waist and
+  // its one broad orange band toward the tip; the European hornet is brown by the waist and yellow toward the tip.
+  uit += g(110, 70, 0, insect({ lijf: '#2a2420', banden: [[-8, 7, '#e8862a'], [9, 2, '#e8c040']], borst: '#141414', kop: '#e8862a', taille: true, lang: 32, poot: '#2a2420', pootPunt: '#f0d040' }), 1.6);
   uit += tekst(90, 136, 'Aziatische hoornaar', { maat: 12, klasse: 'vet' }) + tekst(90, 150, 'bijna zwart, één brede oranje band', { maat: 10, klasse: 'stil' }) + tekst(90, 163, 'gele punten aan de poten', { maat: 10, klasse: 'stil' });
-  uit += g(296, 70, 0, insect({ lijf: '#e8c51e', banden: [[-12, 8, '#6b3a1e'], [4, 3, '#2a1a10'], [12, 3, '#2a1a10']], borst: '#7a2e1a', kop: '#d9a63a', taille: true, lang: 36, poot: '#8a3a1e' }), 1.6);
+  uit += g(296, 70, 0, insect({ lijf: '#e8c51e', banden: [[9, 9, '#6b3a1e'], [-2, 2.5, '#2a1a10'], [-10, 2.5, '#2a1a10']], borst: '#7a2e1a', kop: '#d9a63a', taille: true, lang: 36, poot: '#8a3a1e' }), 1.6);
   uit += tekst(276, 136, 'Europese hoornaar', { maat: 12, klasse: 'vet' }) + tekst(276, 150, 'groter, vooral geel achterlijf', { maat: 10, klasse: 'stil' }) + tekst(276, 163, 'roodbruine poten', { maat: 10, klasse: 'stil' });
   return svg(370, 174, 'Aziatische hoornaar naast de Europese hoornaar', uit);
 }
@@ -1028,7 +1038,8 @@ function twijnen() {
   let koord = '';
   for (let y = 40; y < 112; y += 9) koord += `<path d="M322 ${y} q10 4 0 9" class="nt-vezel b"/><path d="M332 ${y + 4.5} q-10 4 0 9" class="nt-vezel"/>`;
   uit += koord + tekst(328, 134, '4. herhaal', { maat: 10.5, klasse: 'vet' });
-  return svg(370, 158, 'Touw twijnen: vouw vezels dubbel, draai de bovenste streng van je af en leg hem over de andere naar je toe; herhaal', uit);
+  // Shifted right: the first label is wider than the room left of its strands.
+  return svg(386, 158, 'Touw twijnen: vouw vezels dubbel, draai de bovenste streng van je af en leg hem over de andere naar je toe; herhaal', g(12, 0, 0, uit));
 }
 
 /** Wattle and daub: stakes, woven rods, clay pressed on. */
@@ -1192,6 +1203,34 @@ function gipsafdruk() {
   return svg(360, 166, 'Een gipsafdruk maken: zet een ring om de prent, giet er gips in en graaf het na een half uur uit; de prent staat dan bol', uit);
 }
 
+/** Metamorphosis in two rows: frog spawn, tadpole, tadpole with legs, frog; eggs on a leaf, caterpillar, pupa, butterfly. */
+function levenscyclus() {
+  const pijl = (x, y) => `<path d="M${x} ${y}h16" class="lijn stil"/><path d="M${x + 11} ${y - 4}l5 4l-5 4" class="lijn stil"/>`;
+  const visje = (x, y, poten) => {
+    let u = `<path d="M${x + 6} ${y}q10 -6 22 -1q-10 4 -22 1z" class="nt-larve"/><ellipse cx="${x}" cy="${y}" rx="9" ry="7" class="nt-larve"/><circle cx="${x - 4}" cy="${y - 3}" r="1.3" class="nt-oogje"/>`;
+    if (poten) u += `<path d="M${x + 6} ${y + 4}l4 7l3 0M${x + 6} ${y - 4}l4 -7l3 0" class="nt-pootje"/><path d="M${x - 3} ${y + 6}l-2 5M${x - 3} ${y - 6}l-2 -5" class="nt-pootje"/>`;
+    return u;
+  };
+  let uit = tekst(10, 18, 'kikker', { maat: 12, anker: 'start', klasse: 'vet' }) + tekst(10, 140, 'vlinder', { maat: 12, anker: 'start', klasse: 'vet' });
+  // frog: spawn, tadpole, tadpole with legs, young frog
+  let dril = '';
+  for (const [dx, dy] of [[0, 0], [12, -4], [-10, 5], [6, 11], [-4, -11], [16, 8], [-14, -6]]) dril += `<circle cx="${42 + dx}" cy="${62 + dy}" r="6.5" class="nt-gelei"/><circle cx="${42 + dx}" cy="${62 + dy}" r="2" class="nt-eikern"/>`;
+  uit += dril + visje(122, 62, false) + visje(206, 62, true);
+  uit += '<g transform="translate(300 62)"><path d="M-14 8q-10 6 -4 14M14 8q10 6 4 14M-10 -6q-10 -4 -10 -12M10 -6q10 -4 10 -12" class="nt-kikkerpoot"/><ellipse cx="0" cy="2" rx="13" ry="16" class="nt-kikker"/><circle cx="-6" cy="-11" r="3.2" class="nt-kikker"/><circle cx="6" cy="-11" r="3.2" class="nt-kikker"/><circle cx="-6" cy="-11" r="1.4" class="nt-oogje"/><circle cx="6" cy="-11" r="1.4" class="nt-oogje"/></g>';
+  [72, 154, 240].forEach((x) => { uit += pijl(x, 62); });
+  [['kikkerdril', 42], ['kikkervisje', 128], ['met pootjes', 210], ['kikker', 300]].forEach(([t, x]) => { uit += tekst(x, 108, t, { maat: 11 }); });
+  // butterfly: eggs on a leaf, caterpillar, pupa, butterfly
+  uit += '<path d="M18 196q24 -34 52 -18q-22 30 -52 18z" class="blad"/>';
+  for (const [x, y] of [[40, 186], [46, 182], [52, 184], [44, 190], [50, 189]]) uit += `<circle cx="${x}" cy="${y}" r="2" class="nt-vlinderei"/>`;
+  for (let i = 0; i < 7; i++) uit += `<circle cx="${104 + i * 7}" cy="${186 - Math.sin(i * 0.9) * 3}" r="5" class="nt-rups"/>`;
+  uit += '<circle cx="152" cy="184" r="5.5" class="nt-rups"/><circle cx="154" cy="182" r="1.2" class="nt-oogje"/>';
+  uit += '<path d="M196 158H232" class="nt-tak dun"/><path d="M214 158q-9 10 -6 24q2 10 6 14q4 -4 6 -14q3 -14 -6 -24z" class="nt-pop"/>';
+  uit += '<g transform="translate(300 184)"><path d="M0 -2C-8 -22 -30 -24 -28 -8C-26 2 -10 2 0 -2Z" class="nt-vleugel"/><path d="M0 -2C8 -22 30 -24 28 -8C26 2 10 2 0 -2Z" class="nt-vleugel"/><path d="M0 0C-6 6 -22 18 -18 4Z" class="nt-vleugel"/><path d="M0 0C6 6 22 18 18 4Z" class="nt-vleugel"/><path d="M-27 -12q2 -8 8 -9q-6 6 -8 9zM27 -12q-2 -8 -8 -9q6 6 8 9z" class="nt-vleugelpunt"/><path d="M0 -12V10" class="nt-lijfje"/></g>';
+  [72, 166, 240].forEach((x) => { uit += pijl(x, 184); });
+  [['eitjes', 42], ['rups', 128], ['pop', 214], ['vlinder', 300]].forEach(([t, x]) => { uit += tekst(x, 226, t, { maat: 11 }); });
+  return svg(340, 236, 'Gedaanteverwisseling. Kikker: kikkerdril, kikkervisje, kikkervisje met pootjes, kikker. Vlinder: eitjes op een blad, rups, pop, vlinder', uit);
+}
+
 export default {
   ...BOOM_PLAATJES,
   bladvormen,
@@ -1229,4 +1268,5 @@ export default {
   mand,
   kleurstoffen,
   lichtvervuiling,
+  levenscyclus,
 };

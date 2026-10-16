@@ -27,9 +27,9 @@ export default {
         + `<path d="M0 12H64" stroke="#FFF80F" stroke-width="2.8"/>${kam(0, 64, 15.4, 1.4, '#777')}`,
     },
     { naam: 'ingraving, holle weg', teken: rand(0, 28, 10.2, 1) + rand(0, 28, 13.8, -1) + rand(36, 64, 9.2, 1) + rand(36, 64, 14.8, -1) },
-    { naam: 'hoogtelijn 10 m', teken: hoogte('10', 6, 'stroke="#C58A63" stroke-width=".85"') },
-    { naam: 'hoogtelijn 5 m', teken: hoogte('5', 4, 'stroke="#E2C5B1" stroke-width="1.7"') },
-    { naam: 'hoogtelijn 2,5 m (tussenlijn)', teken: hoogte('2.5', 6, 'stroke="#ECD8CB" stroke-width="1.7" stroke-dasharray="14 3 3 3"') },
+    { naam: 'hoogtelijnen: 10 m', teken: hoogte('10', 6, 'stroke="#C58A63" stroke-width=".85"') },
+    { naam: 'hoogtelijnen: 5 m', teken: hoogte('5', 4, 'stroke="#E2C5B1" stroke-width="1.7"') },
+    { naam: 'hoogtelijnen: 2,5 m', teken: hoogte('2.5', 6, 'stroke="#ECD8CB" stroke-width="1.7" stroke-dasharray="14 3 3 3"') },
     { naam: 'hoogtepunt', teken: `<text x="32" y="15" font-size="8" text-anchor="middle" fill="#000" ${TEKST}>12.4</text>` },
     {
       naam: 'GNSS-kernnetpunt',

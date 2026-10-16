@@ -69,10 +69,10 @@ export default {
     { naam: 'brug op pijlers', h: 28, teken: vaart(21.9, 43.8, 28) +
       '<path d="M15.2 10.6V17.4M32.8 10.6V17.4M49.6 10.6V17.4" stroke="#111" stroke-width="1.3"/>' + weg(ROOD, '#111', 3.4, 1.9, 14) },
     // wegeninformatie
-    { naam: 'wegnummer autosnelweg', teken: nummer('A28', '#e85138', '#fff') },
-    { naam: 'wegnummer niet-autosnelweg', teken: nummer('N34', '#fff010', '#111') },
-    { naam: 'Europees wegnummer', teken: nummer('E35', '#008f35', '#fff') },
-    { naam: 'stadsroutenummer', teken: nummer('S101', '#fff', '#111', 26, '#666') },
+    { naam: 'wegnummering: autosnelweg (A)', teken: nummer('A28', '#e85138', '#fff') },
+    { naam: 'wegnummering: niet-autosnelweg (N)', teken: nummer('N34', '#fff010', '#111') },
+    { naam: 'wegnummering: Europese weg (E)', teken: nummer('E35', '#008f35', '#fff') },
+    { naam: 'wegnummering: stadsroute (S)', teken: nummer('S101', '#fff', '#111', 26, '#666') },
     { naam: 'parkeerplaats', teken: blauw('P', 5.4, 6.4, 6) },
     { naam: 'tankstation', teken: blauw('T', 5.4, 6.4, 6) },
     { naam: 'afritnummer', teken: blauw('3', 7, 9.6, 9) },

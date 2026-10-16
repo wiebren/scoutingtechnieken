@@ -7,11 +7,11 @@ import { QUIZ } from './vragen.js';
 
 QUIZ['mes-mee'] ??= [
   { vraag: 'Zaterdag kook je met je groep op houtvuur. Neem je je zakmes mee?',
-    keuzes: ['Ja, als jullie groep dat zo afspreekt: dan heb je hem echt nodig.', 'Nee, een mes mag nooit mee naar Scouting.', 'Ja, en je houdt hem de hele week bij je.'],
+    keuzes: ['Ja, als jullie groep dat goedvindt: bij koken op houtvuur heb je hem echt nodig.', 'Nee, een mes mag nooit mee naar Scouting.', 'Ja, en je houdt hem de hele week bij je.'],
     uitleg: 'Scouting Nederland stelt voor: neem je mes alleen mee als je het echt nodig hebt, zoals bij vuur maken of koken.' },
   { vraag: 'Je gaat zaterdagavond met vrienden de stad in. En je zakmes?',
     keuzes: ['Laat je thuis.', 'Mag mee: een zakmes is nooit een wapen.', 'Mag mee als het lemmet kort is.'],
-    uitleg: 'Bij het uitgaan kan zelfs een zakmes als wapen gelden, en een gemeente kan messen op sommige plekken verbieden.' },
+    uitleg: 'Je hebt hem daar niet nodig. Bij het uitgaan kan zelfs een klein zakmes als wapen gelden: dan telt waarom je het bij je hebt, niet hoe lang het lemmet is. En een gemeente kan messen op sommige plekken verbieden.' },
   { vraag: 'Een vriend heeft in het buitenland een vlindermes gekocht. Mag hij dat hier hebben?',
     keuzes: ['Nee, een vlindermes is in Nederland verboden.', 'Ja, als hij het thuis bewaart.', 'Ja, vanaf 18 jaar.'],
     uitleg: 'Vlindermessen, valmessen en springmessen (stiletto’s) zijn categorie I: verboden om te hebben, voor iedereen.' },

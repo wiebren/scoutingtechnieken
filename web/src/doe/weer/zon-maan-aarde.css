@@ -1,0 +1,20 @@
+/* Zon, maan en aarde (zon-maan-aarde.js). The moons keep their own colours; the rest follows the theme. */
+.doe-zma { display: flex; flex-direction: column; gap: 10px; }
+.doe-zma p { margin: 0; }
+.zma-vraag { font-weight: 700; }
+.zma-beeld { max-width: 420px; }
+.zma-svg { display: block; width: 100%; height: auto; font-family: inherit; }
+.zma-zonlicht { fill: none; stroke: #e0a000; stroke-width: 2; stroke-linecap: round; stroke-linejoin: round; }
+.zma-klein { fill: var(--stil); font-size: 11px; }
+.zma-baan { fill: none; stroke: var(--lijn-sterk); stroke-width: 1; stroke-dasharray: 3 4; }
+.zma-aarde { fill: var(--blauw); }
+.zma-nacht { fill: rgb(0 0 0 / 0.45); }
+.zma-pijl { fill: none; stroke: var(--stil); stroke-width: 1.5; stroke-linecap: round; stroke-linejoin: round; }
+.zma-maan { fill: #f3efd9; }
+.zma-maan-donker { fill: #39424f; stroke: var(--lijn-sterk); stroke-width: 0.8; }
+.zma-plek { cursor: pointer; outline: none; }
+.zma-raak { fill: transparent; stroke: transparent; stroke-width: 3; }
+.zma-plek:hover .zma-raak { stroke: var(--lijn-sterk); }
+.zma-plek:focus-visible .zma-raak { stroke: var(--accent); stroke-dasharray: 4 3; }
+.zma-plek.goed .zma-raak { stroke: var(--accent); fill: color-mix(in srgb, var(--accent) 18%, transparent); }
+.zma-plek.fout .zma-raak { stroke: var(--rood); }

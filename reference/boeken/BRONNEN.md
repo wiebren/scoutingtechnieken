@@ -317,3 +317,13 @@ verdwijnt De Lange uit de scoutingeisen; in 1928–1934 is het Morse of Vreede [
 - `delpher/*.txt` — OCR per scan (ongecorrigeerd), kop met Delpher-link. 16 boeken.
 - `delpher/*.pdf` — 6 PDF's met tekeningen: HOY10, NPO11, SV15, ABR22, NPV30, PTT30 (samen ±42 MB).
 - `delpher/1922_Abraas_vreede-tabel_scan9.png`, `…_morse-tabel_scan8.png` — de handgetekende seintabellen.
+
+## Ashley
+
+| Sleutel | Werk | Herkomst | Bestand |
+|---|---|---|---|
+| **ABOK** | Clifford W. Ashley, *The Ashley Book of Knots* (1944), 638 pagina's met tekstlaag | aangeleverd door Wiebren, 16-10-2026 | `reference/boeken/ashley/Ashley_Book_Knots.pdf` (niet in git, ©) |
+
+Gebruik: ABOK-nummers en paginanummers natrekken (de app linkt naar de scan op archive.org, `web/src/data/abok.js`).
+Steekproef 16-10-2026: #520 blz. 85, #1010 blz. 186, #1431 blz. 262, #1665 blz. 290 — gelijk aan `abok.js`.
+De achtknoop als stopknoop is #520 (niet #570, de achtknoop als begin van een vlechtwerk).

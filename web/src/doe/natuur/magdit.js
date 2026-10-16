@@ -14,14 +14,14 @@ const SITUATIES = [
   { tekst: 'Je plukt een vuilniszak vol bramen om jam van te maken en te verkopen. (Staatsbosbeheer)', antwoord: 'niet',
     uitleg: 'Alleen op kleine schaal en voor jezelf. Een zak vol om te verkopen is dat niet.' },
   { tekst: 'Je groep doet om tien uur ’s avonds een spel in het bos. (Staatsbosbeheer)', antwoord: 'vragen',
-    uitleg: 'De meeste gebieden zijn open van zonsopgang tot zonsondergang. Een activiteit meld je ruim van tevoren bij de boswachter, en ’s avonds kan dat alleen als het mag.' },
+    uitleg: 'De meeste gebieden zijn open van zonsopgang tot zonsondergang, en om tien uur is de zon vaak al onder. Een activiteit meld je ruim van tevoren bij de boswachter. Na zonsondergang kan het alleen als die het goedvindt.' },
   { tekst: 'Je wilt een geocache verstoppen in het bos. (Staatsbosbeheer)', antwoord: 'vragen',
     uitleg: 'Voor een geocache of een GPS-route door een gebied heb je eerst toestemming van de boswachter nodig.' },
   { tekst: 'Je loopt met je groep van 25 scouts een tocht door een gebied van Natuurmonumenten.', antwoord: 'vragen',
     uitleg: 'Bij Natuurmonumenten heb je gebiedstoestemming nodig als je groep groter is dan 20 personen.' },
   { tekst: 'Je loopt een stukje van het pad af, de heide op, om een vogel beter te zien.', antwoord: 'niet',
     uitleg: 'Blijf op de wegen en paden: zo stoor je planten en dieren zo weinig mogelijk.' },
-  { tekst: 'Je fietst over een pad met het bord „Vrij wandelen op wegen en paden”.', antwoord: 'niet',
+  { tekst: 'Je fietst over een pad met het bord „Vrij wandelen op wegen en paden”. (Staatsbosbeheer)', antwoord: 'niet',
     uitleg: 'Dat bord betekent: alleen wandelen. Fietsen mag waar staat „Vrije toegang op wegen en paden”, of op een fietspad.' },
   { tekst: 'Je laat je hond los rennen in het bos, waar geen bord over honden staat.', antwoord: 'niet',
     uitleg: 'Honden zijn bijna overal welkom, maar aan de lijn. Los mag alleen waar een bord dat zegt.' },
@@ -38,7 +38,7 @@ const SITUATIES = [
   { tekst: 'Je wandelt overdag met je ouders over de paden, en neemt je afval weer mee.', antwoord: 'mag',
     uitleg: 'Precies zoals de Buitencode het vraagt: „Respecteer de natuur: maak geen lawaai en neem je afval mee.”' },
   { tekst: 'Je zet een wildcamera aan een boom, om te zien welke dieren er langskomen. (Staatsbosbeheer)', antwoord: 'vragen',
-    uitleg: 'Daar heb je toestemming van de eigenaar voor nodig, en die krijg je zelden. Mensen filmen mag niet.' },
+    uitleg: 'Daar heb je toestemming van de eigenaar voor nodig. Een boswachter geeft die niet zo snel: een wildcamera hangt vaak buiten de paden, en daar mag je meestal niet komen. Mensen filmen mag niet.' },
 ];
 
 export default function magDitHier() {

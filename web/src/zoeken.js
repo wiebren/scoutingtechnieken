@@ -7,9 +7,10 @@
 import { BLAD, BLADEN } from './data/bladen/index.js';
 import { CATEGORIE, CATEGORIEEN, groepNaam } from './data/categorieen.js';
 import { alles, inKeuze, inWoorden } from './data/niveaus.js';
+import { bladTekens } from './bladtekens.js';
 import { h, vul } from './dom.js';
 import { icoon } from './iconen.js';
-import { niveauKeuze } from './opslag.js';
+import { niveauKeuze, volgAfgevinkt } from './opslag.js';
 import { ga, href, terug } from './router.js';
 import { splitView } from './splitview.js';
 import { zoek } from './zoek.js';
@@ -38,7 +39,7 @@ export function zoekenView() {
   vul(sv.lijstBalk, h('div.balk-rij', h('h1', 'Zoeken')), h('div.zoekrij', icoon('zoeken', 'icoon zoekicoon'), veld), filter);
 
   const rij = (b, sub) => h('a.rij', { href: linkNaar(b.id), 'data-blad': b.id },
-    h('span.rij-naam', b.naam), sub && h('span.rij-sub', sub), icoon('verder', 'icoon rij-pijl'));
+    h('span.rij-naam', b.naam), bladTekens(b.id), sub && h('span.rij-sub', sub), icoon('verder', 'icoon rij-pijl'));
 
   // the niveaus chosen in the menu; `ookBuiten` shows the rest as well, until another list is opened
   let ookBuiten = false;
@@ -154,6 +155,9 @@ export function zoekenView() {
       a.href = linkNaar(a.dataset.blad);
     }
   }
+
+  // ticked off on a card, at the insignes or in another tab: the ticks in the list follow
+  volgAfgevinkt(() => { if (getoond) tekenLijst(); });
 
   return {
     el: sv.el,

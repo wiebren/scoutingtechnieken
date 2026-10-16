@@ -59,6 +59,9 @@
 .plaatje .tw-touw-knoop { fill: #9a7442; stroke: #6b4f2a; stroke-width: 1; }
 .plaatje .tw-gezicht { fill: color-mix(in srgb, #f2c200 35%, var(--paneel)); stroke: var(--inkt); stroke-width: 2; }
 .plaatje .tw-oogwit { fill: #ffffff; stroke: var(--inkt); stroke-width: 1.6; }
+/* pupils and the shut ("black") eye stay dark in the dark theme too, or they vanish against the white eye */
+.plaatje .tw-pupil { fill: #1b211d; }
+.plaatje .tw-oog-dicht { fill: #1b211d; stroke: var(--inkt); stroke-width: 1.6; }
 .plaatje .tw-lint { fill: #e5342b; }
 .plaatje .tw-stam { fill: #8a5a2b; }
 .plaatje .tw-kroon { fill: color-mix(in srgb, var(--fam-natuur) 45%, var(--paneel)); stroke: var(--fam-natuur); stroke-width: 1.2; }
@@ -102,3 +105,11 @@
 .plaatje .tw-bord-licht { fill: #ffffff; stroke: #17211b; stroke-width: 1.5; }
 .plaatje .tw-bord-tekst { fill: #17211b; }
 .plaatje .tw-bord-wit-tekst { fill: #ffffff; font-weight: 600; }
+
+/* -- voetjestocht, dobbelsteentocht, radiovossenjacht */
+.plaatje .tw-voetje { fill: #e0559a; }
+.plaatje .tw-dobbel { fill: #ffffff; stroke: #1b211d; stroke-width: 2; }
+.plaatje .tw-oog { fill: #1b211d; }
+.plaatje .tw-peillijn { fill: none; stroke: var(--blauw); stroke-width: 2; stroke-dasharray: 7 4; }
+.plaatje .tw-peilpunt { fill: var(--blauw); }
+.plaatje .tw-vos { fill: #e07b00; stroke: var(--inkt); stroke-width: 1.5; }

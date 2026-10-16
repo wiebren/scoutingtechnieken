@@ -610,6 +610,9 @@
 .plaatje .tw-touw-knoop { fill: #9a7442; stroke: #6b4f2a; stroke-width: 1; }
 .plaatje .tw-gezicht { fill: color-mix(in srgb, #f2c200 35%, var(--paneel)); stroke: var(--inkt); stroke-width: 2; }
 .plaatje .tw-oogwit { fill: #ffffff; stroke: var(--inkt); stroke-width: 1.6; }
+/* pupils and the shut ("black") eye stay dark in the dark theme too, or they vanish against the white eye */
+.plaatje .tw-pupil { fill: #1b211d; }
+.plaatje .tw-oog-dicht { fill: #1b211d; stroke: var(--inkt); stroke-width: 1.6; }
 .plaatje .tw-lint { fill: #e5342b; }
 .plaatje .tw-stam { fill: #8a5a2b; }
 .plaatje .tw-kroon { fill: color-mix(in srgb, var(--fam-natuur) 45%, var(--paneel)); stroke: var(--fam-natuur); stroke-width: 1.2; }

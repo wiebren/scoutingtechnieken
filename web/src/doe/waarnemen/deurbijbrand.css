@@ -1,0 +1,15 @@
+/* Een deur openen bij brand (deurbijbrand.js) */
+.bd-svg { max-width: 460px; }
+.bd-svg .bd-muur { fill: var(--zacht); }
+.bd-svg .bd-vloer { fill: var(--lijn-sterk); }
+.bd-svg .bd-donker { fill: #121316; stroke: var(--inkt); stroke-width: 1.2; }
+.bd-svg .bd-deur { fill: color-mix(in srgb, var(--bruin) 45%, var(--paneel)); stroke: var(--inkt); stroke-width: 1.2; stroke-linejoin: round; }
+.bd-svg .bd-klink { fill: var(--inkt); }
+.bd-svg .bd-lijf path { fill: none; stroke: #3c78c8; stroke-width: 6; stroke-linecap: round; stroke-linejoin: round; }
+.bd-svg .bd-lijf circle { stroke: none; }
+.bd-svg .bd-lijf .lijn { stroke: var(--inkt); stroke-width: 1.5; }
+.bd-svg .bd-hand { stroke: #a8745a; stroke-width: 1; }
+.bd-svg .bd-ballon { fill: var(--paneel); stroke: var(--inkt); stroke-width: 1.2; stroke-linejoin: round; }
+.bd-svg .bd-nood { fill: #11904a; }
+.bd-svg .bd-pijl { fill: none; stroke: #ffffff; stroke-width: 2; stroke-linecap: round; stroke-linejoin: round; }
+.bd-uitleg { min-height: 4.5em; }

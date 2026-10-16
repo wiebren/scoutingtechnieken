@@ -28,4 +28,6 @@ export default {
   tekencheck: { titel: 'Zoek de teken', laad: () => import('./tekencheck.js') },
   'ehbo-set': { titel: 'Pak de EHBO-set in', laad: () => import('./ehboset.js') },
   blusmiddel: { titel: 'Kies het blusmiddel', laad: () => import('./blusmiddel.js') },
+  'brandgevaar-thuis': { titel: 'Veilig of brandgevaar?', laad: () => import('./brandgevaar.js') },
+  'deur-bij-brand': { titel: 'Open de deur, stap voor stap', laad: () => import('./deurbijbrand.js'), bekijk: true },
 };

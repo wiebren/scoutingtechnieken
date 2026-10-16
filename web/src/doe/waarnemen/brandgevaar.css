@@ -1,0 +1,6 @@
+/* Veilig of brandgevaar? (brandgevaar.js) */
+.bg-vraag { margin: 0; padding: 12px 14px; border-radius: 10px; background: color-mix(in srgb, #f08a1c 14%, var(--paneel)); font-size: 17px; font-weight: 600; min-height: 3.2em; }
+.bg-keuzes { display: grid; grid-template-columns: 1fr 1fr; gap: 8px; }
+.bg-keuze { font-size: 15px; }
+.doe-plek .bg-keuze.juist { opacity: 1; background: var(--accent); border-color: var(--accent); color: var(--op-accent); }
+.doe-plek .bg-keuze.mis { opacity: 1; background: color-mix(in srgb, var(--rood) 16%, var(--paneel)); border-color: var(--rood); color: var(--inkt); }

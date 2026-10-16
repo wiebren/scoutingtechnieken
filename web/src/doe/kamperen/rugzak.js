@@ -1,7 +1,7 @@
 // Pack a rucksack: choose a thing and put it in a part of the pack (lid, top, middle against your back, middle at
 // the front, bottom). A dot shows where the weight ends up; "Kijk het na" says what is in a good place and what is
 // not. The rule: heavy things in the middle, close to your back; the sleeping bag at the bottom; what you need on
-// the way at the top or in the lid. Facts: TKN §3.5 and kamperen-uitwerking.md (REI).
+// the way at the top or in the lid. Facts: TKN §3.5 and kamperen-uitwerking.md (DEUTER, EE).
 import { h } from '../../dom.js';
 import { s } from '../kompasdelen.js';
 import '../vorm.css';

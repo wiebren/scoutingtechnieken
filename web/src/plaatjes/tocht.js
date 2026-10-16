@@ -84,8 +84,8 @@ function gezicht(cx, cy, kijk, { smiley = false } = {}) {
   for (const z of [-1, 1]) {
     const ox = cx + z * 8; const oy = cy - 5;
     const dicht = (kijk === 'dicht-links' && z === -1) || (kijk === 'dicht-rechts' && z === 1);
-    uit += dicht ? `<ellipse cx="${ox}" cy="${oy}" rx="5" ry="6.5" class="telefoon"/>`
-      : `<ellipse cx="${ox}" cy="${oy}" rx="5" ry="6.5" class="tw-oogwit"/><circle cx="${ox + dx}" cy="${oy + dy}" r="2.6" class="telefoon"/>`;
+    uit += dicht ? `<ellipse cx="${ox}" cy="${oy}" rx="5" ry="6.5" class="tw-oog-dicht"/>`
+      : `<ellipse cx="${ox}" cy="${oy}" rx="5" ry="6.5" class="tw-oogwit"/><circle cx="${ox + dx}" cy="${oy + dy}" r="2.6" class="tw-pupil"/>`;
   }
   if (smiley) uit += `<path d="M${cx - 9} ${cy + 8}q9 7 18 0" class="tw-pen dun"/>`;
   return uit;
@@ -435,7 +435,7 @@ function coordinatenroute() {
   uit += `<path d="M${p.map(([, x, y]) => `${x} ${y}`).join('L')}" class="tw-route" stroke-dasharray="7 5"/>`;
   const [bx, by] = rd(x0, y0, km, 113, 398);
   uit += `<path d="M${bx} ${by}H${p[1][1]}V${p[1][2]}" class="tw-blauw" stroke-width="2"/>`;
-  uit += tekst(r1((bx + p[1][1]) / 2), by - 5, 'huisje in', { maat: 11, klasse: 'blauw-tekst vet' }) + tekst(p[1][1] + 5, r1((by + p[1][2]) / 2), 'trappetje op', { maat: 11, anker: 'start', klasse: 'blauw-tekst vet' });
+  uit += tekst(bx + 11, by + 14, 'huisje in', { maat: 11, anker: 'start', klasse: 'blauw-tekst vet' }) + regels(p[1][1] + 4, r1((by + p[1][2]) / 2) - 2, 'trapje|op', { maat: 11, anker: 'start', klasse: 'blauw-tekst vet' });
   uit += p.map(([n, x, y]) => `<circle cx="${x}" cy="${y}" r="5" class="rood"/>${tekst(x - 8, y - 7, n, { maat: 12, anker: 'end', klasse: 'vet' })}`).join('');
   uit += ['A  112.30 – 398.25', 'B  113.52 – 398.64', 'C  114.40 – 399.70'].map((r, i) => tekst(x0, 210 + i * 16, r, { maat: 12, anker: 'start' })).join('');
   return svg(300, 252, 'Coördinatenroute: een stuk RD-raster met de lijnen 112 tot 115 en 398 tot 400. A, B en C zijn coördinaten; bij B staat hoe je hem vindt: eerst naar rechts langs lijn 398 tot 52, dan omhoog tot 64', uit);
@@ -474,9 +474,10 @@ function passerroute() {
 
 // -- rally: a grid of roads, 4 × 3 crossings
 const RX = [40, 120, 200, 280]; const RY = [40, 110, 180];
-function rallyWegen({ onverhard = [] } = {}) {
+function rallyWegen({ onverhard = [], gat = null } = {}) {
   let uit = '<rect x="0" y="0" width="320" height="220" rx="6" class="tw-paneel"/>';
-  for (const y of RY) uit += `<path d="M20 ${y}H300" class="tw-weg smal"/>`;
+  // gat = [y, x1, x2]: that stretch of road y is missing
+  for (const y of RY) uit += gat?.[0] === y ? `<path d="M20 ${y}H${gat[1]}M${gat[2]} ${y}H300" class="tw-weg smal"/>` : `<path d="M20 ${y}H300" class="tw-weg smal"/>`;
   for (const x of RX) uit += `<path d="M${x} 20V200" class="tw-weg smal"/>`;
   return uit + onverhard.map((d) => `<path d="${d}" class="tw-pad"/>`).join('');
 }
@@ -504,7 +505,8 @@ function rallyGrens() {
 }
 
 function rallyBarricades() {
-  let uit = rallyWegen();
+  // no road along the top between 120 and 200, so there is one shortest way round the barricade
+  let uit = rallyWegen({ gat: [40, 120, 200] });
   uit += '<path d="M40 200V110H280V40" class="tw-pen" stroke-dasharray="6 5"/>';
   uit += '<path d="M160 100v20" class="tw-pen dik"/>' + tekst(160, 94, '1', { maat: 12, klasse: 'vet' });
   uit += '<path d="M40 200V110H120V180H200V110H280V40" class="tw-route"/>';
@@ -694,8 +696,8 @@ function rallyKaartleesregels() {
   let uit = vak(0, 0, '<path d="M8 56H152" class="tw-weg breed"/>' + '<path d="M20 48H96A9 9 0 0 1 96 66H86" class="tw-route"/>' + pijl(86, 66, 62, 66, { klasse: 'tw-route', punt: 9 }), 'keren mag niet,|tenzij het gevraagd wordt', false);
   uit += vak(170, 0, '<path d="M8 56H152" class="tw-weg"/><circle cx="80" cy="56" r="11" class="vlak"/><circle cx="80" cy="56" r="11" class="lijn dik"/><path d="M80 49v14M74 54h12" class="lijn dik"/>'
     + '<path d="M14 64H120" class="tw-route"/>' + pijl(120, 64, 146, 64, { klasse: 'tw-route', punt: 9 }), 'een kaartteken op de weg:|de weg loopt gewoon door', true);
-  uit += vak(0, 144, '<path d="M24 36V88H124V36M24 62H124M74 36V88" class="tw-weg smal"/><circle cx="24" cy="88" r="5" class="telefoon"/><circle cx="124" cy="36" r="5" class="telefoon"/>'
-    + '<path d="M24 88H124V40" class="tw-route"/><path d="M24 88V36H120" class="tw-pen dun" stroke-dasharray="4 4"/>' + tekst(12, 92, 'A', { maat: 11, klasse: 'vet' }) + tekst(136, 40, 'B', { maat: 11, klasse: 'vet' }), 'zelf kiezen? neem|de kortste route', true);
+  uit += vak(0, 144, '<path d="M24 88V30H124V62M24 62H124" class="tw-weg smal"/><circle cx="24" cy="88" r="5" class="telefoon"/><circle cx="124" cy="62" r="5" class="telefoon"/>'
+    + '<path d="M24 88V62H120" class="tw-route"/><path d="M30 86V36H118V58" class="tw-pen dun" stroke-dasharray="4 4"/>' + tekst(12, 92, 'A', { maat: 11, klasse: 'vet' }) + tekst(136, 66, 'B', { maat: 11, klasse: 'vet' }), 'zelf kiezen? neem|de kortste route', true);
   uit += vak(170, 144, '<rect x="16" y="20" width="44" height="44" rx="4" class="tw-bord-blauw"/><path d="M38 60V34" class="tw-bord-wit"/><path d="M27 32H49" class="tw-bord-rood"/>' + goed(52, 80)
     + '<rect x="72" y="18" width="76" height="50" rx="4" class="tw-bord-licht"/>' + ['uitgezonderd', 'bestemmings-', 'verkeer'].map((r, k) => `<text x="110" y="${33 + k * 12}" class="tw-bord-tekst" font-size="9.5" text-anchor="middle">${r}</text>`).join('') + fout(130, 80),
   'doodlopend: mag wel;|bestemmingsverkeer: niet', true).replace(goed(140, 20), '');
@@ -811,7 +813,7 @@ function tochtafstanden() {
 function logboek() {
   let uit = '<rect x="4" y="4" width="312" height="212" rx="6" class="vlak"/><rect x="4" y="4" width="312" height="212" rx="6" class="lijn"/>';
   for (let y = 54; y < 212; y += 20) uit += `<path d="M10 ${y}H310" class="lijn haar"/>`;
-  uit += '<path d="M52 8V212" class="lijn rood-lijn"/>' + tekst(60, 34, 'Hike zaterdag 12 okt · de Wolven', { maat: 13, anker: 'start', klasse: 'vet' });
+  uit += '<path d="M52 8V212" class="lijn rood-lijn"/>' + tekst(60, 34, 'Hike zaterdag 10 okt · de Wolven', { maat: 13, anker: 'start', klasse: 'vet' });
   [['10.05', 'vertrek: 113.52 – 398.64'], ['', 'stripkaart, 3,2 km, zonnig, 14 °C'], ['10.55', 'post 1: 114.10 – 399.02'], ['', 'ree gezien bij de beek'], ['', 'opdracht: hoogte van de toren geschat'],
     ['11.20', 'vertrek post 1, oleaat'], ['12.10', 'post 2: lunch …']].forEach(([tijd, t], i) => {
     const y = 50 + i * 20;
@@ -837,8 +839,70 @@ function bewerkteKaart() {
   return svg(300, 250, 'Bewerkte kaart met keuzeposten: een kaart met een afgeplakt stuk, een start, verplichte posten 1 en 3, een keuze tussen post 2a en 2b, een bonuspost en een finish', uit);
 }
 
+// -- the tochtvormen added later: voetjes, dobbelsteen, radiovossenjacht
+
+/** One chalk footprint at (x, y), walking towards `hoek` (degrees from north); `links` mirrors it. */
+function voetje(x, y, hoek, links) {
+  const m = links ? -1 : 1;
+  const tenen = [[-4, -15, 2.4], [-0.6, -16.2, 2], [2.5, -15.4, 1.8], [5, -13.8, 1.6], [6.6, -11.6, 1.4]]
+    .map(([tx, ty, r]) => `<circle cx="${r1(tx * m)}" cy="${ty}" r="${r}" class="tw-voetje"/>`).join('');
+  const zool = `<ellipse cx="${r1(1 * m)}" cy="-5" rx="6" ry="7.5" class="tw-voetje"/><ellipse cx="${r1(-0.6 * m)}" cy="3" rx="4" ry="6" class="tw-voetje"/><ellipse cx="0" cy="9" rx="4.6" ry="5" class="tw-voetje"/>`;
+  return `<g transform="translate(${x} ${y}) rotate(${hoek}) scale(0.85)">${zool}${tenen}</g>`;
+}
+
+function voetjes() {
+  let uit = '<rect x="0" y="0" width="300" height="210" rx="8" class="vlak2"/>' + kruispunt(150, 110, 104, [270, 0, 90], 90, { pen: false });
+  // up the road from the south, then right at the crossing
+  [[146, 196, 0, true], [154, 172, 0, false], [146, 148, 0, true], [154, 124, 20, false], [168, 106, 70, true], [190, 114, 90, false],
+    [214, 106, 90, true], [238, 114, 90, false], [262, 106, 90, true]].forEach(([x, y, g, l]) => { uit += voetje(x, y, g, l); });
+  uit += tekst(206, 82, 'de tenen wijzen', { maat: 11, anker: 'start', klasse: 'vet' }) + tekst(206, 96, 'de weg', { maat: 11, anker: 'start', klasse: 'vet' });
+  return svg(300, 210, 'Voetjestocht: gekleurde krijtvoetjes lopen de weg op naar een kruispunt en draaien daar naar rechts. Waar de tenen heen wijzen, ga je heen', uit);
+}
+
+/** A die face with 1-6 pips, at (x, y), size z. */
+function dobbelsteen(x, y, z, n) {
+  const a = z * 0.27; const plek = { 1: [[0, 0]], 2: [[-1, -1], [1, 1]], 3: [[-1, -1], [0, 0], [1, 1]], 4: [[-1, -1], [1, -1], [-1, 1], [1, 1]],
+    5: [[-1, -1], [1, -1], [0, 0], [-1, 1], [1, 1]], 6: [[-1, -1], [1, -1], [-1, 0], [1, 0], [-1, 1], [1, 1]] }[n];
+  return `<rect x="${x - z / 2}" y="${y - z / 2}" width="${z}" height="${z}" rx="${z * 0.18}" class="tw-dobbel"/>${
+    plek.map(([px, py]) => `<circle cx="${r1(x + px * a)}" cy="${r1(y + py * a)}" r="${r1(z * 0.09)}" class="tw-oog"/>`).join('')}`;
+}
+
+function dobbelsteenTocht() {
+  const betekenis = ['rechtsaf', 'linksaf', 'rechtdoor', 'terug', 'opdracht', 'zelf kiezen'];
+  const richting = [90, 270, 0, 180, null, null];
+  let uit = '';
+  betekenis.forEach((t, i) => {
+    const cx = 56 + (i % 3) * 114; const cy = 50 + Math.floor(i / 3) * 112;
+    uit += dobbelsteen(cx - 18, cy, 46, i + 1);
+    const ax = cx + 34;
+    if (richting[i] === 180) {
+      uit += `<path d="M${ax - 7} ${cy + 18}V${cy - 6}a7 7 0 0 1 14 0" class="tw-pen"/>` + pijl(ax + 7, cy - 6, ax + 7, cy + 18, { klasse: 'tw-pen', punt: 8 });
+    } else if (richting[i] != null) {
+      const [ex, ey] = pol(ax, cy, 18, richting[i]);
+      uit += `<path d="M${ax} ${cy + 18}V${cy}" class="tw-pen"/>` + pijl(ax, cy, ex, ey, { klasse: 'tw-pen', punt: 8 });
+    } else uit += tekst(cx + 34, cy + 9, i === 4 ? '!' : '?', { maat: 26, klasse: 'vet' });
+    uit += tekst(cx, cy + 46, `${i + 1}: ${t}`, { maat: 12, klasse: 'vet' });
+  });
+  return svg(340, 214, 'Dobbelsteentocht: wat elk getal betekent bij Jong Nederland. 1 rechtsaf, 2 linksaf, 3 rechtdoor, 4 terug, 5 een opdracht, 6 jullie kiezen zelf', uit);
+}
+
+function radiovos() {
+  let uit = '<rect x="0" y="0" width="320" height="220" rx="8" class="tw-paneel"/><path d="M30 26h120v70h-120z M190 120h110v80h-110z" class="tw-bos"/>';
+  uit += '<path d="M0 170 Q120 150 200 180 T320 160" class="tw-weg smal"/><path d="M90 0 V220" class="tw-pad"/>';
+  const vos = [204, 82];
+  const punten = [[40, 182, 'A'], [292, 196, 'B'], [276, 22, 'C']];
+  for (const [x, y, n] of punten) {
+    const dx = vos[0] - x; const dy = vos[1] - y; const l = Math.hypot(dx, dy);
+    uit += `<path d="M${x} ${y}L${r1(x + (dx / l) * (l + 34))} ${r1(y + (dy / l) * (l + 34))}" class="tw-peillijn"/>`;
+    uit += `<path d="M${x} ${y - 9}l8 14h-16z" class="tw-peilpunt"/>` + tekst(x + (x < 160 ? -12 : 13), y + 4, n, { maat: 13, klasse: 'vet', anker: x < 160 ? 'end' : 'start' });
+  }
+  uit += `<circle cx="${vos[0]}" cy="${vos[1]}" r="11" class="tw-vos"/><path d="M${vos[0]} ${vos[1] - 11}v-14 M${vos[0] - 6} ${vos[1] - 22}h12" class="tw-pen dun"/>`;
+  uit += tekst(vos[0] + 16, vos[1] - 14, 'de vos', { maat: 12, anker: 'start', klasse: 'vet' });
+  uit += tekst(12, 212, 'peilpunt', { maat: 10, anker: 'start', klasse: 'stil' });
+  return svg(320, 220, 'Radiovossenjacht met een kruispeiling: vanaf drie plekken, A, B en C, peil je de richting van het signaal en teken je een lijn op de kaart. Waar de lijnen elkaar snijden, zit de vos', uit);
+}
+
 export default {
-  'tocht-voorbeeldkaart': () => svg(300, 200, 'De voorbeeldroute op een kaartje: vanaf het begin noordwaarts, op 1 rechtsaf, op 2 rechtdoor, op 3 linksaf, op 4 schuin rechts', voorbeeldKaart()),
   'tocht-overzicht': overzicht,
   'tocht-kruispuntenroute': () => kruispuntenroute(),
   'tocht-noordpijlroute': noordpijlRoute,
@@ -879,8 +943,8 @@ export default {
     'De tekens van Baden-Powell uit 1908: deze weg, brief drie passen die kant op, niet deze weg, naar huis, een handtekening, en het teken voor de nacht van takken met gras', { cel: 120, hoog: 124, teken: 76 }),
   'tocht-spoortekens': () => tegels(metKort(UITGEBREID), 4, 'De uitgebreide set spoortekens, elk met zijn betekenis'),
   'tocht-spoortekens-natuur': () => tegels(metKort(NATUUR), 4, 'Spoortekens van gras, stenen, takken en lucifers'),
-  'tocht-wandelmarkering': () => tegels([...MARKERING('law'), ...MARKERING('streekpad')].map((t, i) => ({ inhoud: t.teken, kort: `${i < 5 ? 'LAW' : 'streekpad'}|${['rechtdoor', 'linksaf', 'rechtsaf', 'afslag komt', 'verkeerd'][i % 5]}` })), 5,
-    'Wandelmarkeringen op een paal: een LAW in wit en rood, een streekpad in geel en rood. Rechtdoor, linksaf, rechtsaf, een afslag komt eraan, en verkeerde weg', { cel: 74, hoog: 108, teken: 58 }),
+  'tocht-wandelmarkering': () => tegels([...MARKERING('law'), ...MARKERING('streekpad')].map((t, i) => ({ inhoud: t.teken, kort: `${i < 5 ? 'LAW' : 'streekpad'}|${['goede weg', 'linksaf', 'rechtsaf', 'afslag komt', 'verkeerd'][i % 5]}` })), 5,
+    'Wandelmarkeringen op een paal: een LAW in wit en rood, een streekpad in geel en rood. Goede weg, linksaf, rechtsaf, een afslag komt eraan, en verkeerde weg', { cel: 74, hoog: 108, teken: 58 }),
   'tocht-spiegelkruispunten': spiegelkruispunten,
   'tocht-wiskunderoute': wiskunderoute,
   'tocht-gradenloop': gradenloop,
@@ -901,4 +965,7 @@ export default {
   'tocht-tochtafstanden': tochtafstanden,
   'tocht-logboek': logboek,
   'tocht-bewerkte-kaart': bewerkteKaart,
+  'tocht-voetjes': voetjes,
+  'tocht-dobbelsteen': dobbelsteenTocht,
+  'tocht-radiovos': radiovos,
 };

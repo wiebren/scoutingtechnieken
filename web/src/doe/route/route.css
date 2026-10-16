@@ -133,7 +133,7 @@
 .rw-oog-svg { display: block; width: 58px; height: 54px; }
 .rw-oog { fill: #ffffff; stroke: var(--inkt); stroke-width: 2; }
 .rw-pupil { fill: #17211b; }
-.rw-oog-dicht { fill: var(--inkt); stroke: var(--inkt); stroke-width: 2; }
+.rw-oog-dicht { fill: #17211b; stroke: #17211b; stroke-width: 2; }  /* "zwart" in both themes, on the fixed yellow face */
 .rw-gezicht { fill: #ffd84a; stroke: var(--inkt); stroke-width: 2; }
 .rw-mond { fill: none; stroke: #17211b; stroke-width: 2.4; stroke-linecap: round; }
 

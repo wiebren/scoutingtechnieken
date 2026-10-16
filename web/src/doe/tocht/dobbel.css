@@ -1,0 +1,11 @@
+/* Dobbelsteentocht (dobbel.js). The die keeps its own colours: white with black pips, in both themes. */
+.doe-dobbel { display: flex; flex-direction: column; gap: 12px; }
+.db-boven { display: flex; align-items: center; gap: 16px; }
+.db-steen { width: 96px; height: 96px; flex: none; }
+.db-vlak { fill: #ffffff; stroke: #1b211d; stroke-width: 3; }
+.db-oog { fill: #1b211d; }
+.db-rechts { display: flex; flex-direction: column; align-items: flex-start; gap: 8px; min-width: 0; }
+.db-sleutel { display: grid; grid-template-columns: repeat(2, minmax(0, 1fr)); gap: 4px 12px; margin: 0; padding: 0; list-style: none; font-size: 14px; }
+@container (min-width: 480px) { .db-sleutel { grid-template-columns: repeat(3, minmax(0, 1fr)); } }
+.db-lijst { margin: 0; padding: 0; color: var(--stil); font-size: 14px; list-style: none; }
+.db-lijst:empty { display: none; }

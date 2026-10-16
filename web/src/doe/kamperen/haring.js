@@ -15,7 +15,7 @@ const GRONDEN = [
   { tekst: 'Los, droog zand in de duinen.', goed: ['zand'],
     uitleg: 'In zand glijdt een smalle haring er zo uit. Een lange, brede zandharing heeft veel oppervlak. Je kunt hem ook plat ingraven.' },
   { tekst: 'Harde, droge grond vol steentjes.', goed: ['pen', 'y'],
-    uitleg: 'Op harde grond buigt een dunne hoekharing krom. Een stevige pen of Y-haring gaat er beter in.' },
+    uitleg: 'Voor harde grond heb je een dunne, sterke pen of rotsharing. Een stevige Y-haring kan ook: die past bijna overal.' },
   { tekst: 'Een stevige weide, en er komt harde wind.', goed: ['y', 'hoek'],
     uitleg: 'Een Y-haring of hoekharing houdt goed in stevige grond. Zet bij harde wind ook alle scheerlijnen vast.' },
 ];

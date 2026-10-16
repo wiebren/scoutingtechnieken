@@ -75,7 +75,7 @@ export default function kaartkompas({ greep = 3 } = {}) {
   const knoppen = h('div.kk-knoppen',
     greep === 3 && h('span.kk-knopgroep', h('span.kk-knoplabel', 'Huis'), draai('Huis', -1), draai('Huis', 1)),
     h('span.kk-knopgroep', h('span.kk-knoplabel', orienteren ? 'Kaart' : 'Kompas'), draai(orienteren ? 'Kaart' : 'Kompas', -1), draai(orienteren ? 'Kaart' : 'Kompas', 1)));
-  const beeld = h('div.kkk-beeld', svg, h('p.kkk-bron', 'Kaart: Kadaster, TOPraster via PDOK (open data)'));
+  const beeld = h('div.kkk-beeld', svg, h('p.kkk-bron', 'Kaart: Kadaster, TOPraster via PDOK (CC BY 4.0)'));
   const el = h('div.doe-kaartkompas', beeld,
     h('div.kk-tekst', opdrachtRegel, stappen, stand, melding, knoppen,
       h('div.knop-rij', h('button.knop.klein', { type: 'button', onclick: () => nieuweTaak() }, 'Nieuwe opdracht'))));
@@ -144,7 +144,7 @@ export default function kaartkompas({ greep = 3 } = {}) {
         lijnen.append(s('path', { d: `M${p(jij[0])} ${p(jij[1])}L${p(ex)} ${p(ey)}`, class: 'kkk-lijn' }));
         punten.append(punt(gezien, 'de toren', 'doel'));
       } else randen.replaceChildren();                        // no arrow to a tower that is not there (yet)
-      melding.textContent = klaar ? 'Goed! De toren die je zag, ligt ergens op deze lijn. Met een tweede peiling weet je waar.'
+      melding.textContent = klaar ? 'Goed! De toren die je zag, ligt ergens op deze lijn. Zoek langs de lijn op de kaart naar een toren.'
         : huisOmgekeerd ? 'De oriëntatiepijl wijst naar beneden: dan ligt je lijn precies de verkeerde kant op.' : '';
       svg.classList.toggle('goed', klaar);
       gelukt = klaar;

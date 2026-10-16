@@ -42,7 +42,7 @@ export const SOORTEN = {
   anker: { naam: 'Haringen in serie', blad: 'haringen-in-serie', uitleg: 'Meer haringen achter elkaar, met touw verbonden: ze verdelen de trek over meer grond.' },
   brugtouw: { naam: 'Brugtouw', blad: 'bouw-apenbrug', uitleg: 'Het looptouw en de handtouwen: strak gespannen, met weinig rek.' },
   kabel: { naam: 'Tokkeltouw', blad: 'veilig-touwbanen', uitleg: 'Statisch touw dat bijna niet rekt, van relais naar relais, met genoeg doorhang. Blijf uit de buurt als het gespannen is.' },
-  sling: { naam: 'Relais', blad: 'veilig-touwbanen', uitleg: 'Een vast punt: boombescherming, een sling om de stam en een schroefkarabiner waar het touw in komt.' },
+  sling: { naam: 'Relais', blad: 'veilig-touwbanen', uitleg: 'Een vast punt: boombescherming, een hijsband om de stam en een sluiting met de werklast erop, waar het touw aan komt.' },
   rem: { naam: 'Rem', blad: 'veilig-touwbanen', uitleg: 'Een blok op het touw met een elastiek naar een anker: de tokkelaar stopt zacht voor de boom.' },
   zak: { naam: 'Testzak', blad: 'veilig-touwbanen', uitleg: 'Eerst test je de baan met een zware zak aan de katrol, pas daarna met iemand in een klimgordel.' },
   draagtouw: { naam: 'Draagtouw', blad: 'bouw-familieschommel', uitleg: 'Twee touwen per eind, in een V naar de liggers: de stam kan alleen in zijn lengte schommelen.' },
@@ -67,6 +67,8 @@ export const SOORTEN = {
   binnenband: { naam: 'Binnenband', blad: 'bouw-katapult', uitleg: 'Een oude fietsbinnenband, om de staander geknoopt: hij rekt als je de zak naar achteren trekt.' },
   ligvlak: { naam: 'Ligvlak', blad: 'bouw-brancard', uitleg: 'Begin met een mastworp, haal het touw steeds om en om rond beide palen, trek het strak en eindig met een mastworp.' },
   lint: { naam: 'Afzetlint', blad: 'bouw-zweefmolen', uitleg: 'Een lint rondom, op paaltjes: binnen het lint komt niemand als de molen draait.' },
+  dektouw: { naam: 'Dektouw', blad: 'marlsteek', uitleg: 'Een touw langs de rand van het dek, met een marlsteek om elke dwarsligger: zo zit ook elke dwarsligger zonder hanger vast.' },
+  marl: { naam: 'Marlsteek', blad: 'marlsteek', uitleg: 'Een halve steek om de dwarsligger, steeds met hetzelfde touw: zo hangt het hele dek aan één touw.' },
   ophangtouw: { naam: 'Ophangtouw', blad: 'beweegbare-verbinding', uitleg: 'Draagt het deel dat beweegt, vanaf een strop of ring waar het om kan draaien.' },
 };
 
@@ -100,9 +102,12 @@ function bouwer() {
      * An anchor of pegs in series along `richting` from ground point p: rows of 1, 2, 3 pegs (or the given rows),
      * each row tied to the feet of the next with a slingersjorring. Returns the head of the first peg.
      */
-    anker(p, richting, rijen = [1, 2, 3]) {
+    anker(p, richting, rijen = [3, 2, 1]) {
+      // rows of pegs in series, the most pegs in front (nearest the load, where the pull is largest): 3-2-1. Each
+      // peg of a row is tied to a peg of the next row so that every peg carries; a strop over the front row takes
+      // the load. Returns the point where the load rope ends: the middle of that strop.
       const r = eenheid([richting[0], 0, richting[2]]); const zij = [-r[2], 0, r[0]];
-      let vorige = []; let eerste = null;
+      let vorige = []; let voorste = null;
       rijen.forEach((n, i) => {
         const rij = [];
         for (let j = 0; j < n; j++) {
@@ -110,15 +115,17 @@ function bouwer() {
           const kop = b.haring(q, r, { soort: rijen.length > 1 ? 'anker' : 'haring' });
           rij.push({ q, kop });
         }
-        if (!eerste) eerste = rij[0].kop;
-        // each peg of the row in front to the nearest peg of this row
-        for (const v of vorige) {
-          const doel = rij.reduce((x, y) => (lengte(min(y.q, v.q)) < lengte(min(x.q, v.q)) ? y : x));
+        if (!voorste) voorste = rij;
+        vorige.forEach((v, j) => {
+          const doel = rij[vorige.length > 1 ? Math.round((j * (rij.length - 1)) / (vorige.length - 1)) : 0];
           b.sjor('slinger', [], { van: v.kop, naar: plus(doel.q, [0, 0.04, 0]) });
-        }
+        });
         vorige = rij;
       });
-      return eerste;
+      if (voorste.length === 1) return voorste[0].kop;
+      const koppen = voorste.map((x) => plus(x.kop, keer(r, -0.03)));
+      b.lijn(koppen, 'lijn', { dik: 0.006, naam: 'strop over de voorste haringen' });
+      return plus(keer(koppen.reduce((a, c) => plus(a, c), [0, 0, 0]), 1 / koppen.length), keer(r, -0.06));
     },
   };
   return b;
@@ -307,7 +314,7 @@ function vlaggenmast() {
     const r = [Math.cos(g * RAD), 0, Math.sin(g * RAD)];
     return b.anker(keer(r, 6), r, [1, 1]);
   });
-  b.stap('Tuien', 'Zet drie tuien met een mastworp vast vlak onder de top (dat doe je terwijl de mast nog ligt). Zet de mast overeind en span de tuien gelijk aan.');
+  b.stap('Tuien', 'Zet drie tuien met een mastworp vast vlak onder de top, en de katrol of ring met de vlaglijn in de top (dat doe je terwijl de mast nog ligt). Zet de mast overeind en span de tuien gelijk aan.');
   const top = [0, 7.0, 0];
   b.sjor('mastworp', [boven], { p: top, naam: 'tuien aan de top' });
   for (const kop of koppen) b.lijn([top, kop], 'tui');
@@ -427,7 +434,7 @@ function kampkeuken() {
     b.sjor('kruis', [s.i, langs[s.sz < 0 ? 0 : 1]], { naam: 'langsligger aan staander' });
     b.sjor('kruis', [s.i, dwars[s.sx < 0 ? 0 : 1]], { naam: 'dwarsligger aan staander' });
   }
-  b.stap('Schoren', 'Zet in elke lange kant een schoor met twee diagonaalsjorringen, zodat de vuurtafel niet scheef zakt.');
+  b.stap('Schoren', 'Zet in elke kant een schoor met twee diagonaalsjorringen, onder de vloer, zodat de vuurtafel niet scheef zakt.');
   for (const sz of [-1, 1]) {
     // on the inside of the staanders and under the vloer, so it touches both staanders and keeps clear of the floor
     const z = sz * (Z - d / 2 - DUN / 2);
@@ -437,6 +444,15 @@ function kampkeuken() {
     b.sjor('diagonaal', [st.find((s) => s.sx === -sz && s.sz === sz).i, schoor], { naam: 'schoor aan staander' });
     b.sjor('diagonaal', [st.find((s) => s.sx === sz && s.sz === sz).i, schoor], { naam: 'schoor aan staander' });
   }
+  // and one in each short side, also inside and under the vloer, leaning the other way than the long ones there
+  for (const sx of [-1, 1]) {
+    const x = sx * (X - d / 2 - DUN / 2);
+    const a = [x, 0.1, sx * Z]; const c = [x, 0.64, -sx * Z];
+    const r = eenheid(min(c, a)); const l = lengte(min(c, a));
+    const schoor = b.paal(plus(a, keer(r, -(1.5 - l) / 2)), plus(c, keer(r, (1.5 - l) / 2)), DUN, 'schoor');
+    b.sjor('diagonaal', [st.find((s) => s.sx === sx && s.sz === sx).i, schoor], { naam: 'schoor aan staander' });
+    b.sjor('diagonaal', [st.find((s) => s.sx === sx && s.sz === -sx).i, schoor], { naam: 'schoor aan staander' });
+  }
   b.stap('Vloer', 'Leg een vloer van dunne palen dwars over de langsliggers.');
   const yv = yl + d / 2 + DUN / 2;
   for (let i = 0; i < 12; i++) {
@@ -445,9 +461,18 @@ function kampkeuken() {
   }
   b.stap('Zand', 'Leg er een dikke laag zand of plaggen op, met een opstaande rand. Daarop stook je: de sjorringen zitten eronder en kunnen niet doorbranden.');
   b.ding('zand', { p: [0, yv + DUN / 2 + 0.06, 0], lang: 1.3, breed: 1.2, dik: 0.12 });
-  b.stap('Galg', 'Sjor twee kookstaanders van 2,5 m aan de dwarsliggers en leg er bovenop een kookbalk van 2 m: vier kruissjorringen.');
-  const ks = [-1, 1].map((sx) => b.paal([sx * (X + d + d), 0, 0], [sx * (X + d + d), 2.5, 0], d, 'kookstaander'));
+  b.stap('Galg', 'Graaf twee kookstaanders van 3 m een halve meter in, sjor ze aan de dwarsliggers en zet elk met een schoor naar een haring vast. Leg er bovenop een kookbalk van 2 m: kruissjorringen.');
+  const ks = [-1, 1].map((sx) => b.paal([sx * (X + d + d), -0.5, 0], [sx * (X + d + d), 2.5, 0], d, 'kookstaander (ingegraven)'));
   ks.forEach((k, i) => b.sjor('kruis', [k, dwars[i]], { naam: 'kookstaander aan dwarsligger' }));
+  ks.forEach((k, i) => {
+    // a schoor from a haring in front up to the kookstaander, so the galg cannot tip forward or back
+    const sx = i ? 1 : -1; const x = sx * (X + d + d + d / 2 + DUN / 2 + 0.003);
+    const a = [x, 0.03, 0.95]; const c = [x, 1.5, 0];
+    const r = eenheid(min(c, a)); const l = lengte(min(c, a));
+    const schoor = b.paal(plus(a, keer(r, -0.08)), plus(a, keer(r, l + 0.17)), DUN, 'schoor');
+    b.sjor('diagonaal', [k, schoor], { naam: 'schoor aan de kookstaander' });
+    b.haring([x, 0, 1.08], [0, 0, 1]);
+  });
   const kb = b.paal([-1.0, 1.95, d], [1.0, 1.95, d], d, 'kookbalk');
   ks.forEach((k) => b.sjor('kruis', [k, kb], { naam: 'kookbalk aan kookstaander' }));
   b.stap('Vuur', 'Stook het vuur op het zand en hang de pan aan een ketting aan de kookbalk. Zo hoog dat de kleinste kok in de pan kan kijken.');
@@ -460,8 +485,8 @@ function kampkeuken() {
 
 function uitkijktoren() {
   const b = bouwer(); const { m } = b;
-  const d = DIK; const H = 6; const S = 1.0; const rr = MIDDEL;
-  b.stap('Palen', 'Vier staanders van 6 m op de hoeken van een vierkant van 2 bij 2 m. (Echt bouw je de zijkanten liggend en takel je de toren overeind; hier staat hij al.)');
+  const d = DIK; const H = 4.5; const S = 1.0; const rr = MIDDEL;
+  b.stap('Palen', 'Vier staanders van 4,5 m op de hoeken van een vierkant van 2 bij 2 m, net een meter langer dan de leuning hoog is. (Echt bouw je de zijkanten liggend en takel je de toren overeind; hier staat hij al.)');
   const st = {};
   for (const sx of [-1, 1]) for (const sz of [-1, 1]) st[`${sx}${sz}`] = b.paal([sx * S, 0, sz * S], [sx * S, H, sz * S], d, 'staander');
   const ring = (y, naam) => {
@@ -523,15 +548,15 @@ function uitkijktoren() {
       for (const bm of bomen) b.sjor('kruis', [bm, s], { naam: 'sport aan de ladder' });
     }
   }
-  b.stap('Ankers', 'Zet vier ankers, schuin van de hoeken af: haringen in serie (1-2-3), met slingersjorringen verbonden.');
+  b.stap('Ankers', 'Zet vier ankers, schuin van de hoeken af: haringen in serie (3-2-1), met slingersjorringen verbonden.');
   const koppen = {};
   for (const sx of [-1, 1]) for (const sz of [-1, 1]) {
     const r = eenheid([sx, 0, sz]);
-    koppen[`${sx}${sz}`] = b.anker(keer(r, 6.2), r, [1, 2, 3]);
+    koppen[`${sx}${sz}`] = b.anker(keer(r, 6.2), r, [3, 2, 1]);
   }
-  b.stap('Tuien', 'Zet vanaf de top van elke staander een tui met een mastworp vast en span hem naar zijn anker.');
+  b.stap('Tuien', 'Zet aan elke staander, vlak boven de leuning, een tui met een mastworp vast en span hem naar zijn anker. Daar zit de staander vast in de ring, dus daar kan de tui aan trekken.');
   for (const sx of [-1, 1]) for (const sz of [-1, 1]) {
-    const top = [sx * S, H - 0.25, sz * S];
+    const top = [sx * S, 3.85, sz * S];
     b.sjor('mastworp', [st[`${sx}${sz}`]], { p: top, naam: 'tui aan de staander' });
     b.lijn([plus(top, keer(eenheid([sx, 0, sz]), d / 2)), koppen[`${sx}${sz}`]], 'tui');
   }
@@ -562,8 +587,8 @@ function apenbrug() {
     const balk = b.paal(plus(c, [0, 0, -1]), plus(c, [0, 0, 1]), DUN, 'dwarsbalk');
     for (const p of k.poten) b.sjor('kruis', [p, balk], { naam: 'dwarsbalk aan poot' });
   }
-  b.stap('Ankers', 'Zet achter elke X, zo’n 3 m verder, een anker van haringen in serie (1-2-3) met slingersjorringen.');
-  const ank = kruizen.map((k) => b.anker([k.x + k.s * 3, 0, 0], [k.s, 0, 0], [1, 2, 3]));
+  b.stap('Ankers', 'Zet achter elke X, zo’n 3 m verder, een anker van haringen in serie (3-2-1) met slingersjorringen.');
+  const ank = kruizen.map((k) => b.anker([k.x + k.s * 3, 0, 0], [k.s, 0, 0], [3, 2, 1]));
   b.stap('Looptouw', 'Span het looptouw van anker naar anker. Het ligt in de kruisingen van de X’en.');
   const yl = 1.3 + 0.13;
   const looptouw = (z) => {
@@ -699,8 +724,8 @@ function schommel() {
   const yb = bokken[0].vorm.vorkY(d / 2);
   const balk = b.paal([-2.5, yb, 0], [2.5, yb, 0], d, 'bovenbalk');
   for (const bk of bokken) b.sjor('kruis', [bk.poten[1], balk], { naam: 'bovenbalk in de vork' });
-  b.stap('Ankers', 'Zet aan beide kanten, in het verlengde van de bovenbalk, een anker van haringen in serie (1-2-3).');
-  const ank = [-1, 1].map((s) => b.anker([s * 6.5, 0, 0], [s, 0, 0], [1, 2, 3]));
+  b.stap('Ankers', 'Zet aan beide kanten, in het verlengde van de bovenbalk, een anker van haringen in serie (3-2-1).');
+  const ank = [-1, 1].map((s) => b.anker([s * 6.5, 0, 0], [s, 0, 0], [3, 2, 1]));
   b.stap('Tuien', 'Span vanaf elk eind van de bovenbalk een tui naar het anker. Dan kan het geheel niet opzij kantelen.');
   [-1, 1].forEach((s, i) => {
     const p = [s * 2.35, yb, 0];
@@ -726,26 +751,24 @@ function vlot() {
   const dwars = [-1.3, -0.25, 0.25, 1.3].map((x) => b.paal([x, yL - d, -1.25], [x, yL - d, 1.25], d, 'dwarsbalk'));
   b.stap('Sjorringen', 'Sjor elke kruising met een kruissjorring: acht in totaal.');
   for (const l of langs) for (const w of dwars) b.sjor('kruis', [w, l], { naam: 'langsbalk op dwarsbalk' });
-  b.stap('Schoren', 'Leg twee lange schoren schuin van hoek naar hoek en sjor ze met diagonaalsjorringen. Zonder schoren trekt het raam in het water scheef.');
+  b.stap('Schoren', 'Leg in elk eindvak een schoor van 2 m schuin van hoek naar hoek over de langsbalken en sjor hem met diagonaalsjorringen. Zonder schoren trekt het raam in het water scheef.');
   const yS = yL + d / 2 + DUN / 2;
-  const schoren = [-1, 1].map((k, i) => {
-    const y = yS + i * DUN;
-    const a = [-1.6, y, -k * 0.75]; const c = [1.6, y, k * 0.75];
+  for (const sx of [-1, 1]) {
+    const a = [sx * 0.62, yS, -sx * 0.75]; const c = [sx * 1.6, yS, sx * 0.75];
     const r = eenheid(min(c, a)); const l = lengte(min(c, a));
-    return b.paal(plus(a, keer(r, -(4 - l) / 2)), plus(c, keer(r, (4 - l) / 2)), DUN, 'schoor');
-  });
-  b.sjor('diagonaal', [langs[0], schoren[0]], { naam: 'schoor aan langsbalk' });
-  b.sjor('diagonaal', [langs[1], schoren[0]], { naam: 'schoor aan langsbalk' });
-  b.sjor('diagonaal', [langs[1], schoren[1]], { naam: 'schoor aan langsbalk' });
-  b.sjor('diagonaal', [langs[0], schoren[1]], { naam: 'schoor aan langsbalk' });
-  b.sjor('diagonaal', schoren, { naam: 'waar de schoren kruisen' });
+    const schoor = b.paal(plus(a, keer(r, -(2 - l) / 2)), plus(c, keer(r, (2 - l) / 2)), DUN, 'schoor');
+    b.sjor('diagonaal', [langs[0], schoor], { naam: 'schoor aan langsbalk' });
+    b.sjor('diagonaal', [langs[1], schoor], { naam: 'schoor aan langsbalk' });
+  }
   b.stap('Tonnen', 'Leg onder elke hoek een ton van 200 liter, tussen twee dwarsbalken, en sjor hem met een touw rond de ton vast aan de langsbalk. Vier tonnen dragen samen ruim 400 kg.');
   for (const sx of [-1, 1]) for (const sz of [-1, 1]) {
     const c = [sx * 0.75, 0.04, sz * 0.75];
     const t = b.ding('ton', { p: c, r: tonR, lang: tonL });
     b.sjor('ton', [langs[sz < 0 ? 0 : 1]], { p: c, ton: t, tonR, naam: 'ton aan langsbalk' });
   }
-  return { naam: 'Vlot', ...m, grond: 'water', extra: ['4 tonnen (vaten) van 200 liter, goed dicht'] };
+  b.stap('Vloer', 'Leg in het middenvak een vloer van steigerplanken dwars over de langsbalken en bind ze vast. Daar zit of sta je.');
+  for (const x of [-0.44, -0.22, 0, 0.22, 0.44]) b.ding('plank', { p: [x, yL + d / 2 + 0.016, 0], lang: 0.2, breed: 1.9, dik: 0.032 });
+  return { naam: 'Vlot', ...m, grond: 'water', extra: ['4 tonnen (vaten) van 200 liter, goed dicht', '5 steigerplanken van 2 m'] };
 }
 
 function mini() {
@@ -822,11 +845,15 @@ function eetshelter() {
 function klimrek() {
   const b = bouwer(); const { m } = b;
   const d = MIDDEL; const L = 3; const X = 1.5;
-  b.stap('Bokken', 'Zet twee bokken van palen van 3 m neer, 3 m uit elkaar, elk met een vorksjorring. Laag houden: de kop komt op ruim 2 m.');
+  b.stap('Bokken', 'Zet twee bokken van palen van 3 m neer, 3 m uit elkaar, elk met een vorksjorring en laag een dwarsbalk van 2 m (kruissjorringen), zodat de poten niet uit elkaar kunnen. Laag houden: de kop komt op ruim 2 m.');
   const bokken = [-1, 1].map((s) => {
     const vorm = bokVorm([s * X, 0, 0], [0, 0, 1], 0.9, 2.15, L, d);
     const poten = vorm.poten.map((p) => b.paal(p.a, p.b, d, 'poot'));
     b.sjor('vork', poten, { p: vorm.C, naam: 'de kop van een bok' });
+    // low down, on the outside: keeps the legs of the bok from spreading
+    const c = plus([s * X, 0.25, 0], keer(vorm.diep, s * (d / 2 + d / 2 + 0.005)));
+    const balk = b.paal(plus(c, [0, 0, -1.0]), plus(c, [0, 0, 1.0]), d, 'dwarsbalk');
+    for (const p of poten) b.sjor('kruis', [p, balk], { naam: 'dwarsbalk aan poot' });
     return { s, vorm, poten };
   });
   b.stap('Nokbalk', 'Leg een nokbalk van 3,5 m in de vorken en sjor hem vast met kruissjorringen.');
@@ -858,11 +885,11 @@ function klimrek() {
 
 function stormbaan() {
   const b = bouwer(); const { m } = b;
-  b.stap('Kruipgang', 'Begin met een kruipgang: twee lage bokjes met een nokbalk, en een zeil eroverheen dat aan de zijkanten met haringen laag bij de grond vastzit.');
+  b.stap('Kruipgang', 'Begin met een kruipgang: twee lage bokjes (de poten kruisen bijna haaks, dus een kruissjorring) met een nokbalk, en een zeil eroverheen dat aan de zijkanten met haringen laag bij de grond vastzit.');
   const bokjes = [-6.8, -4.2].map((x) => {
     const vorm = bokVorm([x, 0, 0], [0, 0, 1], 0.6, 0.65, 1.5, DUN);
     const poten = vorm.poten.map((p) => b.paal(p.a, p.b, DUN, 'poot'));
-    b.sjor('vork', poten, { p: vorm.C, naam: 'de kop van een bokje' });
+    b.sjor('kruis', poten, { naam: 'waar de poten van een bokje kruisen' });
     return { vorm, poten };
   });
   const yk = bokjes[0].vorm.vorkY(DUN / 2);
@@ -875,14 +902,14 @@ function stormbaan() {
 
   b.stap('Balken', 'Dan drie balken: eroverheen, eronderdoor, en weer eroverheen. Elke balk hangt met kruissjorringen tussen twee staanders die een halve meter diep zijn ingegraven.');
   [[-2.8, 1.0], [-1.6, 0.55], [-0.4, 1.0]].forEach(([x, y]) => {
-    const st = [-1, 1].map((s) => b.paal([x, 0, s * 1.1], [x, 1.5, s * 1.1], MIDDEL, 'staander (ingegraven)'));
+    const st = [-1, 1].map((s) => b.paal([x, -0.5, s * 1.1], [x, 1.5, s * 1.1], MIDDEL, 'staander (ingegraven)'));
     const balk = b.paal([x + MIDDEL, y, -1.4], [x + MIDDEL, y, 1.4], MIDDEL, 'balk');
     for (const s of st) b.sjor('kruis', [s, balk], { naam: 'balk aan staander' });
   });
 
   b.stap('Wand', 'Een wand om tegenop te klimmen: liggende palen tegen twee ingegraven staanders, een klimtouw met knopen, en aan de achterkant twee schoren.');
   const xw = 1.5;
-  const st = [-1, 1].map((s) => b.paal([xw, 0, s * 1.0], [xw, 2.4, s * 1.0], DIK, 'staander (ingegraven)'));
+  const st = [-1, 1].map((s) => b.paal([xw, -0.5, s * 1.0], [xw, 2.4, s * 1.0], DIK, 'staander (ingegraven)'));
   for (let i = 0; i < 8; i++) {
     const y = 0.3 + i * 0.25;
     const p = b.paal([xw - DIK / 2 - DUN / 2, y, -1.25], [xw - DIK / 2 - DUN / 2, y, 1.25], DUN, 'wandpaal');
@@ -901,11 +928,11 @@ function stormbaan() {
     b.haring([xw + 1.72, 0, s * 1.0], [1, 0, 0]);
   }
 
-  b.stap('Evenwicht', 'Tot slot een evenwichtsbalk: een paal van 4 m in de vorken van twee lage bokjes, vastgezet met kruissjorringen. En de finish.');
+  b.stap('Evenwicht', 'Tot slot een evenwichtsbalk: een paal van 4 m in de vorken van twee lage bokjes (kruissjorring waar de poten kruisen), vastgezet met kruissjorringen. En de finish.');
   const ev = [4.0, 6.4].map((x) => {
     const vorm = bokVorm([x, 0, 0], [0, 0, 1], 0.45, 0.4, 1.0, MIDDEL);
     const poten = vorm.poten.map((p) => b.paal(p.a, p.b, MIDDEL, 'poot'));
-    b.sjor('vork', poten, { p: vorm.C, naam: 'de kop van een bokje' });
+    b.sjor('kruis', poten, { naam: 'waar de poten van een bokje kruisen' });
     return { vorm, poten };
   });
   const ye = ev[0].vorm.vorkY(MIDDEL / 2);
@@ -969,7 +996,7 @@ function kabelbaan() {
       for (const bm of bomen) b.sjor('kruis', [bm, sp], { naam: 'sport aan de ladder' });
     }
   }
-  b.stap('Relais', 'Maak aan beide bomen een vast punt (relais): boombescherming, een sling om de stam en een schroefkarabiner. Boven zit het relais ruim boven stahoogte op het platform.');
+  b.stap('Relais', 'Maak aan beide bomen een vast punt (relais): boombescherming, een hijsband om de stam en een sluiting met de werklast erop. Boven zit het relais ruim boven stahoogte op het platform.');
   const yA = 4.4; const yB = 1.9;
   b.ding('jute', { p: [0, yA, 0], r: 0.34, hoog: 0.3 });
   b.ding('sling', { p: [0, yA, 0], r: 0.34 });
@@ -982,7 +1009,7 @@ function kabelbaan() {
   b.stap('Rem', 'Zorg voor een rem aan het eind: een blok op het touw met een elastiek naar een anker, zodat je zacht stopt. Eronder een zachte landing.');
   const xr = XB - 2.6; const tR = (xr - 0.4) / (XB - 0.8); const yr = yA + (yB - yA) * tR - 0.55 * Math.sin(Math.PI * tR);
   b.ding('katrol', { p: [xr, yr, 0], rem: true });
-  const kop = b.anker([XB + 1.6, 0, 1.4], [1, 0, 0.6], [1, 2]);
+  const kop = b.anker([XB + 1.6, 0, 1.4], [1, 0, 0.6], [2, 1]);
   b.lijn([[xr, yr - 0.04, 0], [XB - 0.4, yB - 0.5, 0.5], kop], 'rem', { dik: 0.011, naam: 'remelastiek' });
   b.ding('zand', { p: [XB - 3.2, 0.02, 0], lang: 4.5, breed: 2.2, dik: 0.04, rand: false });
   b.stap('Testen', 'Test de baan eerst met een zware zak aan de tokkelkatrol, nooit meteen met iemand. Wie tokkelt heeft een klimgordel en blijft van opklimmen tot afstappen gezekerd, onder toezicht van leiding die er verstand van heeft.');
@@ -990,7 +1017,7 @@ function kabelbaan() {
   b.ding('katrol', { p: [xt, yt - 0.05, 0] });
   b.lijn([[xt, yt - 0.1, 0], [xt, yt - 0.9, 0]], 'lijn', { dik: 0.01, naam: 'sling' });
   b.ding('zak', { p: [xt, yt - 1.15, 0] });
-  return { naam: 'Kabelbaan', ...m, grond: 'gras', kader: 'alles', zicht: { theta: 0.75, phi: 1.15 }, extra: ['statisch touw (±60 m), slings, schroefkarabiners, een tokkelkatrol', 'klimgordels en zekeringsmateriaal (gekeurd)', 'een rem met elastiek, en een zware zak om te testen'] };
+  return { naam: 'Kabelbaan', ...m, grond: 'gras', kader: 'alles', zicht: { theta: 0.75, phi: 1.15 }, extra: ['statisch touw (±60 m), hijsbanden en sluitingen met werklast, een tokkelkatrol', 'klimgordels en zekeringsmateriaal (gekeurd)', 'een rem met elastiek, en een zware zak om te testen'] };
 }
 
 function reuzenrad() {

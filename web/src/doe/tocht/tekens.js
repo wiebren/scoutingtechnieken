@@ -49,7 +49,8 @@ export const BP = [
 export const BP_NACHT = tak(16, 82, 84, 18) + tak(84, 18, 64, 22) + tak(84, 18, 80, 38)
   + [[33, 66], [50, 50], [67, 34]].map(([x, y]) => `<path d="M${x - 6} ${y - 4}q6 -6 12 0q-6 6 -12 0" class="tk-gras"/><path d="M${x - 5} ${y + 3}q5 -8 10 -6" class="tk-gras"/>`).join('');
 
-// -- the larger set, as Scoutpedia gives it (drawn after its meanings, not copied)
+// -- the larger set, as Scoutpedia gives it (drawn after its meanings, not copied). Scoutpedia calls both the two
+// circles and the ring of seven "Eindspoor", so they share one meaning: the quiz never offers one against the other.
 export const UITGEBREID = [
   { id: 'sp-weg', vorm: 'een pijl', naam: 'Deze weg volgen', teken: pijl(50, 90, 50, 10, { punt: 22 }) },
   { id: 'sp-rennen', vorm: 'een pijl met twee punten', naam: 'Sneller lopen, rennen', teken: lijn('M50 92V12') + lijn('M30 34L50 12L70 34M30 56L50 34L70 56', 'tk-krijt') },
@@ -57,11 +58,11 @@ export const UITGEBREID = [
   { id: 'sp-rechts', vorm: 'een pijl met een hoek naar rechts', naam: 'Rechtsaf', teken: lijn('M34 90V40H82') + lijn('M64 24L84 40L64 56') },
   { id: 'sp-niet', vorm: 'een kruis', naam: 'Niet doorgaan', teken: lijn('M18 18L82 82M82 18L18 82') },
   { id: 'sp-einde', vorm: 'twee cirkels in elkaar', naam: 'Einde van het spoor', teken: cirkel(50, 50, 36) + cirkel(50, 50, 14) },
-  { id: 'sp-thuis', vorm: 'zeven cirkels in een ring met één in het midden', naam: 'Einde: wij zijn naar huis', teken: Array.from({ length: 7 }, (_, i) => {
+  { id: 'sp-thuis', vorm: 'zeven cirkels in een ring met één in het midden', naam: 'Einde van het spoor', teken: Array.from({ length: 7 }, (_, i) => {
     const a = (i / 7) * 2 * Math.PI; return cirkel(r(50 + 32 * Math.sin(a)), r(50 - 32 * Math.cos(a)), 8);
   }).join('') + cirkel(50, 50, 8) },
   { id: 'sp-begin', vorm: 'drie cirkels, van groot naar klein', naam: 'Begin van het spoor (naar de kleinste cirkel)', teken: cirkel(24, 50, 16) + cirkel(56, 50, 11) + cirkel(80, 50, 6) },
-  { id: 'sp-dwaal', vorm: 'een zigzag die omkeert en terug wijst', naam: 'Dwaalspoor: terug, verkeerde weg', teken: lijn('M26 92L42 72L26 52L42 32Q50 12 64 20Q72 26 70 40') + pijl(70, 40, 70, 80, { punt: 18 }) },
+  { id: 'sp-dwaal', vorm: 'een zigzag die omkeert en terug wijst', naam: 'Dwaalspoor: vals spoor', teken: lijn('M26 92L42 72L26 52L42 32Q50 12 64 20Q72 26 70 40') + pijl(70, 40, 70, 80, { punt: 18 }) },
   { id: 'sp-splitsen', vorm: 'een pijl die zich splitst, met drie streepjes links en twee rechts', naam: 'We splitsen: drie naar links, twee naar rechts', teken: lijn('M50 92V54L22 22M50 54L78 22') + lijn('M14 38L22 22L36 30M64 30L78 22L86 38') + tkst(24, 68, 'III', 18) + tkst(76, 68, 'II', 18) },
   { id: 'sp-verstopt', vorm: 'een vierkant met een 3 en een pijl', naam: 'Drie passen verder ligt iets verstopt', teken: lijn('M8 32h36v36h-36z') + tkst(26, 50, '3') + pijl(44, 50, 92, 50, { punt: 16 }) },
   { id: 'sp-verstopt-hoog', vorm: 'een rechthoek met een schuine streep, drie en twee streepjes, en een pijl', naam: 'Drie meter verder en twee meter hoog zit iets verstopt', teken: lijn('M8 26h44v48h-44zM8 74L52 26') + tkst(21, 38, 'III', 13) + tkst(40, 62, 'II', 13) + pijl(52, 50, 94, 50, { punt: 15 }) },
@@ -81,7 +82,7 @@ export const NATUUR = [
   { id: 'nt-grasdot', vorm: 'een plukje gras, aan de punten samengeknoopt en neergelegd', naam: 'Deze weg: geknoopte grasdot, de punten wijzen', teken: grasdot(50, 78, 0, 1.6) },
   { id: 'nt-stenen-weg', vorm: 'twee stenen op elkaar met een kleine steen ernaast', naam: 'Deze weg: twee stenen op elkaar, een kleine ernaast', teken: steen(44, 62, 24, 17) + steen(42, 46, 15, 11) + steen(82, 64, 9, 7) },
   { id: 'nt-stenen-stop', vorm: 'drie stenen op elkaar gestapeld', naam: 'Niet doorgaan: drie stenen op elkaar', teken: steen(50, 72, 26, 14) + steen(50, 52, 19, 11) + steen(50, 36, 12, 8) },
-  { id: 'nt-tak', vorm: 'een tak schuin in de grond', naam: 'Deze weg: schuin in de grond gestoken tak', teken: lijn('M8 82H92', 'tk-grond') + tak(26, 82, 80, 26) },
+  { id: 'nt-tak', vorm: 'een tak schuin in de grond', naam: 'Deze weg: tak schuin in de grond, zonder steuntakken', teken: lijn('M8 82H92', 'tk-grond') + tak(26, 82, 80, 26) },
   { id: 'nt-tak-afstand', vorm: 'een schuine tak met twee steuntakken eronder', naam: 'Deze weg, twee keer de afgesproken afstand: tak met twee steuntakken', teken: lijn('M8 82H92', 'tk-grond') + tak(22, 82, 78, 24) + tak(56, 82, 50, 54) + tak(70, 82, 62, 42) },
   { id: 'nt-stop-gras', vorm: 'drie grasplukjes dwars over het pad', naam: 'Niet doorgaan: drie grasdotjes dwars op de weg', teken: lijn('M24 10V90M76 10V90', 'tk-grond') + [24, 50, 76].map((y) => grasdot(34, y, 90, 0.85)).join('') },
   { id: 'nt-lucifer', vorm: 'een lucifer in de schors van een boom', naam: 'Deze weg: lucifer in de schors, het kopje wijst', teken: `<rect x="18" y="8" width="64" height="84" rx="10" class="tk-schors"/>`
@@ -107,7 +108,7 @@ export const MARKERING = (route = 'law') => {
   const boven = route === 'law' ? 'wit' : 'geel';
   const kleur = boven;
   return [
-    { id: `${route}-rechtdoor`, vorm: `twee strepen boven elkaar, ${kleur} boven rood`, naam: 'Goede weg, rechtdoor', teken: markering(boven, 'rechtdoor') },
+    { id: `${route}-rechtdoor`, vorm: `twee strepen boven elkaar, ${kleur} boven rood`, naam: 'Goede weg, ga zo door', teken: markering(boven, 'rechtdoor') },
     { id: `${route}-links`, vorm: `een pijl naar links, ${kleur} en rood`, naam: 'Hier linksaf', teken: markering(boven, 'links') },
     { id: `${route}-rechts`, vorm: `een pijl naar rechts, ${kleur} en rood`, naam: 'Hier rechtsaf', teken: markering(boven, 'rechts') },
     { id: `${route}-aankondiging`, vorm: 'het gewone teken twee keer boven elkaar', naam: 'Let op: er komt een afslag', teken: markering(boven, 'aankondiging') },

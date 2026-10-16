@@ -89,7 +89,7 @@ export default function kompas({ opdracht = null, sensor = false } = {}) {
     if (opdracht === 'koers' || opdracht === 'terug') {
       const huisGoed = verschil(koers, taak.koers) <= 1;
       stappen.replaceChildren(
-        stap(`Draai het huis tot ${taak.koers}° bij de richtingspijl staat.`, huisGoed),
+        stap(`Draai het huis tot ${opdracht === 'terug' ? 'de terugkoers' : `${taak.koers}°`} bij de richtingspijl staat.`, huisGoed),
         stap('Draai het hele kompas tot rood in het huisje staat.', huisGoed && inHuisje),
         stap('Kijk langs de richtingspijl: die kant loop je op.', huisGoed && inHuisje));
       melding.textContent = huisGoed && inHuisje ? `Goed! Je loopt nu naar ${taak.koers}° (${streek16(taak.koers)}).`

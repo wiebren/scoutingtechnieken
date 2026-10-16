@@ -328,9 +328,9 @@ function maanstanden() {
     }
     uit += tekst(x, 62, a, { maat: 8.5 }) + tekst(x, 73, b, { maat: 8.5 });
   });
-  uit += '<path d="M24 92 H184" class="accent-lijn" stroke-width="2"/><path d="M178 107 L186 112 L178 117" class="accent-lijn" fill="none" stroke-width="2"/>';
+  uit += '<path d="M24 92 H184" class="accent-lijn" stroke-width="2"/><path d="M178 86 L186 92 L178 98" class="accent-lijn" fill="none" stroke-width="2"/>';
   uit += tekst(104, 108, 'wassend: rechts licht', { maat: 10.5, klasse: 'vet accent-tekst' });
-  uit += '<path d="M190 92 H316" class="lijn stil" stroke-width="2"/><path d="M308 107 L316 112 L308 117" class="lijn stil" fill="none" stroke-width="2"/>';
+  uit += '<path d="M190 92 H316" class="lijn stil" stroke-width="2"/><path d="M308 86 L316 92 L308 98" class="lijn stil" fill="none" stroke-width="2"/>';
   uit += tekst(254, 108, 'afnemend: links licht', { maat: 10.5, klasse: 'vet' });
   return svg(340, 118, 'De maanstanden zoals je ze vanuit Nederland ziet: wassend is de rechterkant verlicht, afnemend de linkerkant', uit);
 }
@@ -452,8 +452,9 @@ function knmiCodes() {
     uit += `<text x="${x + 52}" y="80" class="${klasse}-tekst" font-size="10.5" text-anchor="middle">${a}</text><text x="${x + 52}" y="93" class="${klasse}-tekst" font-size="10.5" text-anchor="middle">${b}</text>`;
   });
   uit += tekst(170, 124, 'Elke soort weer een eigen waarschuwing:', { maat: 10.5, klasse: 'stil' });
-  uit += tekst(170, 139, 'windstoten · onweer · zware regen · gladheid · hitte · kou · mist', { maat: 10, klasse: 'stil' });
-  return svg(340, 146, 'De waarschuwingen van het KNMI: code geel, kans op gevaarlijk weer; code oranje, grote kans op gevaarlijk weer met grote gevolgen; code rood, een weeralarm bij extreem weer.', uit);
+  uit += tekst(170, 139, 'windstoten · onweer · zware regen · sneeuw · gladheid', { maat: 10, klasse: 'stil' });
+  uit += tekst(170, 153, 'mist · hitte · kou · waterhozen', { maat: 10, klasse: 'stil' });
+  return svg(340, 160, 'De waarschuwingen van het KNMI: code geel, kans op gevaarlijk weer; code oranje, grote kans op gevaarlijk weer met grote gevolgen; code rood, een weeralarm bij extreem weer.', uit);
 }
 
 /** The zonkracht: how high the sun stands counts, not how warm it is; and the four steps of the KNMI scale. */
@@ -589,6 +590,132 @@ function planetenAvond() {
   return svg(340, 210, 'Een voorbeeld van de avondhemel in het westen, kort na zonsondergang: Venus staat laag en fel, hoger de maan en Jupiter. Ze staan allemaal op de schuine lijn waar ook de zon langs gaat.', uit);
 }
 
+// -- added later: how clouds form, the far side of the moon, tides, eclipses, northern lights, the solar system, meteors
+
+/** Warm air rises from the ground, cools, and at the condensation level the vapour turns into a cumulus. */
+function wolkOntstaan() {
+  const B = 320; const H = 230; const niveau = 96;
+  let uit = `<rect width="${B}" height="${H}" rx="12" class="w-lucht"/>` + grond(B, H) + zon(40, 36);
+  uit += `<path d="M8 ${niveau} H${B - 8}" class="w-niveau"/>`;
+  uit += stapel(196, niveau, [[-30, -14, 18], [-8, -30, 24], [18, -22, 20], [36, -10, 13], [-44, -6, 10]]);
+  // rising bubbles of warm air from the sunny field
+  for (const [x, y0, y1] of [[170, 196, 112], [208, 196, 116], [244, 194, 128]]) {
+    uit += `<path d="M${x} ${y0} C${x - 8} ${(y0 + y1) / 2 + 20} ${x + 8} ${(y0 + y1) / 2 - 10} ${x} ${y1}" class="w-luchtpijl warm"/><path d="M${x - 5} ${y1 + 8} L${x} ${y1} L${x + 5} ${y1 + 8}" class="w-luchtpijl warm"/>`;
+  }
+  uit += tekst(12, niveau - 6, 'condensatieniveau', { maat: 10.5, anker: 'start', klasse: 'vet' });
+  uit += tekst(12, niveau + 14, 'hierboven wordt de damp', { maat: 10, anker: 'start' }) + tekst(12, niveau + 26, 'kleine druppeltjes', { maat: 10, anker: 'start' });
+  uit += tekst(20, 166, 'warme lucht stijgt op', { maat: 10.5, anker: 'start', klasse: 'vet' }) + tekst(20, 179, 'en koelt af', { maat: 10.5, anker: 'start' });
+  uit += tekst(206, 222, 'de zon verwarmt de grond', { maat: 10, klasse: 'vet' });
+  return svg(B, H, 'Hoe een stapelwolk ontstaat: de zon verwarmt de grond, warme lucht stijgt op en koelt af. Op het condensatieniveau wordt de waterdamp kleine druppeltjes: daar begint de wolk, met een platte onderkant.', uit);
+}
+
+/** The moon going round the earth, always with the same side (marked) towards us. */
+function maanAchterkant() {
+  const c = [160, 130]; const R = 86;
+  let uit = `<circle cx="${c[0]}" cy="${c[1]}" r="${R}" class="lijn haar" stroke-dasharray="3 4"/>`;
+  uit += `<circle cx="${c[0]}" cy="${c[1]}" r="18" class="blauw"/>` + tekst(c[0], c[1] + 34, 'aarde', { maat: 10, klasse: 'stil' });
+  for (const g of [0, 90, 180, 270, 45, 135, 225, 315]) {
+    const [x, y] = pol(c[0], c[1], R, g); const klein = g % 90 !== 0; const r = klein ? 9 : 14;
+    uit += `<circle cx="${x}" cy="${y}" r="${r}" class="w-maan"/><circle cx="${x}" cy="${y}" r="${r}" class="lijn dun"/>`;
+    // the same face: a dark patch on the side towards the earth
+    const [vx, vy] = pol(x, y, r * 0.45, g + 180);
+    uit += `<circle cx="${vx}" cy="${vy}" r="${r1(r * 0.42)}" class="w-maanzee"/>`;
+  }
+  uit += `<path d="M${c[0] + 52} ${c[1] - 76} A92 92 0 0 0 ${c[0] - 52} ${c[1] - 76}" class="lijn stil" fill="none"/><path d="M${c[0] - 44} ${c[1] - 84} L${c[0] - 54} ${c[1] - 76} L${c[0] - 42} ${c[1] - 70}" class="lijn stil" fill="none"/>`;
+  uit += tekst(c[0], 250, 'de donkere vlek wijst steeds naar de aarde', { maat: 11, klasse: 'vet' });
+  return svg(320, 258, 'De maan op acht plekken van zijn rondje om de aarde. De donkere vlek, de kant die wij zien, wijst steeds naar de aarde: de maan draait in één rondje ook één keer om zichzelf.', uit);
+}
+
+/** Spring tide and neap tide: the water of the earth stretched towards the moon, with the sun on the left. */
+function getijden() {
+  let uit = '';
+  const paneel = (x0, moonG, rx, ry, kop, onder) => {
+    const c = [x0 + 100, 92];
+    let u = `<rect x="${x0 + 4}" y="4" width="192" height="170" rx="10" class="vlak2"/>`;
+    u += `<circle cx="${x0 + 22}" cy="${c[1]}" r="12" class="w-zon"/>` + tekst(x0 + 22, c[1] + 26, 'zon', { maat: 9.5, klasse: 'stil' });
+    for (const y of [80, 92, 104]) u += `<path d="M${x0 + 38} ${y} H${x0 + 50}" class="w-zonlicht"/>`;
+    u += `<ellipse cx="${c[0]}" cy="${c[1]}" rx="${rx}" ry="${ry}" class="w-getij" transform="rotate(${moonG - 90} ${c[0]} ${c[1]})"/>`;
+    u += `<circle cx="${c[0]}" cy="${c[1]}" r="16" class="blauw"/>`;
+    const [mx, my] = pol(c[0], c[1], 62, moonG);
+    u += `<circle cx="${mx}" cy="${my}" r="8" class="w-maan"/><circle cx="${mx}" cy="${my}" r="8" class="lijn dun"/>`;
+    u += tekst(c[0], 154, kop, { maat: 12, klasse: 'vet' }) + tekst(c[0], 168, onder, { maat: 10, klasse: 'stil' });
+    return u;
+  };
+  uit += paneel(0, 90, 30, 20, 'springtij', 'nieuwe of volle maan');
+  uit += paneel(200, 0, 24, 21, 'doodtij', 'eerste of laatste kwartier');
+  uit += tekst(200, 192, 'niet op schaal; het water rond de aarde is heel erg overdreven', { maat: 9.5, klasse: 'stil' });
+  return svg(400, 198, 'Links springtij: zon, aarde en maan op één lijn, het water wordt flink naar twee kanten uitgerekt. Rechts doodtij: de maan staat haaks op de zon en het water wordt minder uitgerekt. Niet op schaal.', uit);
+}
+
+/** A solar eclipse (the moon's shadow on the earth) and a lunar eclipse (the moon in the earth's shadow). */
+function verduistering() {
+  let uit = '';
+  const rij = (y, eerst, kop, onder) => {
+    let u = `<rect x="4" y="${y}" width="352" height="112" rx="10" class="vlak2"/>`;
+    const m = y + 64;
+    u += `<circle cx="14" cy="${m}" r="30" class="w-zon"/>` + tekst(14, m + 44, 'zon', { maat: 10, klasse: 'stil' });
+    if (eerst === 'maan') {
+      u += `<path d="M190 ${m - 7} L292 ${m - 2} L292 ${m + 2} L190 ${m + 7}Z" class="w-schaduw"/>`;
+      u += `<circle cx="190" cy="${m}" r="7" class="w-maan-donker"/><circle cx="300" cy="${m}" r="20" class="blauw"/>`;
+      u += tekst(190, m + 24, 'maan', { maat: 10.5 }) + tekst(300, m + 36, 'aarde', { maat: 10.5 });
+    } else {
+      u += `<path d="M190 ${m - 18} L320 ${m - 8} L320 ${m + 8} L190 ${m + 18}Z" class="w-schaduw"/>`;
+      u += `<circle cx="190" cy="${m}" r="20" class="blauw"/><circle cx="300" cy="${m}" r="7" class="w-bloedmaan"/>`;
+      u += tekst(190, m + 36, 'aarde', { maat: 10.5 }) + tekst(300, m + 24, 'maan', { maat: 10.5 });
+    }
+    u += tekst(56, y + 20, kop, { maat: 12, anker: 'start', klasse: 'vet' }) + tekst(56, y + 34, onder, { maat: 10, anker: 'start', klasse: 'stil' });
+    return u;
+  };
+  uit += rij(4, 'maan', 'zonsverduistering', 'nieuwe maan: de schaduw van de maan valt op de aarde');
+  uit += rij(122, 'aarde', 'maansverduistering', 'volle maan: de maan in de schaduw van de aarde');
+  return svg(360, 238, 'Boven een zonsverduistering: de maan staat tussen de zon en de aarde en zijn schaduw valt op de aarde. Onder een maansverduistering: de aarde staat tussen de zon en de maan, en de maan schuift door de schaduw van de aarde en wordt rood. Niet op schaal.', uit);
+}
+
+/** Northern lights over a dark landscape, looking north. */
+function noorderlicht() {
+  let uit = '<rect width="320" height="200" rx="12" class="nacht"/>';
+  for (let i = 0; i < 40; i++) uit += `<circle cx="${r1(8 + stip(i + 700) * 304)}" cy="${r1(6 + stip(i + 760) * 120)}" r="${stip(i + 820) < 0.2 ? 1.2 : 0.7}" class="ster"/>`;
+  // curtains: vertical rays, red at the top, green lower down
+  for (let i = 0; i < 26; i++) {
+    const x = 30 + i * 10 + Math.sin(i * 0.8) * 6; const voet = 132 - Math.sin(i * 0.45) * 22; const hoog = 50 + stip(i + 900) * 40;
+    uit += `<path d="M${r1(x)} ${r1(voet)} V${r1(voet - hoog)}" class="w-aurora"/><path d="M${r1(x)} ${r1(voet - hoog)} V${r1(voet - hoog - 22)}" class="w-aurora rood"/>`;
+  }
+  uit += '<path d="M0 200 V160 q16 -10 30 -4 l6 -14 l6 14 q20 -8 40 0 q30 -10 60 -2 l5 -12 l5 12 q26 -6 50 2 q30 -10 60 -2 q30 -6 58 0 V200Z" class="w-silhouet"/>';
+  uit += '<text x="160" y="190" class="w-nachttekst vet" font-size="12" text-anchor="middle">N</text>';
+  return svg(320, 200, 'Noorderlicht boven een donker landschap, kijkend naar het noorden: groene stralen als een gordijn, met rood erboven.', uit);
+}
+
+/** The eight planets in a row, sizes to scale, distances not. */
+function zonnestelsel() {
+  const P = [['Mercurius', 2440, 'w-pl-grijs'], ['Venus', 6052, 'w-pl-geel'], ['Aarde', 6371, 'blauw'], ['Mars', 3390, 'w-pl-rood'],
+    ['Jupiter', 69911, 'w-pl-jupiter'], ['Saturnus', 58232, 'w-pl-geel'], ['Uranus', 25362, 'w-pl-ijs'], ['Neptunus', 24622, 'w-pl-blauw']];
+  const xs = [50, 72, 94, 116, 158, 220, 272, 316];
+  let uit = '<path d="M0 0 H6 A120 120 0 0 1 6 150 H0Z" class="w-zon"/>';
+  P.forEach(([naam, km, klasse], i) => {
+    const r = Math.max(1.6, r1((km / 69911) * 26)); const x = xs[i]; const y = 70;
+    if (naam === 'Saturnus') uit += `<ellipse cx="${x}" cy="${y}" rx="${r1(r * 2)}" ry="${r1(r * 0.45)}" class="w-ring"/>`;
+    uit += `<circle cx="${x}" cy="${y}" r="${r}" class="${klasse}"/>`;
+    const onder = i % 2 === 0 && i !== 4;
+    uit += `<path d="M${x} ${y + r + 3} V${onder ? 120 : 104}" class="lijn haar"/>` + tekst(x, onder ? 132 : 116, naam, { maat: 10 });
+  });
+  uit += tekst(200, 150, 'grootte op schaal, afstand niet', { maat: 10, klasse: 'stil' });
+  return svg(350, 156, 'De acht planeten op een rij, met de zon links: Mercurius, Venus, Aarde en Mars zijn klein, Jupiter, Saturnus met zijn ring, Uranus en Neptunus zijn reuzen. De grootte is op schaal, de afstand niet.', uit);
+}
+
+/** A meteor shower: the trails all seem to come from one point, the radiant. */
+function vallendeSterren() {
+  let uit = '<rect width="320" height="200" rx="12" class="nacht"/>';
+  for (let i = 0; i < 50; i++) uit += `<circle cx="${r1(8 + stip(i + 1000) * 304)}" cy="${r1(6 + stip(i + 1060) * 170)}" r="${stip(i + 1120) < 0.2 ? 1.2 : 0.7}" class="ster"/>`;
+  const rad = [170, 104];
+  uit += `<circle cx="${rad[0]}" cy="${rad[1]}" r="16" class="w-radiant"/>`;
+  for (const [g, a, l] of [[20, 30, 55], [70, 36, 70], [110, 40, 55], [150, 34, 45], [180, 30, 36], [245, 40, 60], [290, 36, 80], [335, 30, 60], [100, 90, 40]]) {
+    const [x1, y1] = pol(rad[0], rad[1], a, g); const [x2, y2] = pol(rad[0], rad[1], a + l, g);
+    uit += `<path d="M${x1} ${y1} L${x2} ${y2}" class="w-meteoor"/><circle cx="${x2}" cy="${y2}" r="1.6" class="ster"/>`;
+  }
+  uit += `<path d="M${rad[0] - 12} ${rad[1] - 12} L58 186" class="w-radiantlijn"/><rect x="8" y="176" width="150" height="20" rx="4" class="w-nachtvlak"/><text x="14" y="190" class="w-nachttekst vet" font-size="11">hier lijken ze vandaan te komen</text>`;
+  return svg(320, 200, 'Een meteorenzwerm: de sporen van de vallende sterren lijken allemaal uit één punt aan de hemel te komen, de radiant.', uit);
+}
+
 export default {
   weerstation,
   weerlogboek,
@@ -610,4 +737,11 @@ export default {
   maanfasen,
   maanstanden,
   zonnebaan,
+  'wolk-ontstaan': wolkOntstaan,
+  'maan-achterkant': maanAchterkant,
+  getijden,
+  verduistering,
+  noorderlicht,
+  zonnestelsel,
+  'vallende-sterren': vallendeSterren,
 };

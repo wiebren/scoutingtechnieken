@@ -489,7 +489,11 @@ export function maakScene(plek, model, { beweging, kleuren, opKies }) {
   for (const p of P) {
     const seg = p.d >= 0.1 ? 10 : 7;
     nuBeweeg = p.beweeg ?? null;
-    const t = tint(); cilinder(bakVoor('hout', p.stap, p.tot), p.a, p.b, p.r, p.r * 0.94, seg, t, { kapKleur: t });
+    // a pole that stands in the ground (ingegraven) is drawn from where it comes out: the ground is see-through
+    let [a, e] = [p.a, p.b];
+    const boven = (q, r) => { const t2 = (0 - q[1]) / (r[1] - q[1]); return plus(q, keer(min(r, q), t2)); };
+    if (a[1] < 0 && e[1] > 0) a = boven(a, e); else if (e[1] < 0 && a[1] > 0) e = boven(e, a);
+    const t = tint(); cilinder(bakVoor('hout', p.stap, p.tot), a, e, p.r, p.r * 0.94, seg, t, { kapKleur: t });
   }
   nuBeweeg = null;
 

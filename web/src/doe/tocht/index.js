@@ -20,4 +20,5 @@ export default {
   'kruispeiling-zoeken': { titel: 'Vind de post met een kruispeiling', laad: () => import('./coordinaten.js'), opties: { soort: 'kruispeiling' } },
   'passer-zoeken': { titel: 'Vind de post met de passer', laad: () => import('./coordinaten.js'), opties: { soort: 'passer' } },
   'oleaat-leggen': { titel: 'Leg de oleaat op de kaart', laad: () => import('./oleaat.js') },
+  dobbelsteentocht: { titel: 'Gooi: waar ga je heen?', laad: () => import('./dobbel.js'), bekijk: true },
 };

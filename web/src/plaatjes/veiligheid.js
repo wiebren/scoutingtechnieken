@@ -1,17 +1,18 @@
 // Drawings for veiligheid. See ../plaatjes.js and ./basis.js. Flags, lights and fire keep their real colours in
 // both themes; the rest uses the .plaatje classes in style.css and the vh- classes in ./veiligheid.css.
-import { svg, tekst } from './basis.js';
+import { pol, svg, tekst } from './basis.js';
 
 let teller = 0;
 
-/** The beach flags (KNRM, Waterveilig 2024): what they look like and what they mean. Also used by the piece. */
+/** The beach flags of Reddingsbrigade Nederland (the set of 2025: reddingsbrigade.nl, Vlaggen voor vlaggenmast and
+ * Vlaggen voor vlaggenstokken): what they look like and what they mean. Also used by the piece. */
 export const STRANDVLAGGEN = [
-  { id: 'roodgeel', naam: 'Rood-gele vlag', kort: 'Lifeguards: hier zwemmen', uitleg: 'er zijn lifeguards, en tussen twee van deze vlaggen letten ze op. Daar zwem je het veiligst.' },
-  { id: 'geel', naam: 'Gele vlag', kort: 'Gevaarlijk zwemmen', uitleg: 'gevaarlijk zwemmen door wind of stroming. Kun je niet goed zwemmen, blijf dan uit het water.' },
-  { id: 'rood', naam: 'Rode vlag', kort: 'Niet zwemmen', uitleg: 'niet zwemmen, het is te gevaarlijk. Bijvoorbeeld door onweer, hoge golven of sterke stroming.' },
-  { id: 'blok', naam: 'Zwart-wit geblokte vlag', kort: 'Voor watersport en boten', uitleg: 'tussen deze vlaggen is het voor watersporters en boten. Zwem daar niet.' },
-  { id: 'windzak', naam: 'Oranje windzak', kort: 'Geen luchtbedden', uitleg: 'geen luchtbedden en andere drijfdingen: de wind waait van het land de zee op.' },
-  { id: 'vraagteken', naam: 'Vlag met een vraagteken', kort: 'Gevonden kind', uitleg: 'hier is een kind gevonden. Ouders halen het op bij de reddingspost.' },
+  { id: 'roodgeel', naam: 'Rood-gele vlag', kort: 'Lifeguards: hier zwemmen', uitleg: 'de reddingspost is open en lifeguards houden toezicht. Tussen twee rood-gele vlaggen aan de waterlijn letten ze extra op: daar zwem je het veiligst. Watersport mag daar niet.' },
+  { id: 'geel', naam: 'Gele vlag', kort: 'Gevaarlijk zwemmen', uitleg: 'het water is gevaarlijk, door wind, golven of stroming. Zwemmen wordt afgeraden. Kun je niet goed zwemmen, blijf dan uit het water.' },
+  { id: 'rood', naam: 'Rode vlag', kort: 'Niet zwemmen', uitleg: 'niet zwemmen, het is zeer gevaarlijk. Ook niet pootjebaden of watersporten.' },
+  { id: 'oranje', naam: 'Oranje vlag', kort: 'Geen luchtbedden', uitleg: 'geen luchtbedden, opblaasbootjes of andere drijfdingen: de wind waait van het land de zee op en blaast je weg van de kust.' },
+  { id: 'paars', naam: 'Paarse vlag', kort: 'Kwallen of vies water', uitleg: 'er zijn gevaarlijke zeedieren, zoals kwallen, of het water is vervuild. Zwemmen wordt afgeraden.' },
+  { id: 'blok', naam: 'Zwart-wit geblokte vlag', kort: 'Voor watersport', uitleg: 'tussen twee van deze vlaggen aan de waterlijn is het voor watersporters, zoals surfers. Zwem daar niet.' },
 ];
 
 /** One beach flag on its pole, as an SVG string, 200 by 220. */
@@ -27,11 +28,8 @@ export function strandvlag(id, titel) {
     for (let r = 0; r < 2; r++) for (let k = 0; k < 4; k++) if ((r + k) % 2 === 0) d += `<rect x="${60 + k * 22.5}" y="${28 + r * 30}" width="22.5" height="30" fill="#1b1b1b"/>`;
     const id2 = `vh-vlag-${(teller += 1)}`;
     d = `<clipPath id="${id2}"><path d="M60 30 Q100 22 150 32 Q148 62 150 92 Q100 82 60 90 Z"/></clipPath><g clip-path="url(#${id2})">${d}</g>${rand}`;
-  } else if (id === 'windzak') {
-    d = '<path d="M62 36 L150 50 L150 70 L62 86 Z" fill="#f07c1e" stroke="#9a4a0a" stroke-width="1.2"/>'
-      + '<path d="M84 39.5 V82.5 M106 43 V79 M128 46.5 V75" stroke="#ffffff" stroke-width="3" opacity="0.7"/>'
-      + '<ellipse cx="62" cy="61" rx="5" ry="25" fill="#c4600f"/>';
-  } else if (id === 'vraagteken') d = doek('#ffffff') + rand + '<text x="105" y="76" font-size="44" font-weight="700" text-anchor="middle" fill="#1f4fa3">?</text>';
+  } else if (id === 'oranje') d = doek('#f07c1e') + rand;
+  else if (id === 'paars') d = doek('#7b3fa0') + rand;
   return `<svg class="plaatje vh-strandvlag" viewBox="0 0 200 220" role="img" aria-label="${titel}" xmlns="http://www.w3.org/2000/svg">`
     + '<rect x="56" y="22" width="4" height="190" rx="2" fill="#6d6d6d"/><circle cx="58" cy="21" r="4" fill="#8a8a8a"/>'
     + `<path d="M20 212 H180" stroke="#c9a95f" stroke-width="6" stroke-linecap="round"/>${d}</svg>`;
@@ -58,7 +56,7 @@ export default {
       d += `<g transform="translate(${x + 4} ${y}) scale(0.6)">${binnen}</g>`;
       d += tekst(x + 64, y + 140, v.kort, { maat: v.kort.length > 20 ? 8.4 : 9.5, klasse: 'vet' });
     });
-    return svg(380, 300, 'De vlaggen op het strand: rood-geel voor lifeguards, geel voor gevaarlijk zwemmen, rood voor niet zwemmen, zwart-wit geblokt voor watersport, een oranje windzak voor geen luchtbedden, en een vraagteken voor een gevonden kind', d);
+    return svg(380, 300, 'De vlaggen op het strand: rood-geel voor lifeguards, geel voor gevaarlijk zwemmen, rood voor niet zwemmen, oranje voor geen luchtbedden, paars voor gevaarlijke zeedieren of vies water, en zwart-wit geblokt voor watersport', d);
   },
 
   colonne: () => {
@@ -369,6 +367,49 @@ export default {
     d += '<path d="M182 82 h18 m-6 -5 l6 5 l-6 5" class="lijn stil"/>';
     d += tekst(90, 170, 'dagen tot weken na de beet', { maat: 9.5, klasse: 'stil' }) + tekst(290, 170, 'de ring wordt groter', { maat: 9.5, klasse: 'vet' });
     return svg(380, 180, 'Na een tekenbeet kan er een rode, gelige of blauwrode vlek of ring om de plek komen, die groter wordt. Ga dan naar de huisarts', d);
+  },
+
+  vuurvijfhoek: () => {
+    // five corners; the three of the vuurdriehoek (top and the two upper ones) joined by a dashed triangle
+    const [cx, cy, r] = [190, 128, 82];
+    const hoek = [0, 72, 144, 216, 288].map((g) => pol(cx, cy, r, g));
+    let d = `<path d="M${hoek.map(([x, y]) => `${x} ${y}`).join(' L')} Z" class="vh-vijfhoek"/>`;
+    d += `<path d="M${hoek[0][0]} ${hoek[0][1]} L${hoek[1][0]} ${hoek[1][1]} L${hoek[4][0]} ${hoek[4][1]} Z" class="vh-driehoek"/>`;
+    d += tekst(cx, 91, 'vuurdriehoek', { maat: 9.5, klasse: 'vet accent-tekst' });
+    d += hoek.map(([x, y], i) => `<circle cx="${x}" cy="${y}" r="5" class="${i === 2 || i === 3 ? 'vol' : 'accent'}"/>`).join('');
+    // a flame in the middle
+    d += `<g transform="translate(${cx} 172)"><path d="M-24 0 Q-30 -26 -12 -40 Q-14 -24 -4 -22 Q-8 -46 10 -58 Q8 -36 20 -30 Q30 -18 24 0 Z" fill="#f08a1c"/>`
+      + '<path d="M-12 0 Q-14 -14 -4 -22 Q-2 -12 4 -12 Q4 -26 12 -32 Q18 -14 12 0 Z" fill="#ffd34d"/></g>';
+    const labels = [
+      [cx, 20, 'middle', 'Brandstof', 'iets dat kan branden'],
+      [282, 98, 'start', 'Zuurstof', 'meestal uit de lucht'],
+      [248, 212, 'start', 'Mengverhouding', 'goed gemengd'],
+      [132, 212, 'end', 'Kettingreactie', 'houdt het vuur gaande'],
+      [98, 98, 'end', 'Warmte', 'heet genoeg'],
+    ];
+    d += labels.map(([x, y, anker, kop, sub]) => tekst(x, y, kop, { maat: 12, anker, klasse: 'vet' }) + tekst(x, y + 13, sub, { maat: 9.5, anker, klasse: 'stil' })).join('');
+    return svg(380, 236, 'De vuurvijfhoek: brandstof, zuurstof en warmte, de drie van de vuurdriehoek, en daarbij de mengverhouding en de kettingreactie. Pas als alle vijf er zijn, brandt het', d);
+  },
+
+  'stoffen-branden': () => {
+    // three strips of cloth held in a flame with tongs: cotton flares up, wool hardly catches, synthetics melt and drip
+    const stuk = (x, klasse, kop, sub) => {
+      let g = `<rect x="${x}" y="0" width="120" height="190" rx="8" class="vlak2"/>`;
+      g += `<path d="M${x + 60} 8 V30 M${x + 54} 8 L${x + 58} 30 M${x + 66} 8 L${x + 62} 30" class="lijn"/>`;
+      g += `<rect x="${x + 38}" y="30" width="44" height="66" rx="2" class="${klasse}"/>`;
+      g += tekst(x + 60, 162, kop, { maat: 11.5, klasse: 'vet' }) + tekst(x + 60, 177, sub, { maat: 9.5, klasse: 'stil' });
+      return g;
+    };
+    let d = stuk(6, 'vh-katoen', 'katoen', 'vat snel vlam') + stuk(130, 'vh-wol', 'wol', 'vat moeilijk vlam') + stuk(254, 'vh-kunststof', 'polyester, nylon', 'smelt en druppelt');
+    // cotton: a big flame over the lower half
+    d += '<path d="M38 100 Q30 70 46 58 Q46 74 54 72 Q50 50 64 40 Q66 60 74 60 Q90 70 84 100 Z" fill="#f08a1c"/><path d="M50 100 Q48 84 58 76 Q60 86 66 84 Q70 74 74 70 Q80 86 74 100Z" fill="#ffd34d"/>';
+    // wool: only a little glow and a wisp of smoke
+    d += '<path d="M182 98 Q186 88 190 96 Q194 86 198 98 Z" fill="#f08a1c"/><path d="M192 84 q-6 -10 2 -18 q8 -8 0 -18" class="lijn dun stil"/>';
+    // synthetics: the bottom melts away, a small flame, and hot drops falling
+    d += '<path d="M292 96 Q300 104 306 96 Q312 108 318 96 Q324 102 336 96 V100 Q314 112 292 100 Z" class="vh-kunststof"/>';
+    d += '<path d="M296 98 Q300 84 308 90 Q312 78 320 92 Q326 86 332 98 Z" fill="#f08a1c"/>';
+    d += '<path d="M306 116 q-3 6 0 8 q3 -2 0 -8Z M318 128 q-3 6 0 8 q3 -2 0 -8Z M310 140 q-3 6 0 8 q3 -2 0 -8Z" class="vh-druppel"/>';
+    return svg(380, 190, 'Een strookje stof in een vlam. Katoen vat snel vlam. Wol vat moeilijk vlam en smeult hooguit even. Polyester en nylon vatten moeilijker vlam, maar smelten en druppelen: die hete druppels geven brandwonden', d);
   },
 };
 

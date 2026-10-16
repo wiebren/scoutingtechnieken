@@ -25,7 +25,7 @@ const VRAGEN = [
     uitleg: 'Voer wilde dieren nooit. Ze worden er ziek van, en ze leren dat ze bij mensen eten kunnen halen. Berg eten en afval zo op dat ze er niet bij kunnen.' },
   { p: 7, vraag: 'Jullie kampvuur is gezellig, maar op het veld naast jullie kampeert een andere groep. Het is al laat.',
     keuzes: ['Lekker doorzingen, het is kamp', 'Zachter doen: de anderen willen slapen'], goed: 1,
-    uitleg: 'Houd rekening met anderen: met je geluid, met je spullen op het pad, en met hoe je je plek achterlaat.' },
+    uitleg: 'Houd rekening met anderen: met je geluid, en met ruimte op het pad.' },
   { p: 3, vraag: 'Op een hike moet je poepen, en er is nergens een wc. Wat doe je?',
     keuzes: ['Achter een boom, met een blaadje erover', 'Een kuiltje van 15 tot 20 cm diep graven, ver van water, paden en het kamp, en het daarna dichtgooien', 'Bij de beek: daar spoelt het weg'], goed: 1,
     uitleg: 'Een kuiltje, minstens 60 meter van water, paden en het kamp, en daarna dicht met de aarde. Nooit bij water: dan komt het in het water terecht. En vraag de leiding of het daar mag.' },

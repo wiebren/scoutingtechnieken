@@ -6,7 +6,7 @@
 
 export default [
   // Eindknopen
-  { id: 'achtknoop', naam: 'Achtknoop', ook: ['Vlaamse acht'], en: 'figure-eight knot', abok: '570', groep: 'eindknopen', bron: 'TKN §1.1',
+  { id: 'achtknoop', naam: 'Achtknoop', ook: ['Vlaamse acht'], en: 'figure-eight knot', abok: '520', groep: 'eindknopen', bron: 'TKN §1.1',
     plaatje: 'touw-achtknoop',
     waarvoor: 'Een stopknoop aan het eind van een touw, zodat het niet door een oog of blok glipt.',
     uitleg: [
@@ -126,7 +126,7 @@ export default [
     plaatje: 'touw-timmersteek',
     waarvoor: 'Een touw om een balk die je wilt slepen. Ook het begin van de achtsjorring en de diagonaalsjorring.',
     uitleg: [
-      'Sla het touw om de balk. Ga met het eind om het staande part heen. Draai het eind dan minstens drie keer om het stuk touw dat om de balk ligt. Trek je aan het staande part, dan klemmen die draaien tegen het hout.',
+      'Sla het touw om de balk. Ga met het eind om het staande part heen. Draai het eind dan minstens drie keer om zijn eigen part: het stuk touw waar het net vandaan kwam, niet het staande part. Trek je aan het staande part, dan klemmen die draaien tegen het hout.',
       'Hij is snel gemaakt. Trekt er niemand meer aan, dan valt hij vanzelf uit elkaar.',
       'Wil je een lange paal slepen of rechtop hijsen? Leg dan nog een halve steek om de paal, verder naar het eind van de paal. Dan blijft de paal in één lijn met het touw.',
     ],

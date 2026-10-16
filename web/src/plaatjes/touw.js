@@ -351,7 +351,7 @@ export const TEKENINGEN = {
         [82, 112, 0], [118, 112, 1], [146, 108, 0.5], [161, 92, 0], [163, 70, -1], [157, 51, 0], [142, 44, 0.5], [129, 53, 1], [130, 70, 1],
         [123, 94, 0], [118, 112, -1], [112, 132, -1], [104, 152, -1]], begin: 'staand', eind: 'eind' },
     ],
-    labels: [{ t: 'staand part', x: 262, y: 52, naar: [262, 66] }, { t: 'werkend eind', x: 128, y: 180, naar: [105, 150] }, { t: 'paal', x: 26, y: 160, naar: [52, 160] }],
+    labels: [{ t: 'staand part', x: 262, y: 52, naar: [262, 66] }, { t: 'werkend eind', x: 128, y: 180, naar: [105, 150] }, { t: 'paal', x: 42, y: 178, anker: 'end', naar: [50, 162] }],
   },
   // Achtknoop: an alternating figure of eight, four crossings (ABOK #570).
   'touw-achtknoop': {
@@ -369,17 +369,18 @@ export const TEKENINGEN = {
     ],
     labels: [{ t: 'bocht in het dikke touw', x: 250, y: 200, naar: [262, 132] }],
   },
-  // Paalsteek: the same crossings as the schootsteek (the bight of the end around the standing part, the small loop
-  // of the standing part around both legs of that bight), turned so the standing part hangs from the top. The short
-  // end lies inside the eye: the standard bowline, not the cowboy one.
+  // Paalsteek: the bight of the end around the standing part, the small loop of the standing part around both legs of
+  // that bight (as in the schootsteek), with the standing part hanging from the top. Crossings as the blad tells it:
+  // in the small loop the part toward the end lies on top, the end comes up through it from below, goes behind the
+  // standing part and back down. The short end lies inside the eye: the standard bowline, not the cowboy one.
   'touw-paalsteek': {
     w: 250, h: 262, titel: 'Paalsteek: een vaste lus. Het eind komt door het kleine lusje omhoog, gaat om het staande part heen en weer terug door het lusje.',
     strengen: [
-      { p: [[120, 2, 0], [120, 28, 0], [120, 46, -1], [122, 62, 0], [130, 82, 1], [146, 100, 1], [160, 114, 1], [172, 124, 0.5], [178, 138, 0],
-        [170, 151, -0.5], [160, 154, -1], [128, 156, -1], [96, 155, -1], [80, 148, -0.5], [72, 128, 0], [78, 104, 0.5], [96, 88, 1], [114, 84, 0],
-        [130, 84, -1], [146, 85, 0], [160, 86, 1], [176, 90, 0.5], [192, 102, 0], [200, 128, 0], [200, 182, 0], [188, 228, 0], [152, 252, 0],
-        [110, 250, 0], [86, 228, 0], [86, 196, 0], [96, 172, 0], [96, 155, 1], [96, 120, 0], [96, 88, -1], [98, 62, 0], [106, 44, 0.5], [122, 37, 1],
-        [142, 40, 0.5], [157, 54, 0], [160, 86, -1], [160, 114, -1], [160, 154, 1], [160, 176, 0], [160, 196, 0]], begin: 'staand', eind: 'eind' },
+      { p: [[120, 2, 0], [120, 28, 0], [120, 46, 1], [122, 62, 0], [130, 82, -1], [146, 100, -1], [160, 114, -1], [172, 124, -0.5], [178, 138, 0],
+        [170, 151, 0.5], [160, 154, 1], [128, 156, 1], [96, 155, 1], [80, 148, 0.5], [72, 128, 0], [78, 104, -0.5], [96, 88, -1], [114, 84, 0],
+        [130, 84, 1], [146, 85, 0], [160, 86, -1], [176, 90, -0.5], [192, 102, 0], [200, 128, 0], [200, 182, 0], [188, 228, 0], [152, 252, 0],
+        [110, 250, 0], [86, 228, 0], [86, 196, 0], [96, 172, 0], [96, 155, -1], [96, 120, 0], [96, 88, 1], [98, 62, 0], [106, 44, -0.5], [122, 37, -1],
+        [142, 40, -0.5], [157, 54, 0], [160, 86, 1], [160, 114, 1], [160, 154, -1], [160, 176, 0], [160, 196, 0]], begin: 'staand', eind: 'eind' },
     ],
     labels: [{ t: 'staand part', x: 128, y: 14, anker: 'start' }, { t: 'lus', x: 168, y: 232 }, { t: 'werkend eind', x: 36, y: 248, naar: [146, 194] },
       { t: 'lusje', x: 34, y: 120, naar: [70, 128] }],
@@ -395,21 +396,31 @@ export const TEKENINGEN = {
         [178, 84, 0], [188, 120, 0.5], [190, 146, 1],
         ...zet(MASTWORP.slice(0, -1).reverse(), [0, 0.55, 120 - 96 * 0.55, 0.55, 0, 150 - 165 * 0.55])], begin: 'staand', eind: 'eind' },
     ],
-    labels: [{ t: 'rondtorn', x: 232, y: 16, naar: [172, 24] }, { t: 'twee halve steken', x: 214, y: 196, naar: [150, 168] }, { t: 'staand part', x: 66, y: 210, naar: [116, 204] }],
+    labels: [{ t: 'rondtorn', x: 232, y: 16, naar: [172, 24] }, { t: 'twee halve steken', x: 214, y: 196, naar: [150, 168] }, { t: 'staand part', x: 108, y: 212, anker: 'end', naar: [115, 198] }],
   },
-  // Timmersteek: around the log, once around the standing part, and then the end twisted around its own part
-  // (the turn around the log) a few times; pulling clamps the twists against the wood (ABOK #1665).
+  // Timmersteek, as in the public-domain figure "EB1911 - Knot - Fig. 20 - Timber Hitch" (Encyclopaedia Britannica
+  // 1911) and ABOK #1665: the standing part goes down behind the log, round it and up the front; above the log the
+  // end goes once round the standing part and is then twisted round its own part (the piece that just came up the
+  // front), not round the standing part. Pulling clamps the twists against the wood.
   'touw-timmersteek': {
-    w: 300, h: 196, titel: 'Timmersteek: het touw gaat om de balk, het eind om het staande part, en dan een paar keer om zichzelf gedraaid.',
+    w: 300, h: 196, titel: 'Timmersteek: het touw gaat om de balk, het eind om het staande part, en dan een paar keer om zijn eigen part gedraaid.',
     strengen: [
       { p: [[8, 112], [292, 112]], soort: 'paal', dik: 58 },
-      { p: [[150, 4, 0], [150, 50, 0], [150, 66, 0], [150, 76, 0], [150, 86, 1], [150, 112, 1], [150, 140, 1], [150, 150, 1], [158, 160, 0.4],
-        [170, 162, 0], [182, 154, -0.5], [186, 136, -1], [186, 90, -1], [184, 76, -0.5], [176, 64, 0], [164, 60, 0], [152, 63, -1], [140, 66, -1],
-        [134, 74, 0], [140, 81, 0.6], [152, 82, 1], [164, 84, 1], [172, 92, 1], [162, 96, 1.6], [150, 96, 2], [136, 100, 1.2], [132, 106, 0.6],
-        [140, 110, 0.5], [150, 110, 0.5], [164, 112, 0.6], [170, 118, 0.8], [162, 124, 1.6], [150, 124, 2], [136, 128, 1.2], [132, 134, 0.6],
-        [140, 138, 0.5], [150, 138, 0.5], [166, 140, 0.6], [176, 146, 0.6]], dik: 10, begin: 'staand', eind: 'eind' },
+      { p: (() => {
+        const p = [[136, 4, 0], [136, 50, 0], [136, 70, 0], [136, 86, -1], [136, 112, -1], [136, 140, -1], [138, 152, -0.6], [148, 161, 0], [160, 160, 0.5],
+          [168, 150, 1], [170, 140, 1], [170, 112, 1], [170, 86, 1], [170, 66, 1], [167, 54, 0.6], [157, 46, 0.2], [136, 44, -1], [122, 48, -0.4],
+          [118, 58, 0], [124, 66, 0.5], [136, 68, 1], [152, 70, 1], [162, 74, 0.6]];
+        // three twists round the part at x = 170: behind it (z 0.5 < 1), round, and over it (z 2)
+        for (const y of [78, 102, 126]) {
+          p.push([170, y, 0.5], [182, y + 3, 0.6], [186, y + 8, 0.8], [180, y + 12, 1.6], [170, y + 13, 2]);
+          if (y < 126) p.push([158, y + 16, 1.2], [154, y + 21, 0.6], [162, y + 23, 0.5]);
+        }
+        p.push([182, 146, 1.4], [190, 156, 1.2]);
+        return p;
+      })(), dik: 10, begin: 'staand', eind: 'eind' },
     ],
-    labels: [{ t: 'balk', x: 262, y: 160, naar: [262, 136] }, { t: 'staand part', x: 206, y: 20, naar: [154, 24] }, { t: 'eind om zichzelf gedraaid', x: 214, y: 186, naar: [172, 140] }],
+    labels: [{ t: 'balk', x: 262, y: 160, naar: [262, 136] }, { t: 'staand part', x: 196, y: 20, naar: [140, 24] },
+      { t: 'eind om zijn eigen part gedraaid', x: 206, y: 188, naar: [178, 118] }],
   },
   // Slipsteek: a half hitch whose end goes through as a bight; a pull on the short end pulls it loose.
   'touw-slipsteek': {
@@ -421,7 +432,7 @@ export const TEKENINGEN = {
         [124, 94, 0], [119, 112, -1], [116, 132, -0.5], [110, 150, 0], [98, 154, 0], [92, 142, -0.5], [101, 112, -1], [104, 96, 0], [108, 84, 0]],
         begin: 'staand', eind: 'eind' },
     ],
-    labels: [{ t: 'staand part', x: 262, y: 52, naar: [262, 66] }, { t: 'trek hier: los', x: 160, y: 170, naar: [107, 86] }, { t: 'paal', x: 26, y: 160, naar: [52, 160] }],
+    labels: [{ t: 'staand part', x: 262, y: 52, naar: [262, 66] }, { t: 'trek hier: los', x: 160, y: 170, naar: [107, 86] }, { t: 'paal', x: 42, y: 178, anker: 'end', naar: [50, 162] }],
   },
   // Mastworp met voorslag: a mastworp with an extra riding turn; both cross the standing part, and the pull goes
   // along the pole to the side of those turns (ABOK #1735, #1736; Theo Slijkerman, knoopenzo.nl, derdehandsteek).
@@ -485,16 +496,21 @@ export const TEKENINGEN = {
     ],
     labels: [{ t: 'extra slag', x: 158, y: 174, naar: [158, 152] }],
   },
-  // Karaaksteek: the flat carrick bend, over and under in turn everywhere; the short ends diagonally opposite.
-  // Traced from the photo "Knife-lanyard-knot-ABOK-787-Carrick-start.jpg" (David J. Fred, Wikimedia Commons).
+  // Karaaksteek: the flat carrick bend, over and under in turn everywhere; the short ends diagonally opposite. Traced
+  // from the public-domain figure "Chambers 1908 Carrick Bend.png" (Chambers's Twentieth Century Dictionary, 1908;
+  // Wikimedia Commons): rope A comes in from the left, goes round the right-hand loop and leaves lower left; rope B
+  // comes in lower right, goes round the left-hand loop and leaves upper right. A goes under the first time it meets
+  // its own diagonal, as in that figure; the rest follows from over-and-under (ABOK #1439).
   'touw-karaaksteek': {
-    w: 316, h: 152, afwisselend: true,
+    w: 316, h: 140, afwisselend: true,
     titel: 'Karaaksteek: twee touwen die om en om over en onder elkaar door gaan. De korte einden komen schuin tegenover elkaar uit.',
     strengen: [
-      { p: zet([[0, 370], [120, 320], [200, 275], [260, 240], [330, 195], [420, 155], [500, 165], [545, 215], [520, 280], [440, 305], [360, 300],
-        [300, 270], [250, 225], [200, 175], [130, 125], [96, 108]], [0.42, 0, 6, 0, 0.42, -20]), soort: 'a', dik: 11, begin: 'staand', eind: 'eind' },
-      { p: zet([[720, 190], [600, 188], [520, 195], [450, 215], [380, 255], [320, 300], [250, 320], [200, 295], [185, 240], [200, 190], [250, 160],
-        [330, 160], [400, 195], [470, 250], [540, 300], [612, 362]], [0.42, 0, 6, 0, 0.42, -20]), soort: 'b', dik: 11, begin: 'staand', eind: 'eind' },
+      { p: zet([[50, 57], [90, 61], [125, 66], [163, 73], [190, 84], [220, 98], [250, 106], [278, 106], [300, 98], [313, 82], [315, 62], [306, 42],
+        [288, 28], [262, 22], [238, 26], [218, 38], [200, 52], [180, 64], [160, 77], [138, 91], [115, 102], [92, 111], [70, 116]], [1.04, 0, -50.08, 0, 1.04, -0.48]),
+        soort: 'a', dik: 11, begin: 'staand', eind: 'eind' },
+      { p: zet([[354, 124], [320, 108], [298, 96], [278, 82], [258, 66], [240, 50], [222, 36], [200, 24], [170, 19], [140, 26], [118, 44], [108, 68],
+        [112, 92], [128, 108], [155, 114], [185, 110], [208, 99], [230, 84], [255, 68], [280, 52], [302, 38], [322, 27], [338, 20]], [1.04, 0, -50.08, 0, 1.04, -0.48]),
+        soort: 'b', dik: 11, begin: 'staand', eind: 'eind' },
     ],
   },
   // Dubbele achtknoop: the achtknoop laid with the rope double; the bight at the end is the eye.
@@ -518,19 +534,19 @@ export const TEKENINGEN = {
       [-48, 30, 0], [-40, 28, 1], [0, 28, 1], [40, 28, 1], [98, 28, 1]], [1.6, 0, 158, 0, 1.25, 122]), dik: 10, begin: 'staand', eind: 'staand' }],
     labels: [{ t: 'lus', x: 186, y: 22, naar: [170, 30] }],
   },
-  // Werpankersteek: the rondtorn, then the end round the standing part and under both turns, and a half hitch.
-  // As described by Van Kampen, De zeilsport (1923), p. 94.
+  // Werpankersteek: the rondtorn, then the end round the standing part (in front of it) and under both turns, so it
+  // wraps the standing part; then a half hitch. As described by Van Kampen, De zeilsport (1923), p. 94.
   'touw-werpankersteek': {
     w: 300, h: 218, titel: 'Werpankersteek: twee slagen om de paal, het eind om het staande part en onder beide slagen door, en dan een halve steek.',
     strengen: [
       paal(40, 8, 292, 26),
       { p: [[120, 216, 0], [120, 170, 0], [120, 110, 0], [120, 70, 0.5], [120, 40, 1], [121, 22, 0.5], [128, 13, 0], [135, 21, -0.5], [136, 40, -1],
         [138, 60, -0.5], [144, 68, 0], [150, 60, 0.5], [152, 40, 1], [153, 22, 0.5], [160, 13, 0], [167, 21, -0.5], [168, 40, -1], [170, 60, -0.5],
-        [176, 74, 0], [150, 84, -0.5], [120, 87, -1], [98, 80, -0.5], [90, 64, 0], [96, 46, 0.3], [110, 41, 0.5], [120, 40, 0.5], [152, 40, 0.5],
+        [176, 74, 0], [150, 84, 0.5], [120, 87, 1], [98, 80, 0.5], [90, 64, 0], [96, 46, 0.3], [110, 41, 0.5], [120, 40, 0.5], [152, 40, 0.5],
         [176, 41, 0.5], [192, 48, 0.5], [202, 66, 0.5], [200, 92, 0.5], [184, 108, 0.2], [150, 111, -0.3], [120, 111, -1], [102, 118, 0], [104, 130, 0.5],
         [120, 132, 1], [136, 126, 1], [146, 112, -1], [152, 100, -1]], begin: 'staand', eind: 'eind' },
     ],
-    labels: [{ t: 'onder beide slagen door', x: 230, y: 16, naar: [184, 42] }, { t: 'halve steek', x: 222, y: 150, naar: [140, 128] }, { t: 'staand part', x: 66, y: 210, naar: [116, 204] }],
+    labels: [{ t: 'onder beide slagen door', x: 230, y: 16, naar: [184, 42] }, { t: 'halve steek', x: 222, y: 150, naar: [140, 128] }, { t: 'staand part', x: 108, y: 212, anker: 'end', naar: [115, 198] }],
   },
   // Prusikknoop, from the side of the legs: three turns above and three below, the legs coming out in the middle;
   // the bridge that joins them lies on the back.
@@ -635,7 +651,7 @@ export const TEKENINGEN = {
         { p: [[226, 95, -1], [244, 93, 0], [262, 87, 0], [282, 91, 0], [290, 104, 0], [278, 117, 0], [258, 113, 0], [242, 107, 0], [226, 106, -1]], dik: 11 },
         { p: [...slagen, [236, 84, 0], [250, 78, 0.5], [268, 88, 1], [271, 102, 0], [272, 115, -1], [272, 138, -1]], dik: 11, eind: 'eind' },
       ],
-      labels: [{ t: 'oog', x: 304, y: 92, anker: 'end' }, { t: 'staand part', x: 6, y: 130, anker: 'start' }],
+      labels: [{ t: 'oog', x: 316, y: 78, anker: 'end' }, { t: 'staand part', x: 6, y: 130, anker: 'start' }],
     };
   })(),
   // Tonsteek, as the barrel hitch: the barrel stands on the rope; the half knot on top is opened, so that one half

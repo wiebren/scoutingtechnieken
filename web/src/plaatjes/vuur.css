@@ -46,3 +46,4 @@
 .plaatje .vk-hand { fill: #e8b98f; stroke: #8a5a3a; stroke-width: 1.2; stroke-linejoin: round; }
 .plaatje .vk-staal { fill: #c7d0d6; stroke: #56636b; stroke-width: 1.2; stroke-linejoin: round; }
 .plaatje .vk-snede { fill: none; stroke: var(--rood); stroke-width: 2.4; stroke-linecap: round; }
+.plaatje .vk-watten { fill: #f6f4ec; stroke: #b9b4a4; stroke-width: 1; }

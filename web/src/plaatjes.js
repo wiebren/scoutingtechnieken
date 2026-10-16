@@ -90,7 +90,7 @@ function drieNoorden() {
   uit += `<text x="${wx}" y="${wy - 22}" class="tekst vet" font-size="13" text-anchor="middle">ware noorden</text>`;
   uit += `<text x="${mx + 8}" y="${my + 4}" class="tekst vet" font-size="13">magnetisch noorden</text>`;
   uit += `<text x="${kx - 10}" y="${ky + 4}" class="tekst vet" font-size="13" text-anchor="end">kaartnoorden</text>`;
-  uit += `<text x="175" y="240" class="tekst stil" font-size="11" text-anchor="middle">De hoeken zijn veel groter getekend dan ze zijn.</text>`;
+  uit += `<text x="175" y="240" class="tekst stil" font-size="11" text-anchor="middle">Zo in het westen van het land; de hoeken zijn veel groter getekend.</text>`;
   return svg(350, 252, 'De drie noorden: ware noorden, magnetisch noorden en kaartnoorden', uit);
 }
 
@@ -118,7 +118,7 @@ function hoogtelijnen() {
   const ringen = [[110, 72, 0], [84, 54, 6], [62, 40, 12], [44, 28, 16], [30, 19, 19], [18, 11, 21]];
   let uit = '';
   for (const [rx, ry, dx] of ringen) uit += `<ellipse cx="${cx + dx}" cy="${cy}" rx="${rx}" ry="${ry}" class="hoogte"/>`;
-  uit += `<text x="${cx + 21}" y="${cy - 16}" class="tekst bruin-tekst" font-size="10" text-anchor="middle">15 m</text>`;
+  uit += `<text x="${cx + 21}" y="${cy - 2.5}" class="tekst bruin-tekst" font-size="9" text-anchor="middle">15 m</text>`;   // inside the top ring, off its line
   uit += `<path d="M30 ${cy}H270" class="lijn dun stil" stroke-dasharray="4 4"/>`;
   // the profile along the dashed line: heights 0..15 m at the crossings
   const xs = ringen.flatMap(([rx, , dx]) => [cx + dx - rx, cx + dx + rx]);
@@ -226,12 +226,16 @@ function spiegelkompas() {
   return svg(340, 176, 'Een spiegelkompas van opzij: je mikt over de bovenkant en ziet het kompashuis in de spiegel eronder', uit);
 }
 
-/** An oak leaf, lobed, along a midrib from its foot (x, y) upwards; zomereik with two little ears at the foot. */
+/**
+ * An oak leaf, lobed, along a midrib from its foot (x, y) upwards. The zomereik is broadest above the middle, with a
+ * few deep lobes and two little ears at the foot; the wintereik is broadest in the middle, with more, shallower lobes.
+ */
 function eikenblad(x, y, lengte, steel, oortjes) {
   const punten = [];
+  const [scheef, lobben, diep] = oortjes ? [1.4, 4.5, 0.3] : [1, 6, 0.2];
   for (let i = 0; i <= 40; i++) {
-    const t = i / 40;
-    const breed = Math.sin(Math.PI * Math.min(1, t * 1.08)) ** 0.7 * lengte * 0.3 * (0.72 + 0.28 * Math.cos(2 * Math.PI * 4.5 * t));
+    const t = i / 40 / 1.08; // the tip is where the width reaches 0: no spike of outline above it
+    const breed = Math.sin(Math.PI * Math.min(1, t * 1.08) ** scheef) ** 0.7 * lengte * 0.3 * (1 - diep + diep * Math.cos(2 * Math.PI * lobben * t));
     // the ears of the zomereik: two small round lobes right at the foot
     punten.push([t, Math.max(oortjes && t < 0.12 ? lengte * 0.11 * Math.sin((Math.PI * t) / 0.12) : 0, breed)]);
   }
@@ -239,7 +243,7 @@ function eikenblad(x, y, lengte, steel, oortjes) {
   const zijde = (k) => punten.map(([t, b]) => `${r1(x + k * b)} ${r1(voet - t * lengte)}`);
   const rechts = zijde(1); const links = zijde(-1).reverse();
   return `<path d="M${x} ${voet} L${rechts.join(' L')} L${links.join(' L')}Z" class="blad"/>`
-    + `<path d="M${x} ${y} V${r1(voet - lengte * 0.96)}" class="nerf"/>`;
+    + `<path d="M${x} ${y} V${r1(voet - lengte * 0.88)}" class="nerf"/>`;
 }
 
 const eikel = (x, y, schuin = 0) => `<g transform="rotate(${schuin} ${x} ${y})"><ellipse cx="${x}" cy="${y + 13}" rx="7" ry="11" class="eikel"/><path d="M${x - 8} ${y + 5} Q${x} ${y - 4} ${x + 8} ${y + 5} V${y + 8} H${x - 8}Z" class="napje"/></g>`;
@@ -286,7 +290,9 @@ function kaartbladen() {
   uit += `<path d="M${x0 + w / 2} ${y0 - 6} V${y0 + hh + 6}" class="lijn dik accent-lijn"/>`;
   uit += `<rect x="${x0}" y="${y0}" width="${w}" height="${hh}" class="lijn"/>`;
   uit += tekst(x0 + w / 4, y0 - 12, '32 W (1:50.000)', { klasse: 'accent-tekst vet' }) + tekst(x0 + (3 * w) / 4, y0 - 12, '32 O (1:50.000)', { klasse: 'accent-tekst vet' });
-  uit += `<circle cx="${x0 + w / 4 + 22}" cy="${y0 + 64}" r="4.5" class="rood"/>` + tekst(x0 + w / 4 + 22, y0 + 80, 'Amersfoort', { maat: 9.5 });
+  // Amersfoort (RD 155 – 463): halfway across 32 B (x 150–160 km), 0,5 km above its lower edge (y 462,5 km)
+  const [ax, ay] = [x0 + (3 * w) / 8, r1(y0 + hh / 2 - (0.5 / 12.5) * (hh / 2))];
+  uit += `<circle cx="${ax}" cy="${ay}" r="4.5" class="rood"/>` + tekst(ax, ay - 9, 'Amersfoort', { maat: 9.5 });
   uit += tekst(x0 + w / 8, y0 + hh + 22, '10 km', { maat: 10, klasse: 'stil' }) + tekst(x0 + w + 8, y0 + hh / 4 + 4, '12,5 km', { maat: 10, anker: 'start', klasse: 'stil' });
   return svg(370, 238, 'Bladindeling: vak 32 in acht bladen 1:25.000, A B E F boven en C D G H onder, en twee bladen 1:50.000, 32 W en 32 O', uit);
 }
@@ -337,7 +343,7 @@ function obstakelOmlopen() {
   uit += '<path d="M150 30 V12" class="accent-lijn" stroke-width="3"/><path d="M144 18 L150 8 L156 18" class="accent-lijn" stroke-width="3" fill="none"/>';
   uit += '<circle cx="150" cy="250" r="5" class="vol"/>' + tekst(150, 270, 'start, op je koers');
   uit += tekst(200, 232, '90° rechts: 60 passen', { maat: 10.5 }) + tekst(258, 124, 'je koers', { anker: 'start', maat: 10.5 }) + tekst(258, 138, 'tot voorbij', { anker: 'start', maat: 10.5 });
-  uit += tekst(204, 48, '90° links: 60 passen', { maat: 10.5 });
+  uit += tekst(212, 22, '90° links: 60 passen', { maat: 10.5 });
   return svg(340, 280, 'Met haakse hoeken om een meer: 90 graden opzij en passen tellen, langs het meer, en terug met evenveel passen', uit);
 }
 
@@ -438,8 +444,8 @@ function nap() {
   uit += `<path d="M0 ${nul} H380" class="accent-lijn" stroke-width="2" stroke-dasharray="7 4"/>`;
   uit += tekst(8, nul - 8, 'NAP = 0 m', { anker: 'start', klasse: 'accent-tekst vet', maat: 12 });
   uit += tekst(46, nul + 32, 'zee', { klasse: 'stil' }) + tekst(118, nul - 32, 'dijk', { klasse: 'stil' });
-  uit += tekst(188, nul + 40, 'polder: onder NAP', { maat: 10.5 });
-  uit += `<path d="M188 ${nul + 4} V${nul + 26}" class="lijn dun stil"/><path d="M184 ${nul + 22} L188 ${nul + 28} L192 ${nul + 22}" class="lijn dun stil"/>`;
+  uit += tekst(188, nul + 32, 'polder:', { maat: 10.5 }) + tekst(188, nul + 43, 'onder NAP', { maat: 10.5 });
+  uit += `<path d="M188 ${nul + 4} V${nul + 18}" class="lijn dun stil"/><path d="M184 ${nul + 14} L188 ${nul + 20} L192 ${nul + 14}" class="lijn dun stil"/>`;
   // a wall with a peilmerk
   uit += `<rect x="262" y="${nul - 40}" width="26" height="${50}" class="vlak"/><rect x="262" y="${nul - 40}" width="26" height="50" class="lijn dun"/>`;
   uit += `<circle cx="275" cy="${nul - 22}" r="4.5" class="brons"/>` + `<path d="M271 ${nul - 24} L242 ${nul - 44}" class="lijn dun stil"/>`;
@@ -479,12 +485,12 @@ function insnijding() {
   let uit = '<rect x="10" y="10" width="360" height="220" rx="6" class="vlak2"/>';
   for (const x of [70, 150, 230, 310]) uit += `<path d="M${x} 10 V230" class="blauw-lijn" stroke-width="0.8" opacity="0.6"/>`;
   for (const [t, naam] of [[A, 'A'], [B, 'B']]) {
-    const [ex, ey] = verleng(t, 1.35);
+    const [ex, ey] = verleng(t, 1.2);       // a little past you, clear of the labels below
     uit += `<path d="M${t[0]} ${t[1]} L${ex} ${ey}" class="rood-lijn" stroke-width="2" stroke-dasharray="7 4"/>`;
     uit += `<path d="M${t[0] - 6} ${t[1] + 8} L${t[0]} ${t[1] - 12} L${t[0] + 6} ${t[1] + 8}Z" class="vol"/>`;
     uit += tekst(t[0] + (naam === 'A' ? -14 : 14), t[1] - 2, `toren ${naam}`, { anker: naam === 'A' ? 'end' : 'start', maat: 11 });
   }
-  uit += `<circle cx="${jij[0]}" cy="${jij[1]}" r="7" class="accent"/>` + tekst(jij[0] - 12, jij[1] + 4, 'hier sta jij', { anker: 'end', klasse: 'vet', maat: 12 });
+  uit += `<circle cx="${jij[0]}" cy="${jij[1]}" r="7" class="accent"/>` + tekst(jij[0] - 28, jij[1] + 5, 'hier sta jij', { anker: 'end', klasse: 'vet', maat: 12 });
   const [ra, rb] = [richting(A), richting(B)];
   uit += tekst(368, 214, `naar A: ${ra}°, terug ${(ra + 180) % 360}°`, { anker: 'end', maat: 10.5, klasse: 'stil' });
   uit += tekst(18, 214, `naar B: ${rb}°, terug ${(rb + 180) % 360}°`, { anker: 'start', maat: 10.5, klasse: 'stil' });
@@ -509,7 +515,7 @@ function gpsTrack() {
 /** The GPS points straight at the goal, through everything; you walk the paths around. */
 function gpsRechteLijn() {
   let uit = '<rect x="10" y="10" width="360" height="190" rx="6" class="vlak2"/>';
-  uit += '<ellipse cx="196" cy="104" rx="66" ry="40" class="water"/>' + tekst(196, 108, 'ven', { klasse: 'stil' });
+  uit += '<ellipse cx="196" cy="104" rx="66" ry="40" class="water"/>' + tekst(196, 130, 'ven', { klasse: 'stil' });
   uit += '<path d="M44 176 C70 150 90 160 116 150 C126 106 110 60 160 46 C220 30 270 40 300 56 C320 66 326 50 336 40" class="lijn" stroke-width="5" stroke-linecap="round" opacity="0.25"/>';
   uit += '<path d="M44 176 C70 150 90 160 116 150 C126 106 110 60 160 46 C220 30 270 40 300 56 C320 66 326 50 336 40" class="lijn dun stil" stroke-dasharray="2 3"/>';
   uit += '<path d="M44 176 L330 44" class="accent-lijn" stroke-width="2.5"/><path d="M318 44 L332 43 L324 55" class="accent-lijn" stroke-width="2.5" fill="none"/>';
@@ -563,10 +569,10 @@ function breedteLengte() {
   uit += lijn(reeks(120, (t) => proj(0, -180 + 360 * t)), 'lijn');
   uit += lijn(reeks(90, (t) => proj(-90 + 180 * t, 0)), 'lijn');
   uit += lijn(reeks(40, (t) => proj(52 * t, 5)), 'accent-lijn breed');
-  uit += lijn(reeks(20, (t) => proj(52, 5 * t)), 'rood-lijn breed');
+  uit += lijn(reeks(20, (t) => proj(0, 5 * t)), 'rood-lijn breed');      // longitude: along the equator from Greenwich
   const [px, py] = proj(52, 5);
   uit += `<circle cx="${px}" cy="${py}" r="5.5" class="rood"/>`;
-  const [ex, ey] = proj(0, -38); const [gx, gy] = proj(-30, 0);
+  const [ex, ey] = proj(0, -28); const [gx, gy] = proj(-30, 0);
   uit += tekst(ex, ey + 15, 'evenaar', { maat: 10.5, klasse: 'stil' }) + tekst(gx + 4, gy, 'Greenwich', { anker: 'start', maat: 10.5, klasse: 'stil' });
   uit += tekst(312, 96, 'Nederland', { anker: 'start', klasse: 'vet', maat: 12 }) + `<path d="M${px + 6} ${py - 2} L308 92" class="lijn dun stil"/>`;
   uit += tekst(312, 128, '52° noorderbreedte:', { anker: 'start', maat: 10.5, klasse: 'accent-tekst' }) + tekst(312, 141, 'vanaf de evenaar', { anker: 'start', maat: 10.5, klasse: 'accent-tekst' });
@@ -650,10 +656,10 @@ function positieBepalen() {
   let uit = '<rect x="10" y="10" width="260" height="200" rx="6" class="vlak2"/>';
   uit += '<path d="M10 16 Q10 10 16 10 H120 C110 40 90 64 60 76 C40 84 22 86 10 88Z" class="accent-licht" opacity="0.7"/>';
   uit += tekst(40, 38, 'bos', { maat: 10.5, klasse: 'stil' });
-  uit += '<path d="M10 176 C80 172 180 156 270 150" class="blauw-lijn" stroke-width="2.5" fill="none"/>' + tekst(262, 142, 'sloot', { anker: 'end', maat: 10.5, klasse: 'blauw-tekst' });
+  uit += '<path d="M10 176 C80 172 180 156 270 150" class="blauw-lijn" stroke-width="2.5" fill="none"/>' + tekst(20, 166, 'sloot', { anker: 'start', maat: 10.5, klasse: 'blauw-tekst' });
   uit += `<path d="M${jij[0]} 10 V210" class="lijn" stroke-width="4" opacity="0.35"/><path d="M40 ${jij[1] - 36} L${jij[0]} ${jij[1]} L270 ${jij[1] - 4}" class="lijn" stroke-dasharray="5 3" fill="none"/>`;
   uit += '<path d="M188 10 L256 210" class="lijn dun"/><rect x="198" y="38" width="5" height="5" class="vol"/><rect x="232" y="138" width="5" height="5" class="vol"/>';
-  uit += tekst(214, 86, 'hoogspanning', { anker: 'start', maat: 9.5, klasse: 'stil' });
+  uit += tekst(228, 104, 'leiding', { anker: 'start', maat: 9.5, klasse: 'stil' });     // the hoogspanningsleiding, as in the list
   uit += '<circle cx="240" cy="30" r="7" class="rood"/>' + tekst(228, 34, 'toren', { anker: 'end', maat: 10.5 });
   uit += `<circle cx="${jij[0]}" cy="${jij[1]}" r="6" class="accent"/>`;
   // the thumb, from below, its nail on your spot
@@ -725,6 +731,123 @@ function natuurtekens() {
   return svg(360, 236, 'Een boom van bovenaf met mos aan twee kanten: aan de noordkant door de schaduw en aan de zuidwestkant door de regen. Mos wijst dus geen vaste richting.', uit);
 }
 
+/** An orienteering map (ISOM 2017-2) in miniature: its own colours on white paper, magnetic north lines, the
+ *  course in purple; the legend beside it. The map keeps its print colours in both themes, like a paper map. */
+function oKaart() {
+  const KLEUR = { geel: '#ffba35', geel50: '#ffdd9a', groen30: '#c4e5bd', groen60: '#8ccf83', blauw: '#00a3e0', bruin: '#c4651c', zwart: '#1a1a1a', olijf: '#9caa3b', paars: '#c0278f' };
+  let uit = '<rect x="10" y="10" width="232" height="226" fill="#ffffff" stroke="#9a9a9a" stroke-width="1"/>';
+  // open land and rough open land, thickets, water, a no-go garden with its house
+  uit += `<path d="M10 10 H118 C110 40 84 60 52 66 C34 70 18 78 10 84Z" fill="${KLEUR.geel}"/>`;
+  uit += `<path d="M150 150 C178 136 214 142 242 150 V236 H164 C150 214 140 176 150 150Z" fill="${KLEUR.geel50}"/>`;
+  uit += `<path d="M150 22 C176 14 214 26 216 52 C218 78 186 90 166 78 C150 68 136 40 150 22Z" fill="${KLEUR.groen60}"/>`;
+  uit += `<path d="M24 120 C44 104 78 110 84 132 C90 150 66 166 44 160 C28 156 16 138 24 120Z" fill="${KLEUR.groen30}"/>`;
+  uit += `<path d="M98 168 C112 156 138 162 140 180 C142 198 120 210 104 202 C92 196 88 178 98 168Z" fill="${KLEUR.blauw}" stroke="${KLEUR.zwart}" stroke-width="1"/>`;
+  uit += `<rect x="18" y="186" width="58" height="42" fill="${KLEUR.olijf}"/><rect x="34" y="198" width="16" height="12" fill="${KLEUR.zwart}"/>`;
+  // a knoll in brown contours, a path in black dashes
+  uit += `<ellipse cx="128" cy="104" rx="34" ry="24" fill="none" stroke="${KLEUR.bruin}" stroke-width="1.4"/><ellipse cx="130" cy="104" rx="16" ry="10" fill="none" stroke="${KLEUR.bruin}" stroke-width="1.4"/>`;
+  uit += `<path d="M10 98 C60 90 100 140 160 128 S220 96 242 100" fill="none" stroke="${KLEUR.zwart}" stroke-width="1.6" stroke-dasharray="6 3"/>`;
+  // magnetic north lines, parallel to the paper sides, with an arrow
+  for (const x of [66, 136, 206]) uit += `<path d="M${x} 10 V236" stroke="#1d6fb8" stroke-width="0.8" opacity="0.8"/>`;
+  uit += '<path d="M206 30 l-5 10 h10Z" fill="#1d6fb8"/>';
+  // the course: start triangle, controls, finish
+  const route = [[60, 40], [128, 104], [196, 196], [116, 222]];
+  // the start triangle points to the first control (ISOM 701)
+  const naar1 = (Math.atan2(route[1][0] - route[0][0], -(route[1][1] - route[0][1])) * 180) / Math.PI;
+  const tri = `M${[0, 120, 240].map((g) => pol(route[0][0], route[0][1], 10, naar1 + g).join(' ')).join(' L')}Z`;
+  uit += `<path d="${tri}" fill="none" stroke="${KLEUR.paars}" stroke-width="2"/>`;
+  for (let i = 1; i < route.length; i++) {
+    const [ax, ay] = route[i - 1]; const [bx, by] = route[i];
+    const d = Math.hypot(bx - ax, by - ay); const [ux, uy] = [(bx - ax) / d, (by - ay) / d];
+    uit += `<path d="M${r1(ax + ux * 13)} ${r1(ay + uy * 13)} L${r1(bx - ux * 13)} ${r1(by - uy * 13)}" stroke="${KLEUR.paars}" stroke-width="1.6"/>`;
+    uit += `<circle cx="${bx}" cy="${by}" r="10" fill="none" stroke="${KLEUR.paars}" stroke-width="2"/>`;
+    if (i < route.length - 1) uit += `<text x="${bx + 13}" y="${by - 9}" fill="${KLEUR.paars}" font-size="12" font-weight="700">${i}</text>`;
+  }
+  uit += `<circle cx="${route[3][0]}" cy="${route[3][1]}" r="6" fill="none" stroke="${KLEUR.paars}" stroke-width="2"/>`;
+  // the legend, in the colours of the map and the words of the theme
+  const regels = [
+    ['#ffffff', 'wit: bos, goed te lopen'], [KLEUR.geel, 'geel: open terrein'], [KLEUR.groen60, 'groen: dicht, langzaam'],
+    [KLEUR.blauw, 'blauw: water'], [KLEUR.bruin, 'bruin: hoogtelijnen'], [KLEUR.zwart, 'zwart: paden, gebouwen'],
+    [KLEUR.olijf, 'olijf: verboden terrein'], [KLEUR.paars, 'paars: de baan'],
+  ];
+  regels.forEach(([kleur, t], i) => {
+    const y = 22 + i * 27;
+    uit += `<rect x="254" y="${y - 11}" width="18" height="14" fill="${kleur}" stroke="#9a9a9a" stroke-width="1"/>` + tekst(278, y, t, { anker: 'start', maat: 10.5 });
+  });
+  uit += tekst(254, 236, 'noordlijnen: magnetisch noorden', { anker: 'start', maat: 9.5, klasse: 'stil' });
+  return svg(410, 246, 'Een verzonnen stukje oriëntatieloopkaart: wit bos, geel open terrein, groen dichte begroeiing, een blauw meertje, een heuveltje in bruine hoogtelijnen, een zwart pad, olijfgroen verboden terrein met een huis, en in paars de baan: een driehoek als start, twee posten en een dubbele cirkel als finish. De staande lijnen wijzen naar het magnetisch noorden.', uit);
+}
+
+/** Forward intersection: from two known places, a bearing each to the same far point; the lines cross there. */
+function voorwaartseInsnijding() {
+  const A = [80, 196]; const B = [272, 196]; const [ra, rb] = [30, 320];
+  // where the two lines cross: A + t·(sin ra, -cos ra) = B + u·(sin rb, -cos rb)
+  const rad = Math.PI / 180;
+  const [ax, ay, bx, by] = [Math.sin(ra * rad), -Math.cos(ra * rad), Math.sin(rb * rad), -Math.cos(rb * rad)];
+  const u = ((B[1] - A[1]) * ax - (B[0] - A[0]) * ay) / (bx * ay - by * ax);
+  const T = [r1(B[0] + u * bx), r1(B[1] + u * by)];
+  const lijn = (P, r) => { const [ex, ey] = pol(P[0], P[1], Math.hypot(T[0] - P[0], T[1] - P[1]) + 30, r); return `<path d="M${P[0]} ${P[1]} L${ex} ${ey}" class="rood-lijn" stroke-width="2" stroke-dasharray="7 4"/>`; };
+  let uit = '<rect x="10" y="10" width="340" height="226" rx="6" class="vlak2"/>';
+  for (const x of [70, 150, 230, 310]) uit += `<path d="M${x} 10 V236" class="blauw-lijn" stroke-width="0.8" opacity="0.6"/>`;
+  uit += '<path d="M10 206 C90 200 190 214 350 204" class="blauw-lijn" stroke-width="3" fill="none"/>' + tekst(338, 226, 'beek', { anker: 'end', maat: 10, klasse: 'blauw-tekst' });
+  uit += lijn(A, ra) + lijn(B, rb);
+  uit += `<rect x="${A[0] - 9}" y="${A[1] + 5}" width="18" height="12" rx="2" class="vol"/>` + tekst(A[0] - 14, A[1] - 2, 'brug', { anker: 'end', maat: 11, klasse: 'vet' });
+  uit += `<circle cx="${B[0]}" cy="${B[1]}" r="6" class="vol"/>` + tekst(B[0] + 12, B[1] - 6, 'kruising', { anker: 'start', maat: 11, klasse: 'vet' });
+  uit += tekst(A[0] + 28, A[1] - 26, `${ra}°`, { anker: 'start', maat: 11, klasse: 'rood-tekst vet' }) + tekst(B[0] - 30, B[1] - 26, `${rb}°`, { anker: 'end', maat: 11, klasse: 'rood-tekst vet' });
+  uit += `<path d="M${T[0]} ${T[1] + 8} V${T[1] - 22}" class="lijn"/><path d="M${T[0]} ${T[1] - 22} l14 5 l-14 5Z" class="accent"/>`;
+  uit += `<circle cx="${T[0]}" cy="${T[1]}" r="6" class="accent"/>` + tekst(T[0] + 20, T[1] + 4, 'hier staat de mast', { anker: 'start', maat: 11, klasse: 'accent-tekst vet' });
+  uit += `<path d="M330 24 V52" class="lijn"/><path d="M325 32 L330 22 L335 32" class="lijn" fill="none"/>` + tekst(330, 64, 'N', { maat: 11, klasse: 'vet' });
+  return svg(360, 246, `Voorwaartse insnijding: vanaf de brug zie je de vlaggenmast op ${ra} graden, vanaf de kruising op ${rb} graden. Zet beide richtingen op de kaart uit: waar de lijnen kruisen, staat de mast.`, uit);
+}
+
+/** An old church from above: tower and door in the west, choir in the east; how far old and new churches miss. */
+function kerkOosten() {
+  const [cx, cy] = [150, 128];
+  let uit = '';
+  // the fans: 10° and 20° either side of east, from the choir
+  const waaier = (graden, klasse) => {
+    const [x1, y1] = pol(cx + 60, cy, 150, 90 - graden); const [x2, y2] = pol(cx + 60, cy, 150, 90 + graden);
+    return `<path d="M${cx + 60} ${cy} L${x1} ${y1} A150 150 0 0 1 ${x2} ${y2}Z" class="${klasse}"/>`;
+  };
+  uit += waaier(20, 'accent-licht') + waaier(10, 'accent');
+  uit += `<path d="M${cx + 60} ${cy} H${cx + 214}" class="lijn" stroke-dasharray="4 3"/>`;
+  // the church: tower (west), nave, choir with a rounded end (east)
+  uit += `<rect x="${cx - 104}" y="${cy - 17}" width="34" height="34" class="vol"/>`;
+  uit += `<rect x="${cx - 70}" y="${cy - 26}" width="104" height="52" class="vlak"/><rect x="${cx - 70}" y="${cy - 26}" width="104" height="52" class="lijn"/>`;
+  uit += `<path d="M${cx + 34} ${cy - 20} H${cx + 50} A20 20 0 0 1 ${cx + 50} ${cy + 20} H${cx + 34}" class="vlak"/><path d="M${cx + 34} ${cy - 20} H${cx + 50} A20 20 0 0 1 ${cx + 50} ${cy + 20} H${cx + 34}" class="lijn"/>`;
+  uit += tekst(cx - 87, cy + 34, 'toren', { maat: 10.5 }) + tekst(cx - 87, cy + 47, 'en ingang', { maat: 10.5 }) + tekst(cx - 18, cy + 4, 'schip', { maat: 10.5, klasse: 'stil' }) + tekst(cx + 50, cy + 34, 'koor', { maat: 10.5 });
+  uit += tekst(cx - 87, cy - 30, 'W', { maat: 13, klasse: 'vet' });
+  uit += tekst(cx + 222, cy + 18, 'O', { anker: 'start', maat: 13, klasse: 'vet' });
+  // the labels just outside the arc, at the upper edge of each fan
+  const [l20x, l20y] = pol(cx + 60, cy, 158, 70); const [l10x, l10y] = pol(cx + 60, cy, 158, 80);
+  uit += tekst(l20x, l20y, '20°', { anker: 'start', maat: 10.5, klasse: 'accent-tekst vet' }) + tekst(l10x, l10y, '10°', { anker: 'start', maat: 10.5, klasse: 'vet' });
+  uit += tekst(16, 226, 'kerken van voor 1500: 3 van de 4 binnen 10°, bijna alle binnen 20°', { anker: 'start', maat: 10.5 });
+  uit += tekst(16, 242, 'kerken van na 1800: de helft meer dan 20° mis', { anker: 'start', maat: 10.5, klasse: 'rood-tekst' });
+  return svg(390, 252, 'Een oude kerk van bovenaf: de toren met de ingang aan de westkant, het schip, en het koor aan de oostkant. Een waaier toont 10 en 20 graden naast het oosten: oude kerken liggen meestal binnen 10 graden, bijna allemaal binnen 20 graden. Bij kerken van na 1800 is de helft meer dan 20 graden mis.', uit);
+}
+
+/** How big the "place" of each notation is, to scale: a what3words square, an MGRS square, a Plus Code box, a tent. */
+function plekVakjes() {
+  const m = 5.5;                                  // px per metre
+  const grond = 150;
+  let uit = '';
+  const onder = (x, titel, maat) => tekst(x, grond + 20, titel, { maat: 12.5, klasse: 'vet' }) + tekst(x, grond + 36, maat, { maat: 11, klasse: 'stil' });
+  const vak = (x, b, h, klasse, titel, maat) => {
+    uit += `<rect x="${x}" y="${r1(grond - h * m)}" width="${r1(b * m)}" height="${r1(h * m)}" class="${klasse}"/><rect x="${x}" y="${r1(grond - h * m)}" width="${r1(b * m)}" height="${r1(h * m)}" class="lijn dun"/>`;
+    uit += onder(r1(x + (b * m) / 2), titel, maat);
+  };
+  // a tent of 2 by 2.5 m for scale, seen from above
+  uit += `<rect x="24" y="${r1(grond - 2.5 * m)}" width="${r1(2 * m)}" height="${r1(2.5 * m)}" class="vol"/>` + onder(r1(24 + m), 'tent', '2 × 2,5 m');
+  vak(84, 3, 3, 'accent-licht', 'what3words', '3 × 3 m');
+  vak(156, 10, 10, 'water', 'MGRS, 4 + 4', '10 × 10 m');
+  vak(236, 8.6, 13.9, 'vlak2', 'Plus Code', '9 × 14 m');
+  // a GPS on a phone: often within 5 m under an open sky
+  const [gx, gy] = [342, r1(grond - 7 * m)];
+  uit += `<circle cx="${gx}" cy="${gy}" r="${r1(5 * m)}" class="cirkel"/><circle cx="${gx}" cy="${gy}" r="${r1(5 * m)}" class="rood-lijn" fill="none" stroke-dasharray="4 3"/><circle cx="${gx}" cy="${gy}" r="3" class="rood"/>`;
+  uit += onder(gx, 'GPS', 'vaak binnen 5 m');
+  uit += `<path d="M14 ${grond} H382" class="lijn stil"/>`;
+  return svg(394, 194, 'Op dezelfde schaal: een tent van 2 bij 2,5 meter, een what3words-vakje van 3 bij 3 meter, een MGRS-vakje van 10 bij 10 meter, een Plus Code-vakje van ongeveer 9 bij 14 meter in Nederland, en een cirkel van 5 meter: zo ver zit een telefoon er vaak naast.', uit);
+}
+
 export const PLAATJES = {
   'windroos-8': () => windroos(8),
   'windroos-16': () => windroos(16),
@@ -762,6 +885,10 @@ export const PLAATJES = {
   geocache,
   'geocache-regels': geocacheRegels,
   natuurtekens,
+  'o-kaart': oKaart,
+  'voorwaartse-insnijding': voorwaartseInsnijding,
+  'kerk-oosten': kerkOosten,
+  'plek-vakjes': plekVakjes,
   ...tocht,
   ...waarnemen,
   ...seinen,

@@ -109,10 +109,11 @@ body {
   font: 16px/1.5 system-ui, -apple-system, "Segoe UI", Roboto, sans-serif;
   -webkit-text-size-adjust: 100%; -webkit-tap-highlight-color: transparent;
   overflow: hidden; overscroll-behavior: none;
+  overflow-wrap: break-word;      /* a long word or address breaks instead of pushing the card wider than a phone */
 }
 a { color: var(--accent); }
-a:focus-visible, button:focus-visible, input:focus-visible, [tabindex]:focus-visible { outline: 2px solid var(--accent); outline-offset: 2px; }
-h1, h2, h3 { text-wrap: balance; }
+a:focus-visible, button:focus-visible, input:focus-visible, select:focus-visible, textarea:focus-visible, summary:focus-visible, [tabindex]:focus-visible { outline: 2px solid var(--accent); outline-offset: 2px; }
+h1, h2, h3 { text-wrap: balance; hyphens: auto; }   /* Rozenkruisersgeheimschrift at 30px on a phone */
 p, li { text-wrap: pretty; }
 [hidden] { display: none !important; }
 
@@ -252,6 +253,22 @@ p, li { text-wrap: pretty; }
 .rij:hover { background: var(--zacht); }
 .rij[aria-current] { background: color-mix(in srgb, var(--accent) 11%, var(--paneel)); box-shadow: inset 3px 0 var(--accent); }
 .rij-naam { font-weight: 600; }
+/* after the name in a list: the niveaus of the blad and a tick when you can do it (src/bladtekens.js) */
+/* top right of the row, the same place in every row: the niveaus, then the tick */
+.rij-tekens { display: inline-flex; align-items: center; justify-content: flex-end; gap: 3px; }
+.rij > .rij-tekens { grid-column: 2; grid-row: 1; margin-left: 8px; }
+.rij:has(> .rij-tekens) { grid-template-columns: minmax(0, 1fr) auto auto; }
+.rij:has(> .rij-tekens) .rij-sub { grid-column: 1 / span 2; }
+.rij:has(> .rij-tekens) .rij-pijl { grid-column: 3; }
+.oef-stuk:has(> .rij-tekens) { position: relative; padding-right: 64px; }
+.oef-stuk > .rij-tekens { position: absolute; top: 12px; right: 12px; }
+.oef-stuk .rij-tekens span.niveau-stip { color: var(--op-niv); font-size: 10px; }
+.oef-stuk .rij-tekens .rij-vink { color: var(--op-accent); }
+.rij-tekens .niveau-stip { width: 16px; height: 16px; font-size: 10px; }
+.rij-vink { display: inline-grid; place-items: center; width: 18px; height: 18px; margin-left: 2px; border-radius: 5px; background: var(--accent); color: var(--op-accent); }
+.rij-vink .icoon { width: 13px; height: 13px; stroke-width: 3; }
+.rij-vink.leeg { background: none; }
+.wegwijs { position: absolute; width: 1px; height: 1px; overflow: hidden; clip: rect(0 0 0 0); white-space: nowrap; }
 .rij-sub { grid-column: 1; color: var(--stil); font-size: 14px; white-space: nowrap; overflow: hidden; text-overflow: ellipsis; }
 .rij-pijl { grid-column: 2; grid-row: 1 / span 2; width: 18px; height: 18px; color: var(--lijn-sterk); }
 
@@ -504,7 +521,7 @@ tbody th { font-variant-numeric: tabular-nums; }
 .knoppen { display: flex; justify-content: flex-end; gap: 8px; margin-top: 16px; }
 
 /* Melden (src/melden.js): a dialog that asks one thing at a time */
-.meld { width: min(520px, calc(100vw - 24px)); max-height: calc(100dvh - 24px); display: flex; flex-direction: column; padding: 0; }
+.meld { width: min(520px, calc(100vw - 24px)); max-height: calc(100dvh - 24px); flex-direction: column; padding: 0; }
 .meld[open] { display: flex; }
 .meld-kop { display: flex; align-items: center; justify-content: space-between; gap: 8px; padding: 14px 12px 6px 20px; }
 .meld-kop h2 { margin: 0; }

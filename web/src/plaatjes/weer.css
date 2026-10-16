@@ -94,3 +94,22 @@
 .plaatje .w-planeet { fill: #fff8d6; }
 .plaatje .w-schemergloed { fill: #7a4e4a; }
 .plaatje .w-avondgloed-nacht { fill: #b0684a; opacity: 0.8; }
+
+/* how clouds form, the far side of the moon, tides, eclipses, northern lights, the planets, meteors */
+.plaatje .w-niveau { fill: none; stroke: var(--inkt); stroke-width: 1.2; stroke-dasharray: 6 4; }
+.plaatje .w-maanzee { fill: #9a9887; }
+.plaatje .w-getij { fill: color-mix(in srgb, var(--blauw) 40%, transparent); stroke: var(--blauw); stroke-width: 1; }
+.plaatje .w-bloedmaan { fill: #b5502d; }
+.plaatje .w-aurora { stroke: #3ddc84; stroke-width: 5; stroke-linecap: round; opacity: 0.4; }
+.plaatje .w-aurora.rood { stroke: #e0507a; opacity: 0.3; }
+.plaatje .w-pl-grijs { fill: #9c9a94; }
+.plaatje .w-pl-geel { fill: #e3c98a; }
+.plaatje .w-pl-rood { fill: #c8573a; }
+.plaatje .w-pl-jupiter { fill: #d4a877; stroke: #a7764a; stroke-width: 1; }
+.plaatje .w-pl-ijs { fill: #9fd9e0; }
+.plaatje .w-pl-blauw { fill: #4f7bd6; }
+.plaatje .w-ring { fill: none; stroke: #c7b07a; stroke-width: 2.5; }
+.plaatje .w-radiant { fill: none; stroke: rgb(255 255 255 / 0.35); stroke-width: 1; stroke-dasharray: 3 3; }
+.plaatje .w-meteoor { stroke: #fff8d6; stroke-width: 1.6; stroke-linecap: round; opacity: 0.85; }
+.plaatje .w-radiantlijn { stroke: rgb(255 255 255 / 0.5); stroke-width: 1; stroke-dasharray: 2 3; }
+.plaatje .w-nachtvlak { fill: #0f1b2d; }

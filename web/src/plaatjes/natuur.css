@@ -146,3 +146,18 @@
 .plaatje .nt-licht.warm { fill: rgb(255 200 110 / 0.3); }
 .plaatje .nt-mot { fill: #e8e0c0; }
 .plaatje .tekst.nt-nachttekst { fill: #e8eef8; }
+
+/* gedaanteverwisseling (levenscyclus) */
+.plaatje .nt-gelei { fill: color-mix(in srgb, #9fc7cf 45%, var(--paneel)); stroke: #6d9aa3; stroke-width: 0.8; }
+.plaatje .nt-eikern { fill: #1d1d1d; }
+.plaatje .nt-larve { fill: #4a4a32; }
+.plaatje .nt-oogje { fill: #f5f2e6; }
+.plaatje .nt-pootje { fill: none; stroke: #4a4a32; stroke-width: 1.6; stroke-linecap: round; stroke-linejoin: round; }
+.plaatje .nt-kikker { fill: #6f8f3a; stroke: #3d5420; stroke-width: 1; }
+.plaatje .nt-kikkerpoot { fill: none; stroke: #6f8f3a; stroke-width: 4; stroke-linecap: round; }
+.plaatje .nt-vlinderei { fill: #e8c84a; stroke: #9a7d1c; stroke-width: 0.6; }
+.plaatje .nt-rups { fill: #7fae3e; stroke: #4d6e22; stroke-width: 0.8; }
+.plaatje .nt-pop { fill: #a9a16a; stroke: #6b6538; stroke-width: 1; }
+.plaatje .nt-vleugel { fill: #f7f5ee; stroke: #6b6b6b; stroke-width: 1; }
+.plaatje .nt-vleugelpunt { fill: #2a2a2a; }
+.plaatje .nt-lijfje { stroke: #2a2a2a; stroke-width: 3; stroke-linecap: round; }

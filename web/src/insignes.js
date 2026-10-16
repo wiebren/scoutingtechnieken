@@ -69,7 +69,7 @@ export function insignesView() {
   }
 
   function voetnoot() {
-    return h('p.voetnoot', 'De eisen staan hier in eigen woorden. Ze volgen het insignepakket van Scouting Nederland (2025). De officiële eisen staan in de ',
+    return h('p.voetnoot', 'De eisen staan hier in eigen woorden. Ze volgen het insignepakket van Scouting Nederland (2025). De afbeeldingen van de insignes zijn © Scouting Nederland. De officiële eisen staan in de ',
       h('a', { href: BRON, target: '_blank', rel: 'noopener' }, 'activiteitenbank van Scouting Nederland'), '.');
   }
 

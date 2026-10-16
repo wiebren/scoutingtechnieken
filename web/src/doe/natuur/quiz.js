@@ -10,8 +10,9 @@ import '../vorm.css';
 import './natuur.css';
 
 const PRENT_BLAD = { haas: 'haas-en-konijn', konijn: 'haas-en-konijn', hond: 'vos' };
-/** Pairs never offered together: a single drawing does not tell them apart (the cards say so). */
-const APART = [['wolf', 'hond'], ['ruwe-berk', 'zachte-berk']];
+/** Pairs never offered together: a single drawing does not tell them apart (the cards say so; ree and edelhert
+ * differ mainly in size, and the quiz draws every hoof print at the same height). */
+const APART = [['wolf', 'hond'], ['ruwe-berk', 'zachte-berk'], ['ree', 'edelhert']];
 const samenApart = (a, b) => APART.some(([x, y]) => (a === x && b === y) || (a === y && b === x));
 
 /** The kenmerk of a bird, from the table on the card Tuinvogels. */

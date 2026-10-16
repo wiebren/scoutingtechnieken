@@ -35,13 +35,32 @@ export function alinea(tekst) {
   return uit;
 }
 
+/** Credits that link where the licence asks for it: OpenStreetMap to its copyright page, a CC licence to its text,
+ *  and the layers on top to where they come from. */
+const BRON_LINKS = {
+  '© OpenStreetMap-bijdragers': 'https://www.openstreetmap.org/copyright',
+  'CC BY 4.0': 'https://creativecommons.org/licenses/by/4.0/deed.nl',
+  'Waymarked Trails': 'https://hiking.waymarkedtrails.org/',
+  'OpenSeaMap': 'https://www.openseamap.org/',
+};
+const bronPatroon = new RegExp(Object.keys(BRON_LINKS).map((t) => t.replace(/[.*+?^${}()|[\]\\]/g, '\\$&')).join('|'), 'g');
+function bronMetLinks(tekst) {
+  const uit = [];
+  let i = 0;
+  for (const m of tekst.matchAll(bronPatroon)) {
+    uit.push(tekst.slice(i, m.index), h('a', { href: BRON_LINKS[m[0]], target: '_blank', rel: 'noopener' }, m[0]));
+    i = m.index + m[0].length;
+  }
+  return [...uit, tekst.slice(i)];
+}
+
 /** One picture with its caption and where it comes from; a tap opens it at full size. */
 function figuur({ beeld, bij }) {
   const b = BEELDEN[beeld];
   return h('figure.beeld', { class: b.smal ? 'smal' : null },
     h('a.beeld-open', { href: b.src, target: '_blank', rel: 'noopener', title: 'Groot openen' },
       h('img', { src: b.src, alt: b.alt, width: b.w, height: b.h, loading: 'lazy', decoding: 'async' })),
-    h('figcaption', bij && h('span', bij), h('span.beeld-bron', BRONNEN[b.bron])));
+    h('figcaption', bij && h('span', bij), h('span.beeld-bron', bronMetLinks(BRONNEN[b.bron]))));
 }
 
 /** The pictures of a blad: one under the other, or - when each has a titel - one at a time, with chips. */

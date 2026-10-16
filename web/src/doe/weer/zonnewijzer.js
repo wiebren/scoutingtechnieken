@@ -187,7 +187,7 @@ export default function zonnewijzerStuk({ soort: begin = 'middag' } = {}) {
       const fout = Math.round(draaiing(gevonden, 0));
       melding.classList.toggle('fout', Math.abs(fout) > 10);
       melding.textContent = (Math.abs(fout) <= 2 ? 'Precies: je hebt het noorden gevonden.' : `Je zit er ${Math.abs(fout)}° naast, naar het ${fout > 0 ? 'oosten' : 'westen'}.`)
-        + (soort === 'middag' ? ` De zon stond vandaag om ${klok(klokNL(midden).minuten)} in het zuiden.` : '')
+        + (soort === 'middag' ? ` Die dag stond de zon om ${klok(klokNL(midden).minuten)} in het zuiden.` : '')
         + (soort === 'schaduwstok' && Math.abs(fout) > 5 ? ' Preciezer: leg het tweede steentje pas als de schaduw weer even lang is als bij het eerste (de cirkel).' : '');
     } else if (soort === 'uren' && op) {
       const nog = Math.round(draaiing(norm(wereld + (uurlijnZon(z) - uurlijn(z.zonnetijd))), wijzer));

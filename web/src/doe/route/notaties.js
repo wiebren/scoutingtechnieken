@@ -186,7 +186,7 @@ export const TECHNIEKEN = {
     lees: (codes, stappen) => stappen.map((stap, i) => kiesSoort(stap.wegen, codes.items[i].kijk)),
     uitleg: (codes, i, _stap, variant) => {
       const k = codes.items[i].kijk;
-      if (variant === 'smiley') return k === 'rechtdoor' ? `Gezichtje ${i + 1} heeft beide ogen open: rechtdoor.` : `Bij gezichtje ${i + 1} is het ${k === 'links' ? 'linker' : 'rechter'}oog dicht: ${ACTIE[k]}.`;
+      if (variant === 'smiley') return k === 'rechtdoor' ? `Gezichtje ${i + 1} heeft beide ogen open: rechtdoor.` : `Bij gezichtje ${i + 1} is het oog aan de ${k === 'links' ? 'linker' : 'rechter'}kant dicht: ${ACTIE[k]}.`;
       return `De ogen van gezichtje ${i + 1} kijken ${k === 'rechtdoor' ? 'omhoog: rechtdoor' : `naar ${k}: ${ACTIE[k]}`}.`;
     },
     sleutel: [
@@ -194,7 +194,7 @@ export const TECHNIEKEN = {
       'Kijken de ogen omhoog, dan ga je rechtdoor. Kijken ze naar links, dan ga je linksaf; naar rechts is rechtsaf.',
     ],
     sleutelSmiley: [
-      'Elke smiley is een kruispunt. Lees van links naar rechts en van boven naar beneden.',
+      'Elk gezichtje is een kruispunt. Lees van links naar rechts en van boven naar beneden.',
       'Beide ogen open: rechtdoor. Het oog aan de linkerkant van het plaatje dicht (zwart): linksaf. Rechts dicht: rechtsaf.',
     ],
   },

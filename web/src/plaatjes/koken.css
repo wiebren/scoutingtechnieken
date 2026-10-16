@@ -1,1 +1,6 @@
 /* Classes for the drawings of koken (./koken.js): they share the vk-* classes in ./vuur.css. */
+
+/* Cress and cotton wool (tuinkers-kweken): own colours, the same in both themes. */
+.plaatje .kk-watten { fill: #f6f4ec; stroke: #b9b4a4; stroke-width: 1; }
+.plaatje .kk-steel { fill: none; stroke: #8fb86a; stroke-width: 1.6; stroke-linecap: round; }
+.plaatje .kk-blad { fill: #4f9a32; stroke: #2e6a1c; stroke-width: 0.8; }

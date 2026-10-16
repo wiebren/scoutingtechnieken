@@ -1,8 +1,9 @@
-// One place in three systems: type it in RD, in degrees (any of the three ways) or in UTM, and the other two follow.
+// One place in three systems: type it in RD, in degrees (any of the three ways) or in UTM, and the other two follow;
+// MGRS and the Plus Code are shown too, written out only.
 // Two known places to start from, and "Waar ben ik?" with the location of the phone (asked only on a tap, and it
 // stays on the device).
 import { h } from '../dom.js';
-import { gradenNaarRd, gradenNaarUtm, inNederland, leesGraden, leesRd, leesUtm, rdNaarGraden, schrijfGraden, schrijfRd, utmNaarGraden } from './geo.js';
+import { gradenNaarMgrs, gradenNaarPlusCode, gradenNaarRd, gradenNaarUtm, inNederland, leesGraden, leesRd, leesUtm, rdNaarGraden, schrijfGraden, schrijfRd, utmNaarGraden } from './geo.js';
 import './vorm.css';
 import './coordinaten.css';
 
@@ -32,7 +33,9 @@ export default function coordinaten({ nadruk = null } = {}) {
     schrijfwijzen.replaceChildren(
       h('dt', 'Decimale graden'), h('dd', g.dd),
       h('dt', 'Graden, minuten, seconden'), h('dd', g.dms),
-      h('dt', 'Graden en minuten (geocaching)'), h('dd', g.ddm));
+      h('dt', 'Graden en minuten (geocaching)'), h('dd', g.ddm),
+      h('dt', 'MGRS (vakje van 10 m)'), h('dd', Math.abs(plek.lat) < 80 ? gradenNaarMgrs(plek.lat, plek.lon) : '–'),
+      h('dt', 'Plus Code'), h('dd', gradenNaarPlusCode(plek.lat, plek.lon)));
     melding.classList.toggle('fout', !inNederland(r));
     melding.textContent = inNederland(r)
       ? `UTM-zone ${u.zone}: ${u.zone === 31 ? 'het westen van Nederland, tot ongeveer Apeldoorn' : u.zone === 32 ? 'het oosten van Nederland, vanaf ongeveer Apeldoorn' : 'buiten Nederland'}.`

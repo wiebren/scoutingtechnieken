@@ -226,6 +226,7 @@ export default function bouwwerk({ model: naam = 'driepoot', stil = false } = {}
 
   // -- clean up once the card is gone (the card attaches the element as soon as it is made); sleep while hidden
   let gezien = false; const t0 = Date.now();
+  setTimeout(() => { gezien ||= el.isConnected; }, 0);   // attached in the same task by its card: left early, still freed
   const verborgen = () => (el.checkVisibility ? !el.checkVisibility() : el.offsetParent === null);
   const wacht = setInterval(() => {
     if (el.isConnected) {

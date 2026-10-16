@@ -35,3 +35,9 @@
 .plaatje .vh-stap-oranje { fill: color-mix(in srgb, #ec7414 22%, var(--paneel)); stroke: #ec7414; stroke-width: 1.2; }
 .plaatje .vh-stap-rood { fill: color-mix(in srgb, var(--rood) 22%, var(--paneel)); stroke: var(--rood); stroke-width: 1.2; }
 .plaatje .tekst.vh-op-zand { fill: var(--inkt); }
+.plaatje .vh-vijfhoek { fill: color-mix(in srgb, var(--lijn-sterk) 22%, var(--paneel)); stroke: var(--inkt); stroke-width: 1.4; stroke-linejoin: round; }
+.plaatje .vh-driehoek { fill: color-mix(in srgb, var(--accent) 16%, transparent); stroke: var(--accent); stroke-width: 2; stroke-dasharray: 6 4; stroke-linejoin: round; }
+.plaatje .vh-katoen { fill: #f3efe4; stroke: #8a8578; stroke-width: 1; }
+.plaatje .vh-wol { fill: #c9b48a; stroke: #7c6a45; stroke-width: 1; }
+.plaatje .vh-kunststof { fill: #6fa8dc; stroke: #2f5f8f; stroke-width: 1; }
+.plaatje .vh-druppel { fill: #f08a1c; }

@@ -86,7 +86,7 @@ export default function tochtplanner() {
 
   teken();
   return h('div.doe-tochtplanner',
-    h('div.tp-beeld', svg, h('p.doe-stil', 'Kaart: Kadaster, TOPraster via PDOK (open data). Hij is 2 bij 1,4 km.')),
+    h('div.tp-beeld', svg, h('p.doe-stil', 'Kaart: Kadaster, TOPraster via PDOK (CC BY 4.0). Hij is 2 bij 1,4 km.')),
     h('div.tp-zijkant',
       h('div.tp-instellingen',
         h('div.doe-label', h('span', 'Tempo'), h('div.chips', { role: 'group', 'aria-label': 'Tempo' },

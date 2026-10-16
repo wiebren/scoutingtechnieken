@@ -120,7 +120,7 @@ export default function rdkaart() {
     opdracht.replaceChildren('Zoek ', h('strong', coordinaat(doel)), ' op de kaart en tik erop.');
     svg.setAttribute('aria-label', `Kaart van de Soester Duinen. Zoek ${coordinaat(doel)}: schuif het kruisje met de pijltjes, 10 m per stap of met Shift 100 m, en druk op Enter.`);
     uitkomst.textContent = '';
-    uitleg.textContent = 'Tip: de staande lijnen zijn x = 149 en 150 km, de liggende lijn bovenin y = 463 km. De liggende lijn onderin is geen km-lijn: daar grenzen de kaartbladen 32 A en 32 C aan elkaar.';
+    uitleg.textContent = 'Tip: de staande lijnen zijn x = 149 en 150 km, de liggende lijn bovenin y = 463 km. De liggende lijn onderin is geen km-lijn: daar grenzen de kaartbladen 32 A en 32 C aan elkaar (rechts van lijn 150: 32 B en 32 D).';
     uitkomst.className = 'rk-uitkomst';
     teken();
   }

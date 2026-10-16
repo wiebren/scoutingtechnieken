@@ -97,7 +97,7 @@ export default function onweer() {
     advies.classList.toggle('gevaar', dichtbij);
     advies.textContent = dichtbij
       ? 'Hoor je de donder binnen 10 seconden, dan is het onweer gevaarlijk dichtbij. Stop de activiteit en zoek een veilige plek.'
-      : 'Meer dan 10 seconden. Tel bij de volgende flits opnieuw: komt het dichterbij?';
+      : 'Meer dan 10 seconden: nog niet vlakbij. Maar hoor je donder, zoek dan al een veilige plek. Tel bij de volgende flits opnieuw: komt het dichterbij?';
     wolk.setAttribute('transform', `translate(${xVan(km)} 34)`);
     strook.classList.toggle('dichtbij', dichtbij);
     if (geteld) {

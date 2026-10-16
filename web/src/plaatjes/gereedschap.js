@@ -254,6 +254,110 @@ function mesWet() {
   return svg(340, 202, 'Messen en de wet: een opvouwbaar mes dat opengeklapt langer is dan 28 centimeter is verboden; een mes met één snijkant is een gewoon mes, een mes met twee snijkanten, zoals een dolk, is een wapen', uit);
 }
 
+/** A kindling cracker from the side: a cast-iron ring on legs around an upward blade, a block in it, a mallet above. */
+function kindlingCracker() {
+  const voet = 214;
+  let uit = grond(voet, 320);
+  // the foot plate and the two side bars up to the ring
+  uit += `<rect x="96" y="${voet - 12}" width="128" height="12" rx="3" class="vk-metaal"/>`;
+  uit += `<path d="M110 ${voet - 12}V110M210 ${voet - 12}V110" class="vk-metaal-lijn" stroke-width="7"/>`;
+  // the blade, edge up, in the middle of the foot
+  uit += `<path d="M146 ${voet - 12}L160 ${voet - 52}L174 ${voet - 12}Z" class="vk-staal"/><path d="M155 ${voet - 38}L160 ${voet - 52}L165 ${voet - 38}" class="vk-snede"/>`;
+  // the block standing on the blade, inside the ring
+  uit += `<rect x="134" y="84" width="52" height="${voet - 52 - 84}" class="vk-hout-vol"/><ellipse cx="160" cy="84" rx="26" ry="6" class="vk-kop"/>`;
+  // the ring around the block
+  uit += `<ellipse cx="160" cy="110" rx="50" ry="10" fill="none" class="vk-metaal-lijn" stroke-width="6"/>`;
+  // a wooden mallet above: the head across, the handle to the right
+  uit += `<rect x="128" y="22" width="64" height="30" rx="6" class="vk-hout-vol"/>` + blok(192, 37, 270, 37, 8);
+  uit += pijl(160, 56, 160, 76, { warm: true });
+  uit += label(78, 114, 'ring', 108, 110, 'end') + label(118, 190, 'mes, snede omhoog', 150, 184, 'end');
+  uit += label(232, 130, 'blok', 186, 126, 'start') + label(232, 70, 'houten hamer', 200, 46, 'start');
+  uit += tekst(160, 244, 'sla met een hamer, niet met een bijl', { maat: 10.5, klasse: 'stil' });
+  return svg(320, 252, 'Een kindling cracker van opzij: een ijzeren ring op een voet, met in het midden een mes met de snede omhoog. Een blok staat in de ring op het mes, en je slaat er met een houten hamer bovenop', uit);
+}
+
+/** A wooden tent peg cut with a knife: a point at the bottom, a notch near the top that holds the line. */
+function tentharing() {
+  const voet = 150;
+  let uit = grond(voet, 320);
+  // the peg, leaning away from the tent (the tent is to the left), point in the ground; the notch faces the tent,
+  // with a flat top that the line pulls against and a sloping bottom
+  uit += `<g transform="rotate(20 200 ${voet})">`;
+  uit += `<path d="M190 40H210V${voet + 14}L200 ${voet + 34}L190 ${voet + 14}Z" class="vk-hout-vol"/>`;
+  uit += `<path d="M190 ${voet + 14}L200 ${voet + 34}L210 ${voet + 14}" class="vk-kop" opacity="0.7"/>`;
+  uit += `<path d="M189 64H201L189 82Z" class="vk-kop"/><path d="M190 64H201L190 81" class="vk-hout-rand" stroke-width="1.4"/>`;
+  uit += `<ellipse cx="200" cy="40" rx="10" ry="3" class="vk-kop"/></g>`;
+  // the guy line from the tent to the notch
+  uit += `<path d="M20 36L226 70" class="vk-touw"/>`;
+  uit += label(204, 112, 'inkeping: de lijn haakt erachter', 216, 78, 'end');
+  uit += tekst(24, 26, 'naar de tent', { anker: 'start', maat: 10.5, klasse: 'stil' });
+  uit += label(232, 190, 'punt', 194, 178, 'start');
+  return svg(340, 200, 'Een houten tentharing: schuin in de grond, van de tent af, met een punt onderaan en bovenaan een inkeping aan de kant van de tent, waar de scheerlijn achter haakt', uit);
+}
+
+/** The four grips of the insigne Houtbewerken, each in a small panel (MPSE Mesgrepen; Vershout; Scouts UK): the knife
+ *  stays still or moves only a little, the wood moves, and the edge always faces where the wood comes from. */
+function snijgrepen() {
+  const paneel = (x, y, titel, inhoud) => `<g transform="translate(${x} ${y})"><rect x="2" y="2" width="216" height="196" rx="10" class="vlak2"/>`
+    + tekst(110, 24, titel, { maat: 14, klasse: 'vet' }) + inhoud + '</g>';
+  const lid = (d) => `<path d="${d}" fill="none" style="stroke: var(--lijn-sterk)" stroke-width="20" stroke-linecap="round" stroke-linejoin="round"/>`;
+  // a thumb reaching from a hand to where it presses, outlined like the hands
+  const duim = (d) => `<path d="${d}" fill="none" stroke="#8a5a3a" stroke-width="11" stroke-linecap="round"/><path d="${d}" fill="none" stroke="#e8b98f" stroke-width="8.4" stroke-linecap="round"/>`;
+  const klein = (x, y, t) => tekst(x, y, t, { maat: 12 });
+
+  // 1. knee: the wrist of the knife hand against the knee, blade up with the edge away; pull the wood past it
+  let k = lid('M18 150H112L120 186');
+  k += mes(118, 118, -70, 30, 64) + hand(116, 128, -90);
+  k += blok(34, 70, 204, 102, 8) + hand(48, 74, 0);
+  k += pijl(110, 54, 52, 44);
+  k += klein(80, 42, 'trek het hout') + klein(178, 128, 'pols tegen') + klein(178, 142, 'je knie') + klein(54, 138, 'bovenbeen');
+
+  // 2. chest (from the front): both fists against your chest; the knife points down, the edge to the side the wood
+  //    comes from; push your shoulders back and the hands go apart
+  let b = `<path d="M50 196V80Q50 54 80 50H140Q170 54 170 80V196" class="vol-licht"/>`;
+  b += mes(98, 104, 90, 26, 62) + hand(98, 96, 90);
+  b += blok(54, 140, 150, 140, 7) + hand(150, 140, 180);
+  b += pijl(82, 74, 50, 74) + pijl(138, 74, 170, 74);
+  b += klein(110, 44, 'handen tegen je borst') + klein(110, 188, 'schouders naar achteren');
+
+  // 3. reinforced: the thumb of the other hand pushes on the back of the blade; the knife hand steers
+  let v = blok(16, 132, 206, 132, 12);
+  v += mes(100, 116, 0, 54, 60) + hand(66, 112, 0);
+  v += hand(186, 132, 180) + duim('M172 124Q168 104 146 108');
+  v += pijl(110, 84, 156, 84);
+  v += klein(110, 60, 'duim op de rug van het lemmet') + klein(110, 176, 'kleine, precieze sneden');
+
+  // 4. potato: like peeling, the edge towards the thumb of the knife hand, the thumb under the wood
+  let a = blok(16, 116, 204, 116, 12) + hand(40, 128, 0);
+  a += mes(142, 92, -30, 30, 50) + hand(132, 92, -30);
+  a += duim('M136 104Q178 106 176 130');
+  a += pijl(186, 70, 184, 104);
+  a += klein(110, 48, 'snijd naar je duim toe') + klein(110, 176, 'je duim onder het hout');
+
+  const uit = paneel(0, 0, 'Kniegreep', k) + paneel(224, 0, 'Borstgreep', b)
+    + paneel(0, 204, 'Versterkte greep', v) + paneel(224, 204, 'Aardappelgreep', a);
+  return svg(442, 404, 'De vier snijgrepen. Kniegreep: de pols van je meshand tegen je knie, het mes stil met de snede van je af; je trekt het hout erlangs. Borstgreep: beide vuisten tegen je borst, het mes en het hout gekruist; je duwt je schouders naar achteren en je handen gaan uit elkaar. Versterkte greep: de duim van je andere hand duwt op de rug van het lemmet, de meshand stuurt. Aardappelgreep: zoals aardappels schillen, je snijdt naar je duim toe en je duim zit onder het hout', uit);
+}
+
+/** A new handle in an axe, seen from above: the end of the handle in the eye, the wooden wedge along the eye and
+ *  the steel wedge across it (Gränsfors, Hultafors). */
+function bijlWiggen() {
+  // the head from above: a long narrow shape, the edge to the left, the eye in the middle
+  // from above the head is thin at the edge (left) and thick at the eye and the back (right)
+  let uit = `<path d="M34 92L112 66H250Q264 66 264 80V108Q264 122 250 122H112L34 96Z" class="vk-staal"/>`;
+  uit += `<path d="M34 90V98" class="vk-snede"/>`;
+  uit += `<path d="M118 78H222Q236 94 222 110H118Q104 94 118 78Z" class="vk-kop"/>`;
+  for (let i = 1; i < 4; i++) uit += `<path d="M${118 + i * 6} ${80 + i}Q${170} ${88 + i * 2} ${222 - i * 6} ${80 + i}" class="vk-jaar"/>`;
+  uit += `<path d="M118 94H222" stroke="#3b2a1c" stroke-width="5" stroke-linecap="round"/>`;
+  uit += `<path d="M150 74L190 114" stroke="#56636b" stroke-width="4" stroke-linecap="round"/><path d="M150 74L190 114" stroke="#c7d0d6" stroke-width="2" stroke-linecap="round"/>`;
+  uit += label(150, 40, 'houten wig, in de lengte', 140, 90, 'start');
+  uit += label(168, 158, 'stalen wig, schuin erover', 180, 108, 'start');
+  uit += label(236, 56, 'steel in het oog', 214, 82, 'start');
+  uit += label(20, 132, 'snede', 34, 98, 'start');
+  uit += tekst(160, 184, 'de kop van bovenaf gezien', { maat: 10.5, klasse: 'stil' });
+  return svg(320, 192, 'Een nieuwe steel in een bijl, van bovenaf gezien: het eind van de steel zit in het oog van de kop, met een houten wig in de lengte van het oog en een stalen wig schuin eroverheen', uit);
+}
+
 export default {
   zakmes,
   'mes-doorgeven': mesDoorgeven,
@@ -271,4 +375,8 @@ export default {
   'bijl-vijlen': bijlVijlen,
   'chip-carving': chipCarving,
   'mes-wet': mesWet,
+  'kindling-cracker': kindlingCracker,
+  'tentharing-snijden': tentharing,
+  snijgrepen,
+  'bijl-wiggen': bijlWiggen,
 };

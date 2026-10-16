@@ -1,4 +1,4 @@
-// Welke vlag is dit? A beach flag on its pole, and six meanings to choose from (KNRM, Waterveilig 2024).
+// Welke vlag is dit? A beach flag on its pole, and six meanings to choose from (Reddingsbrigade Nederland, the set of 2025).
 import { h } from '../../dom.js';
 import { STRANDVLAGGEN, strandvlag } from '../../plaatjes/veiligheid.js';
 import { schud } from './hulp.js';

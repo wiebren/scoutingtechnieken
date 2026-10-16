@@ -137,3 +137,31 @@ export function utmNaarGraden({ zone, oost, noord, zuid = false }) {
   }
   return { lat, lon };
 }
+
+/**
+ * MGRS, the UTM grid with letters for the 100 km square (as NATO writes it): "31U FU 2883 0422" for a 10 m square.
+ * Column letters A-H, J-R, S-Z in turn per zone; row letters A-V (no I, O), shifted by 5 in even zones (the AA
+ * scheme of WGS84). The numbers are cut off, not rounded, so the square holds the point. Only for UTM latitudes.
+ */
+export function gradenNaarMgrs(lat, lon, cijfers = 4) {
+  const u = gradenNaarUtm(lat, lon);
+  const kolommen = ['ABCDEFGH', 'JKLMNPQR', 'STUVWXYZ'][(u.zone - 1) % 3];
+  const rijen = 'ABCDEFGHJKLMNPQRSTUV';
+  const kolom = kolommen[Math.floor(u.oost / 1e5) - 1];
+  const rij = rijen[(Math.floor(u.noord / 1e5) + (u.zone % 2 ? 0 : 5)) % 20];
+  const deel = (m) => String(Math.floor((m % 1e5) / 10 ** (5 - cijfers))).padStart(cijfers, '0');
+  return `${u.zone}${u.band} ${kolom}${rij} ${deel(u.oost)} ${deel(u.noord)}`;
+}
+
+/**
+ * A Plus Code (Open Location Code, open source): ten characters, a box of 1/8000 degree, in the Netherlands about
+ * 14 m north-south and 9 m east-west. "9F469C4P+3V" style, with the + after the eighth character.
+ */
+export function gradenNaarPlusCode(lat, lon) {
+  const tekens = '23456789CFGHJMPQRVWX';
+  let b = Math.floor((Math.min(Math.max(lat, -90), 90 - 1e-10) + 90) * 8000);
+  let l = Math.floor((((lon + 180) % 360 + 360) % 360) * 8000);
+  let code = '';
+  for (let i = 0; i < 5; i++) { code = tekens[b % 20] + tekens[l % 20] + code; b = Math.floor(b / 20); l = Math.floor(l / 20); }
+  return `${code.slice(0, 8)}+${code.slice(8)}`;
+}

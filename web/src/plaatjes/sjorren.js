@@ -148,32 +148,49 @@ function kruisFamilie(soort) {
   return svg(w, h, 'Kruissjorring: een staande paal met een dwarsbalk ervoor. Begin met een mastworp om de staande paal onder de balk, drie slagen voor de balk langs en achter de paal om, drie woelslagen tussen de palen in de hoeken, eindig met een mastworp om de balk', uit);
 }
 
-/** Three poles side by side, lashed with figure-eights: the achtsjorring. */
+/** Three poles side by side, lashed with figure-eights: the achtsjorring. A small panel above shows the eights alone,
+ *  before the woelslagen go round them; the big one below the finished lashing. */
 function achtsjorring() {
-  const w = 340; const h = 240; const ys = [62, 108, 154]; const d = 28; const r = d / 2;
+  const w = 340; const h = 360; const d = 28; const r = d / 2;
   let uit = '';
+  /** Three poles at heights ys with the eights at x positions `slagen`; `af` adds woelen and the knots. */
+  const tekenAcht = (ys, slagen, d, x0, x1, af) => {
+    const r = d / 2; let u = '';
+    // a turn in front of the outer poles and behind the middle one (at x), the next the other way round (at x + 10):
+    // in the gaps they cross, and the rope makes eights
+    const st = d * 0.36;
+    const pas = (x, voor) => ys.map((y, i) => [[(i % 2 === 0) === voor ? x : x + st, y - r - 3], [(i % 2 === 0) === voor ? x : x + st, y + r + 3]]);
+    for (const x of slagen) for (const voor of [true, false]) u += touw(lijn(pas(x, voor).flat()), af ? 6 : 5);
+    for (const y of ys) u += paal(x0, y, x1, y, d, { kop1: true });
+    for (const x of slagen) {
+      for (const voor of [true, false]) pas(x, voor).forEach((stuk, i) => { if ((i % 2 === 0) === voor) u += touw(lijn(stuk), af ? 6 : 5); });
+    }
+    if (af) {
+      // the frapping, across the turns in the two gaps
+      for (const g of [0, 1]) {
+        const yg = (ys[g] + ys[g + 1]) / 2;
+        u += touw(lijn([[slagen[0] - 10, yg - 4], [slagen[slagen.length - 1] + 18, yg - 3]]), 5) + touw(lijn([[slagen[0] - 10, yg + 3], [slagen[slagen.length - 1] + 18, yg + 4]]), 5);
+      }
+    }
+    return u;
+  };
+  // 1: the eights alone
+  const ysK = [40, 66, 92];
+  uit += tekenAcht(ysK, [112, 124, 136], 20, 20, 196, false);
+  uit += tekst(214, 54, '1. eerst de achten', { anker: 'start', maat: 12 }) + tekst(214, 70, 'over en onder,', { anker: 'start', maat: 11 }) + tekst(214, 84, 'nog zonder woelen', { anker: 'start', maat: 11 });
+  // 2: the finished lashing
+  const ys = [180, 226, 272];
   const slagen = [150, 166, 182];
-  // a turn in front of the outer poles and behind the middle one (at x), the next the other way round (at x + 10):
-  // in the gaps they cross, and the rope makes eights
-  const pas = (x, voor) => ys.map((y, i) => [[(i % 2 === 0) === voor ? x : x + 10, y - r - 3], [(i % 2 === 0) === voor ? x : x + 10, y + r + 3]]);
-  for (const x of slagen) for (const voor of [true, false]) uit += touw(lijn(pas(x, voor).flat()));
-  for (const y of ys) uit += paal(16, y, w - 16, y, d, { kop1: true });
-  for (const x of slagen) {
-    for (const voor of [true, false]) pas(x, voor).forEach((stuk, i) => { if ((i % 2 === 0) === voor) uit += touw(lijn(stuk)); });
-  }
-  // the frapping, across the turns in the two gaps
-  for (const g of [0, 1]) {
-    const yg = (ys[g] + ys[g + 1]) / 2;
-    uit += touw(lijn([[140, yg - 4], [200, yg - 3]]), 5) + touw(lijn([[140, yg + 3], [200, yg + 4]]), 5);
-  }
+  uit += tekenAcht(ys, slagen, d, 16, w - 16, true);
   uit += timmersteekLiggend(124, ys[0], d);
   uit += mastworpLiggend(222, ys[2], d);
-  uit += wijs(64, 26, 'begin: timmersteek', 112, ys[0] - r - 2, 'middle');
-  uit += wijs(226, 26, 'over en onder: achten, 3 per paal', 168, ys[0] - r - 2, 'middle');
-  uit += wijs(186, 228, '2× woelen', 196, (ys[1] + ys[2]) / 2 + 4, 'middle');
-  uit += wijs(290, 212, 'eind: mastworp', 238, ys[2] + r + 4, 'middle');
-  uit += wijs(64, 212, 'onderkanten gelijk', 20, ys[2] + r, 'middle');
-  return svg(w, h, 'Achtsjorring: drie palen naast elkaar, de onderkanten gelijk. Begin met een timmersteek om een buitenste paal, sla het touw in achten over en onder de palen, drie keer om elke paal, woel tussen elk paar palen, eindig met een mastworp om de andere buitenste paal', uit);
+  uit += tekst(16, 132, '2. dan woelen en afmaken', { anker: 'start', maat: 12 });
+  uit += wijs(64, 146, 'begin: timmersteek', 112, ys[0] - r - 2, 'middle');
+  uit += wijs(234, 146, 'achten, 3 per paal', 168, ys[0] - r - 2, 'middle');
+  uit += wijs(186, 346, '2× woelen', 196, (ys[1] + ys[2]) / 2 + 4, 'middle');
+  uit += wijs(290, 330, 'eind: mastworp', 238, ys[2] + r + 4, 'middle');
+  uit += wijs(64, 330, 'onderkanten gelijk', 20, ys[2] + r, 'middle');
+  return svg(w, h, 'Achtsjorring: drie palen naast elkaar, de onderkanten gelijk. Boven: eerst sla je het touw in achten over en onder de palen, drie keer om elke paal. Onder: de hele sjorring, begonnen met een timmersteek om een buitenste paal, met woelslagen tussen elk paar palen, en een mastworp om de andere buitenste paal', uit);
 }
 
 /** Two poles in a narrow fork: the vorksjorring. */
@@ -192,6 +209,9 @@ function vorksjorring() {
   const ys = 170; const ye = 192;
   uit += touw(lijn([[xOp(B, ys) - d / 2 - 2, ys], [xOp(B, ys) + d / 2 + 2, ys + 3]])) + touw(lijn([[xOp(B, ys + 9) - d / 2 - 2, ys + 9], [xOp(B, ys + 9) + d / 2 + 2, ys + 12]]));
   uit += touw(lijn([[xOp(A, ye) - d / 2 - 2, ye], [xOp(A, ye) + d / 2 + 2, ye + 3]])) + touw(lijn([[xOp(A, ye + 9) - d / 2 - 2, ye + 9], [xOp(A, ye + 9) + d / 2 + 2, ye + 12]]));
+  // the crossing part of each mastworp, over its two turns
+  uit += touw(lijn([[xOp(B, ys + 11) - d / 2 + 1, ys + 11], [xOp(B, ys + 1) + d / 2 - 1, ys + 1]]));
+  uit += touw(lijn([[xOp(A, ye + 11) - d / 2 + 1, ye + 11], [xOp(A, ye + 1) + d / 2 - 1, ye + 1]]));
   uit += wijs(312, 214, 'begin: mastworp', xOp(B, ys) + 10, ys + 6, 'end') + tekst(312, 228, 'met voorslag', { anker: 'end', maat: 10.5 });
   uit += wijs(8, 252, 'eind: mastworp', xOp(A, ye) - 10, ye + 6, 'start');
   uit += wijs(312, 96, 'slagen om beide palen', xOp(A, yk) + 18, yk, 'end');
@@ -209,9 +229,9 @@ function diagonaal(filipijns = false) {
   for (const dy of [-7, 0, 7]) uit += touw(lijn([[cx - 32, cy + dy], [cx + 32, cy + dy + 1]]));          // 2: through the small ones
   for (const k of [0, 1]) uit += touw(lijn([[cx + 38 + k * 6, cy - 14], [cx + 34 + k * 6, cy + 16]]), 5);   // 3: woelen
   if (filipijns) {
-    uit += touw(`M${P(cx - 4, cy - 30)}c-10 -14 -2 -26 10 -22`, 5) + platteKnoop(cx - 64, cy + 54);
+    uit += touw(`M${P(cx - 4, cy - 30)}c-10 -14 -2 -26 10 -22`, 5) + platteKnoop(cx - 52, cy + 36);
     uit += wijs(84, 28, 'begin: midden van het touw', cx + 2, cy - 44, 'middle');
-    uit += wijs(70, 262, 'eind: platte knoop', cx - 64, cy + 62, 'middle');
+    uit += wijs(70, 262, 'eind: platte knoop', cx - 52, cy + 44, 'middle');
     uit += wijs(312, 28, 'slagen met beide einden', cx + 7, cy - 22, 'end');
     uit += wijs(312, 262, 'woelen: links- en rechtsom', cx + 44, cy + 12, 'end');
     return svg(w, h, 'Filipijnse diagonaalsjorring: twee schuin kruisende palen; begin met het midden van het touw om beide palen met de einden door de lus, leg de slagen met beide einden samen, woel tegengesteld en maak het af met een platte knoop', uit);
@@ -220,8 +240,8 @@ function diagonaal(filipijns = false) {
   // the end: a mastworp on the front pole, lower left
   uit += `<g transform="rotate(-31.6 92 187)">${mastworpLiggend(86, 187, d)}</g>`;
   uit += wijs(cx, 24, '1 timmersteek + 3 slagen', cx + 2, cy - 26, 'middle');
-  uit += wijs(312, cy - 46, '2 drie slagen de andere kant', cx + 30, cy + 2, 'end');
-  uit += wijs(312, cy + 82, '3 woelen', cx + 44, cy + 10, 'end');
+  uit += tekst(46, 118, '2 drie slagen', { maat: 10.5 }) + wijs(46, 132, 'de andere kant', cx - 30, cy, 'middle');
+  uit += wijs(272, 158, '3 woelen', cx + 44, cy + 8, 'middle');
   uit += wijs(8, 266, '4 eind: mastworp', 96, 196, 'start');
   return svg(w, h, 'Diagonaalsjorring: twee palen die schuin kruisen. 1 een timmersteek met drie slagen door de grootste hoeken, 2 drie slagen de andere kant op door de kleinste hoeken, 3 woelen tussen de palen, 4 eindig met een mastworp', uit);
 }
@@ -350,7 +370,7 @@ function polypedestra() {
     }
   }
   uit += wijs(160, 266, 'in het midden een zuiver vierkant', 160, 140, 'middle');
-  uit += wijs(8, 26, 'woel van de paal naar binnen', 130, 112, 'start');
+  uit += wijs(8, 26, 'woel van de paal naar binnen', 143, 123, 'start');
   uit += wijs(256, 26, '3 keer om elke paal', 236, 90, 'middle');
   uit += tekst(160, 46, 'van boven gezien', { maat: 10, klasse: 'stil' });
   return svg(w, h, 'Polypedestrasjorring, van boven gezien: vier palen in een vierkant, het touw drie keer om de buitenkant van elke paal als een klaverblad, in het midden een zuiver vierkant; de woelslagen om elk bundeltje, van de paal naar binnen', uit);
@@ -635,7 +655,7 @@ function houtOpslag() {
   for (let i = 0; i < 7; i++) uit += `<path d="M${16 + i * 6} ${20 + i * 3}l-4 14" class="sj-regen"/><path d="M${326 + (i % 3) * 8} ${20 + i * 6}l-4 14" class="sj-regen"/>`;
   uit += pijl(26, 126, 74, 126) + pijl(26, 142, 74, 142) + pijl(290, 134, 340, 134);
   uit += wijs(180, 22, 'uit de regen: onder een afdak', 180, 60, 'middle');
-  uit += wijs(44, 186, 'wind erdoor', 46, 136, 'middle');
+  uit += wijs(36, 186, 'wind erdoor', 46, 136, 'middle');
   uit += wijs(186, 222, 'van de grond, op dwarsliggers', 110, 180, 'start');
   return svg(w, h, 'Pionierhout opslaan: de palen liggen onder een afdak, uit de regen, op dwarsliggers van de grond, en de wind kan er doorheen waaien', uit);
 }

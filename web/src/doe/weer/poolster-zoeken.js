@@ -118,7 +118,7 @@ export default function poolsterZoeken() {
         s('text', { x: p(px + 10), y: p(py + 4), class: 'hm-sternaam' }, 'Poolster'),
         s('text', { x: p(px + 8), y: p((py + HORIZON) / 2), class: 'hm-sternaam' }, `${Math.round(pos[POOLSTER].hoogte)}° hoog`));
     }
-    const doel = { steelpan: ['Tik de twee sterren aan de voorkant van de pan: de kant zonder steel.', 'Tel vijf keer de afstand tussen die twee, verder langs de lijn. Tik de Poolster.', ''],
+    const doel = { steelpan: ['Tik de twee sterren aan de voorkant van de pan: de kant zonder steel.', 'Verleng de lijn ongeveer vijf keer de afstand tussen die twee. Tik de Poolster.', ''],
       cassiopeia: ['Stel: de Steelpan staat laag, achter de bomen. Tik een ster van de W: Cassiopeia.', 'De Poolster staat tussen de W en de Steelpan in, ongeveer halverwege. Tik hem.', ''] }[manier];
     opdracht.textContent = doel[stap] || 'Recht onder de Poolster, op de horizon, is het noorden.';
   }

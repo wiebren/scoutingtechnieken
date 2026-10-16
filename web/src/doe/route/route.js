@@ -33,7 +33,7 @@ export default function routeLoper({ techniek = 'kruispunten', stil = false } = 
   const vertaler = techniek === 'vertaler';
   let tA = vertaler ? 'kruispunten' : (TECHNIEKEN[techniek] ? techniek : 'kruispunten');
   let tB = vertaler ? 'stripkaart' : null;
-  let variant = 'ogen'; let woorden = false;
+  let variant = 'ogen'; let woorden = false;   // ogenroute: 'ogen' (eyes that look) or 'smiley' (one eye black, on a whole face)
   let lengte = 9; let seed = 1 + Math.floor(Math.random() * 99999);
   let toonHier = !TECHNIEKEN[tA].tellen;
   const beweging = !stil && !matchMedia('(prefers-reduced-motion: reduce)').matches;
@@ -76,7 +76,7 @@ export default function routeLoper({ techniek = 'kruispunten', stil = false } = 
   const extraChips = h('div.chips');
   const zetExtra = () => {
     extraChips.replaceChildren(hierChip);
-    if (tA === 'ogen' || tB === 'ogen') extraChips.append(...keuze([['ogen', 'Ogen'], ['smiley', 'Smiley']], variant, (v) => { variant = v; tekenNotaties(); }));
+    if (tA === 'ogen' || tB === 'ogen') extraChips.append(...keuze([['ogen', 'Ogen die kijken'], ['smiley', 'Eén oog zwart']], variant, (v) => { variant = v; tekenNotaties(); }));
     if (['kralen', 'knopen'].includes(tA) || ['kralen', 'knopen'].includes(tB)) extraChips.append(schakel('In woorden', woorden, (v) => { woorden = v; tekenNotaties(); }));
   };
   kop.append(h('div.rw-opties',

@@ -94,7 +94,8 @@ export default function maanfaseStuk() {
     uitleg.textContent = `${vandaag ? 'Vandaag: ' : ''}${dagUit.textContent} na nieuwe maan, ${verlicht}% verlicht`
       + (verlicht > 2 && verlicht < 98 ? `, ${fase < 0.5 ? 'wassend: de rechterkant is licht' : 'afnemend: de linkerkant is licht'}.` : '.');
     wanneer.textContent = `${ZICHTBAAR[nm]}`
-      + (nm !== 'nieuwe maan' ? ` Midden in de nacht staat hij ongeveer in ${richtingTekst(middernacht)}.` : '');
+      // not for new moon and the crescents: at midnight they are mostly below the horizon
+      + (!/nieuwe maan|sikkel/.test(nm) ? ` Midden in de nacht staat hij ongeveer in ${richtingTekst(middernacht)}.` : '');
     svg.setAttribute('aria-label', `De maan van bovenaf op zijn baan om de aarde, ${dagUit.textContent} na nieuwe maan. De helft naar de zon is licht; de boog wijst de helft aan die naar de aarde kijkt.`);
   }
 

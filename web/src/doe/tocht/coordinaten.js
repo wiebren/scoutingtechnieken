@@ -1,5 +1,5 @@
 // Routes on the map with RD coordinates. A piece of map of 3 by 2 km with its kilometre lines.
-// - coordinaten: find each coordinate of the route ("huisje in, trappetje op") and set a marker; the route appears.
+// - coordinaten: find each coordinate of the route ("huisje in, trapje op") and set a marker; the route appears.
 // - kruispeiling: find four coordinates w, x, y, z; the lines w–x and y–z cross at the post. Tap the crossing.
 // - passer: three points, each with a distance; draw their circles with the compasses and tap where they meet.
 // A coordinate like 113.52 – 398.64 is km line 113, then 52 hundredths (520 m) to the east; km line 398, then 64
@@ -86,7 +86,7 @@ export default function coordinaten({ soort = 'coordinaten' } = {}) {
     for (let j = 0; j <= 2; j++) kaart.append(s('path', { d: `M${L} ${T + j * KM}h${3 * KM}`, class: 'co-lijn' }), s('text', { x: L - 5, y: T + j * KM + 4, class: 'co-getal', 'text-anchor': 'end' }, String(Y0 + 2 - j)));
   }
 
-  /** "Huisje in, trappetje op": from the corner of the square along the bottom line, then up, with a tick each 100 m. */
+  /** "Huisje in, trapje op": from the corner of the square along the bottom line, then up, with a tick each 100 m. */
   function tekenHulp() {
     hulp.replaceChildren();
     if (!marker || soort === 'passer' || klaar) return;

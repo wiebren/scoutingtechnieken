@@ -462,6 +462,41 @@ function natuurbrandVluchten() {
   return svg(w, h, 'Wegkomen bij een natuurbrand, van boven gezien: de wind drijft het vuurfront voor zich uit. Loop niet voor de brand uit in de richting waarin hij gaat, maar haaks op de brand, als het kan naar de openbare weg', uit);
 }
 
+/** The fire roll in three steps: cotton wool with a thin dusting of ash, rolled up tight, rolled hard under a board. */
+function vuurrol() {
+  // 1. the strip with ash
+  let uit = `<rect x="16" y="52" width="92" height="30" rx="8" class="vk-watten"/>`;
+  for (const [x, y] of [[26, 60], [38, 72], [47, 59], [58, 68], [66, 76], [72, 61], [84, 70], [93, 58], [99, 75], [31, 76], [52, 77], [79, 57], [90, 66], [42, 64]]) uit += `<circle cx="${x}" cy="${y}" r="1.4" class="vol"/>`;
+  uit += tekst(62, 104, 'watten,', { maat: 10.5 }) + tekst(62, 118, 'een beetje as', { maat: 10.5 });
+  // 2. rolled up tight
+  uit += `<rect x="140" y="60" width="54" height="16" rx="8" class="vk-watten"/><path d="M186 61Q178 68 186 75" class="lijn dun stil"/>`;
+  uit += tekst(167, 104, 'strak', { maat: 10.5 }) + tekst(167, 118, 'oprollen', { maat: 10.5 });
+  uit += pijl(112, 68, 134, 68) + pijl(198, 68, 220, 68);
+  // 3. between two boards: press, and roll back and forth with long strokes
+  uit += `<rect x="226" y="80" width="104" height="12" rx="2" class="vk-hout-vol"/>`;
+  uit += `<rect x="262" y="66" width="30" height="14" rx="7" class="vk-watten"/>`;
+  uit += `<rect x="232" y="54" width="92" height="12" rx="2" class="vk-hout-vol"/>`;
+  uit += pijl(278, 26, 278, 48, { warm: true }) + tekst(290, 36, 'druk', { anker: 'start', maat: 10.5 });
+  uit += pijl(262, 112, 236, 112) + pijl(294, 112, 320, 112);
+  uit += tekst(278, 132, 'heen en weer,', { maat: 10.5 }) + tekst(278, 146, 'lange halen', { maat: 10.5 });
+  return svg(340, 156, 'De vuurrol in drie stappen: een strook watten met een dun laagje as, strak opgerold, en dan onder een plank hard heen en weer gerold', uit);
+}
+
+/** A wax torch: strips with candle wax wound tight round the end of a stick, bound with wire, a tuft on top. */
+function kaarsvetfakkel() {
+  let uit = blok(150, 214, 150, 70, 12);
+  uit += `<rect x="128" y="40" width="44" height="76" rx="12" class="vk-tondel"/>`;
+  for (let y = 48; y < 112; y += 10) uit += `<path d="M130 ${y + 6}L170 ${y - 2}" class="lijn dun stil"/>`;
+  uit += `<path d="M126 60H174M126 94H174" class="vk-metaal-lijn" stroke-width="2"/>`;
+  uit += `<path d="M144 40q-4 -12 2 -18M150 40q0 -14 4 -20M156 40q4 -10 -1 -16" class="vk-touw" stroke-width="2"/>`;
+  uit += label(206, 26, 'plukje: hier aansteken', 154, 24, 'start');
+  uit += label(206, 70, 'stroken met kaarsvet,', 172, 74, 'start') + tekst(206, 84, 'strak gewikkeld', { anker: 'start', maat: 10.5 });
+  uit += label(206, 112, 'ijzerdraad', 174, 94, 'start');
+  uit += label(206, 170, 'stok', 158, 168, 'start');
+  uit += label(118, 150, 'een droge strook', 130, 84, 'end') + tekst(118, 164, 'ertussen', { anker: 'end', maat: 10.5 });
+  return svg(340, 222, 'Een kaarsvetfakkel: stroken stof met kaarsvet strak om het eind van een stok gewikkeld, vastgebonden met ijzerdraad, met bovenaan een plukje om aan te steken', uit);
+}
+
 export default {
   piramidevuur,
   blokhutvuur,
@@ -489,4 +524,6 @@ export default {
   'rook-vergelijk': rookVergelijk,
   'kolen-as': kolenAs,
   'natuurbrand-vluchten': natuurbrandVluchten,
+  vuurrol,
+  kaarsvetfakkel,
 };

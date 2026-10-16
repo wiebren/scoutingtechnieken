@@ -62,7 +62,8 @@ function tekening(b, { namen }) {
   return g;
 }
 
-/** When you see a figure well in the evening: always (it never sets here), or the months it stands high at 22:00. */
+/** When you see a figure well in the evening: always (it never sets here), or the months its middle stands higher than
+ * 25° at 22:00 on the 15th. The text says so, so it does not clash with the looser months on the bladen. */
 function wanneer(b) {
   if (sterrenVan(b).every((i) => STERREN[i].dec > 90 - plaats.breedte)) return 'Staat in Nederland altijd boven de horizon: het hele jaar te zien.';
   const hoog = MAANDEN.map((_, m) => midden(b, momentNL(2026, m, 15, 22 * 60), plaats.breedte, plaats.lengte).hoogte > 25);
@@ -74,7 +75,7 @@ function wanneer(b) {
   }
   if (!beste) return 'Staat in Nederland altijd laag.';
   const eind = (beste.start + beste.n - 1) % 12;
-  return `Om 10 uur ’s avonds goed te zien van ${MAANDEN[beste.start]} tot ${MAANDEN[eind]}.`;
+  return `Staat om 10 uur ’s avonds hoger dan 25° boven de horizon van ${MAANDEN[beste.start]} tot ${MAANDEN[eind]}.`;
 }
 
 const schud = (lijst) => {

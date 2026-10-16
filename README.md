@@ -52,8 +52,10 @@ de site via `.github/workflows/pages.yml`.
   scouting.nl, het teal van de insignes en de niveaukleuren geel, oranje en paars. Er zijn nog geen beeldmerken: het
   icoon is een windroos.
 - **Offline**: `web/sw.js` houdt alles wat de app nodig heeft; de build schrijft de bestandslijst en de versie erin.
-- **Op dit toestel** (`web/src/opslag.js`, localStorage): wat je afvinkt bij de insignes, je niveaukeuze en welke
-  updates je gezien hebt. Er gaat niets naar een server.
+- **Op dit toestel** (`web/src/opslag.js`, localStorage): wat je afvinkt bij de insignes en welke insignes je hebt
+  gekregen, je niveaukeuze, het thema, welke updates je gezien hebt, en je naam als je die bij een melding
+  invult (`web/src/melden.js`). Er gaat niets naar een server, behalve een melding die je zelf verstuurt: die
+  wordt een openbaar issue op GitHub.
 
 ## Licentie
 
@@ -68,11 +70,16 @@ Wat van anderen is, valt niet onder deze licentie:
 - Het insignepakket, de eisteksten, de insignes en het logo zijn van Scouting Nederland. De app volgt de indeling en
   noemt de namen van de insignes en de niveaus; de samenvattingen zijn in eigen woorden. De afbeeldingen van de
   insignes in `web/public/insignes/` komen uit de insignebladen van Scouting Nederland (© Scouting Nederland).
-- De kaartvoorbeelden in `web/public/kaarten/` komen van het Kadaster (TOPraster, open data), OpenStreetMap
+- De kaartvoorbeelden in `web/public/kaarten/` komen van het Kadaster (TOPraster, CC BY 4.0), OpenStreetMap
   (© OpenStreetMap-bijdragers, ODbL), OpenSeaMap en Waymarked Trails (CC BY-SA). De app zet de bron onder elk beeld.
   De legenda in `web/src/doe/legenda/` is nagetekend naar de legenda TOP25raster van het Kadaster (CC BY 4.0).
 - De bronnen die `reference/` beschrijft houden hun eigen voorwaarden; de downloads zelf staan niet in de repository.
 - Tekst van Scoutpedia (CC BY-NC-SA 4.0, dezelfde licentie) mag met naamsvermelding worden overgenomen.
 - De windschaal van Beaufort is van het KNMI (CC0, "bron: KNMI").
 - De sterren komen uit de Yale Bright Star Catalogue (publiek domein).
+- Een paar knooptekeningen in `web/src/plaatjes/touw.js` zijn nagetekend naar beelden op Wikimedia Commons: de platte
+  knoop en de oudewijvenknoop naar *Square knot.svg* en *Granny knot.svg* (CountingPine, publiek domein), de
+  schootsteek naar de foto *Schotstek rechts.jpg* (Markus Bärlocher, publiek domein), de karaaksteek naar *Chambers 1908
+  Carrick Bend.png* (Chambers's Twentieth Century Dictionary, 1908, publiek domein) en de timmersteek naar *EB1911 - Knot -
+  Fig. 20 - Timber Hitch.jpg* (Encyclopaedia Britannica 1911, publiek domein).
 - Vite en three.js houden hun eigen licentie (MIT).

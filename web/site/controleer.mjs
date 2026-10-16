@@ -20,6 +20,8 @@ const paginas = (dir) => readdirSync(dir).flatMap((f) => {
   const p = join(dir, f);
   return statSync(p).isDirectory() ? paginas(p) : f.endsWith('.html') ? [p] : [];
 });
+/** Files of the app that only the build writes (vite.config.js), so they are not in web/ in dev. */
+const GEBOUWD = new Set(['/licenties.txt']);
 const ids = new Map();
 const idsVan = (bestand) => {
   if (!ids.has(bestand)) ids.set(bestand, new Set([...readFileSync(bestand, 'utf8').matchAll(/\sid="([^"]+)"/g)].map((m) => m[1])));
@@ -62,6 +64,7 @@ for (const pagina of paginas(SITE)) {
     if (/^https?:/.test(waarde)) { extern.set(waarde, [...(extern.get(waarde) ?? []), naam]); continue; }
     if (waarde === '') { fouten.push(`${naam}: lege ${attr}`); continue; }
     const url = new URL(waarde, basis);
+    if (GEBOUWD.has(url.pathname)) continue;
     const bestand = bestandVan(url.pathname);
     if (!bestand) { fouten.push(`${naam}: ${waarde} bestaat niet`); continue; }
     if (url.hash.startsWith('#/')) {

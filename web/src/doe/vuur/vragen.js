@@ -8,31 +8,33 @@ const PLAATJE = { Piramidevuur: 'piramidevuur', Blokhutvuur: 'blokhutvuur', 'Zwi
   Stervuur: 'stervuur', Jagersvuur: 'jagersvuur', Sleutelgatvuur: 'sleutelgatvuur', Reflectorvuur: 'reflectorvuur', Greppelvuur: 'greppelvuur',
   Dakotavuur: 'dakotavuur', Tafelvuur: 'tafelvuur', 'Zweedse fakkel': 'zweedse-fakkel', 'Lets vuur': 'lets-vuur', Blikvuurtje: 'blikvuur', 'Fins logvuur': 'fins-logvuur' };
 
+/** The fires to pick wrong answers from, without the ones in `niet`: fires that look alike or would also be right. */
+const andere = (niet) => VUREN.filter((v) => !niet.includes(v));
 /** "Which fire is this?" with three other fires to choose from (picked when asked). */
-const welkVuur = (naam, uitleg) => ({ vraag: 'Welk vuur is dit?', plaatje: PLAATJE[naam], keuzes: [naam], uit: VUREN, uitleg });
+const welkVuur = (naam, uitleg, niet = []) => ({ vraag: 'Welk vuur is dit?', plaatje: PLAATJE[naam], keuzes: [naam], uit: andere(niet), uitleg });
 /** "Which fire suits this?" */
-const waarvoor = (vraag, naam, uitleg) => ({ vraag, keuzes: [naam], uit: VUREN, uitleg });
+const waarvoor = (vraag, naam, uitleg, niet = []) => ({ vraag, keuzes: [naam], uit: andere(niet), uitleg });
 
 export const QUIZ = {
   vuur: [
     welkVuur('Stervuur', 'Blokken als spaken van een wiel, met de punten in het vuur.'),
     welkVuur('Jagersvuur', 'Twee balken naast elkaar, wijder aan de windkant, pannen erop.'),
-    welkVuur('Pagodevuur', 'Grote blokken kruislings en trapsgewijs: een groot kampvuur.'),
+    welkVuur('Pagodevuur', 'Grote blokken kruislings en trapsgewijs: een groot kampvuur.', ['Blokhutvuur']),
     welkVuur('Dakotavuur', 'Een vuur in een kuil met een luchttunnel: een grondvuur.'),
     welkVuur('Reflectorvuur', 'Een scherm van blokken kaatst de warmte terug.'),
     welkVuur('Zweedse fakkel', 'Een staande stam, van boven ingezaagd, die van binnenuit brandt.'),
     welkVuur('Tafelvuur', 'Een vuur op een gesjorde tafel met zand: op werkhoogte.'),
     welkVuur('Sleutelgatvuur', 'Stoken in het ronde deel, koken op de kolen in de gleuf.'),
     welkVuur('Lets vuur', 'Een blok in vier gekloofd en weer samengebonden, met een schoorsteen in het midden.'),
-    welkVuur('Zwitserse methode', 'Dik onderop, dun bovenop, en van boven aangestoken.'),
-    waarvoor('Je hebt een paar dikke blokken en wilt er urenlang op koken.', 'Stervuur', 'Een stervuur is zuinig: je schuift de blokken steeds een stukje naar binnen.'),
-    waarvoor('Je mag niet op de grond stoken, maar wel op het terrein.', 'Tafelvuur', 'Op een gesjorde tafel met een dikke laag zand.'),
-    waarvoor('Je wilt de hele koude nacht een zachte, gelijkmatige warmte.', 'Fins logvuur', 'Twee stammen op elkaar gloeien heel lang.'),
-    waarvoor('Je wilt een groot kampvuur met veel licht.', 'Pagodevuur', 'Een pagodevuur brandt fel en geeft veel licht.'),
-    waarvoor('Je begint: de eerste vlammetjes moeten het hout aansteken.', 'Piramidevuur', 'Met een piramidevuur steek je aan; daarna bouw je een ander vuur.'),
-    waarvoor('Je wilt een heet kookvuur dat je van ver bijna niet ziet.', 'Dakotavuur', 'Het brandt in een kuil, met een tunnel die lucht aanvoert.'),
-    waarvoor('Weinig wind, droog hout, en zo min mogelijk rook bij het aansteken.', 'Zwitserse methode', 'Van boven aansteken geeft veel minder rook.'),
-    waarvoor('Je wilt meer pannen naast elkaar op één vuur.', 'Greppelvuur', 'In een lange greppel staan de pannen naast elkaar op de rand.'),
+    welkVuur('Zwitserse methode', 'Dik onderop, dun bovenop, en van boven aangestoken.', ['Blokhutvuur']),
+    waarvoor('Je hebt maar een paar dikke blokken, en je wilt er zuinig de hele dag een kookvuur mee aanhouden.', 'Stervuur', 'Een stervuur is zuinig: je schuift de blokken steeds een stukje naar binnen.', ['Jagersvuur', 'Fins logvuur', 'Sleutelgatvuur']),
+    waarvoor('Je mag niet op de grond stoken, maar wel op het terrein.', 'Tafelvuur', 'Op een gesjorde tafel met een dikke laag zand.', ['Blikvuurtje']),
+    waarvoor('Je wilt de hele koude nacht een zachte, gelijkmatige warmte.', 'Fins logvuur', 'Twee stammen op elkaar gloeien heel lang.', ['Reflectorvuur', 'Stervuur']),
+    waarvoor('Je wilt een groot kampvuur met veel licht.', 'Pagodevuur', 'Een pagodevuur brandt fel en geeft veel licht.', ['Blokhutvuur']),
+    waarvoor('Je begint: de eerste vlammetjes moeten het hout aansteken.', 'Piramidevuur', 'Met een piramidevuur steek je aan; daarna bouw je een ander vuur.', ['Zwitserse methode', 'Blokhutvuur']),
+    waarvoor('Je wilt een heet kookvuur dat je van ver bijna niet ziet.', 'Dakotavuur', 'Het brandt in een kuil, met een tunnel die lucht aanvoert.', ['Greppelvuur']),
+    waarvoor('Weinig wind, droog hout, en zo min mogelijk rook bij het aansteken.', 'Zwitserse methode', 'Van boven aansteken geeft veel minder rook.', ['Blikvuurtje']),
+    waarvoor('Je wilt meer pannen naast elkaar op één vuur.', 'Greppelvuur', 'In een lange greppel staan de pannen naast elkaar op de rand.', ['Jagersvuur']),
     waarvoor('Je hebt alleen een blik en dunne takjes, en wilt een liter water koken.', 'Blikvuurtje', 'Twee tot drie keer de inhoud van het blik aan takjes is genoeg.'),
   ],
   hout: [
@@ -40,9 +42,9 @@ export const QUIZ = {
     { vraag: 'Welk hout brandt lang en heet, als het goed droog is?', keuzes: ['Eik', 'Populier', 'Wilg', 'Linde'], uitleg: 'Eik is uitstekend brandhout, maar moet lang drogen.' },
     { vraag: 'Welk hout knettert en spat vonken?', keuzes: ['Den', 'Beuk', 'Es', 'Eik'], uitleg: 'De hars in naaldhout knettert en geeft vonken.' },
     { vraag: 'Welk hout brandt nog redelijk als het een beetje vochtig is?', keuzes: ['Es', 'Populier', 'Wilg', 'Linde'], uitleg: 'Es brandt regelmatig, ook als het wat vochtiger is.' },
-    { vraag: 'Welk hout geeft weinig warmte?', keuzes: ['Populier', 'Beuk', 'Eik', 'Es'], uitleg: 'Wilg, linde, populier en kastanje branden slecht.' },
+    { vraag: 'Welk hout geeft weinig warmte?', keuzes: ['Populier', 'Beuk', 'Eik', 'Es'], uitleg: 'Populier is licht hout: een blok ervan geeft weinig warmte. Ook wilg, linde en kastanje branden slecht.' },
     { vraag: 'Wat mag nooit op het vuur?', keuzes: ['Een oude geverfde plank', 'Een dode beukentak', 'Een droge berkentak', 'Gekloofd eikenhout'], uitleg: 'Geverfd, gebeitst, gelijmd en geïmpregneerd hout is verboden: het geeft giftige stoffen.' },
-    { vraag: 'Er ligt een pallet bij het vuur. Mag die erop?', keuzes: ['Nee: er zitten spijkers en lijm in, en het is vaak behandeld', 'Ja, dat is gewoon hout', 'Ja, als je hem eerst zaagt', 'Alleen als het regent'], uitleg: 'Pallets zijn bewerkt hout. Dat stook je niet.' },
+    { vraag: 'Er ligt een pallet bij het vuur. Mag die erop?', keuzes: ['Nee: er zitten spijkers in, en het is bewerkt hout', 'Ja, dat is gewoon hout', 'Ja, als je hem eerst zaagt', 'Alleen als het regent'], uitleg: 'Pallets zijn bewerkt hout. Dat stook je niet.' },
     { vraag: 'Welke boom is giftig, ook als je hem stookt?', keuzes: ['Taxus', 'Berk', 'Es', 'Beuk'], uitleg: 'Taxus is giftig; stook hem nooit.' },
     { vraag: 'Twee blokken tegen elkaar klinken helder. Wat zegt dat?', keuzes: ['Ze zijn droog', 'Ze zijn nat', 'Ze zijn rot', 'Ze zijn giftig'], uitleg: 'Droog hout klinkt helder, nat hout dof.' },
     { vraag: 'Een takje buigt als je het wilt breken. Wat betekent dat?', keuzes: ['Het is nat of nog levend', 'Het is heel droog', 'Het is hard hout', 'Het brandt extra goed'], uitleg: 'Een droog takje breekt met een knap.' },
@@ -53,7 +55,7 @@ export const QUIZ = {
     { vraag: 'Een Trangia brandt op…', keuzes: ['Spiritus', 'Gas', 'Petroleum', 'Brandtabletten'], uitleg: 'Een Trangia is een spiritusbrander.' },
     { vraag: 'Een Esbitbrander brandt op…', keuzes: ['Brandtabletten', 'Spiritus', 'Benzine', 'Houtskool'], uitleg: 'Een tablet steek je aan met een lucifer.' },
     { vraag: 'Een brander met een fles en een pomp, zoals een MSR, brandt meestal op…', keuzes: ['Benzine', 'Spiritus', 'Brandtabletten', 'Takjes'], uitleg: 'Een benzinebrander zet de brandstof onder druk met een pomp.' },
-    { vraag: 'Een primus brandt op…', keuzes: ['Petroleum', 'Gas', 'Brandtabletten', 'Spiritus'], uitleg: 'Een primus is een petroleumbrander; hij moet eerst warm worden.' },
+    { vraag: 'Een ouderwetse primus brandt op…', keuzes: ['Petroleum', 'Gas', 'Brandtabletten', 'Spiritus'], uitleg: 'Een primus is een petroleumbrander; hij moet eerst warm worden.' },
     { vraag: 'Welke brander werkt slechter als het koud is?', keuzes: ['Gasbrander', 'Esbitbrander', 'Houtbrander', 'Blikvuurtje'], uitleg: 'Bij kou komt er minder gas uit de bus.' },
     { vraag: 'Bij welke brander zie je de vlam overdag bijna niet?', keuzes: ['Spiritusbrander', 'Houtbrander', 'Esbitbrander', 'Kampvuur'], uitleg: 'Een spiritusvlam is bij daglicht bijna onzichtbaar. Pas op dat je je niet brandt.' },
     { vraag: 'Mag je in je slaaptent koken op een brander?', keuzes: ['Nee, nooit: koolmonoxide', 'Ja, met de rits open', 'Ja, als het regent', 'Alleen met gas'], uitleg: 'Koolmonoxide ruik je niet, en het kan je doden.' },
@@ -69,7 +71,23 @@ export const QUIZ = {
     { vraag: 'Zoals je een aardappel schilt, met het hout boven je duim.', keuzes: ['Aardappelgreep', 'Kniegreep', 'Borstgreep', 'Veerstokgreep'], uitleg: 'Het hout ligt boven je duim, zodat je niet in je vingers snijdt.' },
     { vraag: 'Je splijt een blokje met je mes en een stuk hout als hamer.', keuzes: ['Batonneren', 'Kloven met een bijl', 'Versterkte greep', 'Aardappelgreep'], uitleg: 'Sla op de rug van het lemmet; alleen met een stevig mes met een vast lemmet.' },
     { vraag: 'Waar houd je je andere hand als je snijdt?', keuzes: ['Achter het mes', 'Voor het mes, om het hout vast te houden', 'Onder het hout, waar het mes uitkomt', 'Maakt niet uit'], uitleg: 'Schiet het mes uit, dan raakt het je hand niet.' },
-    { vraag: 'Je schilt een stok. Wat beweeg je?', keuzes: ['De stok, niet het mes', 'Het mes, niet de stok', 'Allebei zo snel mogelijk', 'Het mes naar je toe'], uitleg: 'Houd het mes stil en trek de stok erlangs, van je af. Zo houd je het mes onder controle.' },
+    { vraag: 'Je schilt een stok. Wat beweeg je?', keuzes: ['De stok, niet het mes', 'Het mes, niet de stok', 'Allebei zo snel mogelijk', 'Het mes naar je toe'], uitleg: 'Houd het mes stil, met de snede van je af, en trek de stok erlangs. Zo houd je het mes onder controle.' },
+  ],
+  // De Schijf van Vijf (blad schijf-van-vijf): the Voedingscentrum, 2026 (VKG VC-S5, VC-S5W).
+  schijf: [
+    { vraag: 'Past een volkorenboterham in de Schijf van Vijf?', keuzes: ['Ja', 'Nee'], uitleg: 'Volkoren brood, havermout en volkorenpasta passen erin.' },
+    { vraag: 'Past een glas kraanwater in de Schijf van Vijf?', keuzes: ['Ja', 'Nee'], uitleg: 'Kraanwater is het goedkoopst, en goed voor het milieu.' },
+    { vraag: 'Past een handje ongezouten noten in de Schijf van Vijf?', keuzes: ['Ja', 'Nee'], uitleg: 'Elke dag een handje noten, zonder zout.' },
+    { vraag: 'Past een glas halfvolle melk in de Schijf van Vijf?', keuzes: ['Ja', 'Nee'], uitleg: 'Zuivel kies je vooral mager of halfvol.' },
+    { vraag: 'Passen linzen en kikkererwten in de Schijf van Vijf?', keuzes: ['Ja', 'Nee'], uitleg: 'Peulvruchten passen erin: kies vooral eten uit planten.' },
+    { vraag: 'Past een glas vruchtensap in de Schijf van Vijf?', keuzes: ['Nee', 'Ja'], uitleg: 'Sap past er niet in, net als frisdrank: er zit te veel suiker in.' },
+    { vraag: 'Past worst op je brood in de Schijf van Vijf?', keuzes: ['Nee', 'Ja'], uitleg: 'Bewerkt vlees, zoals worst, past er niet in: te veel zout of vet.' },
+    { vraag: 'Wat is de beste dorstlesser?', keuzes: ['Kraanwater', 'Frisdrank', 'Vruchtensap', 'Sportdrank'], uitleg: 'Water. Frisdrank en sap passen niet in de Schijf van Vijf.' },
+    { vraag: 'Een koekje: is dat iets kleins of iets groters naast de Schijf van Vijf?', keuzes: ['Iets kleins', 'Iets groters'], uitleg: 'Iets kleins kan 3 tot 5 keer per dag.' },
+    { vraag: 'Een zakje chips: is dat iets kleins of iets groters naast de Schijf van Vijf?', keuzes: ['Iets groters', 'Iets kleins'], uitleg: 'Iets groters hooguit 3 keer per week.' },
+    { vraag: 'Een stuk taart: is dat iets kleins of iets groters naast de Schijf van Vijf?', keuzes: ['Iets groters', 'Iets kleins'], uitleg: 'Iets groters hooguit 3 keer per week.' },
+    { vraag: 'Ketchup bij het eten: is dat iets kleins of iets groters naast de Schijf van Vijf?', keuzes: ['Iets kleins', 'Iets groters'], uitleg: 'Iets kleins kan 3 tot 5 keer per dag.' },
+    { vraag: 'Welke drie dingen staan voorop in de Schijf van Vijf van 2026?', keuzes: ['Veel uit planten, vooral eten uit de schijf, weinig weggooien', 'Veel vlees, veel melk, veel brood', 'Alleen biologisch, alleen vers, alleen zelf koken', 'Elke dag snoep, chips en frisdrank'], uitleg: 'Gezond voor jou, en beter voor de aarde.' },
   ],
 };
 
@@ -82,7 +100,7 @@ export const VOLGORDE = {
       'Het sop eraf spoelen in schoon, heet water (teil 2)',
       'Naspoelen in schoon water (teil 3)',
       'Laten drogen aan de lucht, op een rek of in een net',
-      'Het afwaswater door een zeef in het afvoerputje gieten',
+      'Als alles klaar is: het afwaswater door een zeef in het afvoerputje gieten',
     ],
     klaar: 'Goed! Eerst wassen, dan het sop eraf, dan schoon naspoelen. Het afwaswater gaat pas aan het eind, gezeefd, het putje in.',
   },

@@ -36,7 +36,8 @@ export default function codeermachine({ code: beginCode = 'verschuiving' } = {})
   const gewoon = h('textarea.doe-veld', { rows: 3, maxlength: 300, spellcheck: 'false', oninput: () => { laatst = 'gewoon'; werkBij(); } }, 'Kom om acht uur naar het kampvuur');
   const geheim = h('textarea.doe-veld.cm-geheim', { rows: 3, maxlength: 2000, spellcheck: 'false', oninput: () => { laatst = 'geheim'; werkBij(); } });
   const tekenVeld = h('div.cm-tekenveld', { role: 'img' });
-  const geheimLabel = h('span');
+  const geheimLabel = h('span', { id: `cm-geheim-${Math.random().toString(36).slice(2, 8)}` });
+  geheim.setAttribute('aria-labelledby', geheimLabel.id);
   const geheimKant = h('div.doe-label', geheimLabel, geheim, tekenVeld);
   const opmerking = h('p.doe-stil', { 'aria-live': 'polite' });
   const kopieer = h('button.knop.klein', { type: 'button', onclick: () => kopieren() }, 'Kopieer de code');

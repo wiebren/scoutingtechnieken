@@ -171,6 +171,41 @@ function bbqDirectIndirect() {
   return svg(340, 186, 'Barbecue in doorsnede: direct grillen met het eten boven de kolen, of indirect garen met de kolen aan de zijkanten, het eten in het midden en het deksel erop', uit);
 }
 
+/** A kettle barbecue in two zones: coals on one side, the other side empty; air in below, out through the lid. */
+function bbqZones() {
+  let uit = `<path d="M60 112A100 70 0 0 0 260 112Z" class="vk-metaal"/>`;
+  uit += `<path d="M60 108A100 62 0 0 1 260 108" class="vk-metaal" opacity="0.85"/>`;
+  uit += `<path d="M60 112H260" class="vk-metaal-lijn" stroke-dasharray="3 3"/>`;
+  uit += kolen(108, 140, 6, 70) + `<rect x="98" y="128" width="18" height="8" rx="2" class="vk-hout-vol"/>`;
+  uit += `<rect x="186" y="102" width="44" height="9" rx="3" class="vk-hout-vol"/>`;
+  uit += pijl(108, 130, 108, 116, { warm: true }) + `<path d="M140 120Q190 70 210 96" class="vk-warm"/>`;
+  // the vents: in at the bottom, out at the top of the lid
+  uit += `<rect x="150" y="178" width="20" height="6" rx="2" class="vk-metaal"/><rect x="150" y="40" width="20" height="6" rx="2" class="vk-metaal"/>`;
+  uit += pijl(160, 208, 160, 186) + pijl(160, 38, 160, 14);
+  uit += tekst(108, 162, 'heet', { maat: 10.5, klasse: 'vet' }) + tekst(208, 162, 'koel', { maat: 10.5, klasse: 'vet' });
+  uit += label(232, 52, 'luchtrooster', 172, 43, 'start') + label(232, 200, 'luchtrooster', 172, 181, 'start');
+  uit += tekst(232, 214, 'verder open: heter', { anker: 'start', maat: 10 });
+  uit += label(86, 120, 'rookhout', 98, 129, 'end');
+  return svg(340, 222, 'Een barbecue met deksel in twee zones: de kolen met een stukje rookhout aan één kant, de andere kant koel. Lucht komt binnen door het luchtrooster onder en gaat eruit door het rooster in het deksel; verder open is heter', uit);
+}
+
+/** Cress on wet cotton wool: sprouts after a day, ready to cut after one and a half to two weeks. */
+function tuinkersKweken() {
+  const schotel = (cx) => `<ellipse cx="${cx}" cy="150" rx="66" ry="14" class="vk-metaal"/><ellipse cx="${cx}" cy="142" rx="56" ry="9" class="kk-watten"/>`;
+  const plantje = (x, h) => {
+    const top = 140 - h;
+    return `<path d="M${x} 141V${top}" class="kk-steel"/><ellipse cx="${x - 4}" cy="${top}" rx="4.5" ry="2.6" class="kk-blad"/><ellipse cx="${x + 4}" cy="${top}" rx="4.5" ry="2.6" class="kk-blad"/>`;
+  };
+  let uit = schotel(84) + schotel(256);
+  for (let i = 0; i < 9; i++) uit += `<path d="M${46 + i * 9} 141q2 -5 5 -4" class="kk-steel"/>`;
+  for (let i = 0; i < 10; i++) uit += plantje(214 + i * 9, 54 + (i % 3) * 6);
+  uit += tekst(84, 182, 'na een dag: kiempjes', { maat: 10.5 });
+  uit += tekst(256, 182, 'na 1½ tot 2 weken:', { maat: 10.5 }) + tekst(256, 196, '5 tot 8 cm, knippen en eten', { maat: 10.5 });
+  uit += label(56, 118, 'natte watten', 64, 139, 'middle');
+  uit += `<path d="M326 76V140M320 76H332M320 140H332" class="lijn dun"/>`;
+  return svg(340, 204, 'Tuinkers op natte watten op een schoteltje: na een dag zie je kiempjes, na anderhalve tot twee weken zijn de steeltjes 5 tot 8 cm lang en knip je ze af', uit);
+}
+
 export default {
   'pan-boven-vuur': panBovenVuur,
   foliepakket,
@@ -182,4 +217,6 @@ export default {
   'brander-veilig': branderVeilig,
   gaslek,
   'bbq-direct-indirect': bbqDirectIndirect,
+  'bbq-zones': bbqZones,
+  'tuinkers-kweken': tuinkersKweken,
 };

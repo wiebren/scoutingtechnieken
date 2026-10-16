@@ -14,7 +14,7 @@ const TIK_MS = 450;
 export function bak({ afstand, draaien, minuten }) {
   const f = 12 / afstand;
   const korst = 8.5 * f * f * minuten;
-  const binnen = 8.5 * f ** 0.8 * minuten;
+  const binnen = 10 * f ** 0.8 * minuten;           // at 12 cm: done after 10 min, too dark after 15 (Scoutpedia: 10-15 min)
   return draaien ? { boven: korst, onder: korst, binnen } : { boven: korst * 0.45, onder: korst * 1.6, binnen };
 }
 

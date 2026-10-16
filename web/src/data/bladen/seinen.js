@@ -273,7 +273,7 @@ export default [
       ['S', 'Sierra', 'sie-èrra'], ['T', 'Tango', 'tengo'], ['U', 'Uniform', 'joeniform'], ['V', 'Victor', 'viktor'], ['W', 'Whiskey', 'wiskie'],
       ['X', 'X-ray', 'èksree'], ['Y', 'Yankee', 'jenkie'], ['Z', 'Zulu', 'zoeloe'],
     ] },
-    letOp: 'De Nederlandse hulpdiensten (C2000) schrijven Whisky en Juliet; de luchtvaart (ICAO) schrijft Whiskey en Juliett. Het zijn dezelfde woorden.',
+    letOp: 'De Nederlandse hulpdiensten (C2000) schrijven Alpha, Juliet, Whisky en X ray; de luchtvaart (ICAO) schrijft Alfa, Juliett, Whiskey en X-ray. Het zijn dezelfde woorden.',
     naar: [{ blad: 'cijfers-uitspreken' }, { blad: 'nederlands-spelalfabet' }, { blad: 'portofoon-procedure' }] },
   { id: 'cijfers-uitspreken', naam: 'Cijfers over de radio', ook: ['de rie', 'zeuven', 'neegen', 'niner'], groep: 'spelalfabet', bron: 'VAK (C2000), NAV §4e',
     uitleg: [

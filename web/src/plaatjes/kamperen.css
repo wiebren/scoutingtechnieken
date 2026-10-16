@@ -82,3 +82,6 @@
 .plaatje .kp-stippel.donker { stroke: var(--inkt); }
 .plaatje .kp-punt { fill: var(--inkt); stroke: var(--paneel); stroke-width: 1.2; }
 .plaatje .kp-letter { fill: var(--paneel); stroke: var(--inkt); stroke-width: 1.4; }
+
+/* koken in een tent */
+.plaatje .kp-blusdeken { fill: #d1141b; stroke: #7d0b10; stroke-width: 1; }

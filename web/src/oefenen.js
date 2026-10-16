@@ -8,6 +8,7 @@ import { CATEGORIE, CATEGORIEEN } from './data/categorieen.js';
 import { alles, inKeuze } from './data/niveaus.js';
 import { h, vul } from './dom.js';
 import { DOE } from './doe/index.js';
+import { bladTekens } from './bladtekens.js';
 import { icoon } from './iconen.js';
 import { meld } from './melden.js';
 import { niveauKeuze } from './opslag.js';
@@ -53,7 +54,7 @@ export function oefenenView() {
       getoond.map(({ categorie, stukken }) => h('section.oef-groep', { 'data-familie': categorie.kleur },
         h('h2.oef-kop', icoon(categorie.icoon, 'icoon'), categorie.naam),
         h('ul.oef-lijst', stukken.map((s) => h('li', h('a.oef-stuk', { href: href('oefenen', { doe: s.naam }) },
-          h('strong', DOE[s.naam].titel),
+          h('strong', DOE[s.naam].titel), bladTekens(s.bladen.map((b) => b.id)),
           h('span', s.bladen.map((b) => b.naam).join(' · ')))))))),
       weg > 0 && !ookBuiten && !alles(keuze) && h('div.buiten-lijst',
         h('p', `Nog ${weg} bij andere niveaus.`),

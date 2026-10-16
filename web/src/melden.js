@@ -14,7 +14,7 @@ import './doe/vorm.css';
 /** Where the report is POSTed as JSON; null: it can only be saved as a file. */
 const URL_MELDEN = 'https://europe-west4-lelievlet.cloudfunctions.net/lelievlet-melden';
 const MIN_TEKST = 10;                      // the receiver takes no description shorter than this
-const MELDER = 'scoutingtechnieken.melder.v1';   // name and address, kept for the next report
+const MELDER = 'scoutingtechnieken.melder.v1';   // the name, kept for the next report (no e-mail address: decided)
 
 const SOORTEN = [
   { key: 'inhoud', naam: 'De tekst klopt niet', uitleg: 'Een feit, een regel, een naam of een stap die niet klopt, of die je niet snapt', bijBlad: 'De tekst van dit onderwerp' },
@@ -24,11 +24,24 @@ const SOORTEN = [
 ];
 
 const melder = {
-  lees: () => { try { return JSON.parse(localStorage.getItem(MELDER) ?? 'null') ?? {}; } catch { return {}; } },
-  bewaar: (naam, contact) => {
-    try { if (naam || contact) localStorage.setItem(MELDER, JSON.stringify({ naam, contact })); else localStorage.removeItem(MELDER); } catch { /* not kept */ }
+  /** The name kept from the last report. An e-mail address kept by an earlier version is dropped here. */
+  lees: () => {
+    try {
+      const bewaard = JSON.parse(localStorage.getItem(MELDER) ?? 'null') ?? {};
+      if ('contact' in bewaard) melder.bewaar(bewaard.naam ?? '');
+      return { naam: bewaard.naam ?? '' };
+    } catch { return { naam: '' }; }
+  },
+  bewaar: (naam) => {
+    try { if (naam) localStorage.setItem(MELDER, JSON.stringify({ naam })); else localStorage.removeItem(MELDER); } catch { /* not kept */ }
   },
 };
+
+/** Whether a name from an earlier report is kept on this device (Instellingen, Je gegevens). */
+export function melderBewaard() { return Boolean(melder.lees().naam); }
+
+/** Forgets the name kept for the next report. */
+export function vergeetMelder() { try { localStorage.removeItem(MELDER); } catch { /* nothing kept */ } }
 
 let dialoog = null;
 
@@ -58,7 +71,7 @@ function maakDialoog() {
   /** A field that keeps what is typed in melding[key], and keeps `verder` shut until there is enough. */
   function veld(key, label, placeholder, verder, { regels = 5, min = MIN_TEKST, enkel = false, type = 'text', focus = true } = {}) {
     const invoer = enkel
-      ? h('input.doe-veld', { type, value: melding[key] ?? '', placeholder, autocomplete: type === 'email' ? 'email' : 'off' })
+      ? h('input.doe-veld', { type, value: melding[key] ?? '', placeholder, autocomplete: 'off' })
       : h('textarea.doe-veld', { rows: regels, placeholder }, melding[key] ?? '');
     const kijk = () => { melding[key] = invoer.value; if (verder) verder.disabled = invoer.value.trim().length < min; };
     invoer.addEventListener('input', kijk);
@@ -108,9 +121,10 @@ function maakDialoog() {
       return [
         h('h3', 'Klaar om te versturen'),
         veld('naam', 'Je naam of scoutinggroep (mag leeg blijven)', '', null, { enkel: true, min: 0 }),
-        veld('contact', 'Je e-mailadres, als je antwoord wilt (mag leeg blijven)', 'naam@voorbeeld.nl', null, { enkel: true, min: 0, type: 'email', focus: false }),
-        tekst('Je melding gaat naar de makers van de app, op GitHub. Vul je je naam en e-mailadres in, dan gaan die mee. Iedereen kan je melding daar lezen, ook je naam en e-mailadres. Zet er dus niets in wat niet iedereen mag lezen.'),
-        h('details.meld-details', h('summary', 'Wat wordt er meegestuurd?'), h('pre', JSON.stringify(inhoudMelding(), null, 2))),
+        tekst('Je melding gaat naar de makers van de app, op GitHub. Vul je je naam in, dan gaat die mee. Iedereen kan je melding daar lezen, ook je naam. Zet er dus niets in wat niet iedereen mag lezen.'),
+        // what goes out as it is when opened, so with the name typed just now
+        h('details.meld-details', { ontoggle: (e) => { if (melding && e.target.open) e.target.querySelector('pre').textContent = JSON.stringify(inhoudMelding(), null, 2); } },
+          h('summary', 'Wat wordt er meegestuurd?'), h('pre')),
         h('div.knoppen', stuur),
       ];
     },
@@ -147,7 +161,7 @@ function maakDialoog() {
     return {
       versie: 1, app: 'scoutingtechnieken', categorie: melding.categorie,
       omschrijving: melding.omschrijving?.trim() ?? '', bron: melding.bron?.trim() || undefined,
-      naam: melding.naam?.trim() || undefined, contact: melding.contact?.trim() || undefined,
+      naam: melding.naam?.trim() || undefined,
       blad: b ? { id: b.id, naam: b.naam, categorie: CATEGORIE[b.categorie].naam, groep: groepNaam(b.categorie, b.groep) } : undefined,
       doe: melding.doe || b?.doe || undefined,
       gegevens: {
@@ -175,7 +189,7 @@ function maakDialoog() {
   let onderweg = null;
   async function verstuur() {
     if (onderweg === melding) return;
-    if (!URL_MELDEN) { melder.bewaar(melding.naam?.trim() ?? '', melding.contact?.trim() ?? ''); bewaarAlsBestand(); ga('verstuurd'); return; }
+    if (!URL_MELDEN) { melder.bewaar(melding.naam?.trim() ?? ''); bewaarAlsBestand(); ga('verstuurd'); return; }
     const mijn = melding; onderweg = mijn;
     const k = inhoud.querySelector('.knoppen .hoofd');
     if (k) { k.disabled = true; k.textContent = 'Bezig…'; }
@@ -183,7 +197,7 @@ function maakDialoog() {
       const antwoord = await fetch(URL_MELDEN, { method: 'POST', headers: { 'Content-Type': 'application/json' }, body: JSON.stringify(inhoudMelding()) });
       if (!antwoord.ok) throw new Error(`HTTP ${antwoord.status}`);
       const { issue } = await antwoord.json().catch(() => ({}));
-      melder.bewaar(mijn.naam?.trim() ?? '', mijn.contact?.trim() ?? '');
+      melder.bewaar(mijn.naam?.trim() ?? '');
       if (melding !== mijn) return;
       melding.issue = typeof issue === 'string' && issue.startsWith('https://') ? issue : null;
       ga('verstuurd');
@@ -198,8 +212,8 @@ function maakDialoog() {
 
   return {
     open(over) {
-      const { naam, contact } = melder.lees();
-      melding = { naam, contact, blad: over.blad && BLAD[over.blad] ? over.blad : undefined, doe: over.doe, pagina: location.href };
+      const { naam } = melder.lees();
+      melding = { naam, blad: over.blad && BLAD[over.blad] ? over.blad : undefined, doe: over.doe, pagina: location.href };
       spoor = [];
       toon('soort');
       if (!el.open) el.showModal();

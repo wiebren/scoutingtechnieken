@@ -21,4 +21,6 @@ export default {
   'touwbaan-spannen': { titel: 'Span het touw: hoeveel trekt het aan de ankers?', laad: () => import('./veiligspannen.js'), bekijk: true },
   'materiaal-keuren': { titel: 'Goed, of afkeuren?', laad: () => import('./veiligkeuren.js') },
   'mes-mee': { titel: 'Mag je mes mee?', laad: () => import('./veiligquiz.js'), opties: { set: 'mes-mee' } },
+  'schijf-quiz': { titel: 'Past het in de Schijf van Vijf?', laad: () => import('./quiz.js'), opties: { set: 'schijf' } },
+  seizoenkalender: { titel: 'Wat is er in het seizoen?', laad: () => import('./seizoen.js'), bekijk: true },
 };

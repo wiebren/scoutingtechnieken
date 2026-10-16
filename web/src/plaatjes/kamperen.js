@@ -63,8 +63,8 @@ function belltent() {
   for (const [x1, x2] of [[70, 14], [104, 52], [236, 288], [270, 326]]) uit += scheerlijn(x1, 118, x2, 180) + haring(x2, 180, x2 < 170 ? -35 : 35);
   uit += '<path d="M70 118L170 34L270 118Z" class="kp-doek2"/>';
   uit += '<path d="M70 118Q170 128 270 118V178Q170 186 70 178Z" class="kp-doek"/>';
+  uit += '<path d="M170 30V112" class="kp-paal"/>';
   uit += '<path d="M146 178V128Q170 92 194 128V178Z" class="kp-binnen"/>';
-  uit += '<path d="M170 30V178" class="kp-paal"/>';
   uit += wijs(192, 22, 'één paal in het midden', 172, 48);
   uit += wijs(282, 152, 'lage wand', 256, 150);
   uit += wijs(6, 72, 'scheerlijnen rondom', 44, 130);
@@ -74,12 +74,12 @@ function belltent() {
 /** A dome tent: two poles crossing over the top; it stands by itself. */
 function koepeltent() {
   let uit = grond(0, 340, 172);
-  uit += scheerlijn(84, 104, 30, 174) + scheerlijn(256, 104, 310, 174) + haring(30, 174, -35) + haring(310, 174, 35);
+  uit += scheerlijn(82, 118, 30, 174) + scheerlijn(258, 118, 310, 174) + haring(30, 174, -35) + haring(310, 174, 35);
   uit += '<path d="M56 172C64 60 276 60 284 172Z" class="kp-doek"/>';
   uit += '<path d="M56 172C90 74 220 50 262 160" class="kp-stok"/><path d="M78 160C120 50 250 74 284 172" class="kp-stok"/>';
   uit += '<path d="M142 172V128Q170 96 198 128V172Z" class="kp-binnen"/>';
   uit += wijs(200, 28, 'twee stokken kruisen', 170, 90);
-  uit += wijs(6, 84, 'scheerlijn', 57, 139);
+  uit += wijs(6, 84, 'scheerlijn', 62, 140);
   uit += wijs(298, 124, 'apsis', 266, 150);
   return svg(340, 200, 'Een koepeltent: twee stokken die elkaar bovenop kruisen; de tent staat vanzelf', uit);
 }
@@ -496,7 +496,7 @@ function rugzakZones() {
   uit += '<rect x="112" y="64" width="40" height="80" rx="6" class="kp-zwaar"/>';
   uit += tekst(132, 100, 'zwaar', { maat: 11, klasse: 'vet' });
   uit += '<circle cx="132" cy="118" r="5" class="lijn"/><path d="M127 118h10M132 113v10" class="lijn dun"/>';
-  uit += wijs(226, 30, 'deksel: kaart, zakmes, snack', 190, 28);
+  uit += wijs(226, 30, 'deksel: kaart, kompas, snack', 190, 28);
   uit += wijs(226, 70, 'bovenin: regenjas, EHBO-set', 196, 50);
   uit += wijs(226, 112, 'midden: zwaar tegen je rug,', 152, 100);
   uit += tekst(226, 128, 'tussen je schouderbladen', { maat: 11, anker: 'start' });
@@ -632,6 +632,29 @@ function geenSporen() {
   return svg(352, 200, 'De zeven principes van Laat geen sporen na als zeven tegels', uit);
 }
 
+/** Cooking under cover: never in the tent you sleep in; a kitchen tent with open sides, the roof far above the flame. */
+function kooktent() {
+  let uit = grond(0, 360, 186);
+  // left: a sleeping tent with a stove inside, crossed out
+  uit += '<path d="M14 186L62 96L110 186Z" class="kp-doek"/><path d="M62 96V186" class="lijn dun"/>';
+  uit += '<rect x="70" y="172" width="22" height="10" rx="2" class="vol"/><path d="M76 172q5 -12 10 0" class="kp-vlam"/>';
+  uit += '<path d="M20 104L104 182M104 104L20 182" class="kp-kruis"/>';
+  uit += tekst(62, 210, 'niet in je slaaptent', { maat: 11, klasse: 'vet' });
+  // right: a kitchen tent, roof on poles, sides open
+  uit += '<path d="M150 186V70M330 186V70" class="kp-paal"/><path d="M140 72L240 40L340 72Z" class="kp-zeil"/>';
+  uit += '<path d="M160 132H320" class="kp-paal"/><rect x="160" y="126" width="160" height="7" class="kp-blad-hout"/><path d="M170 186V133M310 186V133" class="kp-tak"/>';
+  uit += '<rect x="214" y="112" width="40" height="14" rx="2" class="vol"/><path d="M226 112q8 -16 16 0" class="kp-vlam"/>';
+  uit += '<path d="M206 126V102M262 126V102M206 102H216M252 102H262" class="lijn"/>';
+  uit += '<path d="M234 64V100" class="lijn stil" stroke-dasharray="3 3"/><path d="M230 68L234 62L238 68M230 96L234 102L238 96" class="lijn stil"/>';
+  uit += '<path d="M290 186l4 -24h20l4 24Z" class="kp-emmer"/><rect x="176" y="150" width="20" height="26" rx="2" class="kp-blusdeken"/>';
+  uit += wijs(356, 30, 'dak ver boven de vlam', 236, 82, 'end');
+  uit += wijs(132, 24, 'zijkanten open', 150, 96, 'end');
+  uit += wijs(134, 102, 'spatscherm', 207, 108, 'end');
+  uit += wijs(146, 228, 'blusdeken', 186, 170, 'start');
+  uit += wijs(356, 228, 'emmer water of zand', 304, 172, 'end');
+  return svg(360, 236, 'Links een slaaptent met een brander erin, doorgestreept: kook nooit in de tent waar je slaapt. Rechts een keukentent met open zijkanten, het dak ver boven de vlam, een spatscherm om de brander, een blusdeken en een emmer water of zand', uit);
+}
+
 export default {
   'tent-patrouille': patrouilletent,
   'tent-bell': belltent,
@@ -655,6 +678,7 @@ export default {
   'kamp-hudo': hudo,
   'kamp-afvoerputje': afvoerputje,
   'kamp-keuken': kampkeuken,
+  'kamp-kooktent': kooktent,
   'kamp-gasfles': gasfles,
   'kamp-kuiltje': kuiltje,
   'geen-sporen-zeven': geenSporen,

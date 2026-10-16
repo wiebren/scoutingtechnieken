@@ -44,6 +44,8 @@ export default defineConfig({
   base: './',                     // works from any folder on any host
   plugins: [serviceWorker],
   define: { __BUILD__: JSON.stringify(build()) },
-  // three.js for the 3D route walker is one lazy chunk of about 560 kB, loaded only when that piece opens
-  build: { target: 'es2022', outDir: 'dist', emptyOutDir: true, chunkSizeWarningLimit: 600 },
+  // three.js (the 3D route walker and the bouwwerken in 3D) is one lazy chunk of about 550 kB, loaded only when such
+  // a piece opens. The licences of the code that goes into the build (three.js, MIT) are written to licenties.txt,
+  // linked from the handleiding (site/handleiding/bronnen.html); a .txt, so a browser shows it instead of saving it.
+  build: { target: 'es2022', outDir: 'dist', emptyOutDir: true, chunkSizeWarningLimit: 600, license: { fileName: 'licenties.txt' } },
 });

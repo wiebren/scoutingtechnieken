@@ -32,7 +32,7 @@ export const CATEGORIEEN = [
     groepen: [['driehoek', 'Vuurdriehoek'], ['aanmaken', 'Aanmaken'], ['soorten', 'Vuursoorten'], ['hout', 'Hout'], ['doven', 'Doven'],
       ['regels', 'Regels']] },
   { id: 'koken', naam: 'Buitenkoken', kleur: 'kamp', icoon: 'koken',
-    groepen: [['houtvuur', 'Op houtvuur'], ['branders', 'Branders'], ['ovens', 'Ovens'], ['water', 'Water'], ['hygiene', 'Hygiëne']] },
+    groepen: [['houtvuur', 'Op houtvuur'], ['branders', 'Branders'], ['ovens', 'Ovens'], ['water', 'Water'], ['eten', 'Eten en gezond'], ['hygiene', 'Hygiëne']] },
   { id: 'gereedschap', naam: 'Gereedschap', kleur: 'kamp', icoon: 'gereedschap',
     groepen: [['mes', 'Mes'], ['bijl', 'Bijl'], ['zaag', 'Zaag'], ['onderhoud', 'Slijpen en onderhoud'], ['sierwerk', 'Sierwerk'],
       ['regels', 'Regels']] },

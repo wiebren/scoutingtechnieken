@@ -89,6 +89,7 @@ export default function bloedcirkel() {
           s('text', { x: CX + ux * (a + e) / 2 - 8, y: CY + uy * (a + e) / 2 - 6, class: 'tekst stil', 'text-anchor': 'end' }, `${i + 1}`));
       }) : []));
     takG.replaceChildren(...(tak ? [s('g', { role: 'button', tabindex: 0, 'aria-label': 'Een tak boven je hoofd' },
+      s('circle', { cx: 240, cy: 82, r: 52, class: 'focus-ring', fill: 'none' }),
       s('path', { d: `M330 40Q260 70 ${CX + 6} ${CY - 22}`, stroke: '#6b4a2b', 'stroke-width': 6, fill: 'none', 'stroke-linecap': 'round' }),
       ...[[280, 60], [240, 82], [205, 108]].map(([x, y]) => s('ellipse', { cx: x, cy: y, rx: 16, ry: 9, style: 'fill: var(--fam-natuur)', opacity: 0.8 })),
       s('text', { x: 268, y: 34, class: 'tekst stil' }, 'tak boven je'))] : []));
