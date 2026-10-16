@@ -1,0 +1,19 @@
+/* Oleaat (oleaat.js): a map with roads and a transparent sheet to lay on it. */
+.doe-oleaat { display: flex; flex-direction: column; gap: 10px; }
+.doe-oleaat p { margin: 0; }
+.ol-svg { display: block; width: 100%; height: auto; border-radius: 10px; touch-action: none; user-select: none; -webkit-user-select: none; cursor: grab; }
+.ol-svg:active { cursor: grabbing; }
+.ol-svg:focus-visible { outline: 3px solid var(--accent); outline-offset: 2px; }
+.ol-grond { fill: color-mix(in srgb, #e9dfb6 45%, var(--paneel)); }
+.ol-bos { fill: color-mix(in srgb, var(--fam-natuur) 26%, var(--paneel)); }
+.ol-water { fill: color-mix(in srgb, var(--blauw) 30%, var(--paneel)); }
+.ol-weg { fill: none; stroke: var(--lijn-sterk); stroke-width: 5; stroke-linecap: round; }
+.ol-pad { fill: none; stroke: var(--lijn-sterk); stroke-width: 3; stroke-dasharray: 5 4; }
+.ol-noord-kaart path { fill: var(--inkt); stroke: var(--inkt); stroke-width: 1.5; }
+.ol-noord-kaart text, .ol-noord text { fill: var(--inkt); font-size: 10px; font-weight: 700; }
+.ol-vlak { fill: color-mix(in srgb, var(--blauw) 14%, transparent); stroke: var(--blauw); stroke-width: 1.2; stroke-dasharray: 4 3; }
+.ol-route { fill: none; stroke: var(--rood); stroke-width: 2.6; stroke-linejoin: round; stroke-linecap: round; }
+.ol-start { fill: var(--rood); }
+.ol-noord path { fill: var(--blauw); stroke: var(--blauw); stroke-width: 1.5; }
+.ol-vel.klaar .ol-vlak { stroke: var(--accent); stroke-dasharray: none; }
+.ol-gevonden { fill: none; stroke: var(--rood); stroke-width: 6; stroke-opacity: 0.35; stroke-linejoin: round; stroke-linecap: round; }

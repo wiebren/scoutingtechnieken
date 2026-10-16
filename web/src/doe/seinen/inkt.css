@@ -1,0 +1,10 @@
+/* Onzichtbare inkt (inkt.js): the paper stays light in the dark theme too, it is a piece of paper. */
+.doe-inkt { display: flex; flex-direction: column; gap: 10px; }
+.doe-inkt p { margin: 0; }
+.ik-papier {
+  min-height: 120px; padding: 22px 18px; border-radius: 6px; border: 1px solid #d9d0b8; background: #fbf7ea;
+  font-family: "Segoe Print", "Bradley Hand", "Comic Sans MS", cursive; font-size: 24px; line-height: 1.5;
+  touch-action: none; user-select: none; -webkit-user-select: none; cursor: crosshair;
+  box-shadow: 0 2px 6px rgb(0 0 0 / 0.12);
+}
+.ik-papier span { --w: 0; color: color-mix(in srgb, #7a4a14 calc(var(--w) * 100%), #f6f1e0); }

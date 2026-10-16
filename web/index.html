@@ -7,9 +7,12 @@
   <meta name="description" content="Scoutingtechnieken opzoeken en leren: knopen en sjorringen, kaart en kompas, tochttechnieken, seinen, vuur, kamperen, natuur en meer. Werkt ook zonder internet.">
   <meta name="theme-color" content="#ffffff" media="(prefers-color-scheme: light)">
   <meta name="theme-color" content="#18201b" media="(prefers-color-scheme: dark)">
+  <!-- the theme chosen in Instellingen (src/opslag.js), set before the first paint -->
+  <script>try { const t = JSON.parse(localStorage.getItem('scoutingtechnieken.thema.v1')); if (t === 'licht' || t === 'donker') document.documentElement.dataset.theme = t === 'donker' ? 'dark' : 'light'; } catch { /* auto */ }</script>
   <link rel="manifest" href="manifest.webmanifest">
   <link rel="icon" type="image/png" sizes="192x192" href="icons/icon-192.png">
   <link rel="apple-touch-icon" href="icons/apple-touch-icon.png">
+  <meta name="mobile-web-app-capable" content="yes">
   <meta name="apple-mobile-web-app-capable" content="yes">
   <meta name="apple-mobile-web-app-title" content="Technieken">
 </head>

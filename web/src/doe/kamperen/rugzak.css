@@ -1,0 +1,14 @@
+/* Pack a rucksack (rugzak.js). */
+.rz-svg { max-width: 300px; margin: 0 auto; }
+.rz-zak { fill: color-mix(in srgb, var(--fam-touw) 16%, var(--paneel)); stroke: var(--inkt); stroke-width: 1.5; }
+.rz-rug { fill: none; stroke: var(--accent); stroke-width: 6; stroke-linecap: round; }
+.rz-vak rect { fill: color-mix(in srgb, var(--paneel) 70%, transparent); stroke: var(--lijn-sterk); stroke-width: 1.2; stroke-dasharray: 4 3; }
+.rz-vak { cursor: pointer; outline: none; }
+.rz-vak:hover rect { stroke: var(--inkt); }
+.rz-vak:focus-visible rect { stroke: var(--accent); stroke-width: 2.5; stroke-dasharray: none; }
+.rz-inhoud { fill: var(--inkt); font-size: 10.5px; font-weight: 600; }
+.rz-inhoud .rz-goed { fill: var(--accent); }
+.rz-inhoud .rz-fout { fill: var(--rood); }
+.rz-punt { fill: var(--rood); stroke: var(--paneel); stroke-width: 2; }
+@media (prefers-reduced-motion: no-preference) { .rz-punt { transition: cx 0.3s, cy 0.3s; } }
+.chip.rz-gedaan:not([aria-pressed="true"]) { color: var(--stil); text-decoration: line-through; }

@@ -1,0 +1,110 @@
+<!doctype html>
+<html lang="nl">
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <title>Melden · Handleiding Scoutingtechnieken</title>
+  <meta name="description" content="Melden in Scoutingtechnieken: zo laat je weten wat niet klopt of wat je mist, en wat er met je melding gebeurt.">
+  <meta name="theme-color" content="#ffffff" media="(prefers-color-scheme: light)">
+  <meta name="theme-color" content="#18201b" media="(prefers-color-scheme: dark)">
+  <!-- Links into the app have data-app (the place in the app, after the #); site/maak.mjs sets their href. -->
+  <script>try { const t = JSON.parse(localStorage.getItem('scoutingtechnieken.thema.v1')); if (t === 'licht' || t === 'donker') document.documentElement.dataset.theme = t === 'donker' ? 'dark' : 'light'; } catch { /* auto */ }</script>
+  <link rel="icon" type="image/png" sizes="192x192" href="../img/icon-192.png">
+  <link rel="apple-touch-icon" href="../img/apple-touch-icon.png">
+  <link rel="stylesheet" href="../app.css">
+  <link rel="stylesheet" href="../site.css">
+</head>
+<body>
+  <!-- maak:kop -->
+  <a class="overslaan" href="#inhoud">Naar de inhoud</a>
+  <header class="kop">
+    <nav class="kop-nav" aria-label="Site">
+      <a class="merk" href=".././"><span class="merk-teken"><svg class="icoon" viewBox="0 0 24 24" aria-hidden="true"><path d="M12 1.5l1.9 8.6 8.6 1.9-8.6 1.9-1.9 8.6-1.9-8.6L1.5 12l8.6-1.9z" fill="currentColor" stroke="none"/></svg></span><span>Scoutingtechnieken</span></a>
+      <a class="kop-link" href=".././">Home</a>
+      <a class="kop-link" href="../handleiding/" aria-current="page">Handleiding</a>
+      <a class="knop hoofd klein" data-app="" href="../../">Open de app</a>
+    </nav>
+  </header>
+  <!-- /maak -->
+
+  <main id="inhoud" class="handleiding">
+    <nav class="handleiding-nav" aria-label="Handleiding">
+      <p class="handleiding-nav-kop">Handleiding</p>
+      <!-- maak:handleiding -->
+      <ol>
+        <li><a href="index.html">Beginnen</a></li>
+        <li><a href="zoeken.html">Zoeken</a></li>
+        <li><a href="onderwerp.html">Een onderwerp</a></li>
+        <li><a href="oefenen.html">Oefenen</a></li>
+        <li><a href="insignes.html">Insignes</a></li>
+        <li><a href="instellingen.html">Instellingen</a></li>
+        <li><a href="melden.html" aria-current="page">Melden</a></li>
+        <li><a href="leiding.html">Voor leiding</a></li>
+        <li><a href="bronnen.html">Bronnen en licentie</a></li>
+      </ol>
+      <!-- /maak -->
+    </nav>
+
+    <article class="tekst">
+      <h1>Melden</h1>
+      <p class="lead">Klopt er iets niet, werkt een oefening niet goed, of mis je iets? Laat het weten. Elke melding wordt
+        gelezen, en zo wordt de app beter.</p>
+
+      <h2 id="waar">Waar</h2>
+      <ul>
+        <li>Onderaan elk onderwerp: <b>Klopt er iets niet? Meld het</b>.</li>
+        <li>Onder elke oefening in Oefenen: <b>Werkt dit niet goed? Meld het</b>.</li>
+        <li>In <a data-app="#/over" href="../../#/over">Instellingen</a>: <b>Meld iets</b>.</li>
+      </ul>
+      <p>Meld je vanaf een onderwerp of een oefening, dan gaat mee waar het over gaat. Dat hoef je dus niet te typen.</p>
+
+      <h2 id="stappen">Zo gaat het</h2>
+      <ol class="legenda">
+        <li><b>Waar gaat het over?</b> Kies: de tekst klopt niet, een tekening of oefening, de app zelf, of iets
+          ontbreekt.</li>
+        <li><b>Vertel wat er is.</b> Wat klopt er niet, wat gebeurt er, of wat mis je? Bij een tekst kun je ook zeggen waar
+          het anders staat: een boek, een site, een insigneblad.</li>
+        <li><b>Je naam of scoutinggroep, en je e-mailadres</b>, als je wilt. Vul je je e-mailadres in, dan kunnen we je antwoord geven.
+          Onder <b>Wat wordt er meegestuurd?</b> zie je precies wat er verstuurd wordt.</li>
+        <li><b>Versturen.</b> Lukt het, dan zie je <i>Bedankt!</i>, en meestal een link naar je melding.</li>
+      </ol>
+
+      <h2 id="mee">Wat er meegaat</h2>
+      <p>Je tekst, en je naam en e-mailadres als je die invult. Verder: het onderwerp of de oefening, het adres van de
+        pagina, welke versie van de app je hebt, je browser, de grootte van je scherm, licht of donker, of de app
+        geïnstalleerd is, en welk niveau je hebt gekozen. Geen schermafbeelding.</p>
+      <p class="melding let-op">Je melding gaat naar de makers van de app, op GitHub. Vul je je naam en e-mailadres in,
+        dan gaan die mee. Iedereen kan je melding daar lezen, ook je naam en e-mailadres. Zet er dus niets in wat niet iedereen mag lezen.</p>
+
+      <h2 id="mislukt">Lukt het niet?</h2>
+      <p>Zonder internet kun je niet versturen. Probeer het later opnieuw, of kies <b>Opslaan als bestand</b>: dan
+        bewaar je de melding op je toestel.</p>
+
+      <h2 id="tips">Wat helpt</h2>
+      <ul>
+        <li><b>Wat</b> je zag en <b>waar</b>: welk onderwerp, welke tekening, welke oefening.</li>
+        <li><b>Hoe het volgens jou moet</b>.</li>
+        <li><b>Waar dat staat</b>, als je dat weet: een boek met de bladzijde, een site, het insigneblad, of hoe het bij
+          jullie groep gaat.</li>
+      </ul>
+      <p>De stappen van de knopen hoef je niet te melden: die komen later, uit een apart project.</p>
+
+      <!-- maak:volgende -->
+      <nav class="verder" aria-label="Verder lezen">
+        <a href="instellingen.html" rel="prev">‹ Instellingen</a>
+        <a href="leiding.html" rel="next">Voor leiding ›</a>
+      </nav>
+      <!-- /maak -->
+    </article>
+  </main>
+
+  <!-- maak:voet -->
+  <footer class="voet">
+    <div class="voet-binnen">
+      <p><a href=".././">Scoutingtechnieken</a> · <a href="../handleiding/">Handleiding</a> · <a href="../handleiding/melden.html">Melden</a> · <a href="../handleiding/bronnen.html">Bronnen en licentie</a> · <a data-app="" href="../../">Open de app</a></p>
+      <p>© 2026 Wiebren Braakman, onder <a href="https://creativecommons.org/licenses/by-nc-sa/4.0/deed.nl">CC BY-NC-SA 4.0</a>. Geen app van Scouting Nederland: een eigen project, gemaakt voor scouts en leiding.</p>
+    </div>
+  </footer>
+  <!-- /maak -->
+</body>
+</html>

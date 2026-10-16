@@ -1,3 +1,4 @@
+import { execSync } from 'node:child_process';
 import { createHash } from 'node:crypto';
 import { readdirSync, readFileSync, statSync, writeFileSync } from 'node:fs';
 import { dirname, join, relative, resolve } from 'node:path';
@@ -32,8 +33,17 @@ const serviceWorker = {
   },
 };
 
+/** Which build this is, for Melden (src/melden.js): the commit and the day it was built. */
+function build() {
+  let commit = 'onbekend';
+  try { commit = execSync('git rev-parse --short HEAD', { cwd: here, stdio: ['ignore', 'pipe', 'ignore'] }).toString().trim(); } catch { /* no git */ }
+  return { commit, datum: new Date().toISOString().slice(0, 10) };
+}
+
 export default defineConfig({
   base: './',                     // works from any folder on any host
   plugins: [serviceWorker],
-  build: { target: 'es2022', outDir: 'dist', emptyOutDir: true },
+  define: { __BUILD__: JSON.stringify(build()) },
+  // three.js for the 3D route walker is one lazy chunk of about 560 kB, loaded only when that piece opens
+  build: { target: 'es2022', outDir: 'dist', emptyOutDir: true, chunkSizeWarningLimit: 600 },
 });

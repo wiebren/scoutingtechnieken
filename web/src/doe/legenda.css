@@ -1,0 +1,18 @@
+/* The legenda of the topographic map (legenda.js). The signs keep the colours of the paper map, so they sit on a
+   light patch in the dark theme too. */
+.doe-legenda { display: flex; flex-direction: column; gap: 12px; }
+.doe-legenda > .chips + .chips { margin-top: -4px; }
+.lg-teken { display: block; flex: none; background: #fff; border-radius: 4px; box-shadow: 0 0 0 1px var(--lijn); }
+
+.lg-lijst { display: grid; gap: 6px 16px; margin: 0; padding: 0; list-style: none; }
+@container (min-width: 560px) { .lg-lijst { grid-template-columns: 1fr 1fr; } }
+.lg-lijst li { display: flex; align-items: center; gap: 12px; min-height: 40px; }
+
+.lg-raad { display: flex; flex-direction: column; gap: 10px; }
+.lg-groot { align-self: center; max-width: 100%; }
+.lg-groot .lg-teken { max-width: 100%; height: auto; }
+.lg-opties { display: grid; gap: 8px; }
+@container (min-width: 480px) { .lg-opties { grid-template-columns: 1fr 1fr; } }
+.lg-optie { justify-content: flex-start; text-align: left; }
+.lg-optie.goed { background: var(--accent); border-color: var(--accent); color: var(--op-accent); opacity: 1; }
+.lg-optie.fout { border-color: var(--rood); color: var(--rood); opacity: 1; }

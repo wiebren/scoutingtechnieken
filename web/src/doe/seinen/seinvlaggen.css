@@ -1,0 +1,19 @@
+/* The seinvlaggen to learn (seinvlaggen.js). */
+.doe-seinvlaggen { display: flex; flex-direction: column; gap: 12px; }
+.doe-seinvlaggen p { margin: 0; }
+.sv-quiz { display: grid; gap: 12px; }
+@container (min-width: 540px) { .sv-quiz { grid-template-columns: auto 1fr; align-items: start; } }
+.sv-plaat { display: grid; place-items: center; padding: 16px; border-radius: 12px; background: var(--zacht); }
+.sv-plaat svg { max-width: 100%; height: auto; }
+.sv-paneel { display: flex; flex-direction: column; gap: 10px; min-width: 0; }
+.sv-vraag { font-weight: 600; }
+.sv-opties { display: grid; grid-template-columns: repeat(2, minmax(0, 1fr)); gap: 8px; }
+.sv-opties.lang { grid-template-columns: 1fr; }
+.sv-optie { justify-content: flex-start; text-align: left; height: auto; min-height: 44px; white-space: normal; line-height: 1.3; }
+.sv-optie b { font-size: 18px; margin-right: 2px; }
+.sv-optie.goed { background: var(--accent); border-color: var(--accent); color: var(--op-accent); }
+.sv-optie.fout { border-color: var(--rood); color: var(--rood); }
+
+.sv-hijs { display: flex; flex-direction: column; gap: 4px; margin: 0; padding: 0 0 0 14px; list-style: none; border-left: 3px solid var(--lijn-sterk); }
+.sv-hijs li { display: flex; align-items: center; gap: 10px; font-size: 14px; }
+.sv-hijs li svg { flex: none; }

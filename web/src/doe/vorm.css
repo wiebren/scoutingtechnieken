@@ -1,0 +1,36 @@
+/* What the pieces share (src/doe/): text fields, sliders, the line that says how it went, a lamp, and text for a
+   screen reader only. Each piece imports this next to its own CSS. */
+.doe-veld {
+  width: 100%; min-height: 44px; padding: 9px 12px; border: 1px solid var(--lijn-sterk); border-radius: 10px;
+  background: var(--zacht); color: var(--inkt); font: inherit; font-size: 16px;   /* 16px: iOS does not zoom in */
+}
+textarea.doe-veld { min-height: 76px; resize: vertical; line-height: 1.4; }
+.doe-veld:focus { outline: 2px solid var(--accent); outline-offset: 0; background: var(--paneel); }
+.doe-veld::placeholder { color: var(--stil); }
+
+.doe-label { display: flex; flex-direction: column; gap: 4px; min-width: 0; font-size: 14px; font-weight: 600; color: var(--stil); }
+.doe-label > span strong, .doe-label output { color: var(--inkt); font-variant-numeric: tabular-nums; }
+
+.doe-schuif { width: 100%; min-height: 36px; margin: 0; accent-color: var(--accent); cursor: pointer; }
+
+.doe-melding { min-height: 1.5em; margin: 0; color: var(--accent); font-weight: 600; }
+.doe-melding.fout { color: var(--rood); }
+.doe-stil { margin: 0; color: var(--stil); font-size: 14px; }
+
+.doe-sr { position: absolute; width: 1px; height: 1px; overflow: hidden; clip-path: inset(50%); white-space: nowrap; }
+
+/* a lamp that flashes the signal: it is the content, so it flashes with reduced motion too, only without fading */
+.doe-lamp {
+  width: 84px; height: 84px; flex: none; border-radius: 50%; border: 3px solid var(--lijn-sterk);
+  background: radial-gradient(circle at 35% 35%, color-mix(in srgb, var(--paneel) 40%, var(--zacht)), var(--zacht));
+}
+.doe-lamp.aan {
+  border-color: #e0b400;
+  background: radial-gradient(circle at 35% 35%, #fffbe0, #ffd84a 55%, #f0a800);
+  box-shadow: 0 0 22px 6px rgb(255 205 60 / 0.55);
+}
+@media (prefers-reduced-motion: no-preference) {
+  .doe-lamp { transition: background 0.03s, box-shadow 0.03s; }
+}
+
+.doe-plek .knop:disabled { opacity: 0.45; cursor: default; }

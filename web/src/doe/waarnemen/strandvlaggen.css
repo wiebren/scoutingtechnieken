@@ -1,0 +1,7 @@
+/* Welke vlag is dit? (strandvlaggen.js) */
+.sv-vlag { display: grid; place-items: center; padding: 10px; border: 1px solid var(--lijn); border-radius: 10px; background: var(--wn-lucht); }
+.sv-vlag svg { width: 100%; max-width: 200px; height: auto; }
+.sv-keuzes { display: grid; grid-template-columns: 1fr 1fr; gap: 8px; }
+.sv-keuze { font-size: 14px; line-height: 1.25; }
+.doe-plek .sv-keuze.juist { opacity: 1; background: var(--accent); border-color: var(--accent); color: var(--op-accent); }
+.doe-plek .sv-keuze.mis { opacity: 1; background: color-mix(in srgb, var(--rood) 16%, var(--paneel)); border-color: var(--rood); color: var(--inkt); }

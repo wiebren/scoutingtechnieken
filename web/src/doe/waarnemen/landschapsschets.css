@@ -1,0 +1,38 @@
+/* Eén landschap, drie schetsen (landschapsschets.js) */
+.ls-svg { max-width: 560px; border: 1px solid var(--lijn); border-radius: 10px; }
+.ls-papier { fill: var(--paneel); }
+.ls-horizon { stroke: var(--inkt); stroke-width: 1.4; }
+.ls-punt circle { fill: var(--paneel); stroke: var(--rood); stroke-width: 1.5; }
+.ls-punt text { fill: var(--rood); font-size: 10px; font-weight: 700; }
+.ls-tabel { font-size: 14px; }
+.ls-tabel td, .ls-tabel th { padding: 4px 10px 4px 0; }
+
+/* lines, as drawn with a pencil */
+.ls-svg path, .ls-svg ellipse, .ls-svg circle:not(.ls-punt circle) { stroke: var(--inkt); stroke-width: 1.2; stroke-linejoin: round; stroke-linecap: round; fill: none; }
+.ls-wiek { stroke-width: 2.4 !important; }
+.ls-draad { stroke-width: 0.8 !important; }
+
+/* horizonschets: only the skyline, the band below it dark */
+.horizon .ls-vast, .horizon .ls-even { display: none; }
+.horizon .ls-lucht path { fill: color-mix(in srgb, var(--inkt) 80%, var(--paneel)); stroke: var(--inkt); }
+.horizon .ls-wiek { stroke: color-mix(in srgb, var(--inkt) 80%, var(--paneel)); }
+
+/* recognografisch: what stays, in line */
+.recognografisch .ls-even { display: none; }
+.recognografisch .ls-weg { fill: none; stroke: none; }
+.recognografisch .ls-land { stroke: none; }
+
+/* panorama: everything, in colour */
+.panorama .ls-papier { fill: var(--wn-lucht); }
+.panorama .ls-land { fill: var(--wn-gras); stroke: none; }
+.panorama .ls-bomen { fill: var(--wn-kruin); }
+.panorama .ls-gebouw { fill: color-mix(in srgb, #b9775a 70%, var(--paneel)); }
+.panorama .ls-heg { stroke: var(--wn-kruin); stroke-width: 5; }
+.panorama .ls-sloot { stroke: var(--wn-water); stroke-width: 3; }
+.panorama .ls-weg { fill: color-mix(in srgb, var(--stil) 45%, var(--paneel)); stroke: none; }
+.panorama .ls-wolk { fill: color-mix(in srgb, #ffffff 80%, var(--wn-lucht)); stroke: var(--lijn-sterk); }
+.panorama .ls-koe { fill: #f2efe8; }
+.panorama .ls-vlek { fill: #2a2a2a; }
+.panorama .ls-fietser { fill: var(--rood); }
+.panorama .ls-bord { fill: var(--blauw); }
+.ls-koe-poot { stroke-width: 1.6 !important; }

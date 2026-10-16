@@ -1,0 +1,86 @@
+/* The pieces of vuur, koken and gereedschap (src/doe/vuur/). Wood, flame and metal colours as in the drawings
+   (src/plaatjes/vuur.css); everything else from the theme. */
+.doe-vk {
+  --vk-hout: #9a6233; --vk-hout-rand: #5e3b1a; --vk-kop: #dcae74; --vk-vlam: #f08c1a; --vk-vlam-binnen: #ffd23f;
+  --vk-kool: #d9480f; --vk-tondel: #e9cf73; --vk-zand: #e6d3a3; --vk-metaal: #9aa6ae; --vk-metaal-rand: #56636b;
+  --vk-water: #8cc4e8; --vk-grond: color-mix(in srgb, var(--bruin) 22%, var(--paneel));
+  display: grid; gap: 12px;
+}
+@media (prefers-color-scheme: dark) {
+  :root:not([data-theme="light"]) .doe-vk { --vk-zand: #8c7a50; --vk-kop: #c8975c; --vk-water: #3f7fae; --vk-grond: color-mix(in srgb, var(--bruin) 26%, var(--paneel)); }
+}
+:root[data-theme="dark"] .doe-vk { --vk-zand: #8c7a50; --vk-kop: #c8975c; --vk-water: #3f7fae; --vk-grond: color-mix(in srgb, var(--bruin) 26%, var(--paneel)); }
+
+@container (min-width: 560px) {
+  .doe-vk.naast { grid-template-columns: minmax(0, 1.1fr) minmax(0, 1fr); align-items: start; }
+}
+.vk-svg { display: block; width: 100%; max-width: 420px; height: auto; margin: 0 auto; touch-action: manipulation; }
+.vk-tekst { display: flex; flex-direction: column; gap: 10px; min-width: 0; }
+.vk-tekst p { margin: 0; }
+.vk-vraag { font-weight: 600; }
+.vk-uitleg { color: var(--stil); font-size: 14px; }
+.vk-rij { display: flex; flex-wrap: wrap; gap: 6px; align-items: center; }
+.vk-rij > .vk-kop { width: 100%; margin: 0; font-size: 13px; font-weight: 600; color: var(--stil); }
+.vk-stand { font-variant-numeric: tabular-nums; }
+.vk-oordeel { margin: 0; padding: 10px 12px; border-radius: 10px; border: 1px solid var(--lijn); background: var(--zacht); }
+.vk-oordeel.goed { border-color: var(--accent); background: color-mix(in srgb, var(--accent) 12%, var(--paneel)); }
+.vk-oordeel.fout { border-color: var(--rood); background: color-mix(in srgb, var(--rood) 10%, var(--paneel)); }
+.vk-oordeel.half { border-color: #d39b00; background: color-mix(in srgb, #f4c400 14%, var(--paneel)); }
+.vk-oordeel strong { display: block; margin-bottom: 2px; }
+.vk-oordeel ul { margin: 4px 0 0; padding-left: 20px; }
+
+/* svg parts */
+.vk-svg .hout { fill: none; stroke: var(--vk-hout); stroke-linecap: round; }
+.vk-svg .hout-rand { fill: none; stroke: var(--vk-hout-rand); stroke-linecap: round; }
+.vk-svg .hout-vol { fill: var(--vk-hout); stroke: var(--vk-hout-rand); stroke-width: 1.2; }
+.vk-svg .kop { fill: var(--vk-kop); stroke: var(--vk-hout-rand); stroke-width: 1.2; }
+.vk-svg .tondel { fill: none; stroke: var(--vk-tondel); stroke-linecap: round; }
+.vk-svg .tondel-vol { fill: var(--vk-tondel); stroke: #a7852a; stroke-width: 0.8; }
+.vk-svg .vlam { fill: var(--vk-vlam); }
+.vk-svg .vlam-binnen { fill: var(--vk-vlam-binnen); }
+.vk-svg .kool { fill: var(--vk-kool); }
+.vk-svg .grond { fill: var(--vk-grond); }
+.vk-svg .grondlijn { stroke: var(--stil); stroke-width: 1; }
+.vk-svg .zand { fill: var(--vk-zand); }
+.vk-svg .water { fill: var(--vk-water); }
+.vk-svg .metaal { fill: var(--vk-metaal); stroke: var(--vk-metaal-rand); stroke-width: 1.2; }
+.vk-svg .rook { fill: none; stroke: var(--stil); stroke-width: 3; stroke-linecap: round; opacity: 0.5; }
+.vk-svg .pijl { fill: none; stroke: var(--blauw); stroke-width: 2.2; stroke-linecap: round; }
+.vk-svg .pijl-kop { fill: var(--blauw); }
+.vk-svg .tekst { fill: var(--inkt); font-size: 11px; }
+.vk-svg .tekst.stil { fill: var(--stil); }
+.vk-svg .lijn { fill: none; stroke: var(--inkt); stroke-width: 1.5; }
+.vk-svg .lijn.stil { stroke: var(--stil); }
+.vk-svg .lijn.dun { stroke-width: 1; }
+.vk-svg .rood-lijn { fill: none; stroke: var(--rood); stroke-width: 2.5; }
+.vk-svg .accent-lijn { fill: none; stroke: var(--accent); stroke-width: 2.5; }
+.vk-svg .vlak { fill: var(--paneel); }
+.vk-svg .vlak2 { fill: var(--zacht); }
+.vk-svg [role="button"] { cursor: pointer; }
+.vk-svg [role="button"]:focus { outline: none; }
+.vk-svg [role="button"]:focus-visible .focus-ring { stroke: var(--accent); stroke-width: 3; stroke-dasharray: 4 3; fill: none; }
+
+@media (prefers-reduced-motion: no-preference) {
+  .vk-svg .groei { transform-box: fill-box; transform-origin: 50% 100%; animation: vk-groei 0.7s ease-out both; }
+  .vk-svg .flakker { transform-box: fill-box; transform-origin: 50% 100%; animation: vk-flakker 0.8s ease-in-out infinite alternate; }
+  .vk-svg .opstijgen { animation: vk-op 1.6s ease-out both; }
+}
+@keyframes vk-groei { from { transform: scale(0.1); opacity: 0; } to { transform: scale(1); opacity: 1; } }
+@keyframes vk-flakker { from { transform: scale(1, 1); } to { transform: scale(0.93, 1.07); } }
+@keyframes vk-op { from { transform: translateY(8px); opacity: 0; } 40% { opacity: 0.7; } to { transform: translateY(-14px); opacity: 0; } }
+
+/* quiz and order */
+.vk-keuzes { display: grid; gap: 8px; grid-template-columns: 1fr; }
+@container (min-width: 420px) { .vk-keuzes { grid-template-columns: 1fr 1fr; } }
+.vk-keuzes .knop { justify-content: flex-start; text-align: left; white-space: normal; height: auto; min-height: 44px; }
+.vk-keuzes .knop.goed, .vk-volgorde .knop.goed { border-color: var(--accent); background: color-mix(in srgb, var(--accent) 16%, var(--paneel)); }
+.vk-keuzes .knop.fout, .vk-volgorde .knop.fout { border-color: var(--rood); background: color-mix(in srgb, var(--rood) 12%, var(--paneel)); }
+.vk-plaatje .plaatje { max-width: 300px; }
+.vk-volgorde { display: grid; gap: 6px; margin: 0; padding: 0; list-style: none; counter-reset: stap; }
+.vk-volgorde li { display: flex; gap: 8px; align-items: center; }
+.vk-volgorde li .nr { flex: none; width: 26px; text-align: right; font-variant-numeric: tabular-nums; color: var(--stil); font-weight: 600; }
+.vk-volgorde li .knop { flex: 1; justify-content: flex-start; text-align: left; white-space: normal; height: auto; min-height: 40px; }
+.vk-teller { display: flex; align-items: center; gap: 6px; }
+.vk-teller output { min-width: 2.2em; text-align: center; font-weight: 700; font-variant-numeric: tabular-nums; }
+.vk-teller .knop { min-width: 40px; justify-content: center; }
+.vk-volgorde > .knop { justify-content: flex-start; text-align: left; white-space: normal; height: auto; min-height: 44px; }

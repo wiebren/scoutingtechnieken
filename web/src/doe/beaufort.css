@@ -1,0 +1,37 @@
+/* Windkracht to slide (beaufort.js). Side by side when there is room. The speeds come from beaufort.js as
+   --bf-fladder (the flag), --bf-uitslag (how far it flaps), --bf-waai (the streaks) and --bf-strepen (how many show). */
+.doe-beaufort { display: grid; gap: 12px; }
+.doe-beaufort p { margin: 0; }
+@container (min-width: 600px) { .doe-beaufort { grid-template-columns: minmax(0, 1fr) minmax(0, 1fr); align-items: center; } }
+
+.bf-svg { display: block; width: 100%; height: auto; border-radius: 10px; }
+.bf-lucht { fill: color-mix(in srgb, var(--blauw) 10%, var(--paneel)); }
+.bf-grond { fill: color-mix(in srgb, var(--fam-natuur) 30%, var(--paneel)); }
+.bf-hout { stroke: var(--bruin); stroke-width: 4; stroke-linecap: round; }
+.bf-vuur { fill: var(--oranje); }
+.bf-rook { fill: none; stroke: var(--stil); stroke-width: 7; stroke-linecap: round; stroke-dasharray: 1 11; }
+.bf-mast { stroke: var(--inkt); stroke-width: 3; stroke-linecap: round; }
+.bf-doek { fill: var(--rood); }
+.bf-doek-streep { stroke: var(--paneel); stroke-width: 6; }
+.bf-stam { fill: var(--bruin); }
+.bf-blad { fill: var(--fam-natuur); }
+.bf-streep { stroke: var(--stil); stroke-width: 2; stroke-linecap: round; opacity: var(--bf-strepen, 0); }
+
+@media (prefers-reduced-motion: no-preference) {
+  .bf-vlag path { transform-origin: 0 0; animation: bf-fladder var(--bf-fladder, 1s) ease-in-out infinite alternate; }
+  .bf-wieg { animation: bf-wieg calc(var(--bf-fladder, 1s) * 2.2) ease-in-out infinite alternate; }
+  .bf-streep { animation: bf-waai var(--bf-waai, 2s) linear infinite; animation-delay: calc(var(--i) * -0.37s); }
+  .bf-vlag, .bf-kruin { transition: transform 0.25s ease-out; }
+}
+@keyframes bf-fladder { from { transform: skewY(calc(var(--bf-uitslag, 0deg) * -1)); } to { transform: skewY(var(--bf-uitslag, 0deg)); } }
+@keyframes bf-wieg { from { transform: rotate(0deg); } to { transform: rotate(calc(var(--bf-uitslag, 0deg) * 0.35)); } }
+@keyframes bf-waai { from { transform: translateX(-180px); } to { transform: translateX(260px); } }
+
+.bf-tekst { display: flex; flex-direction: column; gap: 10px; min-width: 0; }
+.bf-kop { display: flex; align-items: baseline; gap: 12px; }
+.bf-getal { font-size: 34px; font-weight: 750; font-variant-numeric: tabular-nums; color: var(--accent); white-space: nowrap; }
+.bf-naamkm { display: flex; flex-direction: column; line-height: 1.25; }
+.bf-naam { font-size: 18px; font-weight: 650; }
+.bf-kmu { color: var(--stil); font-variant-numeric: tabular-nums; }
+.bf-ziet { font-size: 17px; min-height: 3em; }
+.bf-schaal { display: flex; justify-content: space-between; padding: 0 6px; color: var(--stil); font-size: 11px; font-variant-numeric: tabular-nums; }

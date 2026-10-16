@@ -1,0 +1,28 @@
+/* The compass on the map (kaartkompas.js); the compass itself is styled by kompas.css. */
+.doe-kaartkompas { display: grid; gap: 12px; }
+@container (min-width: 700px) { .doe-kaartkompas { grid-template-columns: minmax(0, 3fr) minmax(0, 2fr); align-items: start; } }
+
+.kkk-beeld { min-width: 0; }
+.kkk-svg { display: block; width: 100%; height: auto; touch-action: none; user-select: none; -webkit-user-select: none; cursor: grab;
+  border: 1px solid var(--lijn); border-radius: 12px; background: #fff; }
+.kkk-svg.rond { max-width: 360px; margin: 0 auto; border: 0; background: none; }
+.kkk-svg.sleept { cursor: grabbing; }
+.kkk-svg:focus-visible { outline: 3px solid var(--accent); outline-offset: 3px; }
+.doe-kaartkompas .kk-knoppen .knop { min-width: 44px; min-height: 44px; font-size: 18px; }   /* big enough for a finger */
+.kkk-bron { margin: 6px 0 0; color: var(--stil); font-size: 12px; }
+
+.kkk-raster { stroke: #0066b2; stroke-width: 2.5; stroke-dasharray: 10 6; opacity: 0.75; }
+.kkk-lijn { stroke: #d1141b; stroke-width: 3.5; stroke-dasharray: 12 7; fill: none; }
+.kkk-punt :is(circle, path) { stroke: #fff; stroke-width: 3; stroke-linejoin: round; }
+.kkk-punt.jij :is(circle, path) { fill: #0066b2; }
+.kkk-punt.doel :is(circle, path) { fill: #d1141b; }
+.kkk-punt.buiten text { display: none; }
+.kkk-punt text { fill: #17211b; font-size: 22px; font-weight: 700; paint-order: stroke; stroke: #fff; stroke-width: 5px; }
+.kkk-kompas .kk-plaat-vlak { fill: rgb(255 255 255 / 0.55); }
+.kkk-naald { opacity: 0.9; }
+
+.kkk-grond { fill: var(--zacht); }
+.kkk-rand { fill: none; stroke: var(--lijn-sterk); stroke-width: 2; }
+.goed .kkk-rand { stroke: var(--accent); stroke-width: 4; }
+.kkk-wereld { fill: var(--stil); font-size: 18px; font-weight: 700; }
+.kkk-wereld.noord { fill: var(--rood); }

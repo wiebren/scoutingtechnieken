@@ -6,12 +6,17 @@
   "type": "module",
   "scripts": {
     "dev": "vite",
-    "build": "node scripts/check.mjs && vite build",
+    "build": "pnpm check && vite build",
     "preview": "vite preview",
-    "check": "node scripts/check.mjs",
-    "icons": "node scripts/icons.mjs"
+    "check": "node scripts/check.mjs && node src/doe/route/route.test.mjs && node src/doe/natuur/sleutel.test.mjs && node src/doe/seinen/codes.test.mjs",
+    "icons": "node scripts/icons.mjs",
+    "insignes": "node scripts/insignes.mjs",
+    "build:pages": "pnpm build && node scripts/pages.mjs"
   },
   "devDependencies": {
     "vite": "^8.3.0"
+  },
+  "dependencies": {
+    "three": "0.186.0"
   }
 }

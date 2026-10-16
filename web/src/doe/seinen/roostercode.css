@@ -1,0 +1,16 @@
+/* The roostercode with its sjabloon (roostercode.js). */
+.doe-roostercode { display: flex; flex-direction: column; gap: 10px; }
+.doe-roostercode p { margin: 0; }
+.rc-plek { display: flex; justify-content: center; }
+.rc-rooster {
+  display: grid; grid-template-columns: repeat(6, 1fr); gap: 0; width: min(100%, 300px); aspect-ratio: 1; padding: 6px;
+  border-radius: 10px; background: #fffdf4; border: 1px solid var(--lijn-sterk);
+}
+.rc-rooster span {
+  display: grid; place-items: center; font-family: ui-monospace, Menlo, monospace; font-size: 22px; font-weight: 700; color: #2a2418;
+}
+.rc-rooster.erop { background: #6b5a3a; }
+.rc-rooster.erop span { background: #8a7550; color: transparent; }
+.rc-rooster.erop span.gat { margin: 3px; border-radius: 6px; background: #fffdf4; color: #b3261e; box-shadow: inset 0 2px 4px rgb(0 0 0 / 0.35); }
+@media (prefers-reduced-motion: no-preference) { .rc-rooster span { transition: background 0.25s, color 0.25s; } }
+.rc-uitkomst { text-align: center; font-weight: 600; }

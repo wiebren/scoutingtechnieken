@@ -1,0 +1,19 @@
+/* Hoogte van een boom (boomhoogte.js) */
+.bh-svg { max-width: 520px; }
+.bh-twee { display: grid; grid-template-columns: minmax(0, 1.8fr) minmax(0, 1fr); gap: 8px; align-items: start; }
+.bh-oog { max-width: 220px; }
+.bh-pop, .bh-jij, .bh-vriend { vector-effect: non-scaling-stroke; }
+.bh-pop circle, .bh-jij circle, .bh-vriend circle { fill: var(--inkt); }
+.bh-pop path, .bh-jij path, .bh-vriend path { fill: none; stroke: var(--inkt); stroke-width: 2.4px; stroke-linecap: round; vector-effect: non-scaling-stroke; }
+.bh-jij circle { fill: var(--accent); }
+.bh-jij path { stroke: var(--accent); }
+.bh-vriend circle { fill: var(--blauw); }
+.bh-vriend path { stroke: var(--blauw); }
+.bh-pen-hout { fill: #f2c230; stroke: #8a6a10; stroke-width: 0.8; }
+.bh-pen-punt { fill: #3a3a3a; }
+.bh-pen-gum { fill: #e58a9a; }
+.bh-duim { fill: var(--wn-huid); stroke: #a8745a; stroke-width: 1; }
+.bh-stok { fill: #9b6b3d; }
+.bh-stokje { fill: var(--inkt); }
+.bh-zon { fill: #f6c445; }
+.bh-schaduw { stroke: color-mix(in srgb, var(--inkt) 45%, transparent); stroke-width: 7; stroke-linecap: butt; }

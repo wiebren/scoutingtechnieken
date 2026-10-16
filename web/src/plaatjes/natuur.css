@@ -1,0 +1,148 @@
+/* Classes for the drawings of natuur (./natuur.js), next to .plaatje in src/style.css. Leaves follow the theme
+   (--fam-natuur); fruit, bark, birds and mushrooms keep their own colours, which read on light and dark. */
+.plaatje .nt-nerf { stroke-width: 1.1; opacity: 0.75; }
+.plaatje .blad.nt-zilver { fill: color-mix(in srgb, var(--fam-natuur) 28%, #b8c4bc); }
+.plaatje .blad.nt-glanzend { fill: color-mix(in srgb, var(--fam-natuur) 75%, var(--paneel)); }
+.plaatje .nt-tak { fill: none; stroke: #8a6239; stroke-width: 3; stroke-linecap: round; }
+.plaatje .nt-tak.dun { stroke-width: 2; }
+.plaatje .nt-twijg { fill: none; stroke: #9a7a3c; stroke-width: 2; stroke-linecap: round; }
+.plaatje .nt-steeltje { fill: none; stroke: #7d6a3a; stroke-width: 1.4; stroke-linecap: round; }
+.plaatje .nt-steeltje.dun { stroke-width: 0.9; }
+.plaatje .nt-naald { fill: none; stroke: var(--fam-natuur); stroke-width: 1.5; stroke-linecap: round; }
+.plaatje .nt-naald.dun { stroke-width: 1.1; opacity: 0.7; }
+.plaatje .nt-naald.plat { stroke-width: 3; }
+.plaatje .nt-haar { fill: none; stroke: var(--stil); stroke-width: 0.9; stroke-linecap: round; }
+.plaatje .nt-knop { fill: #8a6239; }
+.plaatje .nt-zwarteknop { fill: #1d1d1d; stroke: #777; stroke-width: 0.6; }
+.plaatje .nt-schub { fill: #a8743e; stroke: #5f3d1c; stroke-width: 0.9; }
+.plaatje .nt-drietand { fill: none; stroke: #c9b27a; stroke-width: 1.3; stroke-linecap: round; stroke-linejoin: round; }
+.plaatje .nt-noot { fill: #b07a3c; stroke: #6d4519; stroke-width: 0.8; }
+.plaatje .nt-nap { fill: #7a5a2e; stroke: #54391a; stroke-width: 0.8; }
+.plaatje .nt-nootje { fill: #9b7a43; stroke: #5f4720; stroke-width: 0.6; }
+.plaatje .nt-bolster-hout { fill: #9c7444; stroke: #5f4320; stroke-width: 0.8; }
+.plaatje .nt-vleugel { fill: #d8bf7f; stroke: #8f7533; stroke-width: 0.9; }
+.plaatje .nt-zaadje { fill: #a07d3a; }
+.plaatje .nt-katje { fill: #c9a85a; stroke: #8b6d2c; stroke-width: 0.6; }
+.plaatje .nt-katje-groen { fill: #a6b46a; stroke: #6b7a33; stroke-width: 0.6; }
+.plaatje .nt-pluis { fill: #fbfbf6; stroke: #b9b9ad; stroke-width: 0.8; }
+.plaatje .nt-schutblad { fill: #c8d48e; stroke: #7f8d3e; stroke-width: 0.9; }
+.plaatje .nt-bolster { fill: #7fae45; stroke: #4d7424; stroke-width: 1; }
+.plaatje .nt-bolletje { fill: #9e7f4c; stroke: #5f4720; stroke-width: 0.8; }
+.plaatje .nt-stekel { stroke: #4d7424; stroke-width: 1.4; stroke-linecap: round; }
+.plaatje .nt-stekel.dun { stroke: #5f4720; stroke-width: 0.8; }
+.plaatje .nt-kastanje { fill: #7b3f1d; stroke: #4a230e; stroke-width: 0.8; }
+.plaatje .nt-kastanje-vlek { fill: #c9a77a; }
+.plaatje .nt-bes-oranje { fill: #ec6c13; stroke: #a5440a; stroke-width: 0.6; }
+.plaatje .nt-bes-rood { fill: #d3202a; stroke: #8e1016; stroke-width: 0.6; }
+.plaatje .nt-bes-zwart { fill: #2b2233; stroke: #8a7a9a; stroke-width: 0.6; }
+.plaatje .nt-glans { fill: rgb(255 255 255 / 0.55); }
+.plaatje .nt-arillus { fill: #e0303a; stroke: #9a1720; stroke-width: 0.8; }
+.plaatje .nt-zaad-donker { fill: #3b3524; }
+.plaatje .nt-berkenstam { fill: #f2f0ea; stroke: #9a978c; stroke-width: 1; }
+.plaatje .nt-ruit { fill: #2c2c2c; }
+.plaatje .nt-stam { fill: #8d7a5c; stroke: #5e4f37; stroke-width: 1; }
+.plaatje.nt-icoon { max-width: none; }
+
+/* plants */
+.plaatje .nt-stengel { fill: none; stroke: color-mix(in srgb, var(--fam-natuur) 80%, #333); stroke-width: 3.5; stroke-linecap: round; }
+.plaatje .nt-stengel-dik { fill: none; stroke: #7a9a4a; stroke-width: 7; stroke-linecap: round; }
+.plaatje .nt-steel-groen { fill: none; stroke: #6f9440; stroke-width: 2; stroke-linecap: round; }
+.plaatje .nt-steel-groen.dun { stroke-width: 1; }
+.plaatje .nt-bloemsteel { fill: none; stroke: #e9e2ef; stroke-width: 3; }
+.plaatje .nt-schede { fill: #b9a77a; }
+.plaatje .nt-paars { fill: #7a2e6e; }
+.plaatje .nt-bloemdraad { fill: none; stroke: #9aa86a; stroke-width: 1.6; stroke-dasharray: 2 1.5; }
+.plaatje .nt-brandhaar { stroke: var(--stil); stroke-width: 0.8; }
+.plaatje .nt-huid { fill: #f0c8a8; stroke: #b98a6a; stroke-width: 1; }
+.plaatje .nt-haar-groot { fill: #dfe9d0; stroke: #6f8a4a; stroke-width: 1; }
+.plaatje .nt-haar-kop { fill: #dfe9d0; stroke: #6f8a4a; stroke-width: 1; }
+.plaatje .nt-bloem-wit { fill: #fffdf4; stroke: #a8a28c; stroke-width: 0.5; }
+.plaatje .nt-paarsbloem { fill: #a2468e; stroke: #6b2a5e; stroke-width: 0.8; }
+.plaatje .nt-geel { fill: #f2c919; }
+.plaatje .nt-mens { stroke: var(--stil); stroke-linecap: round; }
+/* prints */
+.plaatje .nt-modder { fill: color-mix(in srgb, #b8955f 30%, var(--paneel)); }
+.plaatje .nt-prent { fill: color-mix(in srgb, #5a3f22 40%, var(--inkt)); }
+.plaatje .nt-prent .nt-harig { opacity: 0.55; }
+.plaatje .nt-kruis { stroke: var(--rood); stroke-width: 2; stroke-dasharray: 5 4; }
+.plaatje .nt-doosje { fill: #f2e6c8; stroke: #8a6a3a; stroke-width: 1.2; }
+.plaatje .nt-spil { fill: #b78a52; stroke: #6d4a22; stroke-width: 0.8; }
+.plaatje .nt-rafel { stroke: #8a5a2a; stroke-width: 1.6; stroke-linecap: round; }
+.plaatje .nt-rafel.dun { stroke-width: 0.7; }
+.plaatje .nt-rafel.dik { stroke: #6d4a22; stroke-width: 3; }
+.plaatje .nt-hazel { fill: #b8854a; stroke: #6d4a22; stroke-width: 1; }
+.plaatje .nt-gat { fill: #3a2a18; }
+/* birds */
+.plaatje .nt-vogellijn { stroke: rgb(0 0 0 / 0.45); stroke-width: 0.8; }
+.plaatje .nt-poot { fill: none; stroke-width: 2; stroke-linecap: round; }
+.plaatje .nt-lucht { fill: #e6efe8; }
+/* insects, ticks */
+.plaatje .nt-teekpoot { fill: none; stroke: #3a2a20; stroke-width: 1.4; stroke-linecap: round; }
+.plaatje .nt-teek-kop { fill: #2a1a14; }
+.plaatje .nt-teek-lijf { fill: #8a3a24; stroke: #3a1a10; stroke-width: 0.8; }
+.plaatje .nt-teek-schild { fill: #2a1a14; }
+.plaatje .nt-teek-vol { fill: #8f8a8e; stroke: #4a4448; stroke-width: 1; }
+.plaatje .nt-insectlijn { stroke: #1a1a1a; stroke-width: 0.8; }
+.plaatje .nt-insectvleugel { fill: rgb(220 235 245 / 0.6); stroke: #6a7a88; stroke-width: 0.8; }
+.plaatje .nt-spriet { fill: none; stroke: #1a1a1a; stroke-width: 1.3; stroke-linecap: round; }
+.plaatje .nt-schors { fill: none; stroke: #4e3f2a; stroke-width: 1.4; }
+.plaatje .nt-spinsel { fill: #e9e6dc; stroke: #a8a296; stroke-width: 1; }
+.plaatje .nt-rups { fill: #5a5448; }
+.plaatje .nt-rupshaar { stroke: #c9c2b0; stroke-width: 0.8; }
+/* mushrooms */
+.plaatje .nt-padlijn { stroke: #4a3a2a; stroke-width: 1.1; }
+.plaatje .nt-lamel { fill: none; stroke: #b8b0a0; stroke-width: 0.7; }
+.plaatje .nt-zwamvlok { fill: none; stroke: color-mix(in srgb, var(--stil) 45%, #d8d2c0); stroke-width: 1; }
+.plaatje .nt-grondlijn { fill: none; stroke: #8a6a3a; stroke-width: 2; }
+.plaatje .nt-cantharel { fill: #f2b51e; stroke: #a8740a; stroke-width: 1.1; }
+.plaatje .nt-cantharel-top { fill: #f7c53a; }
+.plaatje .nt-lijst { fill: none; stroke: #c98a10; stroke-width: 1; }
+/* scheerling, herbarium, droppings, owl pellet, plaster cast */
+.plaatje .nt-stengel-blauw { fill: none; stroke: #8fb0a8; stroke-width: 5; stroke-linecap: round; }
+.plaatje .nt-groef { fill: none; stroke: color-mix(in srgb, var(--fam-natuur) 55%, #1d3a12); stroke-width: 0.8; }
+.plaatje .nt-krant { fill: #ecebe4; stroke: #a9a79c; stroke-width: 0.8; }
+.plaatje .nt-boek { fill: #4f7396; stroke: #2f4a63; stroke-width: 1; }
+.plaatje .nt-boek.b { fill: #9a4f3c; stroke: #5f2c20; }
+.plaatje .nt-vel { fill: var(--paneel); stroke: var(--lijn-sterk); stroke-width: 1.2; }
+.plaatje .nt-plakband { fill: rgb(240 235 200 / 0.75); stroke: #b9b18a; stroke-width: 0.6; }
+.plaatje .nt-etiket { fill: var(--zacht); stroke: var(--lijn-sterk); stroke-width: 0.8; }
+.plaatje .nt-zand { fill: #e8dfcc; }
+.plaatje .nt-keutel { fill: #7a5a3a; stroke: #4a341e; stroke-width: 0.8; }
+.plaatje .nt-keutel.donker { fill: #3e2c1c; }
+.plaatje .nt-keutel.grijs { fill: #6a625a; stroke: #3a342e; }
+.plaatje .nt-keutel.zwart { fill: #1c1a18; stroke: #000; }
+.plaatje .nt-keutel-punt { fill: none; stroke: #6a625a; stroke-width: 3; stroke-linecap: round; }
+.plaatje .nt-keutel-lang { fill: none; stroke: #4a3a2c; stroke-width: 6; stroke-linecap: round; }
+.plaatje .nt-botje { stroke: #f2eee4; stroke-width: 1.6; stroke-linecap: round; }
+.plaatje .nt-glimmer { stroke: #6fa0a8; stroke-width: 1.4; stroke-linecap: round; }
+.plaatje .nt-braakbal { fill: #8d8a86; stroke: #5a5754; stroke-width: 1; }
+.plaatje .nt-vilt { fill: none; stroke: #6a6764; stroke-width: 1; }
+.plaatje .nt-bot { fill: none; stroke: #f4f0e4; stroke-width: 3; stroke-linecap: round; }
+.plaatje .nt-bot.dik { stroke-width: 3.6; }
+.plaatje .nt-bot-vlak { fill: #f4f0e4; stroke: #a8a090; stroke-width: 1; }
+.plaatje .nt-oogkas { fill: #c9c0ac; }
+.plaatje .nt-tand { fill: none; stroke: #d9a640; stroke-width: 2.4; stroke-linecap: round; }
+.plaatje .nt-ring { fill: none; stroke: #8a6a3a; stroke-width: 3; }
+.plaatje .nt-grond { fill: color-mix(in srgb, #b8955f 45%, var(--paneel)); }
+.plaatje .nt-gips { fill: #f4f2ec; stroke: #9a958a; stroke-width: 1; }
+.plaatje .nt-beker { fill: #d8dde4; stroke: #7a828c; stroke-width: 1; }
+.plaatje .nt-gipsstraal { fill: none; stroke: #ddd8ca; stroke-width: 4; stroke-linecap: round; }
+.plaatje .nt-prent.nt-gipsprent { fill: #d6d1c4; stroke: #a49e90; stroke-width: 1.2; }
+/* materials, people and nature */
+.plaatje .nt-vezel { fill: none; stroke: #9aa86a; stroke-width: 5; stroke-linecap: round; }
+.plaatje .nt-vezel.b { stroke: #c9b27a; }
+.plaatje .nt-hout { fill: #9c7444; stroke: #5f4320; stroke-width: 1; }
+.plaatje .nt-teen { fill: none; stroke: #b28a4a; stroke-width: 4; stroke-linecap: round; }
+.plaatje .nt-teen.dik { stroke: #8a6a34; stroke-width: 4.5; }
+.plaatje .nt-leem { fill: #b8916a; stroke: #7a5a3a; stroke-width: 1; }
+.plaatje .nt-mand-binnen { fill: color-mix(in srgb, #b28a4a 25%, var(--paneel)); }
+.plaatje .nt-lap { stroke: rgb(0 0 0 / 0.3); stroke-width: 1; }
+.plaatje .nt-nacht { fill: #101a2c; }
+.plaatje .nt-ster { fill: #fff8d6; }
+.plaatje .nt-paal { stroke: #5a6270; stroke-width: 4; }
+.plaatje .nt-lamp { fill: #f4f4ff; }
+.plaatje .nt-kap { fill: #5a6270; }
+.plaatje .nt-licht { fill: rgb(220 230 255 / 0.22); }
+.plaatje .nt-licht.warm { fill: rgb(255 200 110 / 0.3); }
+.plaatje .nt-mot { fill: #e8e0c0; }
+.plaatje .tekst.nt-nachttekst { fill: #e8eef8; }

@@ -1,0 +1,7 @@
+/* Een spoor lezen (spoorlezen.js) */
+.sl-svg { max-width: 440px; }
+.sl-svg .zand { fill: #ecdcb6; }   /* sand stays sand-coloured in the dark theme too */
+.sl-voet { fill: #cdb37f; stroke: #6b4f26; stroke-width: 0.8; }
+.sl-diep { fill: #5a4320; }
+.sl-teen { fill: #6b4f26; }
+.sl-korrel { fill: #7a5a2a; }

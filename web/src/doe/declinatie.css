@@ -1,0 +1,48 @@
+/* The three norths (declinatie.js). Side by side when there is room, else the picture above the words. */
+.doe-declinatie { display: grid; gap: 12px; }
+@container (min-width: 560px) { .doe-declinatie { grid-template-columns: minmax(0, 300px) minmax(0, 1fr); align-items: start; } }
+
+.dn-beeld { max-width: 340px; width: 100%; margin: 0 auto; }
+.dn-svg { display: block; width: 100%; height: auto; font-family: inherit; }
+
+.dn-pijl { fill: none; stroke-width: 3; stroke-linecap: round; }
+.dn-pijl.ware { stroke: var(--inkt); }
+.dn-pijl.mag { stroke: var(--rood); }
+.dn-pijl.kaart { stroke: var(--blauw); stroke-dasharray: 9 5; stroke-linecap: butt; }
+.dn-teken.ware { fill: var(--accent); }
+.dn-teken.mag { fill: var(--rood); }
+.dn-teken.kaart { fill: var(--blauw); }
+.dn-voet { fill: var(--inkt); }
+.dn-naam { font-size: 12.5px; font-weight: 700; paint-order: stroke; stroke: var(--paneel); stroke-width: 4px; stroke-linejoin: round; }
+.dn-naam.ware { fill: var(--inkt); }
+.dn-naam.mag { fill: var(--rood); }
+.dn-naam.kaart { fill: var(--blauw); }
+.dn-klein { fill: var(--stil); font-size: 10px; }
+
+.dn-boog { fill: none; stroke-width: 1.6; }
+.dn-boog.dec { stroke: var(--rood); }
+.dn-boog.kk { stroke: var(--accent); stroke-width: 2.2; }
+.dn-boog.mc { stroke: var(--blauw); stroke-dasharray: 3 3; }
+.dn-boogtekst { font-size: 11px; font-weight: 700; font-variant-numeric: tabular-nums; paint-order: stroke; stroke: var(--paneel); stroke-width: 4px; stroke-linejoin: round; }
+.dn-boogtekst.dec { fill: var(--rood); }
+.dn-boogtekst.kk { fill: var(--accent); }
+.dn-boogtekst.mc { fill: var(--blauw); }
+
+.dn-tekst { display: flex; flex-direction: column; gap: 10px; min-width: 0; }
+.dn-tekst p { margin: 0; }
+.dn-jaar { display: flex; align-items: center; gap: 10px; }
+.dn-label { color: var(--stil); font-size: 14px; }
+.dn-schuif { flex: 1; min-width: 0; min-height: 36px; margin: 0; accent-color: var(--accent); }
+.dn-jaartal { min-width: 3.2em; font-weight: 700; font-variant-numeric: tabular-nums; text-align: right; }
+
+.dn-stand { display: flex; flex-direction: column; gap: 2px; margin: 0; padding: 0; list-style: none; font-variant-numeric: tabular-nums; }
+.dn-stand li { position: relative; padding-left: 18px; }
+.dn-stand li::before { content: ''; position: absolute; left: 0; top: 0.55em; width: 11px; height: 4px; border-radius: 2px; background: var(--kleur); }
+.dn-stand .dec { --kleur: var(--rood); }
+.dn-stand .kk { --kleur: var(--accent); }
+.dn-stand .mc { --kleur: var(--blauw); }
+
+.dn-regel { padding: 8px 12px; border-radius: 10px; background: var(--zacht); }
+.dn-voorbeeld { color: var(--stil); }
+.dn-nul { color: var(--accent); font-weight: 600; }
+.dn-noot { color: var(--stil); font-size: 13px; }

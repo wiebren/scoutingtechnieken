@@ -1,0 +1,6 @@
+/* Zoek de teken (tekencheck.js) */
+.tc-svg { max-width: 380px; cursor: pointer; touch-action: manipulation; }
+.tc-lijf circle, .tc-lijf path { fill: var(--wn-huid); stroke: color-mix(in srgb, #8a5a3a 70%, var(--paneel)); stroke-width: 1.2; stroke-linejoin: round; }
+.tc-gezien { fill: color-mix(in srgb, var(--accent) 22%, transparent); stroke: var(--accent); stroke-width: 1.5; }
+.tc-teek ellipse { fill: #3a2414; }
+.tc-teek path { stroke: #3a2414; stroke-width: 0.8; }

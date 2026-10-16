@@ -1,0 +1,15 @@
+/* A conversation over the portofoon (portofoon.js). */
+.doe-portofoon { display: flex; flex-direction: column; gap: 12px; }
+.doe-portofoon p { margin: 0; }
+.pf-log { display: flex; flex-direction: column; gap: 8px; max-height: 340px; overflow-y: auto; margin: 0; padding: 4px; list-style: none; }
+.pf-log li { max-width: 88%; padding: 8px 12px; border-radius: 12px; background: var(--zacht); }
+.pf-log li.post { align-self: flex-end; background: color-mix(in srgb, var(--fam-sein) 15%, var(--paneel)); border-bottom-right-radius: 4px; }
+.pf-log li.leiding { align-self: flex-start; border-bottom-left-radius: 4px; }
+.pf-log li.nu { outline: 2px solid var(--accent); }
+.pf-wie { display: block; font-size: 12px; font-weight: 700; color: var(--stil); }
+.pf-zin { font-size: 15px; }
+.pf-zin mark { padding: 0 4px; border-radius: 4px; background: var(--lijn); color: var(--inkt); font-weight: 700; }
+.pf-zin mark.ingevuld { background: var(--accent); color: var(--op-accent); }
+.pf-woorden { display: flex; flex-wrap: wrap; gap: 6px; }
+.pf-woord { font-weight: 700; letter-spacing: 0.02em; }
+.pf-woord.fout { border-color: var(--rood); color: var(--rood); }

@@ -1,0 +1,72 @@
+/* Classes for the drawings of sjorren (./sjorren.js), next to .plaatje in src/style.css. Rope and wood keep their
+   own colours in both themes, the same as the knots (./touw.css): a manilla rope with a dark edge, a body and a light
+   core, so a turn reads over a pole on a light and on a dark panel; the ground follows the panel. In the dark theme
+   the bodies are a little less bright. */
+:root {
+  --sj-touw: #e2b46a; --sj-touw-rand: #5f4119; --sj-touw-kern: #f7dfaa;
+  --sj-hout: #a2723f; --sj-hout-rand: #4a2f14; --sj-hout-licht: #cfa673; --sj-kop: #e0bf8c;
+  --sj-metaal: #b3bdc4; --sj-metaal-rand: #434f57; --sj-metaal-licht: #eef2f4; --sj-metaal-lijn: #56636b;
+  --sj-jute: #c9b07a; --sj-band: #7b5bc4; --sj-band-rand: #3b2a6b;
+  --sj-schors: #6f5a44; --sj-kruin: color-mix(in srgb, var(--fam-natuur) 40%, var(--paneel));
+  --sj-grond: color-mix(in srgb, var(--bruin) 22%, var(--paneel));
+  --sj-aarde: color-mix(in srgb, var(--bruin) 38%, var(--paneel));
+  --sj-zand: #e6d3a3;
+}
+@media (prefers-color-scheme: dark) {
+  :root:not([data-theme="light"]) {
+    --sj-touw: #cf9f55; --sj-touw-kern: #e9c98b; --sj-hout: #946638; --sj-hout-licht: #b88d5b; --sj-kop: #c9a571;
+    --sj-metaal: #9eaab2; --sj-metaal-licht: #d9e1e5; --sj-metaal-lijn: #9eaab2; --sj-jute: #a8915f; --sj-band: #8f74d6; --sj-schors: #7d6650;
+    --sj-grond: color-mix(in srgb, var(--bruin) 26%, var(--paneel)); --sj-aarde: color-mix(in srgb, var(--bruin) 40%, var(--paneel)); --sj-zand: #8c7a50;
+  }
+}
+:root[data-theme="dark"] {
+  --sj-touw: #cf9f55; --sj-touw-kern: #e9c98b; --sj-hout: #946638; --sj-hout-licht: #b88d5b; --sj-kop: #c9a571;
+  --sj-metaal: #9eaab2; --sj-metaal-licht: #d9e1e5; --sj-metaal-lijn: #9eaab2; --sj-jute: #a8915f; --sj-band: #8f74d6; --sj-schors: #7d6650;
+  --sj-grond: color-mix(in srgb, var(--bruin) 26%, var(--paneel)); --sj-aarde: color-mix(in srgb, var(--bruin) 40%, var(--paneel)); --sj-zand: #8c7a50;
+}
+
+/* rope: edge, body, core (stroke widths are set per piece) */
+.plaatje .sj-touw-rand, .plaatje .sj-touw-lijf, .plaatje .sj-touw-kern { fill: none; stroke-linejoin: round; }
+.plaatje .sj-touw-rand { stroke: var(--sj-touw-rand); }
+.plaatje .sj-touw-lijf { stroke: var(--sj-touw); }
+.plaatje .sj-touw-kern { stroke: var(--sj-touw-kern); }
+.plaatje .sj-touw-vul { fill: var(--sj-touw); stroke: var(--sj-touw-rand); stroke-width: 1.4; }
+/* wood */
+.plaatje .sj-hout { fill: var(--sj-hout); stroke: var(--sj-hout-rand); stroke-width: 1.4; stroke-linejoin: round; }
+.plaatje .sj-hout-licht { fill: var(--sj-hout-licht); stroke: var(--sj-hout-rand); stroke-width: 1.4; stroke-linejoin: round; }
+.plaatje .sj-nerf { fill: none; stroke: var(--sj-hout-rand); stroke-width: 0.8; opacity: 0.45; stroke-dasharray: 18 11; }
+.plaatje .sj-kop { fill: var(--sj-kop); stroke: var(--sj-hout-rand); stroke-width: 1.4; }
+.plaatje .sj-jaar { fill: none; stroke: var(--sj-hout-rand); stroke-width: 0.8; opacity: 0.5; }
+.plaatje .sj-rot { fill: #3d2a17; opacity: 0.75; }
+.plaatje .sj-scheur { fill: #2a1a0b; }
+/* metal, bands, nature, ground */
+.plaatje .sj-metaal { fill: var(--sj-metaal); stroke: var(--sj-metaal-rand); stroke-width: 1.4; stroke-linejoin: round; }
+.plaatje .sj-metaal-lijn { fill: none; stroke: var(--sj-metaal-lijn); stroke-width: 1.4; stroke-linecap: round; }
+.plaatje .sj-metaal-licht { fill: var(--sj-metaal-licht); stroke: var(--sj-metaal-rand); stroke-width: 1.2; }
+.plaatje .sj-band { fill: none; stroke: var(--sj-band); stroke-linejoin: round; }
+.plaatje .sj-band-rand { fill: none; stroke: var(--sj-band-rand); stroke-linejoin: round; }
+.plaatje .sj-jute { fill: var(--sj-jute); stroke: #6d5a30; stroke-width: 1.2; }
+.plaatje .sj-jute-lijn { fill: none; stroke: #6d5a30; stroke-width: 0.8; opacity: 0.7; }
+.plaatje .sj-stam { fill: var(--sj-schors); stroke: #3a2c1e; stroke-width: 1.4; stroke-linejoin: round; }
+.plaatje .sj-schors { fill: none; stroke: #3a2c1e; stroke-width: 1; opacity: 0.55; stroke-linecap: round; }
+.plaatje .sj-kruin { fill: var(--sj-kruin); stroke: var(--fam-natuur); stroke-width: 1.4; }
+.plaatje .sj-grond { fill: var(--sj-grond); }
+.plaatje .sj-grond-over { fill: var(--sj-grond); opacity: 0.78; }
+.plaatje .sj-aarde { fill: var(--sj-aarde); }
+.plaatje .sj-zand { fill: var(--sj-zand); }
+.plaatje .sj-maaiveld { fill: none; stroke: var(--stil); stroke-width: 1.2; }
+.plaatje .sj-onder { fill: none; stroke: var(--sj-hout-rand); stroke-width: 1.2; stroke-dasharray: 4 3; }
+.plaatje .sj-regen { fill: none; stroke: var(--blauw); stroke-width: 1.4; stroke-linecap: round; opacity: 0.7; }
+.plaatje .sj-verf-a { fill: #d1141b; }
+.plaatje .sj-verf-b { fill: #0066b2; }
+/* arrows, pointers, measures */
+.plaatje .sj-pijl { fill: none; stroke: var(--blauw); stroke-width: 2; stroke-linecap: round; stroke-linejoin: round; }
+.plaatje .sj-pijlpunt { fill: var(--blauw); }
+.plaatje .sj-pijl.kracht { stroke: var(--rood); }
+.plaatje .sj-pijlpunt.kracht { fill: var(--rood); }
+.plaatje .sj-wijs { fill: none; stroke: var(--stil); stroke-width: 0.9; }
+.plaatje .sj-wijs-punt { fill: var(--stil); }
+.plaatje .sj-maat { fill: none; stroke: var(--stil); stroke-width: 1; }
+.plaatje .sj-hulp { fill: none; stroke: var(--accent); stroke-width: 1.6; stroke-dasharray: 5 4; }
+.plaatje .sj-last { fill: var(--zacht); stroke: var(--inkt); stroke-width: 1.4; }
+.plaatje .sj-nummer { fill: var(--paneel); stroke: var(--accent); stroke-width: 1.4; }

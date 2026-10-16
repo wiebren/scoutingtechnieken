@@ -1,0 +1,961 @@
+/* Made by site/maak.mjs from src/style.css and src/plaatjes/*.css: do not edit, run the script again.
+   The colours of the app (light, dark, and data-theme to force one), and the classes of its drawings. */
+:root {
+  color-scheme: light dark;
+  --bg: #f4f6f3;
+  --paneel: #ffffff;
+  --zacht: #edf1ed;
+  --inkt: #17211b;
+  --stil: #56655b;
+  --lijn: #dbe3dc;
+  --lijn-sterk: #b9c6bc;
+
+  --groen: #00803f;          /* scouting green, dark enough for text and for white on it */
+  --groen-merk: #00a551;     /* the green of scouting.nl itself: surfaces only */
+  --blauw: #0066b2;
+  --teal: #009c94;           /* the insignes of 2025 */
+  --rood: #d1141b;
+  --geel: #f4e700;           /* niveau 1 */
+  --oranje: #ec7414;         /* niveau 2 */
+  --paars: #913f8c;          /* niveau 3 */
+  --bruin: #a0522d;          /* hoogtelijnen, as on the topographic map */
+
+  --accent: var(--groen);
+  --op-accent: #ffffff;
+
+  /* families of categories (src/data/categorieen.js, kleur) */
+  --fam-touw: #007872;       /* the family colours are text too (breadcrumbs, headings): 4.5:1 on --bg */
+  --fam-weg: #0066b2;
+  --fam-sein: #7a4fb0;
+  --fam-kamp: #b04c12;
+  --fam-natuur: #2e7d32;
+  --fam-veilig: #c8141b;
+
+  --radius: 12px;
+  --safe-t: env(safe-area-inset-top, 0px);
+  --safe-b: env(safe-area-inset-bottom, 0px);
+  --safe-l: env(safe-area-inset-left, 0px);
+  --safe-r: env(safe-area-inset-right, 0px);
+}
+
+/* Dark follows the device; data-theme="light" or "dark" on <html> forces one (for checking drawings and pieces). */
+@media (prefers-color-scheme: dark) {
+  :root:not([data-theme="light"]) {
+    --bg: #0f1511;
+    --paneel: #18201b;
+    --zacht: #1f2923;
+    --inkt: #e3ebe5;
+    --stil: #9aab9f;
+    --lijn: #2b3730;
+    --lijn-sterk: #435248;
+    --groen: #3fcb7d;
+    --blauw: #6eb0f0;
+    --rood: #ff6b6b;
+    --bruin: #d39a6a;
+    --accent: var(--groen);
+    --op-accent: #06180d;
+    --fam-touw: #3cc9bf;
+    --fam-weg: #6eb0f0;
+    --fam-sein: #b597e6;
+    --fam-kamp: #f08d50;
+    --fam-natuur: #74c77a;
+    --fam-veilig: #ff7a7a;
+  }
+}
+:root[data-theme="dark"] {
+  color-scheme: dark;
+  --bg: #0f1511;
+  --paneel: #18201b;
+  --zacht: #1f2923;
+  --inkt: #e3ebe5;
+  --stil: #9aab9f;
+  --lijn: #2b3730;
+  --lijn-sterk: #435248;
+  --groen: #3fcb7d;
+  --blauw: #6eb0f0;
+  --rood: #ff6b6b;
+  --bruin: #d39a6a;
+  --accent: var(--groen);
+  --op-accent: #06180d;
+  --fam-touw: #3cc9bf;
+  --fam-weg: #6eb0f0;
+  --fam-sein: #b597e6;
+  --fam-kamp: #f08d50;
+  --fam-natuur: #74c77a;
+  --fam-veilig: #ff7a7a;
+}
+:root[data-theme="light"] { color-scheme: light; }
+
+[data-familie="touw"] { --fam: var(--fam-touw); }
+[data-familie="weg"] { --fam: var(--fam-weg); }
+[data-familie="sein"] { --fam: var(--fam-sein); }
+[data-familie="kamp"] { --fam: var(--fam-kamp); }
+[data-familie="natuur"] { --fam: var(--fam-natuur); }
+[data-familie="veilig"] { --fam: var(--fam-veilig); }
+[data-niveau="1"] { --niv: var(--geel); --op-niv: #262200; }
+[data-niveau="2"] { --niv: var(--oranje); --op-niv: #2a1200; }
+[data-niveau="3"] { --niv: var(--paars); --op-niv: #ffffff; }
+[data-niveau="extra"] { --niv: var(--stil); --op-niv: var(--paneel); }
+
+/* the drawings (src/style.css) */
+.plaatje { display: block; width: 100%; max-width: 380px; height: auto; margin: 0 auto; font-family: inherit; }
+.plaatje .vlak { fill: var(--paneel); }
+.plaatje .vlak2 { fill: var(--zacht); }
+.plaatje .lijn { fill: none; stroke: var(--inkt); stroke-width: 1.5; }
+.plaatje .lijn.dun { stroke-width: 1; }
+.plaatje .lijn.dik { stroke-width: 3; }
+.plaatje .lijn.haar { stroke: var(--lijn-sterk); stroke-width: 0.6; }
+.plaatje .lijn.stil { stroke: var(--stil); }
+.plaatje .accent-lijn { stroke: var(--accent); }
+.plaatje .rood-lijn { stroke: var(--rood); }
+.plaatje .blauw-lijn { stroke: var(--blauw); }
+.plaatje .accent { fill: var(--accent); }
+.plaatje .accent-licht { fill: color-mix(in srgb, var(--accent) 55%, var(--paneel)); }
+.plaatje .vol { fill: var(--stil); }
+.plaatje .vol-licht { fill: var(--lijn-sterk); }
+.plaatje .rood { fill: var(--rood); }
+.plaatje .blauw { fill: var(--blauw); }
+.plaatje .tekst { fill: var(--inkt); }
+.plaatje .tekst.stil { fill: var(--stil); }
+.plaatje .vet { font-weight: 700; }
+.plaatje .accent-tekst { fill: var(--accent); }
+.plaatje .rood-tekst { fill: var(--rood); }
+.plaatje .telefoon { fill: var(--inkt); }
+.plaatje .water { fill: color-mix(in srgb, var(--blauw) 22%, var(--paneel)); }
+.plaatje .brons { fill: #b07a3a; stroke: #6f4a1e; stroke-width: 1; }
+.plaatje .breed { stroke-width: 3; stroke-linecap: round; }
+.plaatje .blauw-tekst { fill: var(--blauw); }
+.plaatje .bruin-tekst { fill: var(--bruin); }
+.plaatje .hoogte { fill: none; stroke: var(--bruin); stroke-width: 1.4; }
+.plaatje .profiel { fill: color-mix(in srgb, var(--bruin) 18%, transparent); stroke: var(--bruin); stroke-width: 2; }
+.plaatje .nacht { fill: #0f1b2d; }
+.plaatje .ster { fill: #fff8d6; }
+.plaatje .sterlijn { fill: none; stroke: rgb(255 255 255 / 0.35); stroke-width: 1.2; }
+.plaatje .wijslijn { stroke: #f4e700; stroke-width: 1.5; stroke-dasharray: 5 5; }
+.plaatje .sterlabel { fill: #e8eef8; }
+.plaatje .blad { fill: color-mix(in srgb, var(--fam-natuur) 45%, var(--paneel)); stroke: var(--fam-natuur); stroke-width: 1.4; stroke-linejoin: round; }
+.plaatje .nerf { stroke: var(--fam-natuur); stroke-width: 1.6; fill: none; }
+.plaatje .eikel { fill: #c08a3e; }
+.plaatje .napje { fill: #7a5a2e; }
+.plaatje .kurk { fill: #c9a26b; stroke: #8b6a3a; stroke-width: 1; }
+.plaatje .cirkel { fill: color-mix(in srgb, var(--rood) 8%, transparent); }
+.plaatje .lucht-land { fill: #eef0d8; }
+.plaatje .lucht-water { fill: #b9dcf0; }
+.plaatje .lucht-stad { fill: #f5d76e; stroke: #c9a227; stroke-width: 0.8; }
+.plaatje .lucht-weg { stroke: #d14b3d; stroke-width: 1.6; fill: none; }
+.plaatje .lucht-ctr { fill: rgb(0 102 178 / 0.07); stroke: #0066b2; stroke-width: 2; stroke-dasharray: 7 4; }
+.plaatje .lucht-veld { fill: #fff; stroke: #0066b2; stroke-width: 2; }
+.plaatje .lucht-baan { stroke: #0066b2; stroke-width: 4; stroke-linecap: round; }
+.plaatje .lucht-obstakel { fill: none; stroke: #1b2a3a; stroke-width: 1.6; }
+.plaatje .lucht-punt { fill: #1b2a3a; }
+.plaatje .lucht-roos { fill: none; stroke: #0066b2; stroke-width: 1; stroke-dasharray: 2 2; }
+.plaatje .lucht-vor { fill: none; stroke: #0066b2; stroke-width: 1.6; }
+.plaatje .lucht-label { fill: #1b2a3a; }
+
+/* src/plaatjes/geheimschrift.css */
+/* Classes for the drawings of geheimschrift (./geheimschrift.js), next to .plaatje in src/style.css. */
+
+/* the letters of the tekenalfabetten (doe/seinen/lib/tekens.js), also drawn by the Codeermachine: not scoped */
+.gt-lijn { fill: none; stroke: var(--inkt); stroke-width: 3; stroke-linecap: round; stroke-linejoin: round; }
+.gt-stip { fill: var(--inkt); }
+.gt-leeg { fill: none; stroke: var(--lijn-sterk); stroke-width: 1.2; }
+.gt-teken { display: block; }
+
+.plaatje .sc-stok { fill: #c9a26b; stroke: #8b6a3a; stroke-width: 1.5; }
+.plaatje .sc-strook { stroke: color-mix(in srgb, var(--paneel) 80%, #f7efd8); stroke-width: 22; opacity: 0.9; }
+.plaatje .bl-papier { fill: var(--paneel); stroke: var(--lijn-sterk); }
+.plaatje .ml-getal { fill: #3a2c10; }
+.plaatje .ml-lat { fill: #f2d78a; stroke: #b08a2e; stroke-width: 1.2; }
+.plaatje .qu-koord { stroke: #a07a46; stroke-width: 3; stroke-linecap: round; }
+.plaatje .qu-koord.dik { stroke-width: 6; }
+.plaatje .qu-knoop { fill: #7a5a2e; stroke: #4e3a1c; stroke-width: 1; }
+.plaatje .qu-acht { fill: none; stroke: #4e3a1c; stroke-width: 4; }
+.plaatje .sp-spiegel { fill: color-mix(in srgb, var(--blauw) 35%, var(--paneel)); stroke: var(--blauw); }
+.plaatje .bk-woord { stroke-width: 4; stroke-linecap: round; opacity: 0.6; }
+
+/* src/plaatjes/gereedschap.css */
+/* Classes for the drawings of gereedschap (./gereedschap.js): they share the vk-* classes in ./vuur.css. */
+
+/* src/plaatjes/kamperen.css */
+/* Classes for the drawings of kamperen (./kamperen.js), next to .plaatje in src/style.css. Mixed from the theme
+   colours, so they follow the dark theme by themselves. */
+.plaatje .kp-gras { fill: color-mix(in srgb, var(--fam-natuur) 16%, var(--paneel)); }
+.plaatje .kp-doek { fill: color-mix(in srgb, var(--fam-kamp) 26%, var(--paneel)); stroke: var(--inkt); stroke-width: 1.5; stroke-linejoin: round; }
+.plaatje .kp-doek2 { fill: color-mix(in srgb, var(--fam-kamp) 46%, var(--paneel)); stroke: var(--inkt); stroke-width: 1.5; stroke-linejoin: round; }
+.plaatje .kp-binnen { fill: color-mix(in srgb, var(--inkt) 22%, var(--paneel)); stroke: var(--inkt); stroke-width: 1; stroke-linejoin: round; }
+.plaatje .kp-grondzeil { stroke: var(--blauw); stroke-width: 4; fill: none; }
+.plaatje .kp-paal { stroke: var(--bruin); stroke-width: 5; stroke-linecap: round; fill: none; }
+.plaatje .kp-tak { stroke: var(--bruin); stroke-width: 2.4; stroke-linecap: round; fill: none; }
+.plaatje .kp-tak.dik { stroke-width: 4; }
+.plaatje .kp-stam { stroke: var(--bruin); stroke-width: 8; stroke-linecap: round; fill: none; }
+.plaatje .kp-kruin { fill: color-mix(in srgb, var(--fam-natuur) 45%, var(--paneel)); stroke: var(--fam-natuur); stroke-width: 1.2; }
+.plaatje .kp-stok { stroke: var(--accent); stroke-width: 3; stroke-linecap: round; fill: none; }
+.plaatje .kp-frame { stroke: var(--stil); stroke-width: 4; stroke-linecap: round; }
+.plaatje .kp-gewicht { fill: var(--stil); }
+.plaatje .kp-touw { stroke: var(--stil); stroke-width: 1.2; fill: none; }
+.plaatje .kp-touw.dik { stroke-width: 2.2; }
+.plaatje .kp-haring { stroke: var(--inkt); stroke-width: 2.5; stroke-linecap: round; }
+.plaatje .kp-haring-groot { stroke: var(--inkt); stroke-width: 3; stroke-linecap: round; stroke-linejoin: round; fill: none; }
+.plaatje .kp-zeil { fill: color-mix(in srgb, var(--blauw) 26%, var(--paneel)); stroke: var(--blauw); stroke-width: 1.5; stroke-linejoin: round; }
+.plaatje .kp-zeil-licht { fill: color-mix(in srgb, var(--blauw) 14%, transparent); stroke: var(--blauw); stroke-width: 1.2; stroke-linejoin: round; }
+.plaatje .kp-zeil-lijn { stroke: var(--blauw); stroke-width: 4; stroke-linecap: round; fill: none; }
+.plaatje .kp-wind { stroke: var(--blauw); stroke-width: 2; fill: none; stroke-linecap: round; stroke-linejoin: round; }
+.plaatje .kp-regen { stroke: var(--blauw); stroke-width: 1.4; stroke-linecap: round; opacity: 0.7; }
+.plaatje .kp-bladdek { fill: color-mix(in srgb, var(--bruin) 30%, var(--paneel)); stroke: var(--bruin); stroke-width: 1.2; stroke-linejoin: round; }
+.plaatje .kp-blaadje { fill: color-mix(in srgb, var(--bruin) 55%, var(--paneel)); }
+.plaatje .kp-slaper { fill: color-mix(in srgb, var(--fam-kamp) 60%, var(--paneel)); }
+.plaatje .kp-slaapzak { fill: color-mix(in srgb, var(--fam-kamp) 40%, var(--paneel)); stroke: var(--inkt); stroke-width: 1; }
+.plaatje .kp-mat { fill: var(--accent); }
+.plaatje .kp-band { fill: var(--accent); }
+.plaatje .kp-band-lijn { stroke: var(--accent); stroke-width: 6; stroke-linecap: round; fill: none; }
+.plaatje .kp-vlam { fill: #f39c12; }
+.plaatje .kp-rugzak { fill: color-mix(in srgb, var(--fam-touw) 24%, var(--paneel)); stroke: var(--inkt); stroke-width: 1.5; stroke-linejoin: round; }
+.plaatje .kp-zwaar { fill: color-mix(in srgb, var(--fam-kamp) 50%, var(--paneel)); stroke: var(--inkt); stroke-width: 1; }
+.plaatje .kp-warm { fill: color-mix(in srgb, var(--fam-natuur) 40%, var(--paneel)); }
+.plaatje .kp-koel { fill: color-mix(in srgb, var(--oranje) 45%, var(--paneel)); }
+.plaatje .kp-koud { fill: color-mix(in srgb, var(--blauw) 45%, var(--paneel)); }
+.plaatje .kp-laag1 { fill: color-mix(in srgb, var(--fam-natuur) 40%, var(--paneel)); stroke: var(--inkt); stroke-width: 1.2; stroke-linejoin: round; }
+.plaatje .kp-laag2 { fill: color-mix(in srgb, var(--fam-kamp) 40%, var(--paneel)); stroke: var(--inkt); stroke-width: 1.2; stroke-linejoin: round; }
+.plaatje .kp-laag3 { fill: color-mix(in srgb, var(--blauw) 40%, var(--paneel)); stroke: var(--inkt); stroke-width: 1.2; stroke-linejoin: round; }
+.plaatje .kp-water { fill: color-mix(in srgb, var(--blauw) 30%, var(--paneel)); }
+.plaatje .kp-water-lijn { stroke: var(--blauw); stroke-width: 2; fill: none; stroke-linecap: round; }
+.plaatje .kp-pad { stroke: color-mix(in srgb, var(--bruin) 45%, var(--paneel)); stroke-width: 10; fill: none; stroke-linecap: round; }
+.plaatje .kp-vak { fill: color-mix(in srgb, var(--fam-kamp) 26%, var(--paneel)); stroke: var(--inkt); stroke-width: 1; }
+.plaatje .kp-vak2 { fill: color-mix(in srgb, var(--oranje) 30%, var(--paneel)); stroke: var(--inkt); stroke-width: 1; }
+.plaatje .kp-vak3 { fill: color-mix(in srgb, var(--stil) 30%, var(--paneel)); stroke: var(--inkt); stroke-width: 1; }
+.plaatje .kp-veld { fill: color-mix(in srgb, var(--fam-natuur) 30%, var(--paneel)); stroke: var(--fam-natuur); stroke-width: 1; stroke-dasharray: 4 3; }
+.plaatje .kp-vuur { fill: #f39c12; stroke: var(--bruin); stroke-width: 3; }
+.plaatje .kp-kuil { fill: color-mix(in srgb, var(--bruin) 14%, var(--paneel)); stroke: var(--bruin); stroke-width: 1.4; }
+.plaatje .kp-aarde { fill: color-mix(in srgb, var(--bruin) 50%, var(--paneel)); }
+.plaatje .kp-grind { fill: color-mix(in srgb, var(--stil) 40%, var(--paneel)); stroke: var(--stil); stroke-width: 0.8; }
+.plaatje .kp-zeef { stroke: var(--inkt); stroke-width: 3; stroke-dasharray: 3 2; }
+.plaatje .kp-emmer, .plaatje .kp-teil { fill: color-mix(in srgb, var(--stil) 22%, var(--paneel)); stroke: var(--inkt); stroke-width: 1.4; stroke-linejoin: round; }
+.plaatje .kp-steel { stroke: var(--bruin); stroke-width: 4; stroke-linecap: round; }
+.plaatje .kp-jerrycan { fill: color-mix(in srgb, var(--blauw) 34%, var(--paneel)); stroke: var(--inkt); stroke-width: 1.2; }
+.plaatje .kp-blad-hout { fill: color-mix(in srgb, var(--bruin) 40%, var(--paneel)); stroke: var(--bruin); stroke-width: 1; }
+.plaatje .kp-gasfles { fill: color-mix(in srgb, var(--rood) 60%, var(--paneel)); stroke: var(--inkt); stroke-width: 1.4; }
+.plaatje .kp-slang { stroke: var(--inkt); stroke-width: 3; fill: none; stroke-linecap: round; }
+.plaatje .tekst.kp-op-accent { fill: var(--op-accent); }
+.plaatje .kp-paalkop { fill: var(--bruin); }
+.plaatje .tekst.kp-halo { paint-order: stroke; stroke: var(--paneel); stroke-width: 3px; stroke-linejoin: round; }
+.plaatje .kp-kruis { stroke: var(--rood); stroke-width: 2.6; stroke-linecap: round; fill: none; }
+.plaatje .kp-pijl { stroke: var(--accent); stroke-width: 2.4; stroke-linecap: round; stroke-linejoin: round; fill: none; }
+.plaatje .kp-muts { fill: var(--rood); }
+.plaatje .kp-koude { stroke: var(--blauw); stroke-width: 2; stroke-linecap: round; stroke-linejoin: round; fill: none; }
+.plaatje .kp-zak { fill: color-mix(in srgb, var(--stil) 26%, var(--paneel)); stroke: var(--inkt); stroke-width: 1.2; stroke-linejoin: round; }
+.plaatje .kp-schors { fill: color-mix(in srgb, var(--bruin) 40%, var(--paneel)); stroke: var(--bruin); stroke-width: 1.4; }
+.plaatje .kp-jute { fill: color-mix(in srgb, var(--oranje) 30%, var(--paneel)); stroke: var(--inkt); stroke-width: 1; stroke-dasharray: 2 2; }
+.plaatje .kp-cirkel { fill: color-mix(in srgb, var(--fam-kamp) 10%, transparent); stroke: var(--fam-kamp); stroke-width: 1.4; stroke-dasharray: 5 4; }
+.plaatje .kp-druppel { fill: var(--blauw); }
+/* the frietbuil plan (kamp-frietbuil): dark plastic in both themes, tape in orange */
+.plaatje { --kp-folie: #1f2c47; --kp-folie-licht: #4a6191; }
+@media (prefers-color-scheme: dark) {
+  :root:not([data-theme="light"]) .plaatje { --kp-folie: #2b4068; --kp-folie-licht: #5873a6; }
+}
+:root[data-theme="dark"] .plaatje { --kp-folie: #2b4068; --kp-folie-licht: #5873a6; }
+.plaatje .kp-folie { fill: var(--kp-folie); }
+.plaatje .kp-folie-flap { fill: var(--kp-folie-licht); }
+.plaatje .tekst.kp-op-folie { fill: #ffffff; }
+.plaatje .kp-tape { stroke: var(--oranje); stroke-width: 5; stroke-linecap: round; stroke-linejoin: round; fill: none; }
+.plaatje .kp-stippel { stroke: #e6ecf7; stroke-width: 2; stroke-dasharray: 2 4; stroke-linecap: round; fill: none; }
+.plaatje .kp-stippel.donker { stroke: var(--inkt); }
+.plaatje .kp-punt { fill: var(--inkt); stroke: var(--paneel); stroke-width: 1.2; }
+.plaatje .kp-letter { fill: var(--paneel); stroke: var(--inkt); stroke-width: 1.4; }
+
+/* src/plaatjes/koken.css */
+/* Classes for the drawings of koken (./koken.js): they share the vk-* classes in ./vuur.css. */
+
+/* src/plaatjes/natuur.css */
+/* Classes for the drawings of natuur (./natuur.js), next to .plaatje in src/style.css. Leaves follow the theme
+   (--fam-natuur); fruit, bark, birds and mushrooms keep their own colours, which read on light and dark. */
+.plaatje .nt-nerf { stroke-width: 1.1; opacity: 0.75; }
+.plaatje .blad.nt-zilver { fill: color-mix(in srgb, var(--fam-natuur) 28%, #b8c4bc); }
+.plaatje .blad.nt-glanzend { fill: color-mix(in srgb, var(--fam-natuur) 75%, var(--paneel)); }
+.plaatje .nt-tak { fill: none; stroke: #8a6239; stroke-width: 3; stroke-linecap: round; }
+.plaatje .nt-tak.dun { stroke-width: 2; }
+.plaatje .nt-twijg { fill: none; stroke: #9a7a3c; stroke-width: 2; stroke-linecap: round; }
+.plaatje .nt-steeltje { fill: none; stroke: #7d6a3a; stroke-width: 1.4; stroke-linecap: round; }
+.plaatje .nt-steeltje.dun { stroke-width: 0.9; }
+.plaatje .nt-naald { fill: none; stroke: var(--fam-natuur); stroke-width: 1.5; stroke-linecap: round; }
+.plaatje .nt-naald.dun { stroke-width: 1.1; opacity: 0.7; }
+.plaatje .nt-naald.plat { stroke-width: 3; }
+.plaatje .nt-haar { fill: none; stroke: var(--stil); stroke-width: 0.9; stroke-linecap: round; }
+.plaatje .nt-knop { fill: #8a6239; }
+.plaatje .nt-zwarteknop { fill: #1d1d1d; stroke: #777; stroke-width: 0.6; }
+.plaatje .nt-schub { fill: #a8743e; stroke: #5f3d1c; stroke-width: 0.9; }
+.plaatje .nt-drietand { fill: none; stroke: #c9b27a; stroke-width: 1.3; stroke-linecap: round; stroke-linejoin: round; }
+.plaatje .nt-noot { fill: #b07a3c; stroke: #6d4519; stroke-width: 0.8; }
+.plaatje .nt-nap { fill: #7a5a2e; stroke: #54391a; stroke-width: 0.8; }
+.plaatje .nt-nootje { fill: #9b7a43; stroke: #5f4720; stroke-width: 0.6; }
+.plaatje .nt-bolster-hout { fill: #9c7444; stroke: #5f4320; stroke-width: 0.8; }
+.plaatje .nt-vleugel { fill: #d8bf7f; stroke: #8f7533; stroke-width: 0.9; }
+.plaatje .nt-zaadje { fill: #a07d3a; }
+.plaatje .nt-katje { fill: #c9a85a; stroke: #8b6d2c; stroke-width: 0.6; }
+.plaatje .nt-katje-groen { fill: #a6b46a; stroke: #6b7a33; stroke-width: 0.6; }
+.plaatje .nt-pluis { fill: #fbfbf6; stroke: #b9b9ad; stroke-width: 0.8; }
+.plaatje .nt-schutblad { fill: #c8d48e; stroke: #7f8d3e; stroke-width: 0.9; }
+.plaatje .nt-bolster { fill: #7fae45; stroke: #4d7424; stroke-width: 1; }
+.plaatje .nt-bolletje { fill: #9e7f4c; stroke: #5f4720; stroke-width: 0.8; }
+.plaatje .nt-stekel { stroke: #4d7424; stroke-width: 1.4; stroke-linecap: round; }
+.plaatje .nt-stekel.dun { stroke: #5f4720; stroke-width: 0.8; }
+.plaatje .nt-kastanje { fill: #7b3f1d; stroke: #4a230e; stroke-width: 0.8; }
+.plaatje .nt-kastanje-vlek { fill: #c9a77a; }
+.plaatje .nt-bes-oranje { fill: #ec6c13; stroke: #a5440a; stroke-width: 0.6; }
+.plaatje .nt-bes-rood { fill: #d3202a; stroke: #8e1016; stroke-width: 0.6; }
+.plaatje .nt-bes-zwart { fill: #2b2233; stroke: #8a7a9a; stroke-width: 0.6; }
+.plaatje .nt-glans { fill: rgb(255 255 255 / 0.55); }
+.plaatje .nt-arillus { fill: #e0303a; stroke: #9a1720; stroke-width: 0.8; }
+.plaatje .nt-zaad-donker { fill: #3b3524; }
+.plaatje .nt-berkenstam { fill: #f2f0ea; stroke: #9a978c; stroke-width: 1; }
+.plaatje .nt-ruit { fill: #2c2c2c; }
+.plaatje .nt-stam { fill: #8d7a5c; stroke: #5e4f37; stroke-width: 1; }
+.plaatje.nt-icoon { max-width: none; }
+
+/* plants */
+.plaatje .nt-stengel { fill: none; stroke: color-mix(in srgb, var(--fam-natuur) 80%, #333); stroke-width: 3.5; stroke-linecap: round; }
+.plaatje .nt-stengel-dik { fill: none; stroke: #7a9a4a; stroke-width: 7; stroke-linecap: round; }
+.plaatje .nt-steel-groen { fill: none; stroke: #6f9440; stroke-width: 2; stroke-linecap: round; }
+.plaatje .nt-steel-groen.dun { stroke-width: 1; }
+.plaatje .nt-bloemsteel { fill: none; stroke: #e9e2ef; stroke-width: 3; }
+.plaatje .nt-schede { fill: #b9a77a; }
+.plaatje .nt-paars { fill: #7a2e6e; }
+.plaatje .nt-bloemdraad { fill: none; stroke: #9aa86a; stroke-width: 1.6; stroke-dasharray: 2 1.5; }
+.plaatje .nt-brandhaar { stroke: var(--stil); stroke-width: 0.8; }
+.plaatje .nt-huid { fill: #f0c8a8; stroke: #b98a6a; stroke-width: 1; }
+.plaatje .nt-haar-groot { fill: #dfe9d0; stroke: #6f8a4a; stroke-width: 1; }
+.plaatje .nt-haar-kop { fill: #dfe9d0; stroke: #6f8a4a; stroke-width: 1; }
+.plaatje .nt-bloem-wit { fill: #fffdf4; stroke: #a8a28c; stroke-width: 0.5; }
+.plaatje .nt-paarsbloem { fill: #a2468e; stroke: #6b2a5e; stroke-width: 0.8; }
+.plaatje .nt-geel { fill: #f2c919; }
+.plaatje .nt-mens { stroke: var(--stil); stroke-linecap: round; }
+/* prints */
+.plaatje .nt-modder { fill: color-mix(in srgb, #b8955f 30%, var(--paneel)); }
+.plaatje .nt-prent { fill: color-mix(in srgb, #5a3f22 40%, var(--inkt)); }
+.plaatje .nt-prent .nt-harig { opacity: 0.55; }
+.plaatje .nt-kruis { stroke: var(--rood); stroke-width: 2; stroke-dasharray: 5 4; }
+.plaatje .nt-doosje { fill: #f2e6c8; stroke: #8a6a3a; stroke-width: 1.2; }
+.plaatje .nt-spil { fill: #b78a52; stroke: #6d4a22; stroke-width: 0.8; }
+.plaatje .nt-rafel { stroke: #8a5a2a; stroke-width: 1.6; stroke-linecap: round; }
+.plaatje .nt-rafel.dun { stroke-width: 0.7; }
+.plaatje .nt-rafel.dik { stroke: #6d4a22; stroke-width: 3; }
+.plaatje .nt-hazel { fill: #b8854a; stroke: #6d4a22; stroke-width: 1; }
+.plaatje .nt-gat { fill: #3a2a18; }
+/* birds */
+.plaatje .nt-vogellijn { stroke: rgb(0 0 0 / 0.45); stroke-width: 0.8; }
+.plaatje .nt-poot { fill: none; stroke-width: 2; stroke-linecap: round; }
+.plaatje .nt-lucht { fill: #e6efe8; }
+/* insects, ticks */
+.plaatje .nt-teekpoot { fill: none; stroke: #3a2a20; stroke-width: 1.4; stroke-linecap: round; }
+.plaatje .nt-teek-kop { fill: #2a1a14; }
+.plaatje .nt-teek-lijf { fill: #8a3a24; stroke: #3a1a10; stroke-width: 0.8; }
+.plaatje .nt-teek-schild { fill: #2a1a14; }
+.plaatje .nt-teek-vol { fill: #8f8a8e; stroke: #4a4448; stroke-width: 1; }
+.plaatje .nt-insectlijn { stroke: #1a1a1a; stroke-width: 0.8; }
+.plaatje .nt-insectvleugel { fill: rgb(220 235 245 / 0.6); stroke: #6a7a88; stroke-width: 0.8; }
+.plaatje .nt-spriet { fill: none; stroke: #1a1a1a; stroke-width: 1.3; stroke-linecap: round; }
+.plaatje .nt-schors { fill: none; stroke: #4e3f2a; stroke-width: 1.4; }
+.plaatje .nt-spinsel { fill: #e9e6dc; stroke: #a8a296; stroke-width: 1; }
+.plaatje .nt-rups { fill: #5a5448; }
+.plaatje .nt-rupshaar { stroke: #c9c2b0; stroke-width: 0.8; }
+/* mushrooms */
+.plaatje .nt-padlijn { stroke: #4a3a2a; stroke-width: 1.1; }
+.plaatje .nt-lamel { fill: none; stroke: #b8b0a0; stroke-width: 0.7; }
+.plaatje .nt-zwamvlok { fill: none; stroke: color-mix(in srgb, var(--stil) 45%, #d8d2c0); stroke-width: 1; }
+.plaatje .nt-grondlijn { fill: none; stroke: #8a6a3a; stroke-width: 2; }
+.plaatje .nt-cantharel { fill: #f2b51e; stroke: #a8740a; stroke-width: 1.1; }
+.plaatje .nt-cantharel-top { fill: #f7c53a; }
+.plaatje .nt-lijst { fill: none; stroke: #c98a10; stroke-width: 1; }
+/* scheerling, herbarium, droppings, owl pellet, plaster cast */
+.plaatje .nt-stengel-blauw { fill: none; stroke: #8fb0a8; stroke-width: 5; stroke-linecap: round; }
+.plaatje .nt-groef { fill: none; stroke: color-mix(in srgb, var(--fam-natuur) 55%, #1d3a12); stroke-width: 0.8; }
+.plaatje .nt-krant { fill: #ecebe4; stroke: #a9a79c; stroke-width: 0.8; }
+.plaatje .nt-boek { fill: #4f7396; stroke: #2f4a63; stroke-width: 1; }
+.plaatje .nt-boek.b { fill: #9a4f3c; stroke: #5f2c20; }
+.plaatje .nt-vel { fill: var(--paneel); stroke: var(--lijn-sterk); stroke-width: 1.2; }
+.plaatje .nt-plakband { fill: rgb(240 235 200 / 0.75); stroke: #b9b18a; stroke-width: 0.6; }
+.plaatje .nt-etiket { fill: var(--zacht); stroke: var(--lijn-sterk); stroke-width: 0.8; }
+.plaatje .nt-zand { fill: #e8dfcc; }
+.plaatje .nt-keutel { fill: #7a5a3a; stroke: #4a341e; stroke-width: 0.8; }
+.plaatje .nt-keutel.donker { fill: #3e2c1c; }
+.plaatje .nt-keutel.grijs { fill: #6a625a; stroke: #3a342e; }
+.plaatje .nt-keutel.zwart { fill: #1c1a18; stroke: #000; }
+.plaatje .nt-keutel-punt { fill: none; stroke: #6a625a; stroke-width: 3; stroke-linecap: round; }
+.plaatje .nt-keutel-lang { fill: none; stroke: #4a3a2c; stroke-width: 6; stroke-linecap: round; }
+.plaatje .nt-botje { stroke: #f2eee4; stroke-width: 1.6; stroke-linecap: round; }
+.plaatje .nt-glimmer { stroke: #6fa0a8; stroke-width: 1.4; stroke-linecap: round; }
+.plaatje .nt-braakbal { fill: #8d8a86; stroke: #5a5754; stroke-width: 1; }
+.plaatje .nt-vilt { fill: none; stroke: #6a6764; stroke-width: 1; }
+.plaatje .nt-bot { fill: none; stroke: #f4f0e4; stroke-width: 3; stroke-linecap: round; }
+.plaatje .nt-bot.dik { stroke-width: 3.6; }
+.plaatje .nt-bot-vlak { fill: #f4f0e4; stroke: #a8a090; stroke-width: 1; }
+.plaatje .nt-oogkas { fill: #c9c0ac; }
+.plaatje .nt-tand { fill: none; stroke: #d9a640; stroke-width: 2.4; stroke-linecap: round; }
+.plaatje .nt-ring { fill: none; stroke: #8a6a3a; stroke-width: 3; }
+.plaatje .nt-grond { fill: color-mix(in srgb, #b8955f 45%, var(--paneel)); }
+.plaatje .nt-gips { fill: #f4f2ec; stroke: #9a958a; stroke-width: 1; }
+.plaatje .nt-beker { fill: #d8dde4; stroke: #7a828c; stroke-width: 1; }
+.plaatje .nt-gipsstraal { fill: none; stroke: #ddd8ca; stroke-width: 4; stroke-linecap: round; }
+.plaatje .nt-prent.nt-gipsprent { fill: #d6d1c4; stroke: #a49e90; stroke-width: 1.2; }
+/* materials, people and nature */
+.plaatje .nt-vezel { fill: none; stroke: #9aa86a; stroke-width: 5; stroke-linecap: round; }
+.plaatje .nt-vezel.b { stroke: #c9b27a; }
+.plaatje .nt-hout { fill: #9c7444; stroke: #5f4320; stroke-width: 1; }
+.plaatje .nt-teen { fill: none; stroke: #b28a4a; stroke-width: 4; stroke-linecap: round; }
+.plaatje .nt-teen.dik { stroke: #8a6a34; stroke-width: 4.5; }
+.plaatje .nt-leem { fill: #b8916a; stroke: #7a5a3a; stroke-width: 1; }
+.plaatje .nt-mand-binnen { fill: color-mix(in srgb, #b28a4a 25%, var(--paneel)); }
+.plaatje .nt-lap { stroke: rgb(0 0 0 / 0.3); stroke-width: 1; }
+.plaatje .nt-nacht { fill: #101a2c; }
+.plaatje .nt-ster { fill: #fff8d6; }
+.plaatje .nt-paal { stroke: #5a6270; stroke-width: 4; }
+.plaatje .nt-lamp { fill: #f4f4ff; }
+.plaatje .nt-kap { fill: #5a6270; }
+.plaatje .nt-licht { fill: rgb(220 230 255 / 0.22); }
+.plaatje .nt-licht.warm { fill: rgb(255 200 110 / 0.3); }
+.plaatje .nt-mot { fill: #e8e0c0; }
+.plaatje .tekst.nt-nachttekst { fill: #e8eef8; }
+
+/* src/plaatjes/seinen.css */
+/* Classes for the drawings of seinen (./seinen.js), next to .plaatje in src/style.css. The figure, the flags and the
+   morseboom are also drawn by the pieces in src/doe/seinen/, so these are not scoped to .plaatje. Flags keep their
+   real colours in the dark; the figure and the lines follow the theme. */
+
+/* the figure that signals (doe/seinen/lib/seinpop.js) */
+.sp-hoofd { fill: var(--zacht); stroke: var(--inkt); stroke-width: 1.8; }
+.sp-lijf { fill: color-mix(in srgb, var(--fam-sein) 30%, var(--paneel)); stroke: var(--inkt); stroke-width: 1.8; stroke-linejoin: round; }
+.sp-been { stroke: var(--inkt); stroke-width: 5; stroke-linecap: round; }
+.sp-arm { stroke: var(--inkt); stroke-width: 4.5; stroke-linecap: round; }
+.sp-stok { stroke: #8a6a3a; stroke-width: 2; stroke-linecap: round; }
+.sp-rood { fill: #d62828; }
+.sp-geel { fill: #ffd21f; }
+.sp-wit { fill: #ffffff; }
+.sp-blauw { fill: #1f4fa3; }
+.sp-vlagrand { fill: none; stroke: rgb(0 0 0 / 0.45); stroke-width: 0.8; stroke-linejoin: round; }
+.sp-greep { fill: color-mix(in srgb, var(--accent) 30%, transparent); stroke: var(--accent); stroke-width: 2; }
+
+/* seinvlaggen (doe/seinen/lib/vlaggen.js) */
+.vl-rand { fill: none; stroke: #2b2b2b; stroke-width: 1.2; stroke-linejoin: round; }
+
+/* morse */
+.mo-teken { fill: var(--inkt); }
+.mo-aan { fill: var(--fam-sein); }
+.mo-optekst { fill: var(--paneel); }
+
+/* the morseboom (doe/seinen/lib/boom.js) */
+.mb-tak { stroke: var(--lijn-sterk); stroke-width: 1.6; }
+.mb-tak.streep { stroke-width: 3; }
+.mb-tak.op { stroke: var(--accent); }
+.mb-knoop { fill: var(--paneel); stroke: var(--lijn-sterk); stroke-width: 1.4; }
+.mb-knoop.leeg { fill: var(--zacht); stroke-dasharray: 2 2; }
+.mb-knoop.start { fill: var(--stil); stroke: none; }
+.mb-knoop.op { stroke: var(--accent); stroke-width: 2; }
+.mb-knoop.nu { fill: var(--accent); stroke: var(--accent); }
+.mb-letter { fill: var(--inkt); font-weight: 700; }
+.mb-letter.nu { fill: var(--op-accent); }
+.mb-uitleg { fill: var(--stil); }
+
+/* noodseinen */
+.gl-grond { fill: color-mix(in srgb, #4f8a3a 45%, var(--paneel)); }
+.gl-teken { fill: none; stroke: #fff6c8; stroke-width: 6; stroke-linecap: round; stroke-linejoin: round; }
+.ss-zon { fill: #ffd21f; }
+.ss-straal { stroke: #f0b400; stroke-width: 2.5; stroke-linecap: round; }
+.ss-licht { stroke: #f0b400; stroke-width: 2; stroke-dasharray: 5 4; }
+.ss-spiegel { fill: color-mix(in srgb, var(--blauw) 25%, var(--paneel)); stroke: var(--inkt); stroke-width: 1.5; }
+.ss-vinger { fill: none; stroke: var(--inkt); stroke-width: 7; stroke-linecap: round; opacity: 0.75; }
+.ss-vliegtuig { fill: var(--inkt); }
+
+/* the drawings of handsignalen, noodseinen and portofoon */
+.sp-arm.gebogen { fill: none; stroke-linejoin: round; }
+.sp-spook { stroke: var(--stil); stroke-width: 3; stroke-dasharray: 3 3; stroke-linecap: round; opacity: 0.7; }
+.dr-vuur { fill: var(--oranje); stroke: #c0392b; stroke-width: 1; }
+.dr-vlam { fill: #e63322; }
+.dr-fakkel { fill: color-mix(in srgb, var(--rood) 55%, var(--paneel)); stroke: var(--inkt); stroke-width: 1; }
+.dr-rook { fill: #f08a24; opacity: 0.75; }
+.dl-op-accent { fill: var(--op-accent); }
+.pf-kast { fill: color-mix(in srgb, var(--inkt) 75%, var(--paneel)); stroke: var(--inkt); stroke-width: 1; }
+
+/* src/plaatjes/sjorren.css */
+/* Classes for the drawings of sjorren (./sjorren.js), next to .plaatje in src/style.css. Rope and wood keep their
+   own colours in both themes, the same as the knots (./touw.css): a manilla rope with a dark edge, a body and a light
+   core, so a turn reads over a pole on a light and on a dark panel; the ground follows the panel. In the dark theme
+   the bodies are a little less bright. */
+:root {
+  --sj-touw: #e2b46a; --sj-touw-rand: #5f4119; --sj-touw-kern: #f7dfaa;
+  --sj-hout: #a2723f; --sj-hout-rand: #4a2f14; --sj-hout-licht: #cfa673; --sj-kop: #e0bf8c;
+  --sj-metaal: #b3bdc4; --sj-metaal-rand: #434f57; --sj-metaal-licht: #eef2f4; --sj-metaal-lijn: #56636b;
+  --sj-jute: #c9b07a; --sj-band: #7b5bc4; --sj-band-rand: #3b2a6b;
+  --sj-schors: #6f5a44; --sj-kruin: color-mix(in srgb, var(--fam-natuur) 40%, var(--paneel));
+  --sj-grond: color-mix(in srgb, var(--bruin) 22%, var(--paneel));
+  --sj-aarde: color-mix(in srgb, var(--bruin) 38%, var(--paneel));
+  --sj-zand: #e6d3a3;
+}
+@media (prefers-color-scheme: dark) {
+  :root:not([data-theme="light"]) {
+    --sj-touw: #cf9f55; --sj-touw-kern: #e9c98b; --sj-hout: #946638; --sj-hout-licht: #b88d5b; --sj-kop: #c9a571;
+    --sj-metaal: #9eaab2; --sj-metaal-licht: #d9e1e5; --sj-metaal-lijn: #9eaab2; --sj-jute: #a8915f; --sj-band: #8f74d6; --sj-schors: #7d6650;
+    --sj-grond: color-mix(in srgb, var(--bruin) 26%, var(--paneel)); --sj-aarde: color-mix(in srgb, var(--bruin) 40%, var(--paneel)); --sj-zand: #8c7a50;
+  }
+}
+:root[data-theme="dark"] {
+  --sj-touw: #cf9f55; --sj-touw-kern: #e9c98b; --sj-hout: #946638; --sj-hout-licht: #b88d5b; --sj-kop: #c9a571;
+  --sj-metaal: #9eaab2; --sj-metaal-licht: #d9e1e5; --sj-metaal-lijn: #9eaab2; --sj-jute: #a8915f; --sj-band: #8f74d6; --sj-schors: #7d6650;
+  --sj-grond: color-mix(in srgb, var(--bruin) 26%, var(--paneel)); --sj-aarde: color-mix(in srgb, var(--bruin) 40%, var(--paneel)); --sj-zand: #8c7a50;
+}
+
+/* rope: edge, body, core (stroke widths are set per piece) */
+.plaatje .sj-touw-rand, .plaatje .sj-touw-lijf, .plaatje .sj-touw-kern { fill: none; stroke-linejoin: round; }
+.plaatje .sj-touw-rand { stroke: var(--sj-touw-rand); }
+.plaatje .sj-touw-lijf { stroke: var(--sj-touw); }
+.plaatje .sj-touw-kern { stroke: var(--sj-touw-kern); }
+.plaatje .sj-touw-vul { fill: var(--sj-touw); stroke: var(--sj-touw-rand); stroke-width: 1.4; }
+/* wood */
+.plaatje .sj-hout { fill: var(--sj-hout); stroke: var(--sj-hout-rand); stroke-width: 1.4; stroke-linejoin: round; }
+.plaatje .sj-hout-licht { fill: var(--sj-hout-licht); stroke: var(--sj-hout-rand); stroke-width: 1.4; stroke-linejoin: round; }
+.plaatje .sj-nerf { fill: none; stroke: var(--sj-hout-rand); stroke-width: 0.8; opacity: 0.45; stroke-dasharray: 18 11; }
+.plaatje .sj-kop { fill: var(--sj-kop); stroke: var(--sj-hout-rand); stroke-width: 1.4; }
+.plaatje .sj-jaar { fill: none; stroke: var(--sj-hout-rand); stroke-width: 0.8; opacity: 0.5; }
+.plaatje .sj-rot { fill: #3d2a17; opacity: 0.75; }
+.plaatje .sj-scheur { fill: #2a1a0b; }
+/* metal, bands, nature, ground */
+.plaatje .sj-metaal { fill: var(--sj-metaal); stroke: var(--sj-metaal-rand); stroke-width: 1.4; stroke-linejoin: round; }
+.plaatje .sj-metaal-lijn { fill: none; stroke: var(--sj-metaal-lijn); stroke-width: 1.4; stroke-linecap: round; }
+.plaatje .sj-metaal-licht { fill: var(--sj-metaal-licht); stroke: var(--sj-metaal-rand); stroke-width: 1.2; }
+.plaatje .sj-band { fill: none; stroke: var(--sj-band); stroke-linejoin: round; }
+.plaatje .sj-band-rand { fill: none; stroke: var(--sj-band-rand); stroke-linejoin: round; }
+.plaatje .sj-jute { fill: var(--sj-jute); stroke: #6d5a30; stroke-width: 1.2; }
+.plaatje .sj-jute-lijn { fill: none; stroke: #6d5a30; stroke-width: 0.8; opacity: 0.7; }
+.plaatje .sj-stam { fill: var(--sj-schors); stroke: #3a2c1e; stroke-width: 1.4; stroke-linejoin: round; }
+.plaatje .sj-schors { fill: none; stroke: #3a2c1e; stroke-width: 1; opacity: 0.55; stroke-linecap: round; }
+.plaatje .sj-kruin { fill: var(--sj-kruin); stroke: var(--fam-natuur); stroke-width: 1.4; }
+.plaatje .sj-grond { fill: var(--sj-grond); }
+.plaatje .sj-grond-over { fill: var(--sj-grond); opacity: 0.78; }
+.plaatje .sj-aarde { fill: var(--sj-aarde); }
+.plaatje .sj-zand { fill: var(--sj-zand); }
+.plaatje .sj-maaiveld { fill: none; stroke: var(--stil); stroke-width: 1.2; }
+.plaatje .sj-onder { fill: none; stroke: var(--sj-hout-rand); stroke-width: 1.2; stroke-dasharray: 4 3; }
+.plaatje .sj-regen { fill: none; stroke: var(--blauw); stroke-width: 1.4; stroke-linecap: round; opacity: 0.7; }
+.plaatje .sj-verf-a { fill: #d1141b; }
+.plaatje .sj-verf-b { fill: #0066b2; }
+/* arrows, pointers, measures */
+.plaatje .sj-pijl { fill: none; stroke: var(--blauw); stroke-width: 2; stroke-linecap: round; stroke-linejoin: round; }
+.plaatje .sj-pijlpunt { fill: var(--blauw); }
+.plaatje .sj-pijl.kracht { stroke: var(--rood); }
+.plaatje .sj-pijlpunt.kracht { fill: var(--rood); }
+.plaatje .sj-wijs { fill: none; stroke: var(--stil); stroke-width: 0.9; }
+.plaatje .sj-wijs-punt { fill: var(--stil); }
+.plaatje .sj-maat { fill: none; stroke: var(--stil); stroke-width: 1; }
+.plaatje .sj-hulp { fill: none; stroke: var(--accent); stroke-width: 1.6; stroke-dasharray: 5 4; }
+.plaatje .sj-last { fill: var(--zacht); stroke: var(--inkt); stroke-width: 1.4; }
+.plaatje .sj-nummer { fill: var(--paneel); stroke: var(--accent); stroke-width: 1.4; }
+
+/* src/plaatjes/tocht.css */
+/* Classes for the drawings of tocht (./tocht.js), next to .plaatje in src/style.css, and for the trail signs
+   (../doe/tocht/tekens.js), which the quiz shows outside a .plaatje too. Things that are real objects - a post, a
+   stone, grass, a red-and-white waymark - keep their own colours in light and dark. */
+
+/* -- trail signs: chalk lines, sticks, grass and stones */
+.tk { display: block; width: 100%; height: auto; overflow: visible; }
+.tk-krijt { fill: none; stroke: var(--inkt); stroke-width: 5; stroke-linecap: round; stroke-linejoin: round; }
+.tk-krijt.tk-punt { fill: var(--inkt); }
+.tk-rood-krijt { stroke: var(--rood); }
+.tk-vul { fill: var(--inkt); stroke: none; }
+.tk-tekst { fill: var(--inkt); font-weight: 700; font-family: inherit; }
+.tk-gras { fill: none; stroke: #5e9a2e; stroke-width: 2.4; stroke-linecap: round; }
+.tk-knoop { fill: #3f6d1c; }
+.tk-steen { fill: #a7a49c; stroke: #5d5a53; stroke-width: 1.6; }
+.tk-tak { stroke: #8a5a2b; stroke-width: 6; stroke-linecap: round; }
+.tk-grond { fill: none; stroke: var(--stil); stroke-width: 1.5; stroke-dasharray: 4 4; }
+.tk-schors { fill: #7b6a58; }
+.tk-schorslijn { fill: none; stroke: #5b4c3e; stroke-width: 2; stroke-linecap: round; }
+.tk-lucifer { stroke: #f1d9a8; stroke-width: 4; stroke-linecap: round; }
+.tk-kopje { fill: #c62828; }
+.tk-paal { fill: #8c6a48; }
+.tk-paalrand { stroke: #5e4630; stroke-width: 2; }
+.tk-wit { fill: #ffffff; }
+.tk-rood { fill: #d1141b; }
+.tk-geel { fill: #f2c200; }
+
+/* -- the route drawings: roads, paths, the route on the map, and the notation in pen */
+.plaatje .tw-weg { fill: none; stroke: var(--lijn-sterk); stroke-width: 9; stroke-linecap: round; stroke-linejoin: round; }
+.plaatje .tw-weg.smal { stroke-width: 5; }
+.plaatje .tw-pad { fill: none; stroke: var(--lijn-sterk); stroke-width: 4; stroke-dasharray: 5 5; stroke-linecap: round; }
+.plaatje .tw-route { fill: none; stroke: var(--rood); stroke-width: 3.5; stroke-linecap: round; stroke-linejoin: round; }
+.plaatje .tw-route.tk-punt { fill: var(--rood); }
+.plaatje .tw-pen { fill: none; stroke: var(--inkt); stroke-width: 3; stroke-linecap: round; stroke-linejoin: round; }
+.plaatje .tw-pen.tk-punt { fill: var(--inkt); }
+.plaatje .tw-pen.dun { stroke-width: 1.6; }
+.plaatje .tw-pen.dik { stroke-width: 6; }
+.plaatje .tw-noord { fill: none; stroke: var(--inkt); stroke-width: 1.8; stroke-linejoin: round; }
+.plaatje .tw-noord.tk-punt { fill: var(--inkt); }
+.plaatje .tw-blauw { fill: none; stroke: var(--blauw); stroke-width: 3; stroke-linecap: round; stroke-linejoin: round; }
+.plaatje .tw-blauw.tk-punt { fill: var(--blauw); }
+.plaatje .tw-paneel { fill: var(--zacht); stroke: var(--lijn); stroke-width: 1; }
+.plaatje .tw-vel { fill: color-mix(in srgb, var(--blauw) 10%, transparent); stroke: var(--blauw); stroke-width: 1.2; stroke-dasharray: 3 3; }
+.plaatje .tw-wolk { fill: var(--paneel); stroke: var(--lijn-sterk); stroke-width: 1.5; }
+.plaatje .tw-bos { fill: color-mix(in srgb, var(--fam-natuur) 26%, var(--paneel)); }
+.plaatje .tw-water { fill: color-mix(in srgb, var(--blauw) 30%, var(--paneel)); }
+.plaatje .tw-water-lijn { fill: none; stroke: var(--blauw); stroke-width: 2.5; }
+.plaatje .tw-huis { fill: var(--inkt); }
+.plaatje .tw-boom { fill: color-mix(in srgb, var(--fam-natuur) 60%, var(--paneel)); stroke: var(--fam-natuur); stroke-width: 1; }
+.plaatje .tw-grens { fill: none; stroke: var(--paars); stroke-width: 3; stroke-dasharray: 8 4; }
+.plaatje .tw-rooster { fill: none; stroke: var(--stil); stroke-width: 0.8; }
+.plaatje .tw-cirkel { fill: none; stroke: var(--blauw); stroke-width: 1.4; stroke-dasharray: 4 3; }
+.plaatje .tw-geest { opacity: 0.45; }
+.plaatje .tw-kraal-rood { fill: #d1141b; stroke: #7d0b10; stroke-width: 1; }
+.plaatje .tw-kraal-groen { fill: #2e9d46; stroke: #17582a; stroke-width: 1; }
+/* lila is light, green middle, red dark: the beads differ in lightness too, not only in hue */
+.plaatje .tw-kraal-lila { fill: #c7a6f0; stroke: #6a4596; stroke-width: 1; }
+.plaatje .tw-touw-lijn { fill: none; stroke: #6b4f2a; stroke-width: 1.4; }
+.plaatje .tw-touw { fill: none; stroke: #b9905a; stroke-width: 3; stroke-linecap: round; stroke-linejoin: round; }
+.plaatje .tw-touw-knoop { fill: #9a7442; stroke: #6b4f2a; stroke-width: 1; }
+.plaatje .tw-gezicht { fill: color-mix(in srgb, #f2c200 35%, var(--paneel)); stroke: var(--inkt); stroke-width: 2; }
+.plaatje .tw-oogwit { fill: #ffffff; stroke: var(--inkt); stroke-width: 1.6; }
+.plaatje .tw-lint { fill: #e5342b; }
+.plaatje .tw-stam { fill: #8a5a2b; }
+.plaatje .tw-kroon { fill: color-mix(in srgb, var(--fam-natuur) 45%, var(--paneel)); stroke: var(--fam-natuur); stroke-width: 1.2; }
+.plaatje .tw-steen { fill: #a7a49c; stroke: #5d5a53; stroke-width: 1.4; }
+.plaatje .tw-metro-a { fill: none; stroke: #d1141b; stroke-width: 6; stroke-linecap: round; stroke-linejoin: round; }
+.plaatje .tw-metro-b { fill: none; stroke: #0066b2; stroke-width: 6; stroke-linecap: round; stroke-linejoin: round; }
+.plaatje .tw-metro-c { fill: none; stroke: #2e9d46; stroke-width: 6; stroke-linecap: round; stroke-linejoin: round; }
+.plaatje .tw-station { fill: var(--paneel); stroke: var(--inkt); stroke-width: 2; }
+.plaatje .tw-blok { fill: var(--inkt); }
+.plaatje .tw-noord.dik { stroke-width: 5; }
+
+/* -- the drawings of the rules, compass routes and tochtvormen */
+.plaatje .tw-goed { fill: none; stroke: var(--accent); stroke-width: 4; stroke-linecap: round; stroke-linejoin: round; }
+.plaatje .tw-fout { fill: none; stroke: var(--rood); stroke-width: 4; stroke-linecap: round; }
+.plaatje .tw-spiegel { fill: none; stroke: var(--blauw); stroke-width: 2; stroke-dasharray: 6 4; }
+.plaatje .tw-weg.breed { stroke-width: 34; stroke-linecap: butt; }
+.plaatje .tw-rugzak { fill: var(--accent); }
+.plaatje .tw-jas { fill: var(--blauw); }
+.plaatje .tw-zand { fill: color-mix(in srgb, #e9dfb6 60%, var(--paneel)); }
+.plaatje .tw-zandpad { fill: none; stroke: color-mix(in srgb, #e9dfb6 60%, var(--paneel)); stroke-width: 26; stroke-linecap: round; }
+.plaatje .tw-haai { fill: var(--paneel); stroke: var(--inkt); stroke-width: 1; stroke-linejoin: round; }
+.plaatje .tw-kegel { fill: #8a5a2b; stroke: #5a3a1b; stroke-width: 1; }
+.plaatje .tw-kegel-lijn { fill: none; stroke: #5a3a1b; stroke-width: 1.2; }
+.plaatje .tw-metaal { fill: var(--stil); }
+.plaatje .tw-metaal-lijn { fill: none; stroke: var(--stil); stroke-width: 5; stroke-linecap: round; }
+.plaatje .tw-plaatje { fill: var(--paneel); stroke: var(--inkt); stroke-width: 1.4; }
+.plaatje .tw-plak { fill: var(--zacht); stroke: var(--stil); stroke-width: 1.2; stroke-dasharray: 4 3; }
+.plaatje .tw-post { fill: none; stroke: var(--rood); stroke-width: 2.5; stroke-linejoin: round; }
+.plaatje .tw-post.keuze { stroke-dasharray: 4 3; }
+.plaatje .tw-bonus { fill: #f2c200; stroke: #8a6d00; stroke-width: 1; stroke-linejoin: round; }
+.plaatje .accent-licht, .plaatje .vol-licht { stroke: none; }
+.plaatje .tw-paars { fill: var(--paars); }
+.plaatje .tw-bruin { fill: var(--bruin); }
+/* real things keep their own colours: asphalt and chalk, tyre tracks, Dutch road signs */
+.plaatje .tw-asfalt { fill: none; stroke: #6f7377; stroke-width: 40; stroke-linejoin: round; }
+.plaatje .tw-krijt-weg { fill: none; stroke: #f4f1e6; stroke-width: 4; stroke-linecap: round; stroke-linejoin: round; }
+.plaatje .tw-band { fill: none; stroke: #2f3235; stroke-width: 7; opacity: 0.6; }
+.plaatje .tw-bord-blauw { fill: #1f4e9c; stroke: #ffffff; stroke-width: 1.5; }
+.plaatje .tw-bord-wit { fill: none; stroke: #ffffff; stroke-width: 8; }
+.plaatje .tw-bord-rood { fill: none; stroke: #d1141b; stroke-width: 6; }
+.plaatje .tw-bord-licht { fill: #ffffff; stroke: #17211b; stroke-width: 1.5; }
+.plaatje .tw-bord-tekst { fill: #17211b; }
+.plaatje .tw-bord-wit-tekst { fill: #ffffff; font-weight: 600; }
+
+/* src/plaatjes/touw.css */
+/* Classes for the drawings of touw (./touw.js), next to .plaatje in src/style.css. A rope keeps its own colour in
+   both themes (manilla, blue, red; a wooden pole, a metal ring): a dark edge around a body with a lighter core, so a
+   crossing reads on a light and on a dark panel. In the dark theme the bodies are a little less bright. */
+:root {
+  --tw-a: #e2b46a; --tw-a-rand: #5f4119; --tw-a-kern: #f7dfaa;
+  --tw-b: #6cb2d6; --tw-b-rand: #1b4a63; --tw-b-kern: #c3e5f4;
+  --tw-c: #e4846b; --tw-c-rand: #742a17; --tw-c-kern: #f8c9bb;
+  --tw-paal: #a2723f; --tw-paal-rand: #4a2f14;
+  --tw-ring: #b3bdc4; --tw-ring-rand: #434f57; --tw-ring-kern: #eef2f4;
+  --tw-garen: #f3efe4; --tw-garen-rand: #5d5546;
+}
+@media (prefers-color-scheme: dark) {
+  :root:not([data-theme="light"]) {
+    --tw-a: #cf9f55; --tw-a-kern: #e9c98b; --tw-b: #569fc6; --tw-b-kern: #a9d4e8; --tw-c: #d5735a; --tw-c-kern: #eeb2a2;
+    --tw-paal: #946638; --tw-ring: #9eaab2; --tw-ring-kern: #d9e1e5; --tw-garen: #e4dfd2;
+  }
+}
+:root[data-theme="dark"] {
+  --tw-a: #cf9f55; --tw-a-kern: #e9c98b; --tw-b: #569fc6; --tw-b-kern: #a9d4e8; --tw-c: #d5735a; --tw-c-kern: #eeb2a2;
+  --tw-paal: #946638; --tw-ring: #9eaab2; --tw-ring-kern: #d9e1e5; --tw-garen: #e4dfd2;
+}
+
+.plaatje .tw-rand, .plaatje .tw-lijf, .plaatje .tw-kern, .plaatje .tw-pijl, .plaatje .tw-wijs, .plaatje .tw-takel, .plaatje .tw-lijn { fill: none; stroke-linejoin: round; }
+.plaatje .tw-rand.a { stroke: var(--tw-a-rand); }
+.plaatje .tw-lijf.a { stroke: var(--tw-a); }
+.plaatje .tw-kern.a { stroke: var(--tw-a-kern); }
+.plaatje .tw-rand-vul.a, .plaatje .tw-takel.a { fill: var(--tw-a-rand); stroke: var(--tw-a-rand); }
+.plaatje .tw-lijf-vul.a { fill: var(--tw-a); }
+.plaatje .tw-rand.b { stroke: var(--tw-b-rand); }
+.plaatje .tw-lijf.b { stroke: var(--tw-b); }
+.plaatje .tw-kern.b { stroke: var(--tw-b-kern); }
+.plaatje .tw-rand-vul.b, .plaatje .tw-takel.b { fill: var(--tw-b-rand); stroke: var(--tw-b-rand); }
+.plaatje .tw-lijf-vul.b { fill: var(--tw-b); }
+.plaatje .tw-rand.c { stroke: var(--tw-c-rand); }
+.plaatje .tw-lijf.c { stroke: var(--tw-c); }
+.plaatje .tw-kern.c { stroke: var(--tw-c-kern); }
+.plaatje .tw-rand-vul.c, .plaatje .tw-takel.c { fill: var(--tw-c-rand); stroke: var(--tw-c-rand); }
+.plaatje .tw-lijf-vul.c { fill: var(--tw-c); }
+.plaatje .tw-rand.paal { stroke: var(--tw-paal-rand); }
+.plaatje .tw-lijf.paal { stroke: var(--tw-paal); }
+.plaatje .tw-kern.paal { stroke: var(--tw-paal-rand); opacity: 0.35; stroke-dasharray: 18 11; }
+.plaatje .tw-rand.tros { stroke: var(--tw-b-rand); }
+.plaatje .tw-lijf.tros { stroke: var(--tw-b); }
+.plaatje .tw-kern.tros { stroke: var(--tw-b-kern); }
+.plaatje .tw-rand.kern { stroke: var(--tw-a-rand); }
+.plaatje .tw-lijf.kern { stroke: var(--tw-a); }
+.plaatje .tw-kern.kern { stroke: var(--tw-a-kern); }
+.plaatje .tw-rand.kikker { stroke: var(--tw-ring-rand); stroke-linecap: round; }
+.plaatje .tw-lijf.kikker { stroke: var(--tw-ring); stroke-linecap: round; }
+.plaatje .tw-kern.kikker { stroke: var(--tw-ring-kern); stroke-linecap: round; }
+.plaatje .tw-rand.ton { stroke: var(--tw-paal-rand); }
+.plaatje .tw-lijf.ton { stroke: var(--tw-paal); }
+.plaatje .tw-kern.ton { stroke: var(--tw-paal-rand); opacity: 0.25; }
+.plaatje .tw-rand.ring { stroke: var(--tw-ring-rand); }
+.plaatje .tw-lijf.ring { stroke: var(--tw-ring); }
+.plaatje .tw-kern.ring { stroke: var(--tw-ring-kern); }
+.plaatje .tw-rand.garen { stroke: var(--tw-garen-rand); }
+.plaatje .tw-lijf.garen { stroke: var(--tw-garen); }
+.plaatje .tw-rand-vul.garen { fill: var(--tw-garen-rand); }
+.plaatje .tw-lijf-vul.garen { fill: var(--tw-garen); }
+.plaatje .tw-takel { stroke-width: 1.3; }
+
+.plaatje .tw-slag { stroke-width: 1.2; opacity: 0.55; fill: none; }
+.plaatje .tw-slag.a { stroke: var(--tw-a-rand); }
+.plaatje .tw-slag.b { stroke: var(--tw-b-rand); }
+.plaatje .tw-vezel { fill: none; stroke: var(--tw-a-rand); stroke-width: 1; }
+.plaatje .tw-patroon { stroke: var(--tw-garen-rand); stroke-width: 1; }
+.plaatje .tw-patroon.dun { stroke-width: 0.7; }
+.plaatje .tw-bordtekst { fill: var(--tw-paal-rand); font-weight: 600; }
+.plaatje .tw-metaal-lijn { fill: none; stroke: var(--tw-ring-rand); stroke-width: 3; stroke-linecap: round; }
+.plaatje .tw-metaal-licht-lijn { fill: none; stroke: var(--tw-ring-kern); stroke-width: 2.5; stroke-linecap: round; }
+.plaatje .tw-paal-lijn { fill: none; stroke: var(--tw-paal); stroke-width: 10; stroke-linecap: round; }
+.plaatje .tw-zand { fill: color-mix(in srgb, var(--bruin) 22%, var(--paneel)); }
+.plaatje .tw-kruis { fill: none; stroke: var(--rood); stroke-width: 4; stroke-linecap: round; }
+.plaatje .tw-glans { fill: color-mix(in srgb, var(--tw-a-kern) 70%, #ffffff); stroke: var(--tw-a-rand); stroke-width: 1.2; }
+
+/* Pull arrows, pointers to a label, and the things around a knot (board, barrel, tools). */
+.plaatje .tw-pijl { stroke: var(--stil); stroke-width: 1.6; stroke-linecap: round; }
+.plaatje .tw-pijlpunt { fill: var(--stil); }
+.plaatje .tw-pijl.rood, .plaatje .tw-wijs.rood { stroke: var(--rood); }
+.plaatje .tw-pijlpunt.rood { fill: var(--rood); }
+.plaatje .tw-wijs { stroke: var(--stil); stroke-width: 0.8; }
+.plaatje .tw-wijs-punt { fill: var(--stil); }
+.plaatje .tw-hout { fill: var(--tw-paal); stroke: var(--tw-paal-rand); stroke-width: 1.4; stroke-linejoin: round; }
+.plaatje .tw-hout-licht { fill: color-mix(in srgb, var(--tw-paal) 55%, #ffffff); stroke: var(--tw-paal-rand); stroke-width: 1.4; stroke-linejoin: round; }
+.plaatje .tw-nerf { fill: none; stroke: var(--tw-paal-rand); stroke-width: 0.8; opacity: 0.45; }
+.plaatje .tw-metaal { fill: var(--tw-ring); stroke: var(--tw-ring-rand); stroke-width: 1.4; stroke-linejoin: round; }
+.plaatje .tw-metaal-licht { fill: var(--tw-ring-kern); }
+.plaatje .tw-gevaar { fill: color-mix(in srgb, var(--rood) 14%, transparent); stroke: var(--rood); stroke-width: 1.2; stroke-dasharray: 5 4; }
+.plaatje .tw-vlam { fill: #f08c1a; }
+.plaatje .tw-vlam-binnen { fill: #ffd23f; }
+.plaatje .tw-smelt { fill: var(--tw-a-rand); }
+
+/* src/plaatjes/veiligheid.css */
+/* Classes for the drawings of veiligheid (./veiligheid.js), next to .plaatje in src/style.css. */
+.plaatje .vh-lucht { fill: color-mix(in srgb, var(--blauw) 10%, var(--paneel)); }
+.plaatje .vh-ijs { fill: color-mix(in srgb, #bfe3f2 55%, var(--paneel)); }
+.plaatje .vh-oever { fill: color-mix(in srgb, var(--fam-natuur) 35%, var(--paneel)); }
+.plaatje .vh-wak { fill: color-mix(in srgb, #1d4f7a 80%, var(--paneel)); }
+.plaatje .vh-tak { fill: none; stroke: #8a5a2b; stroke-width: 4; stroke-linecap: round; }
+.plaatje .vh-buiten { fill: color-mix(in srgb, var(--fam-natuur) 14%, var(--paneel)); }
+.plaatje .vh-gat { stroke: var(--paneel); stroke-width: 6; }
+.plaatje .vh-route { fill: none; stroke: #11904a; stroke-width: 3; stroke-dasharray: 8 5; stroke-linecap: round; }
+.vh-strandvlag { max-width: 200px; }
+.plaatje .vh-zand { fill: color-mix(in srgb, #d9b56a 45%, var(--paneel)); }
+.plaatje .vh-golf { fill: none; stroke: #ffffff; stroke-width: 2.4; stroke-linecap: round; opacity: 0.85; }
+.plaatje .vh-mui { fill: none; stroke: var(--rood); stroke-width: 2.4; stroke-linecap: round; stroke-linejoin: round; }
+.plaatje .vh-zwemmer { fill: #e9b98f; stroke: #a8745a; }
+.plaatje .vh-pad { fill: none; stroke: var(--accent); stroke-width: 2.6; stroke-dasharray: 6 4; stroke-linecap: round; }
+.plaatje .vh-rook { fill: #6b6f75; opacity: 0.75; }
+.plaatje .tekst.vh-op-rook { fill: #ffffff; }
+.plaatje .vh-deur { fill: color-mix(in srgb, var(--bruin) 45%, var(--paneel)); stroke: var(--inkt); stroke-width: 1.2; }
+.plaatje .vh-buitendeur { fill: var(--paneel); stroke: var(--inkt); stroke-width: 1.2; }
+.plaatje .vh-huid { fill: #e9b98f; }
+.plaatje .vh-huidrand { fill: none; stroke: #a8745a; stroke-width: 1.4; }
+.plaatje .tekst.vh-op-huid { fill: #5b3a22; }
+.plaatje .vh-splinter { fill: #9a6a32; stroke: #5b3a12; stroke-width: 1; }
+.plaatje .vh-splinter-onder { fill: #9a6a32; opacity: 0.45; }
+.plaatje .vh-plek { fill: #d7262b; opacity: 0.45; }
+.plaatje .vh-plek-koud { fill: #3c78c8; opacity: 0.5; }
+.plaatje .vh-straal { fill: none; stroke: #6eb0f0; stroke-width: 6; stroke-linecap: round; opacity: 0.9; }
+.plaatje .vh-straal.dun { stroke-width: 3.5; }
+.plaatje .vh-brand { fill: #e0625a; opacity: 0.8; }
+.plaatje .vh-lijf { fill: var(--lijn-sterk); }
+.plaatje .vh-beet { fill: #7a1d1d; }
+.plaatje .vh-ring { fill: none; stroke: #d7262b; stroke-width: 7; opacity: 0.55; }
+.plaatje .vh-ring-licht { fill: none; stroke: #d7262b; stroke-width: 3; opacity: 0.18; }
+.plaatje .vh-stap-blauw { fill: color-mix(in srgb, var(--blauw) 20%, var(--paneel)); stroke: var(--blauw); stroke-width: 1.2; }
+.plaatje .vh-stap-oranje { fill: color-mix(in srgb, #ec7414 22%, var(--paneel)); stroke: #ec7414; stroke-width: 1.2; }
+.plaatje .vh-stap-rood { fill: color-mix(in srgb, var(--rood) 22%, var(--paneel)); stroke: var(--rood); stroke-width: 1.2; }
+.plaatje .tekst.vh-op-zand { fill: var(--inkt); }
+
+/* src/plaatjes/vuur.css */
+/* Classes for the drawings of vuur, koken and gereedschap (./vuur.js, ./koken.js, ./gereedschap.js), next to
+   .plaatje in src/style.css. Wood, flame and metal keep their own colours in both themes; the ground and the sand
+   follow the panel. The --vk-* colours are also used by the pieces in src/doe/vuur/. */
+:root {
+  --vk-hout: #9a6233;
+  --vk-hout-rand: #5e3b1a;
+  --vk-kop: #dcae74;
+  --vk-vlam: #f08c1a;
+  --vk-vlam-binnen: #ffd23f;
+  --vk-kool: #d9480f;
+  --vk-tondel: #e9cf73;
+  --vk-zand: #e6d3a3;
+  --vk-metaal: #9aa6ae;
+  --vk-metaal-rand: #56636b;
+  --vk-water: #8cc4e8;
+  --vk-grond: color-mix(in srgb, var(--bruin) 22%, var(--paneel));
+  --vk-gat: #3b2a1c;
+}
+@media (prefers-color-scheme: dark) {
+  :root:not([data-theme="light"]) { --vk-zand: #8c7a50; --vk-kop: #c8975c; --vk-water: #3f7fae; --vk-grond: color-mix(in srgb, var(--bruin) 26%, var(--paneel)); --vk-gat: #0c0805; }
+}
+:root[data-theme="dark"] { --vk-zand: #8c7a50; --vk-kop: #c8975c; --vk-water: #3f7fae; --vk-grond: color-mix(in srgb, var(--bruin) 26%, var(--paneel)); --vk-gat: #0c0805; }
+
+.plaatje .vk-hout { fill: none; stroke: var(--vk-hout); stroke-linecap: round; }
+.plaatje .vk-hout-rand { fill: none; stroke: var(--vk-hout-rand); stroke-linecap: round; }
+.plaatje .vk-hout-vol { fill: var(--vk-hout); stroke: var(--vk-hout-rand); stroke-width: 1.2; stroke-linejoin: round; }
+.plaatje .vk-kop { fill: var(--vk-kop); stroke: var(--vk-hout-rand); stroke-width: 1.2; }
+.plaatje .vk-jaar { fill: none; stroke: var(--vk-hout-rand); stroke-width: 0.8; opacity: 0.6; }
+.plaatje .vk-vlam { fill: var(--vk-vlam); }
+.plaatje .vk-vlam-binnen { fill: var(--vk-vlam-binnen); }
+.plaatje .vk-kool { fill: var(--vk-kool); }
+.plaatje .vk-tondel { fill: var(--vk-tondel); stroke: #a7852a; stroke-width: 0.8; }
+.plaatje .vk-grond { fill: var(--vk-grond); }
+.plaatje .vk-gat { fill: var(--vk-gat); }
+.plaatje .vk-zand { fill: var(--vk-zand); }
+.plaatje .vk-water { fill: var(--vk-water); }
+.plaatje .vk-metaal { fill: var(--vk-metaal); stroke: var(--vk-metaal-rand); stroke-width: 1.2; stroke-linejoin: round; }
+.plaatje .vk-metaal-lijn { fill: none; stroke: var(--vk-metaal-rand); stroke-width: 1.4; stroke-linecap: round; }
+.plaatje .vk-rook { fill: none; stroke: var(--stil); stroke-width: 2.5; stroke-linecap: round; opacity: 0.55; }
+.plaatje .vk-pijl { fill: none; stroke: var(--blauw); stroke-width: 2.2; stroke-linecap: round; stroke-linejoin: round; }
+.plaatje .vk-pijl-kop { fill: var(--blauw); }
+.plaatje .vk-warm { fill: none; stroke: var(--rood); stroke-width: 2; stroke-linecap: round; stroke-linejoin: round; }
+.plaatje .vk-warm-kop { fill: var(--rood); }
+.plaatje .vk-wijs { fill: none; stroke: var(--stil); stroke-width: 1; }
+.plaatje .vk-touw { fill: none; stroke: #c9a227; stroke-width: 2.4; stroke-linecap: round; }
+.plaatje .vk-hand { fill: #e8b98f; stroke: #8a5a3a; stroke-width: 1.2; stroke-linejoin: round; }
+.plaatje .vk-staal { fill: #c7d0d6; stroke: #56636b; stroke-width: 1.2; stroke-linejoin: round; }
+.plaatje .vk-snede { fill: none; stroke: var(--rood); stroke-width: 2.4; stroke-linecap: round; }
+
+/* src/plaatjes/waarnemen.css */
+/* Classes for the drawings of waarnemen (./waarnemen.js), next to .plaatje in src/style.css. */
+.plaatje .wn-huid { fill: #e9b98f; stroke: #a8745a; stroke-width: 1; }
+.plaatje .wn-lucht { fill: color-mix(in srgb, var(--blauw) 10%, var(--paneel)); }
+.plaatje .wn-oever { fill: color-mix(in srgb, var(--fam-natuur) 35%, var(--paneel)); }
+.plaatje .wn-water { fill: color-mix(in srgb, var(--blauw) 40%, var(--paneel)); }
+.plaatje .wn-weg { fill: none; stroke: color-mix(in srgb, var(--stil) 55%, var(--paneel)); stroke-width: 9; stroke-linecap: round; stroke-linejoin: round; }
+.plaatje .wn-pad { stroke-width: 4; stroke-dasharray: 6 4; stroke: color-mix(in srgb, var(--bruin) 60%, var(--paneel)); }
+.plaatje .wn-beek { fill: none; stroke: color-mix(in srgb, var(--blauw) 55%, var(--paneel)); stroke-width: 3; }
+.plaatje .wn-route { fill: none; stroke: var(--rood); stroke-width: 2.4; stroke-dasharray: 7 4; stroke-linecap: round; stroke-linejoin: round; }
+.plaatje .wn-zand { fill: #ecdcb6; }   /* sand stays sand-coloured in the dark theme too */
+.plaatje .wn-voet { fill: #cdb37f; stroke: #6b4f26; stroke-width: 0.8; }
+.plaatje .wn-diep { fill: #5a4320; }
+.plaatje .wn-teen { fill: #6b4f26; }
+.plaatje .wn-korrel { fill: #7a5a2a; }
+.plaatje .wn-druppel { fill: #b89a5e; stroke: #6b4f26; stroke-width: 0.8; }
+.plaatje .wn-blaadje { fill: #8aa04a; stroke: #4f6a1e; stroke-width: 0.8; }
+.plaatje .wn-band { fill: #c9b47e; opacity: 0.9; }
+.plaatje .wn-profiel { fill: none; stroke: #6b4f26; stroke-width: 1.2; }
+.plaatje .wn-gras-rand { fill: none; stroke: #9db36a; stroke-width: 10; stroke-linecap: round; opacity: 0.7; }
+/* on sand (which stays sand in the dark theme): dark ink and a dark green */
+.plaatje .tekst.wn-op-zand { fill: #3b2d16; }
+.plaatje .lijn.wn-zandlijn { stroke: #3b2d16; }
+.plaatje .lijn.wn-zoek { stroke: #0b6b35; stroke-width: 2; }
+
+/* src/plaatjes/weer.css */
+/* Classes for the drawings of weer (./weer.js), next to .plaatje in src/style.css. Mixed from the colour tokens, so
+   the light and the dark theme both work: the sky darkens with the panel, the clouds stay light. */
+.plaatje .w-lucht { fill: color-mix(in srgb, var(--blauw) 24%, var(--paneel)); }
+.plaatje .w-band { fill: color-mix(in srgb, var(--paneel) 22%, transparent); }
+.plaatje .w-grond { fill: color-mix(in srgb, var(--fam-natuur) 38%, var(--paneel)); }
+.plaatje .w-stam { stroke: #8b5a2b; stroke-width: 2.5; }
+.plaatje .w-boom { fill: color-mix(in srgb, var(--fam-natuur) 75%, var(--inkt)); }
+.plaatje .wolk { fill: color-mix(in srgb, #ffffff 84%, var(--paneel)); }
+.plaatje .wolk-voet { stroke: color-mix(in srgb, #8a96a3 60%, var(--paneel)); stroke-width: 3; stroke-linecap: round; }
+.plaatje .w-licht { fill: color-mix(in srgb, #d5dbe1 85%, var(--paneel)); }
+.plaatje .w-grijs { fill: color-mix(in srgb, #a7b1bb 80%, var(--paneel)); }
+.plaatje .w-laag { fill: color-mix(in srgb, #9aa5b0 80%, var(--paneel)); }
+.plaatje .w-donker { fill: color-mix(in srgb, #4e5966 88%, var(--paneel)); }
+.plaatje .w-sluier { fill: color-mix(in srgb, #ffffff 34%, transparent); }
+.plaatje .w-matglas { fill: color-mix(in srgb, #9aa5b0 55%, transparent); }
+.plaatje .w-rand { fill: none; stroke: color-mix(in srgb, #9aa5b0 80%, var(--paneel)); stroke-width: 6; }
+.plaatje .w-halo { fill: none; stroke: color-mix(in srgb, #ffffff 70%, transparent); stroke-width: 3; }
+.plaatje .w-veeg { fill: none; stroke: color-mix(in srgb, #ffffff 88%, var(--paneel)); stroke-width: 3; stroke-linecap: round; }
+.plaatje .w-veeg.dun { stroke-width: 1.6; }
+.plaatje .w-regen { stroke: var(--blauw); stroke-width: 1.4; stroke-linecap: round; }
+.plaatje .w-motregen { stroke: var(--blauw); stroke-width: 1.4; stroke-linecap: round; stroke-dasharray: 1 5; }
+.plaatje .w-flits { fill: #f4c400; stroke: #b88a00; stroke-width: 0.8; }
+.plaatje .w-zon { fill: #ffd84a; stroke: #f0a800; stroke-width: 1.5; }
+.plaatje .w-zon-klein { fill: #ffd84a; stroke: #e09400; stroke-width: 1.2; }
+.plaatje .w-zon-mat { fill: #fff6cf; }
+.plaatje .w-straal { stroke: #f0a800; stroke-width: 2; stroke-linecap: round; }
+.plaatje .w-kaartje { fill: var(--paneel); opacity: 0.92; }
+.plaatje .op-donker { fill: #ffffff; }
+
+.plaatje .w-windpijl { stroke: var(--blauw); stroke-width: 2.5; stroke-linecap: round; stroke-linejoin: round; fill: none; }
+.plaatje .w-zee { fill: color-mix(in srgb, var(--blauw) 55%, var(--paneel)); }
+.plaatje .w-land { fill: color-mix(in srgb, #d9a441 55%, var(--paneel)); }
+.plaatje .w-luchtpijl { stroke: var(--blauw); stroke-width: 3; stroke-linecap: round; stroke-linejoin: round; fill: none; }
+.plaatje .w-luchtpijl.dun { stroke-width: 1.8; stroke-dasharray: 5 4; }
+.plaatje .w-luchtpijl.warm { stroke: var(--rood); }
+.plaatje .w-laagdruk { fill: color-mix(in srgb, var(--rood) 14%, var(--paneel)); stroke: var(--rood); stroke-width: 1.5; }
+.plaatje .w-hoogdruk { fill: color-mix(in srgb, var(--blauw) 14%, var(--paneel)); stroke: var(--blauw); stroke-width: 1.5; }
+
+.plaatje .w-front { fill: none; stroke-width: 3; }
+.plaatje .w-front.warm { stroke: #d1141b; }
+.plaatje .w-front.koud { stroke: #1f6fd1; }
+.plaatje .w-front.occlusie { stroke: #8e3fa0; }
+.plaatje .w-warm { fill: #d1141b; }
+.plaatje .w-koud { fill: #1f6fd1; }
+.plaatje .w-occlusie { fill: #8e3fa0; }
+.plaatje .w-koudelucht { fill: color-mix(in srgb, var(--blauw) 20%, transparent); }
+
+.plaatje .w-zonlicht { stroke: #e0a000; stroke-width: 2; stroke-linecap: round; }
+.plaatje .w-nachtkant { fill: rgb(0 0 0 / 0.45); }
+.plaatje .w-maan { fill: #f3efd9; }
+.plaatje .w-maan-donker { fill: #39424f; }
+.plaatje .w-baan { fill: none; stroke-width: 2.5; stroke-linecap: round; }
+.plaatje .w-baan.zomer { stroke: #e07b00; }
+.plaatje .w-baan.lente { stroke: var(--accent); stroke-dasharray: 6 4; }
+.plaatje .w-baan.winter { stroke: var(--blauw); }
+
+/* weer bijhouden, waarschuwingen, zonkracht */
+.plaatje .w-schaduw { fill: color-mix(in srgb, var(--inkt) 16%, transparent); }
+.plaatje .w-water { fill: color-mix(in srgb, var(--blauw) 45%, var(--paneel)); }
+.plaatje .w-avondgloed { fill: color-mix(in srgb, #f08a3c 55%, var(--paneel)); }
+.plaatje .w-zon-laag { fill: #ff9a3c; stroke: #e0601c; stroke-width: 1.5; }
+.plaatje .w-avondrood { fill: color-mix(in srgb, #e2513a 80%, var(--paneel)); }
+.plaatje .w-zonstraal { stroke: #f0a800; stroke-width: 1.4; stroke-dasharray: 4 4; fill: none; }
+.plaatje .w-zonstraal.sterk { stroke-width: 3; stroke-dasharray: none; }
+.plaatje .w-code-geel { fill: #f7d417; }
+.plaatje .w-code-oranje { fill: #f28c00; }
+.plaatje .w-code-rood { fill: #d71920; }
+.plaatje .w-code-geel-tekst, .plaatje .w-code-oranje-tekst { fill: #1f1a00; }
+.plaatje .w-code-rood-tekst { fill: #ffffff; }
+.plaatje .w-zk1 { fill: #bfe3a8; }
+.plaatje .w-zk2 { fill: #f7e27a; }
+.plaatje .w-zk3 { fill: #f6a85a; }
+.plaatje .w-zk4 { fill: #e9665a; }
+.plaatje .w-zk-getal { fill: #1d1d1d; }
+
+/* the night sky keeps its own dark colours in both themes, as in the sky pieces */
+.plaatje .w-nachtgrond, .plaatje .w-silhouet { fill: #050a10; }
+.plaatje .w-lood { stroke: #ff8a8a; stroke-width: 1.5; stroke-dasharray: 4 4; }
+.plaatje .w-pool { fill: none; stroke: #f4e700; stroke-width: 1.5; }
+.plaatje .w-zuid { fill: #ff8a8a; font-weight: 800; }
+.plaatje .w-nachttekst { fill: #e8eef8; }
+.plaatje .w-stadlucht { fill: #3a3550; }
+.plaatje .w-melkweg { fill: rgb(220 228 255 / 0.13); }
+.plaatje .w-stofwolk { fill: rgb(5 10 16 / 0.5); }
+.plaatje .w-issbaan { fill: none; stroke: rgb(255 255 255 / 0.25); stroke-width: 1; stroke-dasharray: 2 4; }
+.plaatje .w-iss { fill: #ffffff; }
+.plaatje .w-vliegbaan { stroke: rgb(255 255 255 / 0.2); stroke-width: 1; stroke-dasharray: 6 5; }
+.plaatje .w-rood-licht { fill: #ff4040; }
+.plaatje .w-groen-licht { fill: #3ddc6a; }
+.plaatje .w-knipper { stroke: #ffffff; stroke-width: 1.2; stroke-linecap: round; }
+.plaatje .w-schemer { fill: #1d3150; opacity: 0.85; }
+.plaatje .w-ecliptica { stroke: #f4c400; stroke-width: 1.2; stroke-dasharray: 5 5; }
+.plaatje .w-gloed { fill: rgb(255 248 214 / 0.25); }
+.plaatje .w-planeet { fill: #fff8d6; }
+.plaatje .w-schemergloed { fill: #7a4e4a; }
+.plaatje .w-avondgloed-nacht { fill: #b0684a; opacity: 0.8; }

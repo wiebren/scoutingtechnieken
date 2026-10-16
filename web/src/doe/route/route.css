@@ -1,0 +1,183 @@
+/* The route walker (route.js): the world and the buttons on the left, the route in its notation on the right when
+   there is room; on a phone everything under each other. Drawings in the colours of the theme. */
+.rw { display: flex; flex-direction: column; gap: 12px; min-width: 0; }
+.rw-kop { display: flex; flex-direction: column; gap: 10px; }
+.rw-opties { display: flex; flex-wrap: wrap; align-items: center; gap: 8px; }
+.rw-kiezers { display: grid; gap: 8px; }
+@container (min-width: 520px) { .rw-kiezers { grid-template-columns: 1fr 1fr; } }
+
+.rw-hoofd { display: grid; gap: 14px; min-width: 0; }
+@container (min-width: 700px) { .rw-hoofd { grid-template-columns: minmax(0, 1.4fr) minmax(0, 1fr); align-items: start; } }
+.rw-links, .rw-rechts { display: flex; flex-direction: column; gap: 10px; min-width: 0; }
+
+/* the world: a box with a fixed shape that the canvas (or the map) fills */
+.rw-wereld { position: relative; }
+.rw-scherm {
+  position: relative; width: 100%; aspect-ratio: 4 / 3; max-height: 72vh; overflow: hidden; border-radius: 10px;
+  background: color-mix(in srgb, var(--accent) 12%, var(--zacht)); border: 1px solid var(--lijn); touch-action: manipulation;
+}
+.rw-canvas { display: block; width: 100%; height: 100%; }
+.rw-laden { position: absolute; inset: 0; display: grid; place-items: center; margin: 0; color: var(--stil); }
+.rw-hud { position: absolute; inset: 8px 8px auto 8px; display: flex; justify-content: space-between; align-items: flex-start; pointer-events: none; }
+.rw-hud-nr {
+  padding: 3px 9px; border-radius: 8px; background: color-mix(in srgb, var(--paneel) 88%, transparent); color: var(--inkt);
+  font-size: 13px; font-weight: 700; font-variant-numeric: tabular-nums;
+}
+.rw-kompas { width: 46px; height: 46px; }
+.rw-kompas-rond { fill: color-mix(in srgb, var(--paneel) 88%, transparent); stroke: var(--lijn-sterk); stroke-width: 1.5; }
+.rw-kompas-noord { fill: var(--rood); }
+.rw-kompas-zuid { fill: var(--stil); }
+.rw-kompas-n { display: none; }
+
+/* the buttons for the roads */
+.rw-knoppen { display: flex; flex-wrap: wrap; gap: 8px; min-height: 44px; }
+.rw-keuze { flex: 1 1 108px; min-width: 0; gap: 6px; padding: 8px 10px; }
+.rw-keuze-nr, .rw-keuze svg { flex: none; }
+.rw-knoppen.namen .rw-keuze { flex-basis: 150px; }
+.rw-keuze-tekst { display: flex; flex-direction: column; align-items: flex-start; min-width: 0; line-height: 1.2; text-align: left; }
+.rw-keuze-tekst small { font-size: 12px; font-weight: 500; color: var(--stil); overflow-wrap: anywhere; }
+.rw-keuze-nr { display: grid; place-items: center; width: 22px; height: 22px; border-radius: 50%; background: var(--inkt); color: var(--paneel); font-size: 12px; }
+.rw-knop-pijl { fill: none; stroke: currentColor; stroke-width: 2.6; stroke-linecap: round; stroke-linejoin: round; }
+.rw-waar { margin: 0; color: var(--stil); font-size: 14px; }
+.rw-waar:empty { display: none; }
+.rw-einde { display: flex; flex-direction: column; gap: 8px; }
+.rw-legenda-regel { display: flex; align-items: center; gap: 6px; margin: 0; color: var(--stil); font-size: 13px; }
+.rw-lijn-groen, .rw-lijn-blauw { display: inline-block; width: 22px; height: 0; border-top: 5px solid color-mix(in srgb, var(--accent) 55%, transparent); }
+.rw-lijn-blauw { border-top: 2.5px solid var(--blauw); }
+
+/* the notation */
+.rw-notatie-kop { display: flex; flex-wrap: wrap; align-items: baseline; justify-content: space-between; gap: 6px; }
+.rw-routenr { color: var(--stil); font-size: 13px; font-variant-numeric: tabular-nums; }
+.rw-notatie { display: grid; gap: 14px; }
+@container (min-width: 700px) {
+  .rw-rechts { max-height: calc(100cqw * 0.58 * 0.75 + 120px); overflow-y: auto; padding-right: 2px; }
+}
+@container (min-width: 560px) and (max-width: 699px) { .rw-notatie.twee { grid-template-columns: 1fr 1fr; } }
+.rw-blok { display: flex; flex-direction: column; gap: 8px; min-width: 0; }
+.rw-blok h4 { margin: 0; font-size: 14px; color: var(--stil); }
+.rw-sleutel { font-size: 14px; }
+.rw-sleutel summary { cursor: pointer; color: var(--accent); font-weight: 600; min-height: 32px; display: flex; align-items: center; }
+.rw-sleutel ul { margin: 4px 0 8px; padding-left: 18px; }
+.rw-sleutel li { margin: 3px 0; }
+.rw-legenda { display: flex; flex-wrap: wrap; gap: 6px 14px; padding: 0 !important; list-style: none; }
+.rw-legenda li { display: inline-flex; align-items: center; gap: 6px; }
+.rw-klok-uitleg { display: flex; flex-wrap: wrap; align-items: center; gap: 8px; color: var(--stil); }
+.rw-mini-oog svg { width: 34px; height: 32px; display: block; }
+
+/* marks: the current junction and the ones behind you */
+.rw .hier { outline: 2.5px solid var(--accent); outline-offset: 2px; border-radius: 8px; }
+.rw .gehad { opacity: 0.45; }
+.rw .rw-stap.hier, .rw .rw-stap.gehad { outline: none; opacity: 1; }
+.rw-hier-ring { fill: color-mix(in srgb, var(--accent) 22%, transparent); stroke: var(--accent); stroke-width: 2; }
+
+/* lines shared by the drawings */
+.rw-pijl-lijn { stroke: var(--accent); stroke-width: 4; stroke-linecap: round; fill: none; }
+.rw-pijl-kop { fill: var(--accent); }
+.rw-pijl.dun .rw-pijl-lijn { stroke-width: 2.4; }
+.rw-pijl.inkt .rw-pijl-lijn { stroke: var(--inkt); stroke-width: 2.6; }
+.rw-pijl.inkt .rw-pijl-kop { fill: var(--inkt); }
+.rw-pijl.leespijl .rw-pijl-lijn { stroke: var(--stil); stroke-width: 1.4; }
+.rw-pijl.leespijl .rw-pijl-kop { fill: var(--stil); }
+.rw-bol { fill: var(--inkt); }
+.rw-stomp, .rw-stok, .rw-streepje { stroke: var(--inkt); stroke-width: 2.6; stroke-linecap: round; fill: none; }
+.rw-streepje { stroke-width: 2.2; }
+.rw-vlag { fill: var(--oranje); }
+.rw-nr { fill: var(--stil); font-size: 12px; font-weight: 700; }
+.rw-nr-tekst { color: var(--stil); font-size: 12px; font-weight: 700; }
+.rw-klein { fill: var(--inkt); font-size: 11px; }
+
+/* roads on a junction drawing: double line = paved, solid = cycle path, dashed = sand path, dotted = forest path */
+.rw-w-verhard-buiten { stroke: var(--inkt); stroke-width: 8; fill: none; }
+.rw-w-verhard-binnen { stroke: var(--paneel); stroke-width: 4.6; fill: none; }
+.rw-w-fietspad { stroke: var(--inkt); stroke-width: 2.6; fill: none; }
+.rw-w-zandpad { stroke: var(--inkt); stroke-width: 2.6; stroke-dasharray: 6 3.5; fill: none; }
+.rw-w-bospad { stroke: var(--inkt); stroke-width: 2.4; stroke-dasharray: 0.5 4; stroke-linecap: round; fill: none; }
+.rw-kt-vol { fill: var(--inkt); }
+.rw-kt-open { fill: var(--paneel); stroke: var(--inkt); stroke-width: 1.4; }
+.rw-kt-lijn { stroke: var(--inkt); stroke-width: 1.6; fill: none; stroke-linecap: round; }
+.rw-noord { fill: var(--rood); }
+.rw-noord-n { fill: var(--rood); font-size: 9px; font-weight: 800; }
+
+/* kruispunten in a grid of tiles */
+.rw-tegels { display: grid; grid-template-columns: repeat(auto-fill, minmax(92px, 1fr)); gap: 6px; margin: 0; padding: 0; list-style: none; }
+.rw-tegel { border: 1px solid var(--lijn); border-radius: 8px; background: var(--paneel); }
+.rw-tegel-svg { display: block; width: 100%; height: auto; }
+
+/* bolletje-pijltje: a row read from left to right */
+.rw-bp { display: flex; flex-wrap: wrap; gap: 2px; margin: 0; padding: 0; list-style: none; }
+.rw-bp-svg { display: block; width: 52px; height: 52px; }
+.rw-wr { display: flex; flex-wrap: wrap; gap: 6px 10px; margin: 0; padding: 0; list-style: none; }
+.rw-wr-svg { display: block; }
+
+/* stripkaart and the cords */
+.rw-strip, .rw-koord { display: flex; justify-content: center; }
+.rw-strip-svg { width: 120px; height: auto; }
+.rw-koord-svg { width: auto; height: auto; max-width: 100%; }
+.rw-strip { stroke-linecap: round; }
+.rw-strip path.rw-strip { stroke: var(--inkt); stroke-width: 3.2; fill: none; }
+.rw-tick { stroke: var(--inkt); stroke-width: 2.6; stroke-linecap: round; fill: none; }
+.rw-tick.onverhard { stroke-dasharray: 4.5 3; stroke-linecap: butt; }
+.rw-stap.gehad .rw-tick { opacity: 0.4; }
+.rw-touw { fill: none; stroke: var(--bruin); stroke-width: 3; stroke-linecap: round; }
+.rw-knoop { fill: var(--bruin); }
+.rw-kraal { stroke: var(--inkt); stroke-width: 1.2; }
+/* Beads keep their own colours in light and dark. Lila is light, green middle, red dark, so they also differ in
+   lightness for anyone who cannot tell the hues apart; "In woorden" writes the colour next to each bead. */
+.rw-kraal.groen { fill: #2e9d4a; }
+.rw-kraal.rood { fill: #b8231a; }
+.rw-kraal.lila { fill: #c7a6f0; }
+
+/* ogen and smileys */
+.rw-ogen { display: grid; grid-template-columns: repeat(auto-fill, minmax(64px, 1fr)); gap: 6px; margin: 0; padding: 0; list-style: none; }
+.rw-oog-item { display: flex; flex-direction: column; align-items: center; padding: 2px; }
+.rw-oog-svg { display: block; width: 58px; height: 54px; }
+.rw-oog { fill: #ffffff; stroke: var(--inkt); stroke-width: 2; }
+.rw-pupil { fill: #17211b; }
+.rw-oog-dicht { fill: var(--inkt); stroke: var(--inkt); stroke-width: 2; }
+.rw-gezicht { fill: #ffd84a; stroke: var(--inkt); stroke-width: 2; }
+.rw-mond { fill: none; stroke: #17211b; stroke-width: 2.4; stroke-linecap: round; }
+
+/* tijden */
+.rw-tijden { display: grid; grid-template-columns: repeat(auto-fill, minmax(118px, 1fr)); gap: 6px; margin: 0; padding: 0; list-style: none; }
+.rw-tijd { display: flex; align-items: center; gap: 8px; padding: 6px 8px; border: 1px solid var(--lijn); border-radius: 8px; }
+.rw-tijd strong { font-size: 18px; font-variant-numeric: tabular-nums; }
+.rw-klok { fill: var(--paneel); stroke: var(--inkt); stroke-width: 1.5; }
+.rw-klok-streep { stroke: var(--stil); stroke-width: 1.2; }
+.rw-wijzer-klein { stroke: var(--inkt); stroke-width: 3; stroke-linecap: round; }
+.rw-wijzer-groot { stroke: var(--accent); stroke-width: 2; stroke-linecap: round; }
+
+/* RLL-LLL and the description */
+.rw-rll { margin: 0; padding-left: 26px; font-variant-numeric: tabular-nums; }
+.rw-rll li { padding: 3px 4px; }
+.rw-tekst p { margin: 0; line-height: 1.6; }
+.rw-zin { border-radius: 4px; }
+.rw .rw-zin.hier { outline: none; background: color-mix(in srgb, var(--accent) 18%, transparent); }
+
+/* the map from above (kaart2d.js) */
+.rk-loopkaart, .rk-overzicht { display: block; width: 100%; height: 100%; }
+.rk-overzicht { height: auto; max-height: 420px; border: 1px solid var(--lijn); border-radius: 10px; background: color-mix(in srgb, var(--accent) 8%, var(--paneel)); }
+.rk-gras { fill: color-mix(in srgb, var(--accent) 14%, var(--zacht)); }
+.rk-weg { fill: none; stroke-linecap: round; }
+.rk-weg.verhard { stroke: color-mix(in srgb, var(--inkt) 55%, var(--paneel)); }
+.rk-weg.fietspad { stroke: #b4573f; }
+.rk-weg.zandpad { stroke: #d1b47a; }
+.rk-weg.bospad { stroke: #98764e; }
+.rk-smal { fill: none; stroke: #a99467; stroke-dasharray: 1.5 1.5; }
+.rk-baken { opacity: 0.85; }
+.rk-bedoeld { fill: none; stroke: color-mix(in srgb, var(--accent) 55%, transparent); stroke-width: 7; stroke-linecap: round; stroke-linejoin: round; }
+.rk-gelopen { fill: none; stroke: var(--blauw); stroke-width: 2.5; stroke-linecap: round; stroke-linejoin: round; }
+.rk-nr-rond { fill: var(--paneel); stroke: var(--inkt); stroke-width: 1; }
+.rk-nr { fill: var(--inkt); font-size: 8px; font-weight: 700; }
+.rk-start { fill: var(--blauw); }
+.rk-vlagstok { stroke: var(--inkt); stroke-width: 1.2; }
+.rk-vlag { fill: var(--oranje); }
+.rk-noord { fill: var(--rood); }
+.rk-loper { fill: var(--rood); stroke: #fff; stroke-width: 0.8; }
+.rk-raak { fill: none; stroke: transparent; stroke-width: 10; cursor: pointer; pointer-events: stroke; }
+.rk-raak.focus { stroke: color-mix(in srgb, #ffd84a 55%, transparent); }
+.rk-raak.hint { stroke: color-mix(in srgb, var(--accent) 50%, transparent); }
+.rk-badge { cursor: pointer; }
+.rk-badge circle { fill: #17211b; stroke: #fff; stroke-width: 0.8; }
+.rk-badge text { fill: #fff; font-size: 6.5px; font-weight: 700; pointer-events: none; }
+.rk-badge.focus circle { fill: #b38f00; }
+.rk-badge.hint circle { fill: var(--accent); }

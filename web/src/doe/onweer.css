@@ -1,0 +1,22 @@
+/* Flits en donder tellen (onweer.js). */
+.doe-onweer { display: flex; flex-direction: column; gap: 10px; }
+.doe-onweer p { margin: 0; }
+.ow-tellen { display: flex; align-items: center; gap: 16px; }
+.ow-knop { min-width: 150px; min-height: 64px; font-size: 22px; border-radius: 14px; }
+.ow-knop.telt { background: var(--blauw); border-color: var(--blauw); color: var(--paneel); }
+.ow-teller { font-size: 30px; font-weight: 750; font-variant-numeric: tabular-nums; }
+
+.ow-svg { display: block; width: 100%; max-width: 480px; height: auto; }
+.ow-as { stroke: var(--lijn-sterk); stroke-width: 1.5; fill: none; }
+.ow-gevaar { fill: color-mix(in srgb, var(--rood) 35%, transparent); }
+.ow-klein { fill: var(--stil); font-size: 11px; }
+.ow-tent { fill: var(--accent); }
+.ow-tent-lijn { stroke: var(--paneel); stroke-width: 1.5; }
+.ow-wolk-vorm { fill: var(--stil); }
+.ow-bliksem { fill: #f4c400; stroke: #b88a00; stroke-width: 0.8; }
+.dichtbij .ow-wolk-vorm { fill: var(--inkt); }
+@media (prefers-reduced-motion: no-preference) { .ow-wolk { transition: transform 0.2s ease-out; } }
+
+.ow-uitkomst { font-size: 17px; }
+.ow-advies { padding: 8px 12px; border-left: 4px solid var(--lijn-sterk); border-radius: 0 10px 10px 0; background: var(--zacht); }
+.ow-advies.gevaar { border-left-color: var(--rood); background: color-mix(in srgb, var(--rood) 11%, var(--paneel)); font-weight: 600; }

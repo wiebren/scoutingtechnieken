@@ -1,0 +1,27 @@
+/* Morse to see, hear and guess (morse.js). */
+.doe-morse { display: flex; flex-direction: column; gap: 12px; }
+.doe-morse p { margin: 0; }
+.ms-kies { display: flex; flex-wrap: wrap; justify-content: space-between; gap: 8px; }
+.ms-paneel { display: flex; flex-direction: column; gap: 10px; }
+
+.ms-tekens { display: flex; flex-wrap: wrap; gap: 6px 18px; }
+.ms-tekens:empty { display: none; }
+.ms-woord { display: inline-flex; flex-wrap: wrap; gap: 4px; }
+.ms-teken {
+  display: inline-flex; flex-direction: column; align-items: center; min-width: 38px; padding: 3px 6px 2px;
+  border: 1px solid var(--lijn); border-radius: 8px; background: var(--zacht);
+}
+.ms-teken b { font-size: 15px; line-height: 1.2; }
+.ms-teken span { font-size: 18px; line-height: 1.1; letter-spacing: 0.08em; color: var(--stil); white-space: nowrap; }
+.ms-teken.nu { border-color: var(--accent); background: color-mix(in srgb, var(--accent) 16%, var(--paneel)); }
+.ms-teken.nu span { color: var(--inkt); }
+.ms-regel { font-size: 17px; letter-spacing: 0.06em; word-spacing: 0.25em; overflow-wrap: anywhere; color: var(--stil); }
+.ms-regel:empty { display: none; }
+
+.ms-antwoord { display: flex; gap: 8px; }
+.ms-antwoord .doe-veld { flex: 1; max-width: 260px; text-transform: uppercase; }
+
+.ms-speler { display: flex; align-items: center; gap: 16px; padding: 10px 12px; border: 1px solid var(--lijn); border-radius: 12px; }
+.ms-speler .doe-lamp { width: 72px; height: 72px; }
+.ms-bediening { flex: 1; min-width: 0; display: flex; flex-direction: column; gap: 8px; }
+@container (min-width: 520px) { .ms-speler .doe-lamp { width: 96px; height: 96px; } }

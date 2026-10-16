@@ -1,0 +1,52 @@
+/* Shared by the pieces of waarnemen and veiligheid (./*.js): the colours of a drawn landscape, made from the theme
+   tokens so they turn dark with the rest, and the layout of a piece with a picture and some text. */
+.wn {
+  --wn-lucht: color-mix(in srgb, var(--blauw) 12%, var(--paneel));
+  --wn-gras: color-mix(in srgb, var(--fam-natuur) 24%, var(--paneel));
+  --wn-gras-donker: color-mix(in srgb, var(--fam-natuur) 42%, var(--paneel));
+  --wn-water: color-mix(in srgb, var(--blauw) 34%, var(--paneel));
+  --wn-water-licht: color-mix(in srgb, var(--blauw) 18%, var(--paneel));
+  --wn-kruin: color-mix(in srgb, var(--fam-natuur) 60%, var(--paneel));
+  --wn-stam: color-mix(in srgb, var(--bruin) 75%, var(--paneel));
+  --wn-zand: color-mix(in srgb, #d9b56a 45%, var(--paneel));
+  --wn-huid: #e9b98f;
+  display: flex; flex-direction: column; gap: 12px;
+}
+.wn p { margin: 0; }
+.wn-svg { display: block; width: 100%; height: auto; margin: 0 auto; touch-action: none; user-select: none; -webkit-user-select: none; }
+.wn-svg:focus-visible { outline: 2px solid var(--accent); outline-offset: 2px; border-radius: 8px; }
+.wn-rand { border: 1px solid var(--lijn); border-radius: 10px; background: var(--wn-lucht); }
+.wn-tekst { display: flex; flex-direction: column; gap: 10px; }
+.wn-groot { font-size: 18px; font-weight: 700; font-variant-numeric: tabular-nums; }
+.wn-rij { display: flex; flex-wrap: wrap; align-items: center; gap: 8px 12px; }
+.wn-rij .doe-veld { width: 7em; text-align: center; font-variant-numeric: tabular-nums; }
+.wn-score { color: var(--stil); font-size: 14px; font-variant-numeric: tabular-nums; }
+@container (min-width: 560px) {
+  .wn.naast { display: grid; grid-template-columns: minmax(0, 1.2fr) minmax(0, 1fr); align-items: start; gap: 16px; }
+}
+
+/* drawing classes for the SVG of the pieces */
+.wn-svg text { fill: var(--inkt); font-family: inherit; }
+.wn-svg .klein { font-size: 11px; }
+.wn-svg .stil { fill: var(--stil); }
+.wn-svg .lucht { fill: var(--wn-lucht); }
+.wn-svg .gras { fill: var(--wn-gras); }
+.wn-svg .gras-donker { fill: var(--wn-gras-donker); }
+.wn-svg .water { fill: var(--wn-water); }
+.wn-svg .water-licht { fill: var(--wn-water-licht); }
+.wn-svg .kruin { fill: var(--wn-kruin); }
+.wn-svg .stam { fill: var(--wn-stam); }
+.wn-svg .zand { fill: var(--wn-zand); }
+.wn-svg .huid { fill: var(--wn-huid); }
+.wn-svg .inkt { fill: var(--inkt); }
+.wn-svg .paneel { fill: var(--paneel); }
+.wn-svg .accent { fill: var(--accent); }
+.wn-svg .rood { fill: var(--rood); }
+.wn-svg .lijn { fill: none; stroke: var(--inkt); stroke-width: 1.5; stroke-linecap: round; stroke-linejoin: round; }
+.wn-svg .lijn.dun { stroke-width: 1; }
+.wn-svg .lijn.stil { stroke: var(--stil); }
+.wn-svg .zicht { fill: none; stroke: var(--accent); stroke-width: 1.6; stroke-dasharray: 5 4; }
+.wn-svg .zicht.rood { stroke: var(--rood); }
+.wn-svg .maat { fill: none; stroke: var(--rood); stroke-width: 1.6; }
+.wn-svg .greep { fill: var(--accent); fill-opacity: 0.18; stroke: var(--accent); stroke-width: 2; cursor: grab; }
+.wn-svg .greep:active { cursor: grabbing; }

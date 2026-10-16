@@ -1,0 +1,37 @@
+<!doctype html>
+<html lang="nl">
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <title>Plaatjes</title>
+</head>
+<body style="overflow: auto">
+  <!-- For development only (pnpm dev, /plaatjes.html): every drawing of src/plaatjes.js side by side, in the light
+       and the dark theme of the app. Not part of the build. -->
+  <main id="plaatjes" style="display: grid; grid-template-columns: repeat(auto-fill, minmax(320px, 1fr)); gap: 16px; padding: 16px"></main>
+  <script type="module">
+    import './src/style.css';
+    import './src/plaatjes/tocht.css';
+    import './src/plaatjes/waarnemen.css';
+    import './src/plaatjes/seinen.css';
+    import './src/plaatjes/geheimschrift.css';
+    import './src/plaatjes/vuur.css';
+    import './src/plaatjes/koken.css';
+    import './src/plaatjes/gereedschap.css';
+    import './src/plaatjes/kamperen.css';
+    import './src/plaatjes/natuur.css';
+    import './src/plaatjes/weer.css';
+    import './src/plaatjes/veiligheid.css';
+    import './src/plaatjes/touw.css';
+    import './src/plaatjes/sjorren.css';
+    import { PLAATJES } from './src/plaatjes.js';
+    const main = document.getElementById('plaatjes');
+    for (const [naam, teken] of Object.entries(PLAATJES)) {
+      const fig = document.createElement('figure');
+      fig.className = 'figuur';
+      fig.innerHTML = `${teken()}<figcaption style="text-align: center; color: var(--stil); font-size: 13px">${naam}</figcaption>`;
+      main.append(fig);
+    }
+  </script>
+</body>
+</html>

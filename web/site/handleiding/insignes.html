@@ -1,0 +1,119 @@
+<!doctype html>
+<html lang="nl">
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <title>Insignes · Handleiding Scoutingtechnieken</title>
+  <meta name="description" content="De insignes in Scoutingtechnieken: niveaus, afvinken wat je kunt, voortgang, de hoed en de ster, en ScoutBadger.">
+  <meta name="theme-color" content="#ffffff" media="(prefers-color-scheme: light)">
+  <meta name="theme-color" content="#18201b" media="(prefers-color-scheme: dark)">
+  <!-- Links into the app have data-app (the place in the app, after the #); site/maak.mjs sets their href. -->
+  <script>try { const t = JSON.parse(localStorage.getItem('scoutingtechnieken.thema.v1')); if (t === 'licht' || t === 'donker') document.documentElement.dataset.theme = t === 'donker' ? 'dark' : 'light'; } catch { /* auto */ }</script>
+  <link rel="icon" type="image/png" sizes="192x192" href="../img/icon-192.png">
+  <link rel="apple-touch-icon" href="../img/apple-touch-icon.png">
+  <link rel="stylesheet" href="../app.css">
+  <link rel="stylesheet" href="../site.css">
+</head>
+<body>
+  <!-- maak:kop -->
+  <a class="overslaan" href="#inhoud">Naar de inhoud</a>
+  <header class="kop">
+    <nav class="kop-nav" aria-label="Site">
+      <a class="merk" href=".././"><span class="merk-teken"><svg class="icoon" viewBox="0 0 24 24" aria-hidden="true"><path d="M12 1.5l1.9 8.6 8.6 1.9-8.6 1.9-1.9 8.6-1.9-8.6L1.5 12l8.6-1.9z" fill="currentColor" stroke="none"/></svg></span><span>Scoutingtechnieken</span></a>
+      <a class="kop-link" href=".././">Home</a>
+      <a class="kop-link" href="../handleiding/" aria-current="page">Handleiding</a>
+      <a class="knop hoofd klein" data-app="" href="../../">Open de app</a>
+    </nav>
+  </header>
+  <!-- /maak -->
+
+  <main id="inhoud" class="handleiding">
+    <nav class="handleiding-nav" aria-label="Handleiding">
+      <p class="handleiding-nav-kop">Handleiding</p>
+      <!-- maak:handleiding -->
+      <ol>
+        <li><a href="index.html">Beginnen</a></li>
+        <li><a href="zoeken.html">Zoeken</a></li>
+        <li><a href="onderwerp.html">Een onderwerp</a></li>
+        <li><a href="oefenen.html">Oefenen</a></li>
+        <li><a href="insignes.html" aria-current="page">Insignes</a></li>
+        <li><a href="instellingen.html">Instellingen</a></li>
+        <li><a href="melden.html">Melden</a></li>
+        <li><a href="leiding.html">Voor leiding</a></li>
+        <li><a href="bronnen.html">Bronnen en licentie</a></li>
+      </ol>
+      <!-- /maak -->
+    </nav>
+
+    <article class="tekst">
+      <h1>Insignes</h1>
+      <p class="lead">Onder <b>Insignes</b> staan de insignes van Scouting Nederland, elk met niveau
+        <span class="stip" data-niveau="1">1</span>, <span class="stip" data-niveau="2">2</span> en
+        <span class="stip" data-niveau="3">3</span>. Bij elke eis staan de onderwerpen die je erover kunt lezen of
+        oefenen, en je vinkt af wat je al kunt.</p>
+      <p>Er staan negen insignes in: Knopen, Pionieren, Navigeren, Vuur stoken, Houtbewerken, Kamperen, Koken, Natuur
+        &amp; Buitenleven en Veilig &amp; Gezond.</p>
+
+      <h2 id="overzicht">Het overzicht</h2>
+      <p>Elk insigne is een tegel met de afbeelding van het insigne en een balkje per niveau. Hoe voller het balkje, hoe
+        meer je hebt afgevinkt. Een hoed of een ster aan het eind van een balkje: zie <a href="#hoed">hieronder</a>.</p>
+
+      <h2 id="niveau">Een insigne en een niveau</h2>
+      <p>Tik op een insigne. Bovenaan kies je het niveau. Daaronder staat in een paar woorden wat dat niveau vraagt, en
+        hoe ver je bent, zoals <i>7/18</i>. Dan volgen de eisen, in groepjes, elk met een vinkje:</p>
+      <ul>
+        <li>Tik op de naam en de uitleg van het onderwerp opent.</li>
+        <li>Een eis zonder onderwerp staat er als tekst; die kun je ook afvinken.</li>
+        <li>Wat je hier afvinkt, staat ook afgevinkt bij het onderwerp zelf (<b>Ik kan dit</b>), en bij elk ander insigne
+          waar het in staat.</li>
+      </ul>
+      <p>Heb je in het menu een niveau gekozen, dan zie je alleen dat niveau. Zie
+        <a href="zoeken.html#niveau">Het niveau kiezen</a>.</p>
+
+      <h2 id="hoed">De hoed en de ster</h2>
+      <div class="voorbeeld klein" role="img" aria-label="Voorbeeld uit de app: niveau 1 helemaal afgevinkt, met de hoed">
+        <div aria-hidden="true">
+          <div class="m-voortgang" data-niveau="1"><span class="m-balkje"><span style="width: 100%"></span></span>18/18</div>
+          <div class="m-stand" data-niveau="1"><!-- maak:icoon hoed --><svg class="icoon" viewBox="0 0 24 24" aria-hidden="true"><path d="M2.5 16.2c0-1.5 4.3-2.6 9.5-2.6s9.5 1.1 9.5 2.6-4.3 2.6-9.5 2.6-9.5-1.1-9.5-2.6z"/><path d="M6.6 14.4C7 9.6 9 6.3 12 6c3 .3 5 3.6 5.4 8.4"/><path d="M12 6v3.6M9.6 7.6l1.2 2.9M14.4 7.6l-1.2 2.9"/><path d="M6.8 12.8c3.4.8 7 .8 10.4 0"/></svg><!-- /maak -->
+            <p><strong>Je kunt alles voor dit insigne.</strong> Vraag je leiding of je het mag laten zien.</p></div>
+        </div>
+      </div>
+      <ul>
+        <li><b>De hoed</b>: je hebt alles van een niveau afgevinkt. Vraag je leiding of je het mag laten zien. Gebruikt
+          je groep ScoutBadger? Dan zet je leiding het daarin.</li>
+        <li><b>De ster</b> <!-- maak:icoon ster icoon klein is-ster --><svg class="icoon klein is-ster" viewBox="0 0 24 24" aria-hidden="true"><path d="M12 3.2l2.7 5.6 6.1.9-4.4 4.3 1 6.1L12 17.2l-5.4 2.9 1-6.1-4.4-4.3 6.1-.9z"/></svg><!-- /maak -->: je hebt het insigne gekregen. Tik daarvoor
+          bij de hoed op <b>Ik heb hem gekregen</b>. Per ongeluk? Tik op <b>Toch niet</b>.</li>
+        <li><b>Heb je dit insigne al?</b> Heb je hem al gekregen voordat je alles had afgevinkt, tik dan op die vraag en
+          kies <b>Ja, ik heb hem</b>.</li>
+      </ul>
+
+      <h2 id="leiding">Wie beslist</h2>
+      <p>Afvinken is voor jezelf: het blijft op je eigen toestel en gaat nergens heen. Of je een insigne krijgt, beslist
+        je leiding. Gebruikt je groep <a href="https://www.scoutbadger.nl/">ScoutBadger</a>, de insigne-app van Scouting
+        Nederland, dan houdt je leiding je insignes daar bij.</p>
+      <p>De eisen staan in de app in eigen woorden. De officiële eisen staan in de
+        <a href="https://activiteitenbank.scouting.nl/insignes-en-badges/nieuwe-insignes">activiteitenbank van Scouting Nederland</a>.</p>
+
+      <h2 id="toestel">Een ander toestel</h2>
+      <p>Wat je afvinkt, staat alleen in de browser waarin je het deed. Op een andere telefoon, of in een andere browser,
+        begin je opnieuw. Hoe je het weer wist, staat bij <a href="instellingen.html#gegevens">Instellingen</a>.</p>
+
+      <!-- maak:volgende -->
+      <nav class="verder" aria-label="Verder lezen">
+        <a href="oefenen.html" rel="prev">‹ Oefenen</a>
+        <a href="instellingen.html" rel="next">Instellingen ›</a>
+      </nav>
+      <!-- /maak -->
+    </article>
+  </main>
+
+  <!-- maak:voet -->
+  <footer class="voet">
+    <div class="voet-binnen">
+      <p><a href=".././">Scoutingtechnieken</a> · <a href="../handleiding/">Handleiding</a> · <a href="../handleiding/melden.html">Melden</a> · <a href="../handleiding/bronnen.html">Bronnen en licentie</a> · <a data-app="" href="../../">Open de app</a></p>
+      <p>© 2026 Wiebren Braakman, onder <a href="https://creativecommons.org/licenses/by-nc-sa/4.0/deed.nl">CC BY-NC-SA 4.0</a>. Geen app van Scouting Nederland: een eigen project, gemaakt voor scouts en leiding.</p>
+    </div>
+  </footer>
+  <!-- /maak -->
+</body>
+</html>

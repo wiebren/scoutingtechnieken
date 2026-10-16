@@ -1,0 +1,19 @@
+/* Classes for the drawings of geheimschrift (./geheimschrift.js), next to .plaatje in src/style.css. */
+
+/* the letters of the tekenalfabetten (doe/seinen/lib/tekens.js), also drawn by the Codeermachine: not scoped */
+.gt-lijn { fill: none; stroke: var(--inkt); stroke-width: 3; stroke-linecap: round; stroke-linejoin: round; }
+.gt-stip { fill: var(--inkt); }
+.gt-leeg { fill: none; stroke: var(--lijn-sterk); stroke-width: 1.2; }
+.gt-teken { display: block; }
+
+.plaatje .sc-stok { fill: #c9a26b; stroke: #8b6a3a; stroke-width: 1.5; }
+.plaatje .sc-strook { stroke: color-mix(in srgb, var(--paneel) 80%, #f7efd8); stroke-width: 22; opacity: 0.9; }
+.plaatje .bl-papier { fill: var(--paneel); stroke: var(--lijn-sterk); }
+.plaatje .ml-getal { fill: #3a2c10; }
+.plaatje .ml-lat { fill: #f2d78a; stroke: #b08a2e; stroke-width: 1.2; }
+.plaatje .qu-koord { stroke: #a07a46; stroke-width: 3; stroke-linecap: round; }
+.plaatje .qu-koord.dik { stroke-width: 6; }
+.plaatje .qu-knoop { fill: #7a5a2e; stroke: #4e3a1c; stroke-width: 1; }
+.plaatje .qu-acht { fill: none; stroke: #4e3a1c; stroke-width: 4; }
+.plaatje .sp-spiegel { fill: color-mix(in srgb, var(--blauw) 35%, var(--paneel)); stroke: var(--blauw); }
+.plaatje .bk-woord { stroke-width: 4; stroke-linecap: round; opacity: 0.6; }

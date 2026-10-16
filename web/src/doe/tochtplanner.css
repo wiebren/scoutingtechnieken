@@ -1,0 +1,20 @@
+/* Plan a walk on the map (tochtplanner.js). */
+.doe-tochtplanner { display: grid; gap: 12px; }
+@container (min-width: 720px) { .doe-tochtplanner { grid-template-columns: minmax(0, 3fr) minmax(0, 2fr); align-items: start; } }
+.tp-beeld { min-width: 0; }
+.tp-svg { display: block; width: 100%; height: auto; touch-action: none; user-select: none; -webkit-user-select: none; cursor: crosshair;
+  border: 1px solid var(--lijn); border-radius: 12px; background: #fff; }
+.tp-beeld .doe-stil { margin-top: 6px; font-size: 12px; }
+.tp-lijn { fill: none; stroke: #d1141b; stroke-width: 4; stroke-linejoin: round; stroke-linecap: round; opacity: 0.85; }
+.tp-svg:focus-visible { outline: 3px solid var(--accent); outline-offset: 3px; }
+.tp-kruis { display: none; stroke: #0066b2; stroke-width: 3; }
+.tp-svg:focus-visible .tp-kruis { display: inline; }
+.tp-punt { cursor: grab; }
+.tp-punt circle { fill: #d1141b; stroke: #fff; stroke-width: 3; }
+.tp-punt.start circle { fill: #0066b2; }
+.tp-punt text { fill: #fff; font-size: 13px; font-weight: 700; pointer-events: none; }
+.tp-zijkant { display: flex; flex-direction: column; gap: 10px; min-width: 0; }
+.tp-instellingen { display: flex; flex-wrap: wrap; gap: 10px 16px; align-items: end; }
+.tp-pauze { width: 100px; }
+.tp-totaal { margin: 0; font-weight: 600; }
+.tp-tabel { font-variant-numeric: tabular-nums; }

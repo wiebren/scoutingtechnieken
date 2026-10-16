@@ -1,0 +1,22 @@
+/* The sun and a stick on the ground (zonnewijzer.js). */
+.doe-zonnewijzer { display: flex; flex-direction: column; gap: 12px; }
+.zw-svg { border-radius: 50%; }
+.zw-svg.draait { touch-action: none; cursor: grab; }
+.zw-grond { fill: color-mix(in srgb, var(--fam-natuur) 22%, var(--paneel)); }
+.zw-stok { fill: #8b5a2b; stroke: var(--inkt); stroke-width: 1; }
+.zw-schaduw { stroke: rgb(0 0 0 / 0.45); stroke-width: 6; stroke-linecap: round; }
+.zw-steen { fill: #9a9a92; stroke: var(--inkt); stroke-width: 1; }
+.zw-steen.kortst { stroke: var(--accent); stroke-width: 3; }
+.zw-cirkel { fill: none; stroke: var(--stil); stroke-width: 1; stroke-dasharray: 3 4; }
+.zw-label { fill: var(--inkt); font-size: 12px; font-weight: 600; paint-order: stroke; stroke: var(--paneel); stroke-width: 3px; }
+.zw-label.vet { font-weight: 800; font-size: 14px; }
+.zw-noord { stroke: var(--rood); stroke-width: 2.5; stroke-dasharray: 7 4; }
+.zw-noordletter { fill: var(--rood); font-size: 16px; font-weight: 800; paint-order: stroke; stroke: var(--paneel); stroke-width: 4px; }
+.zw-jouw { stroke: var(--accent); stroke-width: 3; stroke-linecap: round; }
+.zw-weoost { stroke: var(--blauw); stroke-width: 2.5; stroke-linecap: round; }
+.zw-plaat { fill: #e9e2cf; stroke: #8b7a5a; stroke-width: 1.5; }
+.zw-uurlijn { stroke: #8b7a5a; stroke-width: 1; }
+.zw-uurlijn.twaalf { stroke: #5a4a2a; stroke-width: 2; }
+.zw-uur { fill: #2a2418; font-size: 11px; font-weight: 600; }
+.zw-uur.twaalf { font-weight: 800; font-size: 13px; }
+.zw-stijl { fill: #5a4a2a; }

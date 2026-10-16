@@ -1,0 +1,50 @@
+/* The wind rose to learn the points by (windroos.js). Side by side when there is room, else the rose above the words. */
+.doe-windroos { display: grid; gap: 12px; }
+@container (min-width: 560px) { .doe-windroos { grid-template-columns: minmax(0, 300px) minmax(0, 1fr); align-items: start; } }
+
+.wr-beeld { max-width: 320px; width: 100%; margin: 0 auto; }
+.wr-svg { display: block; width: 100%; height: auto; user-select: none; -webkit-user-select: none; border-radius: 50%; }
+.wr-svg.wijzen { touch-action: none; cursor: pointer; }
+.wr-svg:focus-visible { outline: 3px solid var(--accent); outline-offset: 3px; }
+
+.wr-grond { fill: var(--zacht); }
+.wr-ring { fill: none; stroke: var(--lijn-sterk); stroke-width: 1; }
+.wr-as { fill: var(--inkt); }
+.wr-streep { stroke: var(--stil); stroke-width: 1.2; }
+.wr-links { fill: var(--stil); }
+.wr-rechts { fill: var(--lijn-sterk); }
+.wr-punt.hoofd .wr-links { fill: var(--inkt); }
+.wr-punt.hoofd .wr-rechts { fill: var(--stil); }
+.wr-naam { fill: var(--inkt); font-weight: 600; visibility: hidden; }
+.wr-naam.hoofd { font-weight: 700; }
+.wr-punt.genoemd .wr-naam { visibility: visible; }
+.wr-punt.noord .wr-links, .wr-punt.noord .wr-naam { fill: var(--rood); }
+
+/* the point under the finger, the one lit up, and the answer: right in green, wrong in red */
+.wr-punt.kandidaat .wr-links, .wr-punt.licht .wr-links { fill: var(--blauw); }
+.wr-punt.kandidaat .wr-rechts, .wr-punt.licht .wr-rechts { fill: color-mix(in srgb, var(--blauw) 55%, var(--paneel)); }
+.wr-punt.kandidaat .wr-streep, .wr-punt.licht .wr-streep { stroke: var(--blauw); stroke-width: 3; }
+.wr-punt.goed .wr-links { fill: var(--accent); }
+.wr-punt.goed .wr-rechts { fill: color-mix(in srgb, var(--accent) 55%, var(--paneel)); }
+.wr-punt.goed .wr-streep { stroke: var(--accent); stroke-width: 3; }
+.wr-punt.goed .wr-naam { fill: var(--accent); }
+.wr-punt.fout .wr-links { fill: var(--rood); }
+.wr-punt.fout .wr-rechts { fill: color-mix(in srgb, var(--rood) 55%, var(--paneel)); }
+.wr-punt.fout .wr-streep { stroke: var(--rood); stroke-width: 3; }
+.wr-punt.fout .wr-naam { fill: var(--rood); }
+@media (prefers-reduced-motion: no-preference) {
+  .wr-links, .wr-rechts { transition: fill 0.12s linear; }
+}
+
+.wr-tekst { display: flex; flex-direction: column; gap: 10px; min-width: 0; }
+.wr-tekst p { margin: 0; }
+.wr-vraag { font-size: 18px; }
+.wr-keuzes { display: grid; grid-template-columns: repeat(2, minmax(0, 1fr)); gap: 8px; }
+.wr-keuzes:empty { display: none; }
+.wr-keuze { flex-direction: column; gap: 0; min-height: 52px; font-size: 17px; }
+.wr-keuze:disabled { cursor: default; opacity: 0.6; }
+.wr-keuze.goed { opacity: 1; border-color: var(--accent); background: color-mix(in srgb, var(--accent) 14%, var(--paneel)); }
+.wr-keuze.fout { opacity: 1; border-color: var(--rood); background: color-mix(in srgb, var(--rood) 12%, var(--paneel)); }
+.wr-graden { color: var(--stil); font-size: 13px; font-weight: 500; font-variant-numeric: tabular-nums; }
+.wr-score { color: var(--stil); font-variant-numeric: tabular-nums; }
+.wr-score:empty { display: none; }

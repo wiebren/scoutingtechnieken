@@ -1,0 +1,57 @@
+/* Classes for the drawings of seinen (./seinen.js), next to .plaatje in src/style.css. The figure, the flags and the
+   morseboom are also drawn by the pieces in src/doe/seinen/, so these are not scoped to .plaatje. Flags keep their
+   real colours in the dark; the figure and the lines follow the theme. */
+
+/* the figure that signals (doe/seinen/lib/seinpop.js) */
+.sp-hoofd { fill: var(--zacht); stroke: var(--inkt); stroke-width: 1.8; }
+.sp-lijf { fill: color-mix(in srgb, var(--fam-sein) 30%, var(--paneel)); stroke: var(--inkt); stroke-width: 1.8; stroke-linejoin: round; }
+.sp-been { stroke: var(--inkt); stroke-width: 5; stroke-linecap: round; }
+.sp-arm { stroke: var(--inkt); stroke-width: 4.5; stroke-linecap: round; }
+.sp-stok { stroke: #8a6a3a; stroke-width: 2; stroke-linecap: round; }
+.sp-rood { fill: #d62828; }
+.sp-geel { fill: #ffd21f; }
+.sp-wit { fill: #ffffff; }
+.sp-blauw { fill: #1f4fa3; }
+.sp-vlagrand { fill: none; stroke: rgb(0 0 0 / 0.45); stroke-width: 0.8; stroke-linejoin: round; }
+.sp-greep { fill: color-mix(in srgb, var(--accent) 30%, transparent); stroke: var(--accent); stroke-width: 2; }
+
+/* seinvlaggen (doe/seinen/lib/vlaggen.js) */
+.vl-rand { fill: none; stroke: #2b2b2b; stroke-width: 1.2; stroke-linejoin: round; }
+
+/* morse */
+.mo-teken { fill: var(--inkt); }
+.mo-aan { fill: var(--fam-sein); }
+.mo-optekst { fill: var(--paneel); }
+
+/* the morseboom (doe/seinen/lib/boom.js) */
+.mb-tak { stroke: var(--lijn-sterk); stroke-width: 1.6; }
+.mb-tak.streep { stroke-width: 3; }
+.mb-tak.op { stroke: var(--accent); }
+.mb-knoop { fill: var(--paneel); stroke: var(--lijn-sterk); stroke-width: 1.4; }
+.mb-knoop.leeg { fill: var(--zacht); stroke-dasharray: 2 2; }
+.mb-knoop.start { fill: var(--stil); stroke: none; }
+.mb-knoop.op { stroke: var(--accent); stroke-width: 2; }
+.mb-knoop.nu { fill: var(--accent); stroke: var(--accent); }
+.mb-letter { fill: var(--inkt); font-weight: 700; }
+.mb-letter.nu { fill: var(--op-accent); }
+.mb-uitleg { fill: var(--stil); }
+
+/* noodseinen */
+.gl-grond { fill: color-mix(in srgb, #4f8a3a 45%, var(--paneel)); }
+.gl-teken { fill: none; stroke: #fff6c8; stroke-width: 6; stroke-linecap: round; stroke-linejoin: round; }
+.ss-zon { fill: #ffd21f; }
+.ss-straal { stroke: #f0b400; stroke-width: 2.5; stroke-linecap: round; }
+.ss-licht { stroke: #f0b400; stroke-width: 2; stroke-dasharray: 5 4; }
+.ss-spiegel { fill: color-mix(in srgb, var(--blauw) 25%, var(--paneel)); stroke: var(--inkt); stroke-width: 1.5; }
+.ss-vinger { fill: none; stroke: var(--inkt); stroke-width: 7; stroke-linecap: round; opacity: 0.75; }
+.ss-vliegtuig { fill: var(--inkt); }
+
+/* the drawings of handsignalen, noodseinen and portofoon */
+.sp-arm.gebogen { fill: none; stroke-linejoin: round; }
+.sp-spook { stroke: var(--stil); stroke-width: 3; stroke-dasharray: 3 3; stroke-linecap: round; opacity: 0.7; }
+.dr-vuur { fill: var(--oranje); stroke: #c0392b; stroke-width: 1; }
+.dr-vlam { fill: #e63322; }
+.dr-fakkel { fill: color-mix(in srgb, var(--rood) 55%, var(--paneel)); stroke: var(--inkt); stroke-width: 1; }
+.dr-rook { fill: #f08a24; opacity: 0.75; }
+.dl-op-accent { fill: var(--op-accent); }
+.pf-kast { fill: color-mix(in srgb, var(--inkt) 75%, var(--paneel)); stroke: var(--inkt); stroke-width: 1; }

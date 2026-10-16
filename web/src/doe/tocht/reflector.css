@@ -1,0 +1,14 @@
+/* Reflectortocht (reflector.js): a forest at night, the same in light and dark theme, because it is night. */
+.doe-reflector { display: flex; flex-direction: column; gap: 10px; }
+.doe-reflector p { margin: 0; }
+.rt-svg { display: block; width: 100%; height: auto; border-radius: 12px; touch-action: none; cursor: none; user-select: none; -webkit-user-select: none; }
+.rt-svg:focus-visible { outline: 3px solid var(--accent); outline-offset: 2px; }
+.rt-grond { fill: #3b4a2c; }
+.rt-pad { fill: none; stroke: #b8a57a; stroke-width: 16; stroke-linecap: round; }
+.rt-boom { fill: #22401f; stroke: #142812; stroke-width: 1.5; }
+.rt-stam { fill: #5b3f22; }
+.rt-ik { fill: #f2c200; stroke: #000; stroke-width: 1.5; }
+.rt-nacht { fill: #04060a; opacity: 0.96; }
+.rt-reflector { fill: #ff2a1a; stroke: #fff; stroke-width: 1.5; }
+.rt-glans { fill: rgb(255 80 60 / 0.35); }
+.rt-knoppen .knop { flex: 1 1 auto; }

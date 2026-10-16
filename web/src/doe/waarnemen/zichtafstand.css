@@ -1,0 +1,28 @@
+/* Afstand schatten op zicht (zichtafstand.js) */
+.za-svg { max-width: 520px; }
+.za-persoon path, .za-persoon circle { vector-effect: non-scaling-stroke; }
+.za-lijf { fill: var(--blauw); }
+.za-arm, .za-been { fill: none; stroke: color-mix(in srgb, var(--inkt) 70%, var(--paneel)); stroke-width: 2px; stroke-linecap: round; }
+.za-arm { stroke: var(--blauw); }
+.za-hoofd { fill: var(--wn-huid); }
+.za-haar { fill: #5a3a22; }
+.za-ogen circle { fill: #1b1b1b; }
+.za-ogen.groot circle { r: 1.5; }
+.za-mond { fill: none; stroke: #8a2b2b; stroke-width: 1px; }
+.za-knopen circle { fill: #f4f4f4; }
+.za-persoon.geen-gezicht .za-hoofd { fill: #6b6b6b; }
+.za-persoon.grijs .za-lijf, .za-persoon.grijs .za-hoofd, .za-persoon.grijs .za-haar { fill: color-mix(in srgb, var(--inkt) 70%, var(--paneel)); }
+.za-persoon.grijs .za-arm, .za-persoon.grijs .za-been { stroke: color-mix(in srgb, var(--inkt) 70%, var(--paneel)); }
+.za-been { transform-box: fill-box; transform-origin: top center; }
+@media (prefers-reduced-motion: no-preference) {
+  .za-persoon.loopt .za-been-l { animation: za-stap 0.8s ease-in-out infinite alternate; }
+  .za-persoon.loopt .za-been-r { animation: za-stap 0.8s ease-in-out infinite alternate-reverse; }
+}
+@keyframes za-stap { from { transform: rotate(-14deg); } to { transform: rotate(14deg); } }
+.za-lijst { margin: 0; padding-left: 20px; font-size: 14px; }
+.za-lijst li.wel { color: var(--inkt); }
+.za-lijst li.niet { color: var(--stil); text-decoration: line-through; }
+@media (prefers-reduced-motion: reduce) {
+  .za-persoon.loopt .za-been-l { transform: rotate(-14deg); }
+  .za-persoon.loopt .za-been-r { transform: rotate(14deg); }
+}

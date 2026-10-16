@@ -1,0 +1,18 @@
+/* Dwarsprofiel (dwarsprofiel.js) */
+.dp-svg { max-width: 520px; }
+.dp-bodem { fill: color-mix(in srgb, #7a5a35 60%, var(--paneel)); }
+.dp-water { fill: color-mix(in srgb, #6b7a52 85%, var(--paneel)); }
+.dp-water.open { fill: color-mix(in srgb, var(--blauw) 22%, transparent); }
+.dp-touw { stroke: #b08a4a; stroke-width: 2.5; fill: none; }
+.dp-merk { cursor: pointer; }
+.dp-merk circle { fill: var(--paneel); stroke: var(--inkt); stroke-width: 1.5; }
+.dp-merk.klaar circle { fill: var(--accent); stroke: var(--accent); }
+.dp-merk:focus-visible { outline: none; }
+.dp-merk:focus-visible circle { stroke: var(--accent); stroke-width: 3; }
+.dp-raak { fill: transparent; }
+.dp-steen { fill: #6d6d6d; }
+.dp-papier { fill: var(--paneel); stroke: var(--lijn-sterk); }
+.dp-raster path { stroke: color-mix(in srgb, #3c9c6a 30%, transparent); stroke-width: 0.5; }
+.dp-raster path.dik { stroke-width: 1; stroke: color-mix(in srgb, #3c9c6a 55%, transparent); }
+.dp-meetlijn { fill: none; stroke: var(--accent); stroke-width: 2; }
+.dp-echt { fill: none; stroke: var(--rood); stroke-width: 1.5; stroke-dasharray: 4 3; }

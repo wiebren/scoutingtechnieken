@@ -1,0 +1,58 @@
+/* The horlogemethode (horloge.js). Side by side when there is room, else the picture above the words. */
+.doe-horloge { display: grid; gap: 12px; }
+@container (min-width: 560px) { .doe-horloge { grid-template-columns: minmax(0, 300px) minmax(0, 1fr); align-items: start; } }
+
+.hw-beeld { max-width: 320px; width: 100%; margin: 0 auto; }
+.hw-svg { display: block; width: 100%; height: auto; touch-action: none; user-select: none; -webkit-user-select: none; cursor: grab; border-radius: 50%; font-family: inherit; }
+.hw-svg.sleept { cursor: grabbing; }
+.hw-svg:focus-visible { outline: 3px solid var(--accent); outline-offset: 3px; }
+
+.hw-grond { fill: var(--zacht); }
+.hw-streep { stroke: var(--lijn-sterk); stroke-width: 1.2; }
+.hw-letter { fill: var(--stil); font-size: 15px; font-weight: 700; }
+.hw-letter.zuid { fill: var(--inkt); }
+
+.hw-zon-gloed { fill: color-mix(in srgb, var(--geel) 30%, transparent); }
+.hw-zon-schijf { fill: var(--geel); stroke: var(--oranje); stroke-width: 1.5; }
+.hw-zon-straal { stroke: var(--oranje); stroke-width: 2; stroke-linecap: round; }
+
+.hw-kast { fill: var(--lijn-sterk); stroke: var(--inkt); stroke-width: 1.5; }
+.hw-wijzerplaat { fill: var(--paneel); }
+.hw-tik { stroke: var(--inkt); stroke-width: 2; }
+.hw-tik.dun { stroke: var(--stil); stroke-width: 0.8; }
+.hw-cijfer text { fill: var(--inkt); font-size: 13px; font-weight: 600; }
+.hw-merk { fill: transparent; }
+.hw-cijfer.doel .hw-merk { fill: var(--accent); }
+.hw-cijfer.doel text { fill: var(--op-accent); font-weight: 700; }
+.hw-kleine { stroke: var(--inkt); stroke-width: 6; stroke-linecap: round; }
+.hw-grote { stroke: var(--stil); stroke-width: 2.5; stroke-linecap: round; }
+.hw-as { fill: var(--inkt); }
+.raak .hw-kleine { stroke: var(--oranje); }
+
+.hw-helft { fill: none; stroke: var(--accent); stroke-width: 2; stroke-dasharray: 3 3; }
+.hw-deellijn { stroke: var(--accent); stroke-width: 3; stroke-linecap: round; }
+.hw-zuidmerk, .hw-noordmerk { font-size: 14px; font-weight: 800; paint-order: stroke; stroke: var(--zacht); stroke-width: 4px; stroke-linejoin: round; }
+.hw-zuidmerk { fill: var(--accent); }
+.hw-noordmerk { fill: var(--rood); }
+.hw-foutboog { fill: none; stroke: var(--rood); stroke-width: 2.5; }
+.hw-fouttekst { fill: var(--rood); font-size: 12px; font-weight: 700; paint-order: stroke; stroke: var(--zacht); stroke-width: 4px; stroke-linejoin: round; }
+
+@media (prefers-reduced-motion: no-preference) {
+  .hw-zon, .hw-kleine, .hw-grote { transition: transform 0.12s linear; }
+}
+
+.hw-tekst { display: flex; flex-direction: column; gap: 10px; min-width: 0; }
+.hw-tekst p { margin: 0; }
+.hw-klok { display: flex; align-items: center; gap: 10px; }
+.hw-label { color: var(--stil); font-size: 14px; }
+.hw-schuif { flex: 1; min-width: 0; min-height: 36px; margin: 0; accent-color: var(--accent); }
+.hw-tijd { min-width: 3.2em; font-weight: 700; font-variant-numeric: tabular-nums; text-align: right; }
+.hw-stappen { margin: 0; padding-left: 22px; color: var(--stil); }
+.hw-stappen li { margin: 2px 0; }
+.hw-stappen li.klaar { color: var(--inkt); }
+.hw-stappen li.klaar::marker { content: '✓  '; color: var(--accent); font-weight: 700; }
+.hw-stand { font-variant-numeric: tabular-nums; }
+.hw-melding { min-height: 1.5em; color: var(--accent); font-weight: 600; }
+.hw-knoppen { display: flex; flex-wrap: wrap; align-items: center; gap: 6px; }
+.hw-knoplabel { color: var(--stil); font-size: 14px; min-width: 64px; }
+.hw-noot { color: var(--stil); font-size: 13px; }

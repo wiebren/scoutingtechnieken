@@ -1,0 +1,36 @@
+/* The moon pieces of weer (maanfase.js, maankompas.js). */
+.doe-maanfase, .doe-maankompas { display: flex; flex-direction: column; gap: 12px; }
+.mf-zonlicht { fill: none; stroke: #e0a000; stroke-width: 2; stroke-linecap: round; stroke-linejoin: round; }
+.mf-baan { fill: none; stroke: var(--lijn-sterk); stroke-width: 1; stroke-dasharray: 3 4; }
+.mf-pijl { fill: none; stroke: var(--stil); stroke-width: 1.5; stroke-linecap: round; stroke-linejoin: round; }
+.mf-aarde { fill: var(--blauw); }
+.mf-nacht { fill: rgb(0 0 0 / 0.45); }
+.mf-zicht { fill: none; stroke: var(--accent); stroke-width: 3; stroke-linecap: round; }
+.mf-rand { fill: none; stroke: var(--lijn-sterk); stroke-width: 1; }
+.mf-groot { display: block; width: 96px; height: 96px; flex: none; border-radius: 50%; background: #0d1626; }
+.mf-zo { display: flex; align-items: center; gap: 14px; }
+.mf-zo p { margin: 0; }
+.mf-naam { font-size: 19px; font-weight: 700; }
+.mf-raad { display: flex; flex-direction: column; align-items: flex-start; gap: 10px; }
+.mf-raad p { margin: 0; }
+.mf-raad .mf-groot { width: 140px; height: 140px; }
+
+.mk-svg { touch-action: none; cursor: grab; border-radius: 50%; }
+.mk-schijf { fill: #f4efe2; stroke: #8b7a5a; stroke-width: 1.5; }
+.mk-schijf2 { fill: #d8c9a6; stroke: #8b7a5a; stroke-width: 1.5; }
+.mk-venster { fill: none; stroke: #5a4a2a; stroke-width: 2; }
+.mk-streep { stroke: #6b5a3a; stroke-width: 1.2; }
+.mk-letter { fill: #2a2418; font-size: 16px; font-weight: 800; }
+.mk-letter.noord { fill: #c8141b; }
+.mk-tussen { fill: #6b5a3a; font-size: 10px; font-weight: 700; }
+.mk-uur { fill: #2a2418; font-size: 12px; font-weight: 650; }
+.mk-uur.twaalf { font-weight: 800; }
+.mk-pen { fill: #5a4a2a; }
+.mk-uurwijzer { stroke: #ffd84a; stroke-width: 2.5; stroke-linecap: round; stroke-dasharray: 6 4; }
+.mk-svg.klaar .mk-uurwijzer { stroke-dasharray: none; }
+.mk-stappen { margin: 0; padding-left: 22px; color: var(--stil); }
+.mk-stappen li { margin: 2px 0; }
+.mk-stappen li.klaar { color: var(--inkt); }
+.mk-stappen li.klaar::marker { content: '✓  '; color: var(--accent); font-weight: 700; }
+.mk-knoppen { display: flex; flex-wrap: wrap; align-items: center; gap: 6px; }
+.mk-knoppen .doe-stil { margin-left: 4px; }

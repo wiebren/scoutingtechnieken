@@ -1,34 +1,102 @@
-// Oefenen: the interactive tools, which go across the categories (notities/onderwerpen.md, Gereedschappen). None
-// is built yet; this page says what is coming, in the order of "Eerst bouwen". Address: #/oefenen
-import { CATEGORIE } from './data/categorieen.js';
-import { h } from './dom.js';
+// Oefenen: the exercises of the bladen in one place, per category, and each one opened on its own at full width.
+// The list comes from the bladen themselves (`doe`), so a new exercise shows up here by itself; a piece marked
+// `bekijk` in src/doe/ (a viewer, a calculator, a checklist) stays on its card and out of the list. The list follows
+// the niveaus chosen in the menu: a piece is in it when one of its bladen is. A link opens any piece, `bekijk` or not.
+// Addresses: #/oefenen and #/oefenen?doe=kompas-koers
+import { BLADEN } from './data/bladen/index.js';
+import { CATEGORIE, CATEGORIEEN } from './data/categorieen.js';
+import { alles, inKeuze } from './data/niveaus.js';
+import { h, vul } from './dom.js';
+import { DOE } from './doe/index.js';
 import { icoon } from './iconen.js';
+import { meld } from './melden.js';
+import { niveauKeuze } from './opslag.js';
 import { href } from './router.js';
 
-const GEREEDSCHAPPEN = [
-  { naam: 'Codeermachine', wat: 'Tekst omzetten in een geheimschrift, morse of semafoor, en terug. Met een herkenner: welke code is dit?', in: ['geheimschrift', 'seinen'], eerst: true },
-  { naam: 'Seinspeler en -trainer', wat: 'Morse als geluid, licht en trilling; semafoor met een poppetje; noodseinen en fluitsignalen. Oefenen in je eigen tempo.', in: ['seinen'], eerst: true },
-  { naam: 'Stappenspeler', wat: 'Stap voor stap vooruit en achteruit door een sjorring, een vuur dat je opbouwt of een tent die je opzet.', in: ['sjorren', 'vuur', 'kamperen'] },
-  { naam: 'Kompas', wat: 'Een kompas op het scherm om de grepen te oefenen, en het kompas van je telefoon.', in: ['kaart', 'tocht'] },
-  { naam: 'Oefenkaart', wat: 'Een stuk topografische kaart dat ook zonder internet werkt, met coördinaten prikken, een oleaat en peillijnen.', in: ['kaart', 'tocht', 'waarnemen'] },
-  { naam: 'Routevertaler', wat: 'Eén route in elke notatie: bolletje-pijltje, stripkaart, kruispuntenroute. Lees de route, en loop hem op het scherm.', in: ['tocht'] },
-  { naam: 'Hemelrekenaar', wat: 'Zon, maan en sterren voor jouw plek en tijd: wanneer gaat de zon onder, waar staat de Poolster.', in: ['weer', 'kaart'] },
-  { naam: 'Herkenquiz', wat: 'Plaatje naar naam en terug: knopen, spoortekens, bomen, sporen, wolken, sterrenbeelden.', in: ['touw', 'tocht', 'natuur', 'weer'] },
-  { naam: 'Bouwplaat', wat: 'Slepen en neerzetten: een pionierobject met materiaallijst, een vuur, een kampterrein, een rugzak.', in: ['sjorren', 'vuur', 'kamperen'] },
-  { naam: 'Keuzehulp', wat: 'Een paar vragen naar een antwoord: welke knoop, welke sjorring, mag ik hier stoken?', in: ['touw', 'sjorren', 'vuur', 'kamperen'] },
-  { naam: 'Rekenhulpen', wat: 'Schaal, declinatie, RD naar GPS, flits en donder, touwsterkte.', in: ['kaart', 'weer', 'sjorren'] },
-];
+/** Every piece a blad shows, by name, each with those bladen; a piece belongs to the category of its first blad. */
+function alleStukken() {
+  const stukken = new Map();
+  for (const b of BLADEN) {
+    if (!b.doe || !DOE[b.doe]) continue;
+    if (!stukken.has(b.doe)) stukken.set(b.doe, { naam: b.doe, categorie: b.categorie, bladen: [] });
+    stukken.get(b.doe).bladen.push(b);
+  }
+  return stukken;
+}
+
+/** Per category the exercises: the pieces without `bekijk`. */
+function perCategorie(stukken) {
+  const oefeningen = [...stukken.values()].filter((s) => !DOE[s.naam].bekijk);
+  return CATEGORIEEN.map((c) => ({ categorie: c, stukken: oefeningen.filter((s) => s.categorie === c.id) }))
+    .filter((g) => g.stukken.length > 0);
+}
+
+const bladLink = (b) => href('zoeken', { c: b.categorie, blad: b.id });
 
 export function oefenenView() {
-  const el = h('div.view.enkel',
-    h('section.paneel',
-      h('header.balk', h('div.balk-rij', h('h1', 'Oefenen'))),
-      h('div.scroll', h('div.smal',
-        h('p.intro', 'Hier komen de onderdelen om mee te oefenen. Ze zijn nog niet gebouwd; dit is wat er komt, met bovenaan wat het eerst komt.'),
-        h('ul.gereedschappen', GEREEDSCHAPPEN.map((g) => h('li.gereedschap',
-          h('div.gereedschap-kop', h('h2', g.naam), h('span.label', g.eerst ? 'komt eerst' : 'later')),
-          h('p', g.wat),
-          h('ul.chips', g.in.map((c) => h('li', h('a.chip.klein', { href: href('zoeken', { c }), 'data-familie': CATEGORIE[c].kleur },
-            icoon(CATEGORIE[c].icoon, 'icoon klein'), CATEGORIE[c].naam)))))))))));
-  return { el, update() {}, titel: () => 'Oefenen' };
+  const alle = alleStukken();
+  const groepen = perCategorie(alle);
+  const stuk = (naam) => alle.get(naam);
+
+  // the niveaus chosen in the menu; `ookBuiten` shows the rest as well, until the choice changes
+  let ookBuiten = false;
+  const inhoud = h('div.smal');
+  const lijst = h('div.scroll', inhoud);
+  function tekenLijst() {
+    const keuze = niveauKeuze();
+    const toon = (s) => ookBuiten || s.bladen.some((b) => inKeuze(b.id, keuze));
+    const getoond = groepen.map((g) => ({ ...g, stukken: g.stukken.filter(toon) })).filter((g) => g.stukken.length > 0);
+    const aantal = getoond.reduce((n, g) => n + g.stukken.length, 0);
+    const weg = groepen.reduce((n, g) => n + g.stukken.length, 0) - aantal;
+    vul(inhoud,
+      h('p.intro', `${aantal} ${aantal === 1 ? 'oefening' : 'oefeningen'} om jezelf te testen: een route lopen, een morseletter raden, een wolk herkennen, een vuur bouwen. Elk hoort bij een onderwerp in Zoeken. Daar staat de uitleg, en daar vind je ook wat je alleen bekijkt of uitrekent, zoals de bouwwerken in 3D en de sterrenkaart.`),
+      getoond.map(({ categorie, stukken }) => h('section.oef-groep', { 'data-familie': categorie.kleur },
+        h('h2.oef-kop', icoon(categorie.icoon, 'icoon'), categorie.naam),
+        h('ul.oef-lijst', stukken.map((s) => h('li', h('a.oef-stuk', { href: href('oefenen', { doe: s.naam }) },
+          h('strong', DOE[s.naam].titel),
+          h('span', s.bladen.map((b) => b.naam).join(' · ')))))))),
+      weg > 0 && !ookBuiten && !alles(keuze) && h('div.buiten-lijst',
+        h('p', `Nog ${weg} bij andere niveaus.`),
+        h('button.knop.klein', { type: 'button', onclick: () => { ookBuiten = true; tekenLijst(); } }, 'Toon ze ook')));
+  }
+  tekenLijst();
+
+  const kop = h('h1');
+  const plek = h('div.doe-plek');
+  const lees = h('ul.chips');
+  const los = h('div.scroll', h('div.smal.oef-los', h('section.doe', plek), h('section.zieook', h('h3', 'Lees erover'), lees),
+    h('p.meld-link', h('button', { type: 'button', onclick: () => meld({ doe: open }) }, 'Werkt dit niet goed? Meld het'))));
+  const balk = h('header.balk', h('div.balk-rij', kop));
+  const terug = h('div.kruimel', h('a.kruimel-terug', { href: href('oefenen') }, icoon('terug', 'icoon klein'), 'Oefenen'));
+  const paneel = h('section.paneel', balk, lijst);
+  const el = h('div.view.enkel', paneel);
+  let open = null;
+
+  function update({ doe } = {}) {
+    const s = doe && stuk(doe);
+    if (!s) {
+      open = null;
+      kop.textContent = 'Oefenen';
+      terug.remove();
+      plek.replaceChildren();               // the piece cleans up after itself once it is out of the page
+      los.replaceWith(lijst);
+      if (!lijst.isConnected) paneel.append(lijst);
+      return;
+    }
+    balk.prepend(terug);
+    kop.textContent = DOE[s.naam].titel;
+    lees.replaceChildren(...s.bladen.map((b) => h('li', h('a.chip', { href: bladLink(b), 'data-familie': CATEGORIE[b.categorie].kleur }, b.naam))));
+    if (open !== s.naam) {
+      open = s.naam;
+      const d = DOE[s.naam];
+      plek.replaceChildren(h('p.leeg', 'Even laden…'));
+      d.laad().then((m) => { if (open === s.naam) plek.replaceChildren(m.default(d.opties ?? {})); })
+        .catch(() => { if (open === s.naam) plek.replaceChildren(h('p.leeg', 'Dit laadt niet. Probeer het later nog eens.')); dispatchEvent(new Event('laadfout')); });
+    }
+    lijst.replaceWith(los);
+    if (!los.isConnected) paneel.append(los);
+    los.scrollTop = 0;
+  }
+
+  return { el, update, herteken: () => { ookBuiten = false; tekenLijst(); }, titel: ({ doe } = {}) => (doe && stuk(doe) ? DOE[doe].titel : 'Oefenen') };
 }

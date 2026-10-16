@@ -1,0 +1,44 @@
+/* Hoogtelijnen to a profile (hoogte.js). The map and its profile side by side with the words when there is room. */
+.doe-hoogte { display: grid; gap: 12px; }
+@container (min-width: 620px) { .doe-hoogte { grid-template-columns: minmax(0, 380px) minmax(0, 1fr); align-items: start; } }
+
+.hp-beeld { display: flex; flex-direction: column; gap: 6px; max-width: 420px; width: 100%; margin: 0 auto; }
+.hp-svg { display: block; width: 100%; height: auto; touch-action: none; user-select: none; -webkit-user-select: none; cursor: crosshair;
+  border: 1px solid var(--lijn); border-radius: 10px; font-family: inherit; }
+.hp-svg.sleept { cursor: grabbing; }
+.hp-svg:focus-visible { outline: 3px solid var(--accent); outline-offset: 3px; }
+.hp-profielsvg { display: block; width: 100%; height: auto; font-family: inherit; }
+
+.hp-grond { fill: color-mix(in srgb, var(--bruin) 4%, var(--paneel)); }
+.hp-beek { fill: none; stroke: var(--blauw); stroke-width: 2; stroke-linecap: round; stroke-linejoin: round; }
+.hp-lijn { fill: none; stroke: var(--bruin); stroke-linejoin: round; }
+.hp-lijn.tien { stroke-width: 1.8; }
+.hp-lijn.vijf { stroke-width: 1; }
+.hp-lijn.half { stroke-width: 0.8; stroke-dasharray: 4 2.5; opacity: 0.7; }
+.hp-hoogtegetal { fill: var(--bruin); font-size: 10px; font-weight: 600; paint-order: stroke; stroke: var(--paneel); stroke-width: 3.5px; stroke-linejoin: round; }
+.hp-schaal { stroke: var(--inkt); stroke-width: 2; }
+.hp-klein { fill: var(--stil); font-size: 10px; }
+.hp-halo { paint-order: stroke; stroke: var(--paneel); stroke-width: 3.5px; stroke-linejoin: round; }
+
+.hp-meetlijn { stroke: var(--accent); stroke-width: 2.5; stroke-linecap: round; }
+.hp-kruisingen circle, .hp-stippen circle { fill: var(--paneel); stroke: var(--accent); stroke-width: 1.4; }
+.hp-greep { cursor: grab; }
+.hp-greep-rond { fill: var(--paneel); stroke: var(--accent); stroke-width: 2.5; }
+.hp-greep-letter { fill: var(--accent); font-size: 12px; font-weight: 800; }
+.hp-greep.actief .hp-greep-rond { fill: var(--accent); }
+.hp-greep.actief .hp-greep-letter { fill: var(--op-accent); }
+
+.hp-raster path { stroke: var(--lijn-sterk); stroke-width: 0.8; }
+.hp-raster path.dun { stroke: var(--lijn); }
+.hp-raster text { fill: var(--stil); font-size: 9.5px; font-variant-numeric: tabular-nums; }
+.hp-profiel { fill: color-mix(in srgb, var(--bruin) 22%, transparent); stroke: var(--bruin); stroke-width: 2; stroke-linejoin: round; }
+.hp-band .steil { fill: var(--bruin); }
+.hp-band .glooiend { fill: color-mix(in srgb, var(--bruin) 40%, var(--paneel)); }
+.hp-band .vlak { fill: var(--lijn); }
+.hp-woord { fill: var(--inkt); font-size: 11px; font-weight: 700; }
+.hp-woord.vlak { fill: var(--stil); }
+
+.hp-tekst { display: flex; flex-direction: column; gap: 10px; min-width: 0; }
+.hp-tekst p { margin: 0; }
+.hp-stand { font-variant-numeric: tabular-nums; }
+.hp-noot { color: var(--stil); font-size: 13px; }

@@ -1,13 +1,22 @@
 // Checks the data before a build (`pnpm check`, and the first step of `pnpm build`): every id once, every blad in
 // a groep its category has, every link to a blad that exists, and the insignelaag pointing only at bladen that
-// are there. A mistake stops the build with a list of what is wrong.
+// are there, and no interactive piece hiding another of the same name. A mistake stops the build with a list of what
+// is wrong; what is only odd (a piece or a drawing no blad uses) is listed, and the build goes on. At the end: how
+// many bladen each niveau of the menu shows (src/data/niveaus.js).
+import { existsSync, readdirSync, readFileSync } from 'node:fs';
+import { BEELDEN, BRONNEN } from '../src/data/beelden.js';
 import { BLAD, BLADEN } from '../src/data/bladen/index.js';
+import { DOE } from '../src/doe/index.js';
 import { CATEGORIE } from '../src/data/categorieen.js';
-import { INSIGNES, NIVEAUS } from '../src/data/insignes.js';
+import { GROEPEN } from '../src/doe/legenda/index.js';
+import { insigneBeeld, INSIGNES, NIVEAUS } from '../src/data/insignes.js';
+import { KEUZES, niveausVan } from '../src/data/niveaus.js';
+import { PLAATJES } from '../src/plaatjes.js';
 import { UPDATES } from '../src/data/updates.js';
 
 const fouten = [];
 const fout = (waar, wat) => fouten.push(`${waar}: ${wat}`);
+const opmerkingen = [];
 
 const gezien = new Set();
 for (const b of BLADEN) {
@@ -23,10 +32,19 @@ for (const b of BLADEN) {
   }
   for (const v of b.verwijs ?? []) if (!/^https:\/\//.test(v.url ?? '') || !v.naam) fout(waar, 'verwijs heeft een naam en een https-adres nodig');
   if (b.letterlijk && (!b.bron || !b.bronDatum)) fout(waar, 'een regel toont zijn bron en datum: geef ze allebei');
+  if (b.plaatje && !PLAATJES[b.plaatje]) fout(waar, `plaatje bestaat niet: ${b.plaatje}`);
+  if (b.doe && !DOE[b.doe]) fout(waar, `doe bestaat niet: ${b.doe} (src/doe/index.js)`);
+  for (const x of b.beelden ?? []) if (!BEELDEN[x.beeld]) fout(waar, `beeld bestaat niet: ${x.beeld}`);
+  if (b.beelden?.some((x) => x.titel) && !b.beelden.every((x) => x.titel)) fout(waar, 'geef elk beeld een titel, of geen enkel');
   if (b.tabel && b.tabel.rijen.some((r) => r.length !== b.tabel.kop.length)) fout(waar, 'een rij van de tabel heeft niet evenveel cellen als de kop');
   for (const veld of ['niveau', 'insigne', 'insignes', 'verzamelingen', 'klasse']) {
     if (veld in b) fout(waar, `"${veld}" hoort niet bij een blad: de insignelaag staat in src/data/insignes.js`);
   }
+}
+
+for (const [id, x] of Object.entries(BEELDEN)) {
+  if (!existsSync(new URL(`../public/${x.src}`, import.meta.url))) fout(`beeld ${id}`, `bestand ontbreekt: public/${x.src}`);
+  if (!x.alt || !BRONNEN[x.bron]) fout(`beeld ${id}`, 'een beeld heeft een alt-tekst en een bron uit BRONNEN nodig');
 }
 
 for (const i of INSIGNES) {
@@ -34,8 +52,36 @@ for (const i of INSIGNES) {
     if (!NIVEAUS.some((x) => String(x.niveau) === nr)) fout(`insigne ${i.id}`, `onbekend niveau ${nr}`);
     for (const d of n.delen) for (const id of d.bladen) if (!BLAD[id]) fout(`insigne ${i.id} niveau ${nr}`, `blad bestaat niet: ${id}`);
   }
+  for (const { niveau } of NIVEAUS) {
+    if (!existsSync(new URL(`../public/${insigneBeeld(i.id, niveau)}`, import.meta.url))) fout(`insigne ${i.id}`, `geen badge voor niveau ${niveau} (pnpm insignes)`);
+  }
   if (i.compleet && NIVEAUS.some(({ niveau }) => !i.niveaus[niveau]?.kort)) fout(`insigne ${i.id}`, 'compleet, maar niet elk niveau heeft een korte omschrijving');
 }
+
+for (const g of GROEPEN) {
+  if (g.tekens.length < 3) fout(`legenda ${g.id}`, 'te weinig tekens om uit te raden');
+  const namen = g.tekens.map((x) => x.naam);
+  if (new Set(namen).size !== namen.length) fout(`legenda ${g.id}`, 'twee tekens met dezelfde naam');
+  if (g.tekens.some((x) => !x.naam || !x.teken)) fout(`legenda ${g.id}`, 'een teken zonder naam of tekening');
+}
+
+// src/doe/index.js spreads the lists of its folders into DOE: a name in two of them hides one without a word
+const doeIndex = readFileSync(new URL('../src/doe/index.js', import.meta.url), 'utf8');
+const doeNamen = [...doeIndex.matchAll(/^ {2}'?([a-z0-9-]+)'?: \{/gm)].map((m) => m[1]);
+for (const map of readdirSync(new URL('../src/doe/', import.meta.url), { withFileTypes: true })) {
+  if (!map.isDirectory() || !existsSync(new URL(`../src/doe/${map.name}/index.js`, import.meta.url))) continue;
+  const lijst = (await import(`../src/doe/${map.name}/index.js`)).default;
+  if (lijst && typeof lijst === 'object' && !Array.isArray(lijst) && !('tekens' in lijst)) doeNamen.push(...Object.keys(lijst));
+}
+for (const naam of new Set(doeNamen.filter((n, k) => doeNamen.indexOf(n) !== k))) fout(`doe ${naam}`, 'deze naam staat in twee lijsten van src/doe/');
+
+const gebruikt = (veld) => new Set(BLADEN.map((b) => b[veld]).filter(Boolean));
+const doeGebruikt = gebruikt('doe');
+const plaatjeGebruikt = gebruikt('plaatje');
+const beeldGebruikt = new Set(BLADEN.flatMap((b) => (b.beelden ?? []).map((x) => x.beeld)));
+for (const naam of Object.keys(DOE)) if (!doeGebruikt.has(naam)) opmerkingen.push(`doe ${naam}: geen blad gebruikt het`);
+for (const naam of Object.keys(PLAATJES)) if (!plaatjeGebruikt.has(naam)) opmerkingen.push(`plaatje ${naam}: geen blad gebruikt het`);
+for (const naam of Object.keys(BEELDEN)) if (!beeldGebruikt.has(naam)) opmerkingen.push(`beeld ${naam}: geen blad gebruikt het`);
 
 if (UPDATES.some((u, k) => k > 0 && u.datum > UPDATES[k - 1].datum)) fout('updates', 'de nieuwste datum hoort bovenaan');
 
@@ -45,3 +91,5 @@ if (fouten.length) {
 }
 const inLaag = new Set(INSIGNES.flatMap((i) => Object.values(i.niveaus).flatMap((n) => n.delen.flatMap((d) => d.bladen))));
 console.log(`Data in orde: ${BLADEN.length} bladen in ${new Set(BLADEN.map((b) => b.categorie)).size} categorieën, ${inLaag.size} ervan in de insignelaag.`);
+console.log(`Per niveau in het menu: ${KEUZES.map((k) => `${k.naam} ${BLADEN.filter((b) => niveausVan(b.id).includes(k.key)).length}`).join(', ')}.`);
+if (opmerkingen.length) console.log(`Om na te kijken (${opmerkingen.length}):\n${opmerkingen.map((o) => `  - ${o}`).join('\n')}`);

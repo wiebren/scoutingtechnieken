@@ -1,0 +1,62 @@
+/* What the sky pieces of weer share (bediening.js and the pieces in this folder): the controls beside the picture,
+   and the picture itself. Side by side when there is room, else the picture above the words. */
+.hm { display: grid; gap: 12px; }
+@container (min-width: 600px) { .hm { grid-template-columns: minmax(0, 330px) minmax(0, 1fr); align-items: start; } }
+.hm-beeld { width: 100%; max-width: 360px; margin: 0 auto; }
+.hm-svg { display: block; width: 100%; height: auto; font-family: inherit; user-select: none; -webkit-user-select: none; }
+.hm-svg:focus-visible { outline: 3px solid var(--accent); outline-offset: 3px; border-radius: 12px; }
+.hm-tekst { display: flex; flex-direction: column; gap: 10px; min-width: 0; }
+.hm-tekst p { margin: 0; }
+.hm-schuif > span { color: var(--stil); }
+.hm-plaatsen { gap: 5px; }
+.hm-uitkomst { font-variant-numeric: tabular-nums; }
+.hm-tabel { width: 100%; border-collapse: collapse; font-size: 14px; font-variant-numeric: tabular-nums; }
+.hm-tabel th { text-align: left; color: var(--stil); font-weight: 600; padding: 3px 8px 3px 0; white-space: nowrap; }
+.hm-tabel td { padding: 3px 0; }
+.hm-noot { color: var(--stil); font-size: 13px; }
+
+/* the ground seen from above, its edge the horizon */
+.hm-grond { fill: var(--zacht); }
+.hm-horizon { fill: none; stroke: var(--lijn-sterk); stroke-width: 1.5; }
+.hm-ring { fill: none; stroke: var(--lijn); stroke-width: 1; stroke-dasharray: 2 4; }
+.hm-streep { stroke: var(--lijn-sterk); stroke-width: 1.2; }
+.hm-letter { fill: var(--stil); font-size: 14px; font-weight: 700; }
+.hm-letter.hoofd { fill: var(--inkt); }
+.hm-klein { fill: var(--stil); font-size: 11px; }
+.hm-label { fill: var(--inkt); font-size: 12px; font-weight: 650; paint-order: stroke; stroke: var(--zacht); stroke-width: 4px; stroke-linejoin: round; }
+
+.hm-zon-schijf { fill: #ffd84a; stroke: #e09400; stroke-width: 1.5; }
+.hm-zon-gloed { fill: rgb(255 216 74 / 0.35); }
+.hm-zonbaan { fill: none; stroke: #e09400; stroke-width: 2.5; stroke-linecap: round; }
+.hm-zonbaan.nacht { stroke: var(--lijn-sterk); stroke-width: 1.5; stroke-dasharray: 3 5; }
+.hm-schaduw { stroke: color-mix(in srgb, var(--inkt) 45%, transparent); stroke-width: 5; stroke-linecap: round; }
+.hm-stok { fill: var(--inkt); }
+.hm-wijzer { stroke: var(--accent); stroke-width: 2.5; stroke-linecap: round; }
+
+/* the night sky */
+.hm-nacht { fill: #0d1626; }
+.hm-schemer { fill: #1d3150; }
+.hm-dag { fill: #6f9fd0; }
+.hm-ster { fill: #fff8e0; }
+.hm-sterlijn { fill: none; stroke: rgb(170 200 255 / 0.5); stroke-width: 1.1; }
+.hm-sterlijn.licht { stroke: #ffd84a; stroke-width: 2; }
+.hm-sternaam { fill: #e8eef8; font-size: 11px; }
+.hm-beeldnaam { fill: #9fc2ff; font-size: 11.5px; font-weight: 650; letter-spacing: 0.02em; }
+.hm-nachtrand { fill: none; stroke: #4a6080; stroke-width: 1.5; }
+.hm-nachtletter { fill: #c7d3e6; font-size: 14px; font-weight: 700; }
+.hm-maan { fill: #f3efd9; }
+.hm-maan-donker { fill: #2c3442; }
+
+@media (prefers-reduced-motion: no-preference) {
+  .hm-glij { transition: transform 0.15s ease-out; }
+}
+
+/* what works now (hemel-nu.js) */
+.hn-lucht { transition: fill 0.3s; }
+.hn-lijst { margin: 0; padding: 0; list-style: none; display: flex; flex-direction: column; gap: 4px; font-size: 15px; }
+.hn-lijst li { padding-left: 24px; position: relative; }
+.hn-lijst li::before { position: absolute; left: 0; font-weight: 800; }
+.hn-lijst li.ja::before { content: '✓'; color: var(--accent); }
+.hn-lijst li.nee { color: var(--stil); }
+.hn-lijst li.nee::before { content: '–'; }
+@media (prefers-reduced-motion: reduce) { .hn-lucht { transition: none; } }

@@ -1,0 +1,26 @@
+/* The fire triangle (vuurdriehoek.js) */
+.doe-vuurdriehoek { display: grid; gap: 12px; }
+@container (min-width: 520px) { .doe-vuurdriehoek { grid-template-columns: minmax(0, 280px) minmax(0, 1fr); align-items: center; } }
+.vd-svg { display: block; width: 100%; max-width: 280px; height: auto; margin: 0 auto; }
+.vd-tekst { display: flex; flex-direction: column; gap: 10px; }
+.vd-melding { margin: 0; min-height: 3em; }
+
+.vd-kant { stroke: var(--fam-kamp); stroke-width: 7; stroke-linecap: round; }
+.vd-kant.weg { stroke: var(--lijn); stroke-dasharray: 2 12; }
+.vd-label { fill: var(--inkt); font-size: 15px; font-weight: 700; }
+.vd-hout path { stroke: #8b5a2b; stroke-width: 11; stroke-linecap: round; }
+.vd-hout.weg { opacity: 0.15; }
+.vd-buiten { fill: #f39c12; }
+.vd-binnen { fill: #ffe066; }
+.vd-rook path { fill: none; stroke: var(--stil); stroke-width: 3; stroke-linecap: round; opacity: 0; }
+.uit .vd-vlam { opacity: 0; transform: scale(0.2); }
+.uit .vd-rook path { opacity: 0.6; }
+.zand .vd-hout path { stroke: #d8c08a; }
+.water .vd-hout path { stroke: #6f8fa8; }
+.vd-vlam { transform-origin: 150px 180px; }
+@media (prefers-reduced-motion: no-preference) {
+  .vd-vlam { transition: opacity 0.6s, transform 0.6s; animation: vd-flakker 0.9s ease-in-out infinite alternate; }
+  .uit .vd-vlam { animation: none; }
+  .vd-rook path { transition: opacity 0.8s 0.3s; }
+}
+@keyframes vd-flakker { from { transform: scale(1, 1); } to { transform: scale(0.94, 1.06); } }

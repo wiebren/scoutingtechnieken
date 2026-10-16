@@ -1,0 +1,39 @@
+/* Semafoor and Vreede with a figure to move (semafoor.js). */
+.doe-semafoor { display: flex; flex-direction: column; gap: 12px; }
+.doe-semafoor p { margin: 0; }
+.sf-zelf, .sf-lees { display: grid; gap: 12px; }
+@container (min-width: 520px) { .sf-zelf, .sf-lees { grid-template-columns: minmax(0, 300px) 1fr; align-items: start; } }
+.sf-links { display: flex; flex-direction: column; gap: 8px; }
+.sf-paneel { display: flex; flex-direction: column; gap: 10px; min-width: 0; }
+
+.sf-figuur {
+  display: block; width: 100%; max-width: 300px; height: auto; margin: 0 auto; touch-action: none; cursor: pointer;
+  border-radius: 12px; background: var(--zacht); user-select: none; -webkit-user-select: none;
+}
+.sf-lees .sf-figuur { cursor: default; }
+
+.sf-bediening { display: flex; flex-wrap: wrap; gap: 6px 12px; justify-content: center; align-items: center; }
+.sf-arm { display: flex; align-items: center; gap: 4px; }
+.sf-armnaam { font-size: 13px; color: var(--stil); margin-right: 2px; }
+.sf-arm .knop.klein { min-width: 40px; font-size: 18px; padding: 4px 8px; }
+
+.sf-uitkomst { display: flex; align-items: baseline; gap: 6px; flex-wrap: wrap; min-height: 56px; }
+.sf-letter { font-size: 48px; font-weight: 800; line-height: 1; color: var(--accent); }
+.sf-teken { font-size: 24px; font-weight: 700; color: var(--accent); }
+.sf-geen { font-size: 20px; color: var(--stil); }
+
+.sf-woord { display: flex; flex-wrap: wrap; gap: 4px; }
+.sf-woord span {
+  display: grid; place-items: center; width: 38px; height: 44px; border: 1px solid var(--lijn-sterk); border-radius: 8px;
+  font-size: 22px; font-weight: 700; color: var(--stil);
+}
+.sf-woord span.nu { border-color: var(--accent); border-width: 2px; color: var(--inkt); }
+.sf-woord span.klaar { background: var(--accent); border-color: var(--accent); color: var(--op-accent); }
+.sf-eigenrij { display: flex; gap: 8px; }
+.sf-eigen { flex: 1; max-width: 220px; text-transform: uppercase; }
+
+.sf-opties { display: grid; grid-template-columns: repeat(4, minmax(0, 1fr)); gap: 8px; max-width: 320px; }
+.sf-optie { font-size: 22px; font-weight: 700; }
+.sf-optie.goed { background: var(--accent); border-color: var(--accent); color: var(--op-accent); }
+.sf-optie.fout { border-color: var(--rood); color: var(--rood); }
+.sf-eigen::placeholder { text-transform: none; }

@@ -1,0 +1,49 @@
+/* A pioneering structure in 3D (bouwwerk.js): the picture with the zoom buttons in a corner, the build steps, the
+   chips that light up a kind of lashing, what you tapped, and the parts list. Colours from the theme. */
+.bw { display: flex; flex-direction: column; gap: 12px; min-width: 0; }
+.bw-beeld { position: relative; }
+.bw-scherm {
+  position: relative; width: 100%; aspect-ratio: 4 / 3; max-height: 66vh; overflow: hidden; border-radius: 10px;
+  background: var(--zacht); border: 1px solid var(--lijn); touch-action: none; cursor: grab;
+}
+.bw-scherm:active { cursor: grabbing; }
+.bw-scherm:focus-visible { outline: 3px solid var(--accent); outline-offset: 2px; }
+@container (min-width: 640px) { .bw-scherm { aspect-ratio: 16 / 10; } }
+.bw-canvas { display: block; width: 100%; height: 100%; }
+.bw-laden { position: absolute; inset: 0; display: grid; place-items: center; margin: 0; padding: 16px; color: var(--stil); text-align: center; }
+
+/* the name of a tapped part, at its place in the picture */
+.bw-label {
+  position: absolute; left: 0; top: 0; pointer-events: none; white-space: nowrap;
+  margin: -38px 0 0; padding: 3px 9px; border-radius: 8px; translate: -50% 0;
+  background: color-mix(in srgb, var(--paneel) 92%, transparent); color: var(--inkt); border: 1.5px solid var(--accent);
+  font-size: 13px; font-weight: 700; box-shadow: 0 2px 8px rgb(0 0 0 / 0.15);
+}
+.bw-label::after {
+  content: ''; position: absolute; left: 50%; bottom: -7px; width: 10px; height: 10px; translate: -50% 0; rotate: 45deg;
+  background: inherit; border-right: 1.5px solid var(--accent); border-bottom: 1.5px solid var(--accent);
+}
+
+.bw-hoek { position: absolute; top: 8px; right: 8px; display: flex; flex-direction: column; gap: 6px; }
+.bw-rond {
+  display: grid; place-items: center; width: 40px; height: 40px; padding: 0; border-radius: 50%;
+  border: 1px solid var(--lijn-sterk); background: color-mix(in srgb, var(--paneel) 90%, transparent); color: var(--inkt);
+  font: inherit; font-size: 20px; font-weight: 700; line-height: 1; cursor: pointer;
+}
+.bw-rond:hover { border-color: var(--accent); }
+.bw-rond:focus-visible { outline: 3px solid var(--accent); outline-offset: 1px; }
+
+.bw-bouw { display: flex; flex-direction: column; gap: 8px; }
+.bw-kop { margin: 0; font-size: 14px; font-weight: 700; color: var(--stil); }
+.bw-stap { margin: 0; font-size: 15px; line-height: 1.45; min-height: 3em; }
+.bw-hulp { margin-top: -4px; }
+.bw-legenda .chip { font-size: 14px; }
+.bw-info:empty { display: none; }
+.bw-info { display: flex; flex-direction: column; align-items: flex-start; gap: 8px; padding: 10px 12px; border-radius: 10px; background: var(--zacht); border-left: 4px solid var(--accent); }
+.bw-info p { margin: 0; line-height: 1.45; }
+.bw-link { text-decoration: none; color: var(--accent); font-weight: 600; }
+.bw-geen3d { margin: 0; padding: 12px; border-radius: 10px; background: var(--zacht); color: var(--inkt); }
+.bw-details summary { cursor: pointer; color: var(--accent); font-weight: 600; min-height: 36px; display: flex; align-items: center; }
+.bw-delen { margin: 4px 0 0; padding-left: 20px; line-height: 1.5; }
+.bw-variant { display: flex; flex-wrap: wrap; align-items: center; gap: 6px 10px; }
+.bw-variant .bw-kop { flex: none; }

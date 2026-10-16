@@ -1,0 +1,38 @@
+/* The safety pieces (veiligcheck.js, veiligspannen.js, veiligkeuren.js): a list to tick off per phase, a rope to
+   tension, and material to check. Colours from the theme; rope and wood as in the drawings of sjorren
+   (src/plaatjes/sjorren.css). */
+.doe-vg { display: grid; gap: 12px; }
+.vg-kop { margin: 4px 0 0; font-weight: 700; }
+.vg-lijst { margin: 0; padding: 0; list-style: none; display: flex; flex-direction: column; border: 1px solid var(--lijn); border-radius: 10px; overflow: hidden; }
+.vg-lijst li + li { border-top: 1px solid var(--lijn); }
+.vg-lijst label { display: flex; align-items: flex-start; gap: 10px; min-height: 44px; padding: 9px 12px; cursor: pointer; }
+.vg-lijst input { flex: none; width: 20px; height: 20px; margin: 1px 0 0; accent-color: var(--accent); }
+.vg-lijst label > span { display: flex; flex-direction: column; gap: 1px; min-width: 0; }
+.vg-wat { font-weight: 600; }
+.vg-waarom { color: var(--stil); font-size: 13px; }
+.vg-lijst input:checked + span .vg-wat { color: var(--stil); }
+.vg-stand { margin: 0; padding: 10px 12px; border-radius: 10px; border: 1px solid var(--lijn); background: var(--zacht); }
+.vg-stand.goed { border-color: var(--accent); background: color-mix(in srgb, var(--accent) 12%, var(--paneel)); }
+.vg-stand.open { border-color: var(--rood); background: color-mix(in srgb, var(--rood) 10%, var(--paneel)); }
+
+/* the rope to tension */
+.vg-svg { display: block; width: 100%; max-width: 440px; height: auto; margin: 0 auto; }
+.vg-grond { fill: color-mix(in srgb, var(--bruin) 22%, var(--paneel)); }
+.vg-anker { fill: var(--sj-schors, #6f5a44); stroke: #3a2c1e; stroke-width: 1.4; }
+.vg-hulp { fill: none; stroke: var(--accent); stroke-width: 1.4; stroke-dasharray: 5 4; }
+.vg-maat { fill: none; stroke: var(--stil); stroke-width: 1; }
+.vg-touw-rand { fill: none; stroke: var(--sj-touw-rand, #5f4119); stroke-width: 6; stroke-linejoin: round; }
+.vg-touw { fill: none; stroke: var(--sj-touw, #e2b46a); stroke-width: 3.6; stroke-linejoin: round; }
+.vg-pop circle { fill: var(--stil); }
+.vg-pop path { fill: none; stroke: var(--inkt); stroke-width: 2.6; stroke-linecap: round; stroke-linejoin: round; }
+.vg-pijl path { fill: none; stroke: var(--rood); stroke-width: 2.6; stroke-linecap: round; }
+.vg-pijl .vg-pijlkop { fill: var(--rood); stroke: none; }
+.vg-getal { fill: var(--rood); font-size: 15px; font-weight: 700; }
+.vg-uit { display: block; font-weight: 600; }
+
+/* material to check */
+.vg-plaatje .plaatje { max-width: 320px; }
+.vg-keuzes { display: grid; grid-template-columns: 1fr 1fr; gap: 8px; }
+.vg-keuzes .knop { justify-content: center; white-space: normal; height: auto; min-height: 44px; }
+.vg-keuzes .knop.goed { border-color: var(--accent); background: color-mix(in srgb, var(--accent) 16%, var(--paneel)); }
+.vg-keuzes .knop.fout { border-color: var(--rood); background: color-mix(in srgb, var(--rood) 12%, var(--paneel)); }

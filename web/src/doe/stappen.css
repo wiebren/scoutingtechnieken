@@ -1,0 +1,41 @@
+/* The steps of a piece (stappen.js): numbered dots on a line, the name under each, filled up to where you are. */
+.stappenbalk {
+  --stb-punt: 30px;
+  position: relative; display: grid; grid-template-columns: repeat(var(--stb-n), minmax(0, 1fr));
+  padding: 4px 0 2px; touch-action: none; cursor: pointer; user-select: none; -webkit-user-select: none;
+  border-radius: 10px;
+}
+.stappenbalk:focus-visible { outline: 3px solid var(--accent); outline-offset: 4px; }
+
+/* the line from the middle of the first dot to the middle of the last; the filled part follows the value */
+.stb-lijn {
+  position: absolute; top: calc(4px + var(--stb-punt) / 2 - 2px); height: 4px; border-radius: 2px;
+  left: calc(50% / var(--stb-n)); right: calc(50% / var(--stb-n)); background: var(--lijn-sterk);
+}
+.stb-vulling { display: block; height: 100%; width: 0; border-radius: inherit; background: var(--accent); }
+
+.stb-punt { position: relative; display: flex; flex-direction: column; align-items: center; gap: 5px; min-width: 0; }
+.stb-nr {
+  display: grid; place-items: center; width: var(--stb-punt); height: var(--stb-punt); border-radius: 50%;
+  border: 2px solid var(--lijn-sterk); background: var(--paneel); color: var(--stil);
+  font-size: 13px; font-weight: 700; font-variant-numeric: tabular-nums;
+}
+.stb-naam {
+  max-width: 100%; padding: 0 2px; color: var(--stil); font-size: 12.5px; font-weight: 500; line-height: 1.25; text-align: center;
+  overflow-wrap: anywhere;
+}
+.stb-punt.klaar .stb-nr { border-color: var(--accent); background: var(--accent); color: var(--op-accent); }
+.stb-punt.nu .stb-nr { box-shadow: 0 0 0 4px color-mix(in srgb, var(--accent) 25%, transparent); }
+.stb-punt.nu .stb-naam { color: var(--inkt); font-weight: 650; }
+
+/* many steps in a narrow piece: only the name of the step you are at */
+@container (max-width: 420px) {
+  .stappenbalk:has(.stb-punt:nth-child(8)) .stb-punt:not(.nu) .stb-naam { visibility: hidden; }   /* the line is the first child */
+  /* the one name left may run past its column, but not past the ends of the bar */
+  .stappenbalk:has(.stb-punt:nth-child(8)) .stb-punt.nu .stb-naam { overflow-wrap: normal; white-space: nowrap; max-width: none; }
+  .stappenbalk:has(.stb-punt:nth-child(8)) .stb-punt.nu:nth-child(2) .stb-naam { align-self: flex-start; }
+  .stappenbalk:has(.stb-punt:nth-child(8)) .stb-punt.nu:last-child .stb-naam { align-self: flex-end; }
+}
+@media (prefers-reduced-motion: no-preference) {
+  .stb-nr { transition: background 0.15s, border-color 0.15s, box-shadow 0.15s; }
+}

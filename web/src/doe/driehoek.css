@@ -1,0 +1,17 @@
+/* The square of poles and the schoor (driehoek.js) */
+.doe-driehoek { display: grid; gap: 12px; }
+@container (min-width: 520px) { .doe-driehoek { grid-template-columns: minmax(0, 300px) minmax(0, 1fr); align-items: center; } }
+.dh-svg { display: block; width: 100%; max-width: 300px; height: auto; margin: 0 auto; touch-action: none; cursor: grab; }
+.dh-svg:focus-visible { outline: 3px solid var(--accent); outline-offset: 3px; border-radius: 8px; }
+.dh-tekst { display: flex; flex-direction: column; gap: 10px; }
+.dh-melding { margin: 0; min-height: 3em; }
+
+.dh-grond { stroke: var(--lijn-sterk); stroke-width: 3; }
+.dh-paal { stroke: #a8743f; stroke-width: 11; stroke-linecap: round; }
+.dh-paal.schoor { stroke: #c4935e; }
+.dh-knoop { fill: var(--paneel); stroke: var(--inkt); stroke-width: 2; }
+.dh-greep { fill: color-mix(in srgb, var(--accent) 18%, transparent); stroke: var(--accent); stroke-width: 2; stroke-dasharray: 4 3; }
+@media (prefers-reduced-motion: no-preference) {
+  .wiebel { animation: dh-wiebel 0.3s; }
+}
+@keyframes dh-wiebel { 25% { transform: translateX(2px); } 75% { transform: translateX(-2px); } }

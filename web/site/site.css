@@ -1,0 +1,224 @@
+/* The public pages: the homepage and the handleiding. The colours are the app's own (app.css, made by maak.mjs
+   from src/style.css): light and dark follow the device, or what you chose in the app (data-theme on <html>, set
+   by the line at the top of each page). Mobile first; from 760px the handleiding has its list beside the text.
+   No emblems or logos: the mark is the app's windroos. */
+
+* { box-sizing: border-box; }
+html { -webkit-text-size-adjust: 100%; }
+body {
+  margin: 0; background: var(--bg); color: var(--inkt);
+  font: 16px/1.6 system-ui, -apple-system, "Segoe UI", Roboto, sans-serif;
+}
+a { color: var(--accent); text-underline-offset: 2px; }
+a:focus-visible, button:focus-visible, summary:focus-visible { outline: 2px solid var(--accent); outline-offset: 2px; border-radius: 4px; }
+h1, h2, h3 { line-height: 1.2; text-wrap: balance; letter-spacing: -0.01em; }
+h1 { font-size: clamp(30px, 7vw, 46px); margin: 0 0 12px; font-weight: 800; }
+h2 { font-size: clamp(22px, 4.4vw, 28px); margin: 48px 0 12px; font-weight: 750; }
+h3 { font-size: 18px; margin: 26px 0 6px; font-weight: 700; }
+p, li { text-wrap: pretty; }
+p { margin: 0 0 14px; }
+ul, ol { margin: 0 0 14px; padding-left: 22px; }
+li { margin-bottom: 5px; }
+img, svg { max-width: 100%; }
+kbd { font: 13px ui-monospace, Menlo, Consolas, monospace; padding: 1px 6px; border: 1px solid var(--lijn-sterk); border-bottom-width: 2px; border-radius: 5px; background: var(--paneel); }
+b, strong { font-weight: 650; }
+.icoon { width: 24px; height: 24px; flex: none; fill: none; stroke: currentColor; stroke-width: 1.8; stroke-linecap: round; stroke-linejoin: round; }
+.icoon.klein { width: 18px; height: 18px; }
+.icoon.is-ster { fill: #f4c430; stroke: #a77800; }
+
+.overslaan { position: absolute; left: 8px; top: -60px; z-index: 10; padding: 8px 14px; border-radius: 8px; background: var(--accent); color: var(--op-accent); font-weight: 600; }
+.overslaan:focus { top: 8px; }
+
+/* -- the bar along the top */
+.kop { background: var(--paneel); border-bottom: 1px solid var(--lijn); }
+.kop-nav { max-width: 1100px; margin: 0 auto; padding: 10px 16px; display: flex; align-items: center; gap: 6px 16px; flex-wrap: wrap; }
+.merk { display: flex; align-items: center; gap: 10px; margin-right: auto; color: var(--inkt); text-decoration: none; font-weight: 750; font-size: 17px; letter-spacing: -0.01em; }
+.merk-teken { display: grid; place-items: center; width: 36px; height: 36px; border-radius: 10px; background: var(--groen-merk); color: #fff; }
+.merk-teken .icoon { width: 24px; height: 24px; }
+.kop-link { color: var(--stil); text-decoration: none; font-weight: 600; font-size: 15px; padding: 6px 2px; }
+.kop-link:hover { color: var(--inkt); }
+.kop-link[aria-current="page"] { color: var(--inkt); box-shadow: inset 0 -2px var(--accent); }
+
+/* -- buttons */
+.knop {
+  display: inline-flex; align-items: center; justify-content: center; gap: 8px; min-height: 44px; padding: 9px 18px;
+  border: 1px solid var(--lijn-sterk); border-radius: 10px; background: var(--paneel); color: var(--inkt);
+  font: inherit; font-size: 15px; font-weight: 650; text-decoration: none; cursor: pointer;
+}
+.knop:hover { border-color: var(--stil); }
+.knop.hoofd { background: var(--accent); border-color: var(--accent); color: var(--op-accent); }
+.knop.hoofd:hover { background: color-mix(in srgb, var(--accent) 88%, var(--inkt)); }
+.knop.klein { min-height: 38px; padding: 6px 14px; font-size: 14px; }
+.knop.groot { min-height: 54px; padding: 12px 26px; font-size: 18px; border-radius: 12px; }
+.knoppen { display: flex; flex-wrap: wrap; gap: 10px; margin: 22px 0 10px; }
+
+main { display: block; max-width: 1100px; margin: 0 auto; padding: 28px 16px 64px; }
+.lead { font-size: clamp(17px, 2.6vw, 20px); color: var(--stil); max-width: 680px; }
+.stil { color: var(--stil); }
+.klein-tekst { font-size: 14px; color: var(--stil); }
+.smal { max-width: 760px; }
+
+/* -- home: the top, with the app drawn on a phone */
+.held { display: grid; gap: 28px; align-items: center; padding: 8px 0 12px; }
+.held-tekst h1 span { color: var(--accent); }
+.held-noot { margin: 6px 0 0; font-size: 14px; color: var(--stil); }
+.telefoon {
+  justify-self: center; width: min(100%, 320px); padding: 12px; border-radius: 40px; background: #1b231e;
+  box-shadow: 0 18px 50px rgb(10 30 18 / 0.22), inset 0 0 0 2px #39443d;
+  outline: 1px solid color-mix(in srgb, var(--lijn-sterk) 50%, transparent);
+}
+.telefoon-scherm { overflow: hidden; border-radius: 30px; background: var(--bg); font-size: 13px; line-height: 1.35; }
+.m-balk { padding: 18px 14px 10px; background: var(--paneel); border-bottom: 1px solid var(--lijn); }
+.m-titel { display: flex; justify-content: space-between; align-items: center; font-size: 20px; font-weight: 750; }
+.m-titel .icoon { width: 20px; height: 20px; color: var(--stil); }
+.m-zoek { display: flex; align-items: center; gap: 6px; margin-top: 8px; padding: 7px 10px; border-radius: 10px; background: var(--zacht); color: var(--stil); }
+.m-zoek .icoon { width: 16px; height: 16px; }
+.m-tegels { display: grid; grid-template-columns: 1fr 1fr; gap: 8px; margin: 0; padding: 12px; list-style: none; }
+.m-tegel { display: flex; flex-direction: column; gap: 4px; margin: 0; padding: 10px; min-height: 92px; border: 1px solid var(--lijn); border-radius: 10px; background: var(--paneel); font-weight: 650; }
+.m-tegel small { margin-top: auto; color: var(--stil); font-weight: 400; font-size: 11px; }
+.m-tegel-icoon { display: grid; place-items: center; width: 32px; height: 32px; border-radius: 9px; color: var(--fam); background: color-mix(in srgb, var(--fam) 13%, transparent); }
+.m-tegel-icoon .icoon { width: 19px; height: 19px; }
+.m-nav { display: grid; grid-template-columns: repeat(4, 1fr); padding: 6px 4px 10px; background: var(--paneel); border-top: 1px solid var(--lijn); color: var(--stil); font-size: 10.5px; font-weight: 600; text-align: center; }
+.m-nav > span { display: flex; flex-direction: column; align-items: center; gap: 2px; }
+.m-nav .icoon { width: 19px; height: 19px; }
+.m-nav .nu { color: var(--accent); }
+.m-stippen { display: flex; gap: 2px; height: 19px; align-items: center; }
+
+/* -- tiles: the categories, each a link into the app */
+.tegels { display: grid; grid-template-columns: repeat(auto-fill, minmax(min(100%, 250px), 1fr)); gap: 10px; margin: 16px 0 8px; padding: 0; list-style: none; }
+.tegels li { margin: 0; }
+.tegel {
+  height: 100%; display: grid; grid-template-columns: auto 1fr; column-gap: 12px; align-items: start; align-content: start; padding: 12px 14px;
+  border: 1px solid var(--lijn); border-radius: var(--radius); background: var(--paneel); color: inherit; text-decoration: none;
+}
+.tegel:hover { border-color: var(--fam); }
+.tegel-icoon { grid-row: 1 / span 2; display: grid; place-items: center; width: 42px; height: 42px; border-radius: 11px; color: var(--fam); background: color-mix(in srgb, var(--fam) 13%, transparent); }
+.tegel-naam { font-weight: 700; line-height: 1.25; }
+.tegel-sub { color: var(--stil); font-size: 13.5px; line-height: 1.4; }
+
+/* -- cards with a drawing or an icon */
+.kaarten { display: grid; grid-template-columns: repeat(auto-fill, minmax(min(100%, 300px), 1fr)); gap: 14px; margin: 16px 0 8px; }
+.kaart { display: flex; flex-direction: column; padding: 16px; border: 1px solid var(--lijn); border-radius: 14px; background: var(--paneel); }
+.kaart h3 { margin: 0 0 6px; font-size: 17px; }
+.kaart p { margin: 0 0 10px; color: var(--stil); font-size: 15px; }
+.kaart p:last-child { margin-bottom: 0; }
+.kaart .figuur { margin: auto 0 0; padding: 8px 0 0; border: 0; }
+.kaart .plaatje { max-height: 210px; }
+
+.galerij { display: grid; grid-template-columns: repeat(auto-fill, minmax(min(100%, 200px), 1fr)); gap: 12px; margin: 16px 0 6px; padding: 0; list-style: none; }
+.galerij li { margin: 0; }
+.figuur { margin: 0; height: 100%; display: flex; flex-direction: column; justify-content: space-between; gap: 8px; padding: 12px; border: 1px solid var(--lijn); border-radius: 12px; background: var(--paneel); }
+.figuur .plaatje { display: block; width: 100%; height: auto; max-height: 220px; margin: auto; font-family: inherit; }
+.figuur figcaption { text-align: center; color: var(--stil); font-size: 14px; }
+
+/* -- what it is like: a row of short facts */
+.kenmerken { display: grid; grid-template-columns: repeat(auto-fill, minmax(min(100%, 230px), 1fr)); gap: 12px 22px; margin: 16px 0 8px; padding: 0; list-style: none; }
+.kenmerken li { display: grid; grid-template-columns: auto 1fr; align-content: start; gap: 2px 12px; margin: 0; }
+.kenmerken .teken { grid-row: 1 / span 2; display: grid; place-items: center; width: 40px; height: 40px; border-radius: 50%; background: color-mix(in srgb, var(--accent) 14%, transparent); color: var(--accent); }
+.kenmerken b { font-size: 16px; }
+.kenmerken span { color: var(--stil); font-size: 14.5px; }
+
+/* -- the insignes, drawn as the app shows them */
+.twee { display: grid; gap: 22px 36px; align-items: start; }
+.voorbeeld { padding: 16px; border: 1px solid var(--lijn); border-radius: 16px; background: var(--paneel); font-size: 15px; }
+.voorbeeld-titel { margin: 0 0 10px; font-size: 19px; font-weight: 750; }
+.m-niveaus { display: grid; grid-template-columns: repeat(3, 1fr); gap: 6px; margin-bottom: 14px; }
+.m-niveau { display: flex; align-items: center; justify-content: center; gap: 6px; min-height: 38px; border: 1px solid var(--lijn); border-radius: 9px; font-size: 14px; font-weight: 650; }
+.m-niveau.nu { background: color-mix(in srgb, var(--niv) 16%, var(--paneel)); border-color: var(--niv); box-shadow: inset 0 0 0 1px var(--niv); }
+.m-niveau .icoon { width: 18px; height: 18px; }
+.m-voortgang { display: flex; align-items: center; gap: 12px; color: var(--stil); font-variant-numeric: tabular-nums; font-size: 14px; }
+.m-balkje { flex: 1; height: 8px; border-radius: 4px; overflow: hidden; background: color-mix(in srgb, var(--niv) 22%, var(--zacht)); }
+.m-balkje span { display: block; height: 100%; background: var(--niv); }
+.m-stand { display: flex; gap: 12px; align-items: center; margin-top: 12px; padding: 12px 14px; border: 1px solid var(--niv); border-radius: 14px; background: color-mix(in srgb, var(--niv) 12%, var(--paneel)); }
+.m-stand p { margin: 0; font-size: 14.5px; }
+.m-stand .icoon { width: 38px; height: 38px; stroke-width: 1.5; }
+.m-rijen { margin: 14px 0 0; padding: 0; list-style: none; border: 1px solid var(--lijn); border-radius: 12px; overflow: hidden; }
+.m-rijen li { display: flex; align-items: center; gap: 10px; margin: 0; padding: 9px 12px; border-top: 1px solid var(--lijn); font-weight: 600; font-size: 14.5px; }
+.m-rijen li:first-child { border-top: 0; }
+.m-vink { display: grid; place-items: center; width: 22px; height: 22px; border-radius: 6px; border: 2px solid var(--lijn-sterk); flex: none; }
+.m-vink.aan { background: var(--accent); border-color: var(--accent); color: var(--op-accent); }
+.m-vink .icoon { width: 16px; height: 16px; stroke-width: 3; }
+
+/* the niveau colours, as in the app's menu */
+.stip { display: inline-grid; place-items: center; flex: none; width: 20px; height: 20px; border-radius: 50%; background: var(--niv); color: var(--op-niv); font-size: 11px; font-weight: 800; line-height: 1; vertical-align: -3px; }
+.stip.klein { width: 13px; height: 13px; font-size: 8px; }
+
+/* -- installing: a column per kind of device */
+.installeer { display: grid; grid-template-columns: repeat(auto-fit, minmax(min(100%, 280px), 1fr)); gap: 14px; margin: 16px 0 8px; }
+.installeer section { padding: 16px; border: 1px solid var(--lijn); border-radius: 14px; background: var(--paneel); }
+.installeer h3 { margin: 0 0 8px; }
+.installeer ol { margin: 0; }
+
+.melding { padding: 12px 16px; border-left: 4px solid var(--accent); border-radius: 0 10px 10px 0; background: var(--paneel); }
+.melding.let-op { border-left-color: var(--oranje); }
+.melding > :last-child { margin-bottom: 0; }
+
+.bronnen li { margin-bottom: 8px; }
+
+/* -- handleiding: the list of pages beside the text */
+.handleiding { display: grid; gap: 18px; }
+.handleiding-nav { font-size: 15px; }
+.handleiding-nav-kop { margin: 0 0 6px; font-weight: 700; font-size: 13px; letter-spacing: 0.05em; text-transform: uppercase; color: var(--stil); }
+.handleiding-nav ol { display: flex; flex-wrap: wrap; gap: 6px; margin: 0; padding: 0; list-style: none; }
+.handleiding-nav li { margin: 0; }
+.handleiding-nav a { display: block; padding: 5px 12px; border: 1px solid var(--lijn); border-radius: 18px; background: var(--paneel); color: var(--inkt); text-decoration: none; }
+.handleiding-nav a:hover { border-color: var(--lijn-sterk); }
+.handleiding-nav a[aria-current="page"] { background: var(--accent); border-color: var(--accent); color: var(--op-accent); font-weight: 650; }
+.tekst { min-width: 0; max-width: 760px; }
+.tekst h2 { margin-top: 36px; }
+.tekst h1 + .lead { margin-bottom: 20px; }
+.legenda { list-style: none; padding: 0; counter-reset: n; }
+.legenda li { counter-increment: n; position: relative; padding-left: 36px; margin-bottom: 10px; }
+.legenda li::before { content: counter(n); position: absolute; left: 0; top: 1px; width: 25px; height: 25px; border-radius: 50%; background: var(--accent); color: var(--op-accent); font: 700 13px/25px system-ui, sans-serif; text-align: center; }
+.tabel-wrap { overflow-x: auto; margin: 0 0 16px; }
+table { border-collapse: collapse; width: 100%; font-size: 15px; }
+th, td { text-align: left; vertical-align: top; padding: 8px 10px; border-bottom: 1px solid var(--lijn); }
+thead th { font-size: 13px; color: var(--stil); font-weight: 650; }
+tbody th { font-weight: 650; }
+.verder { display: flex; justify-content: space-between; gap: 12px; margin-top: 44px; padding-top: 16px; border-top: 1px solid var(--lijn); font-weight: 600; }
+.voorbeeld.klein { max-width: 420px; margin: 12px 0 18px; }
+/* Beginnen: the screen of a phone with numbers on its parts */
+.scherm-vb { max-width: 340px; padding: 14px 0 0; overflow: hidden; }
+.scherm-vb .m-titel, .scherm-vb .m-zoek { margin-inline: 14px; }
+.scherm-vb .m-leeg { height: 56px; }
+.scherm-vb .m-nav { font-size: 12px; padding-top: 10px; }
+.met-nr { position: relative; display: inline-flex; }
+.nr { position: absolute; top: -9px; right: -14px; display: grid; place-items: center; width: 19px; height: 19px; border-radius: 50%;
+  background: var(--accent); color: var(--op-accent); font-size: 11px; font-weight: 800; line-height: 1; }
+
+/* -- the foot of every page */
+.voet { border-top: 1px solid var(--lijn); background: var(--paneel); }
+.voet-binnen { max-width: 1100px; margin: 0 auto; padding: 20px 16px calc(28px + env(safe-area-inset-bottom, 0px)); color: var(--stil); font-size: 14px; }
+.voet p { margin: 0 0 6px; }
+
+/* a narrow phone: the name on the left goes home, and the handleiding has its own list (and the button on the home) */
+@media (max-width: 599px) {
+  .kop-link:first-of-type { display: none; }
+  /* the categories two by two, as in the app, without their groepen */
+  .tegels { grid-template-columns: repeat(2, minmax(0, 1fr)); gap: 8px; }
+  .tegel { grid-template-columns: 1fr; row-gap: 8px; padding: 12px; }
+  .tegel-icoon { grid-row: auto; width: 38px; height: 38px; }
+  .tegel-sub { display: none; }
+}
+@media (max-width: 459px) {
+  .kop-nav { column-gap: 10px; }
+  .kop-link { display: none; }
+  .merk { gap: 8px; font-size: 16px; }
+  .kop .knop { padding-inline: 12px; }
+}
+
+@media (min-width: 760px) {
+  main { padding-top: 40px; }
+  .held { grid-template-columns: minmax(0, 1fr) 320px; gap: 48px; padding-top: 12px; }
+  .twee { grid-template-columns: minmax(0, 1fr) minmax(0, 420px); }
+  .handleiding { grid-template-columns: 220px minmax(0, 1fr); gap: 40px; align-items: start; }
+  .handleiding-nav { position: sticky; top: 20px; }
+  .handleiding-nav ol { display: block; }
+  .handleiding-nav a { padding: 7px 12px; border: 0; border-radius: 8px; background: none; color: var(--accent); }
+  .handleiding-nav a:hover { background: var(--zacht); }
+  .handleiding-nav a[aria-current="page"] { background: color-mix(in srgb, var(--accent) 13%, transparent); color: var(--inkt); }
+}
+
+@media (prefers-reduced-motion: no-preference) {
+  .tegel, .knop { transition: border-color 0.15s, background 0.15s; }
+}

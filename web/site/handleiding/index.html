@@ -1,0 +1,146 @@
+<!doctype html>
+<html lang="nl">
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <title>Beginnen · Handleiding Scoutingtechnieken</title>
+  <meta name="description" content="Hoe je Scoutingtechnieken opent, installeert op Android, iPhone of de computer, en zonder internet gebruikt.">
+  <meta name="theme-color" content="#ffffff" media="(prefers-color-scheme: light)">
+  <meta name="theme-color" content="#18201b" media="(prefers-color-scheme: dark)">
+  <!-- Links into the app have data-app (the place in the app, after the #); site/maak.mjs sets their href. -->
+  <script>try { const t = JSON.parse(localStorage.getItem('scoutingtechnieken.thema.v1')); if (t === 'licht' || t === 'donker') document.documentElement.dataset.theme = t === 'donker' ? 'dark' : 'light'; } catch { /* auto */ }</script>
+  <link rel="icon" type="image/png" sizes="192x192" href="../img/icon-192.png">
+  <link rel="apple-touch-icon" href="../img/apple-touch-icon.png">
+  <link rel="stylesheet" href="../app.css">
+  <link rel="stylesheet" href="../site.css">
+</head>
+<body>
+  <!-- maak:kop -->
+  <a class="overslaan" href="#inhoud">Naar de inhoud</a>
+  <header class="kop">
+    <nav class="kop-nav" aria-label="Site">
+      <a class="merk" href=".././"><span class="merk-teken"><svg class="icoon" viewBox="0 0 24 24" aria-hidden="true"><path d="M12 1.5l1.9 8.6 8.6 1.9-8.6 1.9-1.9 8.6-1.9-8.6L1.5 12l8.6-1.9z" fill="currentColor" stroke="none"/></svg></span><span>Scoutingtechnieken</span></a>
+      <a class="kop-link" href=".././">Home</a>
+      <a class="kop-link" href="../handleiding/" aria-current="page">Handleiding</a>
+      <a class="knop hoofd klein" data-app="" href="../../">Open de app</a>
+    </nav>
+  </header>
+  <!-- /maak -->
+
+  <main id="inhoud" class="handleiding">
+    <nav class="handleiding-nav" aria-label="Handleiding">
+      <p class="handleiding-nav-kop">Handleiding</p>
+      <!-- maak:handleiding -->
+      <ol>
+        <li><a href="index.html" aria-current="page">Beginnen</a></li>
+        <li><a href="zoeken.html">Zoeken</a></li>
+        <li><a href="onderwerp.html">Een onderwerp</a></li>
+        <li><a href="oefenen.html">Oefenen</a></li>
+        <li><a href="insignes.html">Insignes</a></li>
+        <li><a href="instellingen.html">Instellingen</a></li>
+        <li><a href="melden.html">Melden</a></li>
+        <li><a href="leiding.html">Voor leiding</a></li>
+        <li><a href="bronnen.html">Bronnen en licentie</a></li>
+      </ol>
+      <!-- /maak -->
+    </nav>
+
+    <article class="tekst">
+      <h1>Beginnen</h1>
+      <p class="lead">Scoutingtechnieken is een app om technieken op te zoeken en te leren. Hij werkt in de browser op je
+        telefoon, tablet en computer. Er is geen account en niets om in te stellen.</p>
+      <p><a class="knop hoofd" data-app="" href="../../">Open de app</a></p>
+
+      <h2 id="scherm">Het scherm</h2>
+      <p>Op een telefoon staat het menu onderin. Op een tablet staat het links, en op een breed scherm staan de lijst en
+        de uitleg naast elkaar.</p>
+      <div class="voorbeeld klein scherm-vb" role="img" aria-label="Een telefoon: bovenaan de titel met rechts het tandwiel (5), onderin het menu met Zoeken (1), Insignes (2), Oefenen (3) en Niveau (4)">
+        <div aria-hidden="true">
+          <div class="m-titel">Zoeken <span class="met-nr"><!-- maak:icoon over --><svg class="icoon" viewBox="0 0 24 24" aria-hidden="true"><path d="M18.6 9.7 21 10.1 21 13.9 18.6 14.3 18.3 15.1 19.7 17 17 19.7 15.1 18.3 14.3 18.6 13.9 21 10.1 21 9.7 18.6 8.9 18.3 7 19.7 4.3 17 5.7 15.1 5.4 14.3 3 13.9 3 10.1 5.4 9.7 5.7 8.9 4.3 7 7 4.3 8.9 5.7 9.7 5.4 10.1 3 13.9 3 14.3 5.4 15.1 5.7 17 4.3 19.7 7 18.3 8.9Z"/><circle cx="12" cy="12" r="3"/></svg><!-- /maak --><span class="nr">5</span></span></div>
+          <div class="m-zoek"><!-- maak:icoon zoeken --><svg class="icoon" viewBox="0 0 24 24" aria-hidden="true"><circle cx="10.5" cy="10.5" r="6.5"/><path d="M15.5 15.5 21 21"/></svg><!-- /maak --> Zoek een knoop, sein of techniek</div>
+          <div class="m-leeg"></div>
+          <div class="m-nav">
+            <span class="nu"><span class="met-nr"><!-- maak:icoon zoeken --><svg class="icoon" viewBox="0 0 24 24" aria-hidden="true"><circle cx="10.5" cy="10.5" r="6.5"/><path d="M15.5 15.5 21 21"/></svg><!-- /maak --><span class="nr">1</span></span>Zoeken</span>
+            <span><span class="met-nr"><!-- maak:icoon insignes --><svg class="icoon" viewBox="0 0 24 24" aria-hidden="true"><path d="M12 2.5l8.2 4.75v9.5L12 21.5l-8.2-4.75v-9.5z"/><path d="M12 8l1.2 2.5 2.7.4-2 1.9.5 2.7-2.4-1.3-2.4 1.3.5-2.7-2-1.9 2.7-.4z"/></svg><!-- /maak --><span class="nr">2</span></span>Insignes</span>
+            <span><span class="met-nr"><!-- maak:icoon oefenen --><svg class="icoon" viewBox="0 0 24 24" aria-hidden="true"><circle cx="12" cy="12" r="8.5"/><circle cx="12" cy="12" r="4.5"/><circle cx="12" cy="12" r="0.6"/></svg><!-- /maak --><span class="nr">3</span></span>Oefenen</span>
+            <span><span class="met-nr"><span class="m-stippen"><span class="stip klein" data-niveau="1">1</span><span class="stip klein" data-niveau="2">2</span><span class="stip klein" data-niveau="3">3</span><span class="stip klein" data-niveau="extra">+</span></span><span class="nr">4</span></span>Niveau</span>
+          </div>
+        </div>
+      </div>
+      <ol class="legenda">
+        <li><b>Zoeken</b>: alle onderwerpen, per categorie of op naam. Zie <a href="zoeken.html">Zoeken</a>.</li>
+        <li><b>Insignes</b>: de insignes per niveau, om af te vinken wat je kunt. Zie <a href="insignes.html">Insignes</a>.</li>
+        <li><b>Oefenen</b>: alles om zelf te doen bij elkaar. Zie <a href="oefenen.html">Oefenen</a>.</li>
+        <li><b>Niveau</b>: de vier gekleurde stippen. Kies niveau 1, 2, 3 of Extra en je ziet alleen wat daarbij
+          hoort. Zie <a href="zoeken.html#niveau">Het niveau kiezen</a>.</li>
+        <li><b>Instellingen</b>: het tandwiel, rechtsboven op een telefoon en onderaan het menu op een groter scherm.
+          Licht of donker, installeren, melden en wat er nieuw is. Een oranje stip op het tandwiel betekent dat er
+          iets nieuws is. Zie <a href="instellingen.html">Instellingen</a>.</li>
+      </ol>
+
+      <h2 id="installeren">Installeren</h2>
+      <p>Je kunt de app gewoon in de browser gebruiken. Installeer je hem, dan staat hij met een eigen icoon op je
+        beginscherm of in je dock, en opent hij in een eigen venster.</p>
+      <h3>Android</h3>
+      <ol>
+        <li><a data-app="" href="../../">Open de app</a> in Chrome.</li>
+        <li>Open het menu van de browser (⋮) en kies <b>App installeren</b> of <b>Toevoegen aan startscherm</b>.
+          In Firefox heet het <b>Installeren</b>.</li>
+      </ol>
+      <h3>iPhone en iPad</h3>
+      <ol>
+        <li><a data-app="" href="../../">Open de app</a> in Safari.</li>
+        <li>Tik op het deelsymbool, het vierkantje met de pijl omhoog: onderin, of bovenin op een iPad.</li>
+        <li>Kies <b>Zet op beginscherm</b>.</li>
+      </ol>
+      <h3>Computer</h3>
+      <ul>
+        <li><b>Chrome of Edge</b>: klik op het installeersymbool rechts in de adresbalk, of kies in het menu
+          <b>App installeren</b>.</li>
+        <li><b>Safari op de Mac</b>: kies in de menubalk <b>Archief › Voeg toe aan Dock</b>.</li>
+        <li><b>Firefox</b> installeert op de computer geen apps. Gebruik de app daar in de browser, of installeer hem in
+          Chrome, Edge of Safari.</li>
+      </ul>
+      <p>In de app zelf staat het ook: open <b>Instellingen</b> en kies <b>Installeer als app</b>. Je ziet dan hoe
+        het in jouw browser gaat; in Chrome en Edge staat er meteen een knop <b>Installeren</b>.</p>
+
+      <h2 id="offline">Zonder internet</h2>
+      <p>De eerste keer dat je de app met internet opent, haalt hij alles binnen wat hij nodig heeft: de onderwerpen, de
+        tekeningen, de oefeningen (ook die in 3D) en de voorbeeldkaarten, samen een paar megabyte. Laat hem daarvoor even
+        openstaan. Daarna werkt hij ook zonder internet: in het bos, op een hike, op kamp.</p>
+      <p>Wat buiten de app ligt, heeft wel internet nodig: de links naar andere sites, zoals de EHBO-app van het Rode
+        Kruis of de eisen in de activiteitenbank, en het versturen van een melding.</p>
+
+      <h2 id="bijwerken">Een nieuwe versie</h2>
+      <p>De app kijkt zelf of er een nieuwe versie is, als je hem opent en daarna elk uur. Staat die klaar, dan zie je
+        onderin <i>Er is een nieuwe versie</i> met de knop <b>Bijwerken</b>. Wat er veranderd is, lees je onder
+        <b>Instellingen › Updates</b>.</p>
+
+      <h2 id="toetsen">Op de computer</h2>
+      <div class="tabel-wrap"><table>
+        <thead><tr><th scope="col">Toets</th><th scope="col">Wat het doet</th></tr></thead>
+        <tbody>
+          <tr><th scope="row"><kbd>/</kbd></th><td>Naar het zoekveld, vanaf elke plek in de app</td></tr>
+          <tr><th scope="row"><kbd>Esc</kbd></th><td>De uitleg van een onderwerp sluiten, of het zoekveld verlaten</td></tr>
+        </tbody>
+      </table></div>
+
+      <!-- maak:volgende -->
+      <nav class="verder" aria-label="Verder lezen">
+        <span></span>
+        <a href="zoeken.html" rel="next">Zoeken ›</a>
+      </nav>
+      <!-- /maak -->
+    </article>
+  </main>
+
+  <!-- maak:voet -->
+  <footer class="voet">
+    <div class="voet-binnen">
+      <p><a href=".././">Scoutingtechnieken</a> · <a href="../handleiding/">Handleiding</a> · <a href="../handleiding/melden.html">Melden</a> · <a href="../handleiding/bronnen.html">Bronnen en licentie</a> · <a data-app="" href="../../">Open de app</a></p>
+      <p>© 2026 Wiebren Braakman, onder <a href="https://creativecommons.org/licenses/by-nc-sa/4.0/deed.nl">CC BY-NC-SA 4.0</a>. Geen app van Scouting Nederland: een eigen project, gemaakt voor scouts en leiding.</p>
+    </div>
+  </footer>
+  <!-- /maak -->
+</body>
+</html>

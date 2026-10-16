@@ -1,0 +1,8 @@
+/* 112, huisarts of zelf? (huisartsof112.js) */
+.ho-vraag { margin: 0; padding: 12px 14px; border-radius: 10px; background: var(--zacht); font-size: 17px; font-weight: 600; min-height: 3.2em; }
+.ho-keuzes { display: grid; grid-template-columns: 1fr 1fr; gap: 8px; }
+@container (min-width: 560px) { .ho-keuzes { grid-template-columns: repeat(4, 1fr); } }
+.ho-keuze { font-size: 14px; line-height: 1.25; }
+.ho-keuze:first-child { border-color: var(--fam-veilig); color: var(--fam-veilig); }
+.doe-plek .ho-keuze.juist { opacity: 1; background: var(--accent); border-color: var(--accent); color: var(--op-accent); }
+.doe-plek .ho-keuze.mis { opacity: 1; background: color-mix(in srgb, var(--rood) 16%, var(--paneel)); border-color: var(--rood); color: var(--inkt); }

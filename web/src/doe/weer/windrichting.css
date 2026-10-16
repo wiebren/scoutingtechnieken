@@ -1,0 +1,32 @@
+/* Where does the wind come from (windrichting.js). The smoke drifts away; with reduced motion it stands still. */
+.doe-windrichting { display: grid; gap: 12px; }
+@container (min-width: 560px) { .doe-windrichting { grid-template-columns: minmax(0, 300px) minmax(0, 1fr); align-items: start; } }
+.wr-beeld { max-width: 320px; width: 100%; margin: 0 auto; }
+.wr-svg { display: block; width: 100%; height: auto; font-family: inherit; }
+.wr-tekst { display: flex; flex-direction: column; gap: 10px; min-width: 0; }
+.wr-tekst p { margin: 0; }
+.wr-vraag { font-weight: 600; }
+.wr-knoppen { display: grid; grid-template-columns: 1fr 1fr; gap: 6px; }
+.wr-knop { justify-content: flex-start; padding-inline: 10px; font-size: 13.5px; }
+.wr-knop.goed { background: var(--accent); border-color: var(--accent); color: var(--op-accent); opacity: 1; }
+.wr-knop.fout { border-color: var(--rood); color: var(--rood); opacity: 1; }
+
+.wr-grond { fill: color-mix(in srgb, var(--fam-natuur) 20%, var(--paneel)); }
+.wr-rand { fill: none; stroke: var(--lijn-sterk); stroke-width: 1.5; }
+.wr-letter { fill: var(--inkt); font-size: 16px; font-weight: 800; }
+.wr-letter.tussen { fill: var(--stil); font-size: 12px; font-weight: 700; }
+.wr-hout { stroke: #8b5a2b; stroke-width: 5; stroke-linecap: round; }
+.wr-vlam { fill: #f08a00; stroke: #c0392b; stroke-width: 1; }
+.wr-pluim { fill: color-mix(in srgb, #8a929a 60%, transparent); }
+.wr-stang { stroke: var(--inkt); stroke-width: 3.5; stroke-linecap: round; }
+.wr-punt { fill: var(--rood); }
+.wr-staart { fill: none; stroke: var(--stil); stroke-width: 3; stroke-linecap: round; }
+.wr-as { fill: var(--inkt); }
+
+@media (prefers-reduced-motion: no-preference) {
+  .wr-pluim { animation: wr-drijf 2.4s linear infinite; animation-delay: calc(var(--i) * -0.34s); }
+  @keyframes wr-drijf {
+    from { transform: translateY(14px); opacity: 0.9; }
+    to { transform: translateY(-4px); opacity: 0.5; }
+  }
+}

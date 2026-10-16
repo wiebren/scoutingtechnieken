@@ -1,0 +1,66 @@
+/* Walk a route of directions and distances (koers.js): the notation left, the terrain right; one above the other
+   on a phone. */
+.doe-koers { display: grid; gap: 14px; }
+@container (min-width: 680px) { .doe-koers { grid-template-columns: minmax(0, 270px) minmax(0, 1fr); align-items: start; } }
+.doe-koers p { margin: 0; }
+.ko-links, .ko-rechts { display: flex; flex-direction: column; gap: 8px; min-width: 0; }
+.ko-notatie { display: block; width: 100%; max-width: 300px; margin: 0 auto; height: auto; border-radius: 10px; background: var(--zacht); }
+.ko-terrein { display: block; width: 100%; height: auto; border-radius: 10px; touch-action: none; cursor: crosshair; user-select: none; -webkit-user-select: none; }
+.ko-terrein:focus-visible { outline: 3px solid var(--accent); outline-offset: 2px; }
+.ko-opdracht { font-weight: 600; }
+.ko-velden { display: grid; grid-template-columns: 1fr 1fr; gap: 8px; align-items: end; }
+.ko-velden .knop { grid-column: 1 / -1; }
+@container (min-width: 680px) { .ko-velden { grid-template-columns: 1fr 1fr auto; } .ko-velden .knop { grid-column: auto; } }
+
+/* the notation */
+.ko-noord path { fill: none; stroke: var(--inkt); stroke-width: 1.6; }
+.ko-noord .ko-noord-punt { fill: var(--inkt); stroke: none; }
+.ko-noord path.ko-dik { stroke-width: 3.5; }
+.ko-n { fill: var(--inkt); font-size: 10px; font-weight: 700; }
+.ko-been path { fill: none; stroke: var(--inkt); stroke-width: 2.4; stroke-linecap: round; }
+.ko-been .ko-punt { fill: var(--inkt); stroke: none; }
+.ko-been.nu path { stroke: var(--blauw); }
+.ko-been.nu .ko-punt { fill: var(--blauw); }
+.ko-stip { fill: var(--inkt); }
+.ko-nr { fill: var(--inkt); font-size: 12px; font-weight: 700; }
+.ko-label { fill: var(--inkt); font-size: 11px; }
+.ko-klein { fill: var(--stil); font-size: 9px; }
+.ko-ruggengraat { fill: none; stroke: var(--inkt); stroke-width: 1.4; }
+.ko-lijn { fill: none; stroke: var(--rood); stroke-width: 2.6; stroke-linejoin: round; stroke-linecap: round; }
+.ko-lijn.nu { stroke: var(--blauw); stroke-width: 3.4; }
+.ko-schaal path { fill: none; stroke: var(--inkt); stroke-width: 1.4; }
+.ko-meet .ko-gradenboog { fill: color-mix(in srgb, var(--blauw) 8%, transparent); stroke: var(--blauw); stroke-width: 1; }
+.ko-streepje { stroke: var(--blauw); stroke-width: 0.8; }
+.ko-streepje.vet { stroke-width: 1.4; }
+.ko-graad { fill: var(--blauw); font-size: 8px; font-weight: 600; }
+.ko-lat path { fill: none; stroke: var(--blauw); stroke-width: 1.2; }
+
+/* the terrain */
+.ko-grond { fill: color-mix(in srgb, #e9dfb6 55%, var(--paneel)); }
+.ko-raster { stroke: var(--lijn-sterk); stroke-width: 0.6; }
+.ko-bos { fill: color-mix(in srgb, var(--fam-natuur) 28%, var(--paneel)); }
+.ko-water { fill: color-mix(in srgb, var(--blauw) 32%, var(--paneel)); }
+.ko-startpunt { fill: var(--paneel); stroke: var(--inkt); stroke-width: 2; }
+.ko-ik { fill: var(--blauw); stroke: var(--paneel); stroke-width: 2; }
+.ko-gelopen { fill: none; stroke: var(--blauw); stroke-width: 2.6; stroke-linejoin: round; stroke-linecap: round; }
+.ko-ring circle { fill: color-mix(in srgb, var(--paneel) 55%, transparent); stroke: var(--inkt); stroke-width: 0.8; }
+.ko-ring path { stroke: var(--inkt); stroke-width: 0.8; }
+.ko-mik path { fill: none; stroke: var(--accent); stroke-width: 2.4; stroke-dasharray: 5 4; stroke-linecap: round; }
+.ko-mik .ko-punt { fill: var(--accent); stroke: none; stroke-dasharray: none; }
+.ko-echt { fill: none; stroke: var(--rood); stroke-width: 2; stroke-dasharray: 6 5; }
+.ko-vangst { fill: color-mix(in srgb, var(--rood) 10%, transparent); stroke: var(--rood); stroke-width: 1; }
+.ko-post { fill: var(--rood); stroke: var(--rood); stroke-width: 2; }
+
+/* the given numbers: a list, or for a vliegkoers a strip read from the bottom up */
+.ko-lijst { margin: 0; padding: 10px 10px 10px 34px; border-radius: 10px; background: var(--zacht); font-variant-numeric: tabular-nums; }
+.ko-lijst li { padding: 3px 0; }
+.ko-lijst li.nu { color: var(--blauw); font-weight: 700; }
+.ko-lijst li.gedaan { color: var(--stil); text-decoration: line-through; }
+.ko-vlieg path { fill: none; stroke: var(--inkt); stroke-width: 3; stroke-linecap: round; }
+.ko-vlieg path.nu { stroke: var(--blauw); }
+.ko-vlieg path.gedaan { stroke: var(--stil); }
+.ko-vlieg-t { fill: var(--inkt); font-size: 14px; font-weight: 600; font-variant-numeric: tabular-nums; }
+.ko-vlieg-t.links { text-anchor: end; }
+.ko-vlieg-t.rechts { text-anchor: start; }
+.ko-vlieg-t.nu { fill: var(--blauw); font-weight: 700; }
+.ko-vlieg-t.gedaan { fill: var(--stil); }

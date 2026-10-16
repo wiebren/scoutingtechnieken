@@ -1,0 +1,105 @@
+<!doctype html>
+<html lang="nl">
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <title>Instellingen · Handleiding Scoutingtechnieken</title>
+  <meta name="description" content="De instellingen van Scoutingtechnieken: licht of donker, installeren, updates, en wat de app op je toestel bewaart.">
+  <meta name="theme-color" content="#ffffff" media="(prefers-color-scheme: light)">
+  <meta name="theme-color" content="#18201b" media="(prefers-color-scheme: dark)">
+  <!-- Links into the app have data-app (the place in the app, after the #); site/maak.mjs sets their href. -->
+  <script>try { const t = JSON.parse(localStorage.getItem('scoutingtechnieken.thema.v1')); if (t === 'licht' || t === 'donker') document.documentElement.dataset.theme = t === 'donker' ? 'dark' : 'light'; } catch { /* auto */ }</script>
+  <link rel="icon" type="image/png" sizes="192x192" href="../img/icon-192.png">
+  <link rel="apple-touch-icon" href="../img/apple-touch-icon.png">
+  <link rel="stylesheet" href="../app.css">
+  <link rel="stylesheet" href="../site.css">
+</head>
+<body>
+  <!-- maak:kop -->
+  <a class="overslaan" href="#inhoud">Naar de inhoud</a>
+  <header class="kop">
+    <nav class="kop-nav" aria-label="Site">
+      <a class="merk" href=".././"><span class="merk-teken"><svg class="icoon" viewBox="0 0 24 24" aria-hidden="true"><path d="M12 1.5l1.9 8.6 8.6 1.9-8.6 1.9-1.9 8.6-1.9-8.6L1.5 12l8.6-1.9z" fill="currentColor" stroke="none"/></svg></span><span>Scoutingtechnieken</span></a>
+      <a class="kop-link" href=".././">Home</a>
+      <a class="kop-link" href="../handleiding/" aria-current="page">Handleiding</a>
+      <a class="knop hoofd klein" data-app="" href="../../">Open de app</a>
+    </nav>
+  </header>
+  <!-- /maak -->
+
+  <main id="inhoud" class="handleiding">
+    <nav class="handleiding-nav" aria-label="Handleiding">
+      <p class="handleiding-nav-kop">Handleiding</p>
+      <!-- maak:handleiding -->
+      <ol>
+        <li><a href="index.html">Beginnen</a></li>
+        <li><a href="zoeken.html">Zoeken</a></li>
+        <li><a href="onderwerp.html">Een onderwerp</a></li>
+        <li><a href="oefenen.html">Oefenen</a></li>
+        <li><a href="insignes.html">Insignes</a></li>
+        <li><a href="instellingen.html" aria-current="page">Instellingen</a></li>
+        <li><a href="melden.html">Melden</a></li>
+        <li><a href="leiding.html">Voor leiding</a></li>
+        <li><a href="bronnen.html">Bronnen en licentie</a></li>
+      </ol>
+      <!-- /maak -->
+    </nav>
+
+    <article class="tekst">
+      <h1>Instellingen</h1>
+      <p class="lead">Achter het tandwiel: rechtsboven op een telefoon, onderaan het menu op een groter scherm.</p>
+
+      <h2 id="thema">Thema</h2>
+      <p>Kies <b>Automatisch</b>, <b>Licht</b> of <b>Donker</b>. Automatisch doet wat je toestel doet: licht als je
+        toestel licht staat, donker als het donker staat. Deze pagina's volgen je keuze ook.</p>
+
+      <h2 id="melden">Melden</h2>
+      <p>Met <b>Meld iets</b> laat je weten dat er iets niet klopt of dat je iets mist. Zie <a href="melden.html">Melden</a>.</p>
+
+      <h2 id="over">Scoutingtechnieken</h2>
+      <p>Wat de app is, en hoe het niveau in het menu werkt.</p>
+
+      <h2 id="installeren">Installeren</h2>
+      <p><b>Installeer als app</b> laat zien hoe je de app op jouw toestel zet. Zie
+        <a href="index.html#installeren">Installeren</a>.</p>
+
+      <h2 id="updates">Updates</h2>
+      <p>Per datum wat er veranderd is. Is er iets nieuws dat je nog niet gezien hebt, dan staat er een oranje stip op
+        het tandwiel.</p>
+
+      <h2 id="bronnen">Waar het vandaan komt</h2>
+      <p>De bronnen in het kort, en de licentie. Alles staat ook in <a href="bronnen.html">Bronnen en licentie</a>.</p>
+
+      <h2 id="gegevens">Je gegevens</h2>
+      <p>De app bewaart een paar dingen in je browser, op dit toestel. Er gaat niets naar een server, en er is geen
+        account:</p>
+      <ul>
+        <li>wat je hebt afgevinkt, en welke insignes je hebt gekregen (de sterren);</li>
+        <li>het niveau dat je in het menu hebt gekozen;</li>
+        <li>het thema;</li>
+        <li>welke updates je al hebt gezien;</li>
+        <li>je naam en e-mailadres, als je die bij een melding hebt ingevuld, zodat je ze niet opnieuw hoeft te typen.</li>
+      </ul>
+      <p>Hier zie je ook hoeveel je hebt afgevinkt. Met <b>Alles uitvinken</b> wis je dat, na een vraag of je het zeker
+        weet; terugdraaien kan niet. Wis je de sitegegevens van de app in je browser, dan is alles weg. In een privévenster
+        onthoudt de app niets.</p>
+
+      <!-- maak:volgende -->
+      <nav class="verder" aria-label="Verder lezen">
+        <a href="insignes.html" rel="prev">‹ Insignes</a>
+        <a href="melden.html" rel="next">Melden ›</a>
+      </nav>
+      <!-- /maak -->
+    </article>
+  </main>
+
+  <!-- maak:voet -->
+  <footer class="voet">
+    <div class="voet-binnen">
+      <p><a href=".././">Scoutingtechnieken</a> · <a href="../handleiding/">Handleiding</a> · <a href="../handleiding/melden.html">Melden</a> · <a href="../handleiding/bronnen.html">Bronnen en licentie</a> · <a data-app="" href="../../">Open de app</a></p>
+      <p>© 2026 Wiebren Braakman, onder <a href="https://creativecommons.org/licenses/by-nc-sa/4.0/deed.nl">CC BY-NC-SA 4.0</a>. Geen app van Scouting Nederland: een eigen project, gemaakt voor scouts en leiding.</p>
+    </div>
+  </footer>
+  <!-- /maak -->
+</body>
+</html>

@@ -1,0 +1,92 @@
+/* Classes for the drawings of touw (./touw.js), next to .plaatje in src/style.css. A rope keeps its own colour in
+   both themes (manilla, blue, red; a wooden pole, a metal ring): a dark edge around a body with a lighter core, so a
+   crossing reads on a light and on a dark panel. In the dark theme the bodies are a little less bright. */
+:root {
+  --tw-a: #e2b46a; --tw-a-rand: #5f4119; --tw-a-kern: #f7dfaa;
+  --tw-b: #6cb2d6; --tw-b-rand: #1b4a63; --tw-b-kern: #c3e5f4;
+  --tw-c: #e4846b; --tw-c-rand: #742a17; --tw-c-kern: #f8c9bb;
+  --tw-paal: #a2723f; --tw-paal-rand: #4a2f14;
+  --tw-ring: #b3bdc4; --tw-ring-rand: #434f57; --tw-ring-kern: #eef2f4;
+  --tw-garen: #f3efe4; --tw-garen-rand: #5d5546;
+}
+@media (prefers-color-scheme: dark) {
+  :root:not([data-theme="light"]) {
+    --tw-a: #cf9f55; --tw-a-kern: #e9c98b; --tw-b: #569fc6; --tw-b-kern: #a9d4e8; --tw-c: #d5735a; --tw-c-kern: #eeb2a2;
+    --tw-paal: #946638; --tw-ring: #9eaab2; --tw-ring-kern: #d9e1e5; --tw-garen: #e4dfd2;
+  }
+}
+:root[data-theme="dark"] {
+  --tw-a: #cf9f55; --tw-a-kern: #e9c98b; --tw-b: #569fc6; --tw-b-kern: #a9d4e8; --tw-c: #d5735a; --tw-c-kern: #eeb2a2;
+  --tw-paal: #946638; --tw-ring: #9eaab2; --tw-ring-kern: #d9e1e5; --tw-garen: #e4dfd2;
+}
+
+.plaatje .tw-rand, .plaatje .tw-lijf, .plaatje .tw-kern, .plaatje .tw-pijl, .plaatje .tw-wijs, .plaatje .tw-takel, .plaatje .tw-lijn { fill: none; stroke-linejoin: round; }
+.plaatje .tw-rand.a { stroke: var(--tw-a-rand); }
+.plaatje .tw-lijf.a { stroke: var(--tw-a); }
+.plaatje .tw-kern.a { stroke: var(--tw-a-kern); }
+.plaatje .tw-rand-vul.a, .plaatje .tw-takel.a { fill: var(--tw-a-rand); stroke: var(--tw-a-rand); }
+.plaatje .tw-lijf-vul.a { fill: var(--tw-a); }
+.plaatje .tw-rand.b { stroke: var(--tw-b-rand); }
+.plaatje .tw-lijf.b { stroke: var(--tw-b); }
+.plaatje .tw-kern.b { stroke: var(--tw-b-kern); }
+.plaatje .tw-rand-vul.b, .plaatje .tw-takel.b { fill: var(--tw-b-rand); stroke: var(--tw-b-rand); }
+.plaatje .tw-lijf-vul.b { fill: var(--tw-b); }
+.plaatje .tw-rand.c { stroke: var(--tw-c-rand); }
+.plaatje .tw-lijf.c { stroke: var(--tw-c); }
+.plaatje .tw-kern.c { stroke: var(--tw-c-kern); }
+.plaatje .tw-rand-vul.c, .plaatje .tw-takel.c { fill: var(--tw-c-rand); stroke: var(--tw-c-rand); }
+.plaatje .tw-lijf-vul.c { fill: var(--tw-c); }
+.plaatje .tw-rand.paal { stroke: var(--tw-paal-rand); }
+.plaatje .tw-lijf.paal { stroke: var(--tw-paal); }
+.plaatje .tw-kern.paal { stroke: var(--tw-paal-rand); opacity: 0.35; stroke-dasharray: 18 11; }
+.plaatje .tw-rand.tros { stroke: var(--tw-b-rand); }
+.plaatje .tw-lijf.tros { stroke: var(--tw-b); }
+.plaatje .tw-kern.tros { stroke: var(--tw-b-kern); }
+.plaatje .tw-rand.kern { stroke: var(--tw-a-rand); }
+.plaatje .tw-lijf.kern { stroke: var(--tw-a); }
+.plaatje .tw-kern.kern { stroke: var(--tw-a-kern); }
+.plaatje .tw-rand.kikker { stroke: var(--tw-ring-rand); stroke-linecap: round; }
+.plaatje .tw-lijf.kikker { stroke: var(--tw-ring); stroke-linecap: round; }
+.plaatje .tw-kern.kikker { stroke: var(--tw-ring-kern); stroke-linecap: round; }
+.plaatje .tw-rand.ton { stroke: var(--tw-paal-rand); }
+.plaatje .tw-lijf.ton { stroke: var(--tw-paal); }
+.plaatje .tw-kern.ton { stroke: var(--tw-paal-rand); opacity: 0.25; }
+.plaatje .tw-rand.ring { stroke: var(--tw-ring-rand); }
+.plaatje .tw-lijf.ring { stroke: var(--tw-ring); }
+.plaatje .tw-kern.ring { stroke: var(--tw-ring-kern); }
+.plaatje .tw-rand.garen { stroke: var(--tw-garen-rand); }
+.plaatje .tw-lijf.garen { stroke: var(--tw-garen); }
+.plaatje .tw-rand-vul.garen { fill: var(--tw-garen-rand); }
+.plaatje .tw-lijf-vul.garen { fill: var(--tw-garen); }
+.plaatje .tw-takel { stroke-width: 1.3; }
+
+.plaatje .tw-slag { stroke-width: 1.2; opacity: 0.55; fill: none; }
+.plaatje .tw-slag.a { stroke: var(--tw-a-rand); }
+.plaatje .tw-slag.b { stroke: var(--tw-b-rand); }
+.plaatje .tw-vezel { fill: none; stroke: var(--tw-a-rand); stroke-width: 1; }
+.plaatje .tw-patroon { stroke: var(--tw-garen-rand); stroke-width: 1; }
+.plaatje .tw-patroon.dun { stroke-width: 0.7; }
+.plaatje .tw-bordtekst { fill: var(--tw-paal-rand); font-weight: 600; }
+.plaatje .tw-metaal-lijn { fill: none; stroke: var(--tw-ring-rand); stroke-width: 3; stroke-linecap: round; }
+.plaatje .tw-metaal-licht-lijn { fill: none; stroke: var(--tw-ring-kern); stroke-width: 2.5; stroke-linecap: round; }
+.plaatje .tw-paal-lijn { fill: none; stroke: var(--tw-paal); stroke-width: 10; stroke-linecap: round; }
+.plaatje .tw-zand { fill: color-mix(in srgb, var(--bruin) 22%, var(--paneel)); }
+.plaatje .tw-kruis { fill: none; stroke: var(--rood); stroke-width: 4; stroke-linecap: round; }
+.plaatje .tw-glans { fill: color-mix(in srgb, var(--tw-a-kern) 70%, #ffffff); stroke: var(--tw-a-rand); stroke-width: 1.2; }
+
+/* Pull arrows, pointers to a label, and the things around a knot (board, barrel, tools). */
+.plaatje .tw-pijl { stroke: var(--stil); stroke-width: 1.6; stroke-linecap: round; }
+.plaatje .tw-pijlpunt { fill: var(--stil); }
+.plaatje .tw-pijl.rood, .plaatje .tw-wijs.rood { stroke: var(--rood); }
+.plaatje .tw-pijlpunt.rood { fill: var(--rood); }
+.plaatje .tw-wijs { stroke: var(--stil); stroke-width: 0.8; }
+.plaatje .tw-wijs-punt { fill: var(--stil); }
+.plaatje .tw-hout { fill: var(--tw-paal); stroke: var(--tw-paal-rand); stroke-width: 1.4; stroke-linejoin: round; }
+.plaatje .tw-hout-licht { fill: color-mix(in srgb, var(--tw-paal) 55%, #ffffff); stroke: var(--tw-paal-rand); stroke-width: 1.4; stroke-linejoin: round; }
+.plaatje .tw-nerf { fill: none; stroke: var(--tw-paal-rand); stroke-width: 0.8; opacity: 0.45; }
+.plaatje .tw-metaal { fill: var(--tw-ring); stroke: var(--tw-ring-rand); stroke-width: 1.4; stroke-linejoin: round; }
+.plaatje .tw-metaal-licht { fill: var(--tw-ring-kern); }
+.plaatje .tw-gevaar { fill: color-mix(in srgb, var(--rood) 14%, transparent); stroke: var(--rood); stroke-width: 1.2; stroke-dasharray: 5 4; }
+.plaatje .tw-vlam { fill: #f08c1a; }
+.plaatje .tw-vlam-binnen { fill: #ffd23f; }
+.plaatje .tw-smelt { fill: var(--tw-a-rand); }

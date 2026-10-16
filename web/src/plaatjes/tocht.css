@@ -1,0 +1,104 @@
+/* Classes for the drawings of tocht (./tocht.js), next to .plaatje in src/style.css, and for the trail signs
+   (../doe/tocht/tekens.js), which the quiz shows outside a .plaatje too. Things that are real objects - a post, a
+   stone, grass, a red-and-white waymark - keep their own colours in light and dark. */
+
+/* -- trail signs: chalk lines, sticks, grass and stones */
+.tk { display: block; width: 100%; height: auto; overflow: visible; }
+.tk-krijt { fill: none; stroke: var(--inkt); stroke-width: 5; stroke-linecap: round; stroke-linejoin: round; }
+.tk-krijt.tk-punt { fill: var(--inkt); }
+.tk-rood-krijt { stroke: var(--rood); }
+.tk-vul { fill: var(--inkt); stroke: none; }
+.tk-tekst { fill: var(--inkt); font-weight: 700; font-family: inherit; }
+.tk-gras { fill: none; stroke: #5e9a2e; stroke-width: 2.4; stroke-linecap: round; }
+.tk-knoop { fill: #3f6d1c; }
+.tk-steen { fill: #a7a49c; stroke: #5d5a53; stroke-width: 1.6; }
+.tk-tak { stroke: #8a5a2b; stroke-width: 6; stroke-linecap: round; }
+.tk-grond { fill: none; stroke: var(--stil); stroke-width: 1.5; stroke-dasharray: 4 4; }
+.tk-schors { fill: #7b6a58; }
+.tk-schorslijn { fill: none; stroke: #5b4c3e; stroke-width: 2; stroke-linecap: round; }
+.tk-lucifer { stroke: #f1d9a8; stroke-width: 4; stroke-linecap: round; }
+.tk-kopje { fill: #c62828; }
+.tk-paal { fill: #8c6a48; }
+.tk-paalrand { stroke: #5e4630; stroke-width: 2; }
+.tk-wit { fill: #ffffff; }
+.tk-rood { fill: #d1141b; }
+.tk-geel { fill: #f2c200; }
+
+/* -- the route drawings: roads, paths, the route on the map, and the notation in pen */
+.plaatje .tw-weg { fill: none; stroke: var(--lijn-sterk); stroke-width: 9; stroke-linecap: round; stroke-linejoin: round; }
+.plaatje .tw-weg.smal { stroke-width: 5; }
+.plaatje .tw-pad { fill: none; stroke: var(--lijn-sterk); stroke-width: 4; stroke-dasharray: 5 5; stroke-linecap: round; }
+.plaatje .tw-route { fill: none; stroke: var(--rood); stroke-width: 3.5; stroke-linecap: round; stroke-linejoin: round; }
+.plaatje .tw-route.tk-punt { fill: var(--rood); }
+.plaatje .tw-pen { fill: none; stroke: var(--inkt); stroke-width: 3; stroke-linecap: round; stroke-linejoin: round; }
+.plaatje .tw-pen.tk-punt { fill: var(--inkt); }
+.plaatje .tw-pen.dun { stroke-width: 1.6; }
+.plaatje .tw-pen.dik { stroke-width: 6; }
+.plaatje .tw-noord { fill: none; stroke: var(--inkt); stroke-width: 1.8; stroke-linejoin: round; }
+.plaatje .tw-noord.tk-punt { fill: var(--inkt); }
+.plaatje .tw-blauw { fill: none; stroke: var(--blauw); stroke-width: 3; stroke-linecap: round; stroke-linejoin: round; }
+.plaatje .tw-blauw.tk-punt { fill: var(--blauw); }
+.plaatje .tw-paneel { fill: var(--zacht); stroke: var(--lijn); stroke-width: 1; }
+.plaatje .tw-vel { fill: color-mix(in srgb, var(--blauw) 10%, transparent); stroke: var(--blauw); stroke-width: 1.2; stroke-dasharray: 3 3; }
+.plaatje .tw-wolk { fill: var(--paneel); stroke: var(--lijn-sterk); stroke-width: 1.5; }
+.plaatje .tw-bos { fill: color-mix(in srgb, var(--fam-natuur) 26%, var(--paneel)); }
+.plaatje .tw-water { fill: color-mix(in srgb, var(--blauw) 30%, var(--paneel)); }
+.plaatje .tw-water-lijn { fill: none; stroke: var(--blauw); stroke-width: 2.5; }
+.plaatje .tw-huis { fill: var(--inkt); }
+.plaatje .tw-boom { fill: color-mix(in srgb, var(--fam-natuur) 60%, var(--paneel)); stroke: var(--fam-natuur); stroke-width: 1; }
+.plaatje .tw-grens { fill: none; stroke: var(--paars); stroke-width: 3; stroke-dasharray: 8 4; }
+.plaatje .tw-rooster { fill: none; stroke: var(--stil); stroke-width: 0.8; }
+.plaatje .tw-cirkel { fill: none; stroke: var(--blauw); stroke-width: 1.4; stroke-dasharray: 4 3; }
+.plaatje .tw-geest { opacity: 0.45; }
+.plaatje .tw-kraal-rood { fill: #d1141b; stroke: #7d0b10; stroke-width: 1; }
+.plaatje .tw-kraal-groen { fill: #2e9d46; stroke: #17582a; stroke-width: 1; }
+/* lila is light, green middle, red dark: the beads differ in lightness too, not only in hue */
+.plaatje .tw-kraal-lila { fill: #c7a6f0; stroke: #6a4596; stroke-width: 1; }
+.plaatje .tw-touw-lijn { fill: none; stroke: #6b4f2a; stroke-width: 1.4; }
+.plaatje .tw-touw { fill: none; stroke: #b9905a; stroke-width: 3; stroke-linecap: round; stroke-linejoin: round; }
+.plaatje .tw-touw-knoop { fill: #9a7442; stroke: #6b4f2a; stroke-width: 1; }
+.plaatje .tw-gezicht { fill: color-mix(in srgb, #f2c200 35%, var(--paneel)); stroke: var(--inkt); stroke-width: 2; }
+.plaatje .tw-oogwit { fill: #ffffff; stroke: var(--inkt); stroke-width: 1.6; }
+.plaatje .tw-lint { fill: #e5342b; }
+.plaatje .tw-stam { fill: #8a5a2b; }
+.plaatje .tw-kroon { fill: color-mix(in srgb, var(--fam-natuur) 45%, var(--paneel)); stroke: var(--fam-natuur); stroke-width: 1.2; }
+.plaatje .tw-steen { fill: #a7a49c; stroke: #5d5a53; stroke-width: 1.4; }
+.plaatje .tw-metro-a { fill: none; stroke: #d1141b; stroke-width: 6; stroke-linecap: round; stroke-linejoin: round; }
+.plaatje .tw-metro-b { fill: none; stroke: #0066b2; stroke-width: 6; stroke-linecap: round; stroke-linejoin: round; }
+.plaatje .tw-metro-c { fill: none; stroke: #2e9d46; stroke-width: 6; stroke-linecap: round; stroke-linejoin: round; }
+.plaatje .tw-station { fill: var(--paneel); stroke: var(--inkt); stroke-width: 2; }
+.plaatje .tw-blok { fill: var(--inkt); }
+.plaatje .tw-noord.dik { stroke-width: 5; }
+
+/* -- the drawings of the rules, compass routes and tochtvormen */
+.plaatje .tw-goed { fill: none; stroke: var(--accent); stroke-width: 4; stroke-linecap: round; stroke-linejoin: round; }
+.plaatje .tw-fout { fill: none; stroke: var(--rood); stroke-width: 4; stroke-linecap: round; }
+.plaatje .tw-spiegel { fill: none; stroke: var(--blauw); stroke-width: 2; stroke-dasharray: 6 4; }
+.plaatje .tw-weg.breed { stroke-width: 34; stroke-linecap: butt; }
+.plaatje .tw-rugzak { fill: var(--accent); }
+.plaatje .tw-jas { fill: var(--blauw); }
+.plaatje .tw-zand { fill: color-mix(in srgb, #e9dfb6 60%, var(--paneel)); }
+.plaatje .tw-zandpad { fill: none; stroke: color-mix(in srgb, #e9dfb6 60%, var(--paneel)); stroke-width: 26; stroke-linecap: round; }
+.plaatje .tw-haai { fill: var(--paneel); stroke: var(--inkt); stroke-width: 1; stroke-linejoin: round; }
+.plaatje .tw-kegel { fill: #8a5a2b; stroke: #5a3a1b; stroke-width: 1; }
+.plaatje .tw-kegel-lijn { fill: none; stroke: #5a3a1b; stroke-width: 1.2; }
+.plaatje .tw-metaal { fill: var(--stil); }
+.plaatje .tw-metaal-lijn { fill: none; stroke: var(--stil); stroke-width: 5; stroke-linecap: round; }
+.plaatje .tw-plaatje { fill: var(--paneel); stroke: var(--inkt); stroke-width: 1.4; }
+.plaatje .tw-plak { fill: var(--zacht); stroke: var(--stil); stroke-width: 1.2; stroke-dasharray: 4 3; }
+.plaatje .tw-post { fill: none; stroke: var(--rood); stroke-width: 2.5; stroke-linejoin: round; }
+.plaatje .tw-post.keuze { stroke-dasharray: 4 3; }
+.plaatje .tw-bonus { fill: #f2c200; stroke: #8a6d00; stroke-width: 1; stroke-linejoin: round; }
+.plaatje .accent-licht, .plaatje .vol-licht { stroke: none; }
+.plaatje .tw-paars { fill: var(--paars); }
+.plaatje .tw-bruin { fill: var(--bruin); }
+/* real things keep their own colours: asphalt and chalk, tyre tracks, Dutch road signs */
+.plaatje .tw-asfalt { fill: none; stroke: #6f7377; stroke-width: 40; stroke-linejoin: round; }
+.plaatje .tw-krijt-weg { fill: none; stroke: #f4f1e6; stroke-width: 4; stroke-linecap: round; stroke-linejoin: round; }
+.plaatje .tw-band { fill: none; stroke: #2f3235; stroke-width: 7; opacity: 0.6; }
+.plaatje .tw-bord-blauw { fill: #1f4e9c; stroke: #ffffff; stroke-width: 1.5; }
+.plaatje .tw-bord-wit { fill: none; stroke: #ffffff; stroke-width: 8; }
+.plaatje .tw-bord-rood { fill: none; stroke: #d1141b; stroke-width: 6; }
+.plaatje .tw-bord-licht { fill: #ffffff; stroke: #17211b; stroke-width: 1.5; }
+.plaatje .tw-bord-tekst { fill: #17211b; }
+.plaatje .tw-bord-wit-tekst { fill: #ffffff; font-weight: 600; }

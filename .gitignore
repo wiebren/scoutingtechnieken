@@ -1,5 +1,6 @@
 node_modules/
 dist/
+pages/
 __pycache__/
 .DS_Store
 .idea/

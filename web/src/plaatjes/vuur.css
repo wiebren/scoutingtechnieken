@@ -1,0 +1,48 @@
+/* Classes for the drawings of vuur, koken and gereedschap (./vuur.js, ./koken.js, ./gereedschap.js), next to
+   .plaatje in src/style.css. Wood, flame and metal keep their own colours in both themes; the ground and the sand
+   follow the panel. The --vk-* colours are also used by the pieces in src/doe/vuur/. */
+:root {
+  --vk-hout: #9a6233;
+  --vk-hout-rand: #5e3b1a;
+  --vk-kop: #dcae74;
+  --vk-vlam: #f08c1a;
+  --vk-vlam-binnen: #ffd23f;
+  --vk-kool: #d9480f;
+  --vk-tondel: #e9cf73;
+  --vk-zand: #e6d3a3;
+  --vk-metaal: #9aa6ae;
+  --vk-metaal-rand: #56636b;
+  --vk-water: #8cc4e8;
+  --vk-grond: color-mix(in srgb, var(--bruin) 22%, var(--paneel));
+  --vk-gat: #3b2a1c;
+}
+@media (prefers-color-scheme: dark) {
+  :root:not([data-theme="light"]) { --vk-zand: #8c7a50; --vk-kop: #c8975c; --vk-water: #3f7fae; --vk-grond: color-mix(in srgb, var(--bruin) 26%, var(--paneel)); --vk-gat: #0c0805; }
+}
+:root[data-theme="dark"] { --vk-zand: #8c7a50; --vk-kop: #c8975c; --vk-water: #3f7fae; --vk-grond: color-mix(in srgb, var(--bruin) 26%, var(--paneel)); --vk-gat: #0c0805; }
+
+.plaatje .vk-hout { fill: none; stroke: var(--vk-hout); stroke-linecap: round; }
+.plaatje .vk-hout-rand { fill: none; stroke: var(--vk-hout-rand); stroke-linecap: round; }
+.plaatje .vk-hout-vol { fill: var(--vk-hout); stroke: var(--vk-hout-rand); stroke-width: 1.2; stroke-linejoin: round; }
+.plaatje .vk-kop { fill: var(--vk-kop); stroke: var(--vk-hout-rand); stroke-width: 1.2; }
+.plaatje .vk-jaar { fill: none; stroke: var(--vk-hout-rand); stroke-width: 0.8; opacity: 0.6; }
+.plaatje .vk-vlam { fill: var(--vk-vlam); }
+.plaatje .vk-vlam-binnen { fill: var(--vk-vlam-binnen); }
+.plaatje .vk-kool { fill: var(--vk-kool); }
+.plaatje .vk-tondel { fill: var(--vk-tondel); stroke: #a7852a; stroke-width: 0.8; }
+.plaatje .vk-grond { fill: var(--vk-grond); }
+.plaatje .vk-gat { fill: var(--vk-gat); }
+.plaatje .vk-zand { fill: var(--vk-zand); }
+.plaatje .vk-water { fill: var(--vk-water); }
+.plaatje .vk-metaal { fill: var(--vk-metaal); stroke: var(--vk-metaal-rand); stroke-width: 1.2; stroke-linejoin: round; }
+.plaatje .vk-metaal-lijn { fill: none; stroke: var(--vk-metaal-rand); stroke-width: 1.4; stroke-linecap: round; }
+.plaatje .vk-rook { fill: none; stroke: var(--stil); stroke-width: 2.5; stroke-linecap: round; opacity: 0.55; }
+.plaatje .vk-pijl { fill: none; stroke: var(--blauw); stroke-width: 2.2; stroke-linecap: round; stroke-linejoin: round; }
+.plaatje .vk-pijl-kop { fill: var(--blauw); }
+.plaatje .vk-warm { fill: none; stroke: var(--rood); stroke-width: 2; stroke-linecap: round; stroke-linejoin: round; }
+.plaatje .vk-warm-kop { fill: var(--rood); }
+.plaatje .vk-wijs { fill: none; stroke: var(--stil); stroke-width: 1; }
+.plaatje .vk-touw { fill: none; stroke: #c9a227; stroke-width: 2.4; stroke-linecap: round; }
+.plaatje .vk-hand { fill: #e8b98f; stroke: #8a5a3a; stroke-width: 1.2; stroke-linejoin: round; }
+.plaatje .vk-staal { fill: #c7d0d6; stroke: #56636b; stroke-width: 1.2; stroke-linejoin: round; }
+.plaatje .vk-snede { fill: none; stroke: var(--rood); stroke-width: 2.4; stroke-linecap: round; }

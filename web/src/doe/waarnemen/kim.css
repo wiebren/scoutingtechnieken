@@ -1,0 +1,44 @@
+/* Kim's spel (kim.js) */
+.km-svg { max-width: 420px; }
+.km-tafel { fill: color-mix(in srgb, #a77b4f 40%, var(--paneel)); }
+.km-doek { fill: color-mix(in srgb, var(--fam-weg) 70%, var(--paneel)); stroke: color-mix(in srgb, var(--fam-weg) 85%, #000); stroke-width: 2; }
+.km-doek.weg { opacity: 0; pointer-events: none; }
+@media (prefers-reduced-motion: no-preference) { .km-doek { transition: opacity 0.35s; } }
+.km-vak { fill: color-mix(in srgb, #fff 55%, transparent); }
+.km-ding[role="button"] { cursor: pointer; }
+.km-ding[role="button"]:hover .km-vak, .km-ding:focus-visible .km-vak { fill: color-mix(in srgb, var(--accent) 30%, #fff); }
+.km-ding:focus-visible { outline: none; }
+.km-juist .km-vak { fill: color-mix(in srgb, var(--accent) 35%, #fff); stroke: var(--accent); stroke-width: 3; }
+.km-keuzes { display: flex; flex-wrap: wrap; gap: 6px; }
+.km-chip { gap: 6px; padding-left: 6px; }
+.km-mini { width: 26px; height: 26px; flex: none; }
+.km-chip.goed { background: color-mix(in srgb, var(--accent) 22%, var(--paneel)); border-color: var(--accent); color: var(--inkt); }
+.km-chip.gemist { background: repeating-linear-gradient(45deg, transparent 0 6px, color-mix(in srgb, var(--accent) 22%, transparent) 6px 12px); border-color: var(--accent); border-style: dashed; color: var(--inkt); }
+.km-chip.fout { background: color-mix(in srgb, var(--rood) 18%, var(--paneel)); border-color: var(--rood); color: var(--inkt); }
+
+/* the things: fixed colours, they are objects, on a light square in both themes */
+.km-metaal { fill: #9aa3ab; stroke: #5d656c; stroke-width: 1; }
+.km-gat { fill: #3b3b3b; }
+.km-geel { fill: #f2c230; stroke: #8a6a10; stroke-width: 0.8; }
+.km-hout { fill: #9a6a3a; }
+.km-roze { fill: #e58a9a; }
+.km-goud { fill: #e2b33c; stroke: #8f6c12; stroke-width: 1; }
+.km-lijn { fill: none; stroke: #4a3a24; stroke-width: 1.2; stroke-linecap: round; }
+.km-lijn-dik { fill: none; stroke: #2b2b2b; stroke-width: 2.4; stroke-linecap: round; }
+.km-tekst { fill: #6d5210; font-size: 11px; font-weight: 700; }
+.km-rood { fill: #d23b3b; }
+.km-schelp { fill: #f1d9c0; stroke: #a07a55; stroke-width: 1; }
+.km-eikel { fill: #c08a3e; }
+.km-veer { fill: #e9eef3; stroke: #8796a3; stroke-width: 1; }
+.km-wit { fill: #fafafa; stroke: #555; stroke-width: 1.2; }
+.km-donker { fill: #2d3338; }
+.km-touw { fill: none; stroke: #c2a06a; stroke-width: 3.5; stroke-linecap: round; }
+.km-touw-knoop { fill: #a9844b; }
+.km-steel { stroke: #7c858d; stroke-width: 3.5; stroke-linecap: round; }
+.km-steel-hout { stroke: #d9b77c; stroke-width: 3; stroke-linecap: round; }
+.km-steen { fill: #8f9295; stroke: #5f6265; stroke-width: 1; }
+.km-blad { fill: #4f9a3e; }
+.km-vlam { fill: #f5a623; }
+.km-draad { fill: none; stroke: #8a939b; stroke-width: 2; stroke-linecap: round; }
+.km-pleister { fill: #e7b98f; }
+.km-blauw { fill: #3c78c8; }

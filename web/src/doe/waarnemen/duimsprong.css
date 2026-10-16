@@ -1,0 +1,12 @@
+/* Duimsprong (duimsprong.js) */
+.ds-svg { max-width: 520px; }
+.ds-muur { fill: color-mix(in srgb, #c9a27a 70%, var(--paneel)); stroke: var(--inkt); stroke-width: 0.6; }
+.ds-dak { fill: color-mix(in srgb, #b5452f 80%, var(--paneel)); }
+.ds-deur, .ds-raam { fill: color-mix(in srgb, var(--inkt) 70%, var(--paneel)); }
+.ds-duim { fill: var(--wn-huid); stroke: #a8745a; stroke-width: 1.4; }
+.ds-geest { fill: none; stroke: var(--accent); stroke-width: 2; stroke-dasharray: 5 4; }
+.ds-boven { max-width: 260px; }
+.ds-hoe summary { cursor: pointer; font-weight: 600; color: var(--accent); }
+.ds-hoe[open] summary { margin-bottom: 8px; }
+@media (prefers-reduced-motion: no-preference) { .ds-verte { transition: transform 0.25s ease-out; } }
+.ds-label { font-size: 13px; font-weight: 700; fill: var(--rood) !important; }

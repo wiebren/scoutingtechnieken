@@ -1,0 +1,9 @@
+/* The packing list (paklijst.js): a checkbox per thing, with why it comes along. */
+.pk-lijst { margin: 0; padding: 0; list-style: none; display: flex; flex-direction: column; border: 1px solid var(--lijn); border-radius: 10px; overflow: hidden; }
+.pk-lijst li + li { border-top: 1px solid var(--lijn); }
+.pk-lijst label { display: flex; align-items: flex-start; gap: 10px; min-height: 44px; padding: 9px 12px; cursor: pointer; }
+.pk-lijst input { flex: none; width: 20px; height: 20px; margin: 1px 0 0; accent-color: var(--accent); }
+.pk-lijst label > span { display: flex; flex-direction: column; gap: 1px; min-width: 0; }
+.pk-naam { font-weight: 600; }
+.pk-waarom { color: var(--stil); font-size: 13px; }
+.pk-lijst input:checked + span .pk-naam { color: var(--stil); text-decoration: line-through; }

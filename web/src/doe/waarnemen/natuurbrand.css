@@ -1,0 +1,19 @@
+/* Welke kant vlucht je op? (natuurbrand.js) */
+.nb-svg { max-width: 360px; }
+.nb-heide { fill: color-mix(in srgb, #b46aa8 22%, var(--paneel)); }
+.nb-vlam { fill: #f08a1c; stroke: #c4420e; stroke-width: 1; }
+.nb-rook { fill: none; stroke: color-mix(in srgb, var(--stil) 50%, transparent); stroke-width: 26; stroke-linecap: round; }
+.nb-wind { stroke: var(--inkt); stroke-width: 2; }
+.nb-wind-punt { fill: var(--inkt); }
+.nb-weg { stroke: color-mix(in srgb, var(--stil) 70%, var(--paneel)); stroke-width: 7; stroke-linecap: round; }
+.nb-huis { fill: color-mix(in srgb, #b9775a 75%, var(--paneel)); stroke: var(--inkt); stroke-width: 0.8; }
+.nb-keuze { cursor: pointer; }
+.nb-raak { fill: var(--paneel); stroke: var(--lijn-sterk); stroke-width: 1.5; }
+.nb-pijl { stroke: var(--stil); stroke-width: 2; stroke-dasharray: 3 3; }
+.nb-letter { font-size: 11px; font-weight: 700; fill: var(--inkt); }
+.nb-keuze:hover .nb-raak, .nb-keuze:focus-visible .nb-raak { stroke: var(--accent); stroke-width: 2.5; }
+.nb-keuze:focus-visible { outline: none; }
+.nb-keuze.juist .nb-raak { fill: var(--accent); stroke: var(--accent); }
+.nb-keuze.juist .nb-letter { fill: var(--op-accent); }
+.nb-keuze.juist .nb-pijl { stroke: var(--accent); stroke-dasharray: none; stroke-width: 3; }
+.nb-keuze.mis .nb-raak { fill: color-mix(in srgb, var(--rood) 25%, var(--paneel)); stroke: var(--rood); }

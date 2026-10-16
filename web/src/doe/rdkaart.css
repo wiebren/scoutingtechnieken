@@ -1,0 +1,37 @@
+/* RD coordinates on a real map (rdkaart.js). The map keeps its shape at any width; the drawing over it is in the
+   pixels of the image. The map is light in both themes, so what is drawn on it has a white halo. */
+.doe-rdkaart { display: flex; flex-direction: column; gap: 10px; }
+.doe-rdkaart p { margin: 0; }
+
+.rk-figuur { margin: 0; }
+.rk-kaart { position: relative; aspect-ratio: 800 / 560; overflow: hidden; border: 1px solid var(--lijn); border-radius: 12px; background: #fff; }
+.rk-kaart img { position: absolute; inset: 0; width: 100%; height: 100%; display: block; user-select: none; -webkit-user-select: none; }
+.rk-svg { position: absolute; inset: 0; width: 100%; height: 100%; display: block; overflow: hidden; touch-action: pinch-zoom;
+  user-select: none; -webkit-user-select: none; cursor: crosshair; }
+.rk-svg:focus-visible { outline: 3px solid var(--accent); outline-offset: -3px; border-radius: 12px; }
+.rk-bron { margin-top: 4px; color: var(--stil); font-size: 12px; }
+
+.rk-randen text { fill: #17211b; font-size: 22px; font-weight: 700; paint-order: stroke; stroke: #fff; stroke-width: 5px; stroke-linejoin: round; }
+.rk-huisje, .rk-trapje { fill: none; stroke-width: 3; vector-effect: non-scaling-stroke; }
+.rk-huisje { stroke: #00803f; }
+.rk-trapje { stroke: #0066b2; }
+.rk-kruis .halo { fill: none; stroke: #fff; stroke-width: 5; vector-effect: non-scaling-stroke; }
+.rk-kruis .lijn { fill: none; stroke: #d1141b; stroke-width: 2.5; vector-effect: non-scaling-stroke; }
+.rk-kruis.stil { opacity: 0.75; }
+.rk-zone { fill: rgb(0 128 63 / 0.18); stroke: #00803f; stroke-width: 2.5; vector-effect: non-scaling-stroke; }
+.rk-stip { fill: #00803f; stroke: #fff; stroke-width: 2; vector-effect: non-scaling-stroke; }
+.rk-mis { stroke: #17211b; stroke-width: 2; stroke-dasharray: 6 5; vector-effect: non-scaling-stroke; }
+.rk-juist { visibility: hidden; }
+.rk-juist.toon { visibility: visible; }
+@media (prefers-reduced-motion: no-preference) {
+  .rk-juist.toon { animation: rk-in 0.25s ease-out; }
+  @keyframes rk-in { from { opacity: 0; } }
+}
+
+.rk-opdracht { font-size: 16px; }
+.rk-uitkomst { min-height: 1.5em; font-size: 17px; font-variant-numeric: tabular-nums; }
+.rk-uitkomst.goed { color: var(--accent); font-weight: 600; }
+.rk-uitkomst.fout { color: var(--rood); font-weight: 600; }
+.rk-uitleg { color: var(--stil); font-size: 14px; font-variant-numeric: tabular-nums; }
+.rk-score { color: var(--stil); font-variant-numeric: tabular-nums; }
+.rk-score:empty { display: none; }

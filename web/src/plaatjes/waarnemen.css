@@ -1,0 +1,23 @@
+/* Classes for the drawings of waarnemen (./waarnemen.js), next to .plaatje in src/style.css. */
+.plaatje .wn-huid { fill: #e9b98f; stroke: #a8745a; stroke-width: 1; }
+.plaatje .wn-lucht { fill: color-mix(in srgb, var(--blauw) 10%, var(--paneel)); }
+.plaatje .wn-oever { fill: color-mix(in srgb, var(--fam-natuur) 35%, var(--paneel)); }
+.plaatje .wn-water { fill: color-mix(in srgb, var(--blauw) 40%, var(--paneel)); }
+.plaatje .wn-weg { fill: none; stroke: color-mix(in srgb, var(--stil) 55%, var(--paneel)); stroke-width: 9; stroke-linecap: round; stroke-linejoin: round; }
+.plaatje .wn-pad { stroke-width: 4; stroke-dasharray: 6 4; stroke: color-mix(in srgb, var(--bruin) 60%, var(--paneel)); }
+.plaatje .wn-beek { fill: none; stroke: color-mix(in srgb, var(--blauw) 55%, var(--paneel)); stroke-width: 3; }
+.plaatje .wn-route { fill: none; stroke: var(--rood); stroke-width: 2.4; stroke-dasharray: 7 4; stroke-linecap: round; stroke-linejoin: round; }
+.plaatje .wn-zand { fill: #ecdcb6; }   /* sand stays sand-coloured in the dark theme too */
+.plaatje .wn-voet { fill: #cdb37f; stroke: #6b4f26; stroke-width: 0.8; }
+.plaatje .wn-diep { fill: #5a4320; }
+.plaatje .wn-teen { fill: #6b4f26; }
+.plaatje .wn-korrel { fill: #7a5a2a; }
+.plaatje .wn-druppel { fill: #b89a5e; stroke: #6b4f26; stroke-width: 0.8; }
+.plaatje .wn-blaadje { fill: #8aa04a; stroke: #4f6a1e; stroke-width: 0.8; }
+.plaatje .wn-band { fill: #c9b47e; opacity: 0.9; }
+.plaatje .wn-profiel { fill: none; stroke: #6b4f26; stroke-width: 1.2; }
+.plaatje .wn-gras-rand { fill: none; stroke: #9db36a; stroke-width: 10; stroke-linecap: round; opacity: 0.7; }
+/* on sand (which stays sand in the dark theme): dark ink and a dark green */
+.plaatje .tekst.wn-op-zand { fill: #3b2d16; }
+.plaatje .lijn.wn-zandlijn { stroke: #3b2d16; }
+.plaatje .lijn.wn-zoek { stroke: #0b6b35; stroke-width: 2; }

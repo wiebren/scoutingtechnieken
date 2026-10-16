@@ -1,0 +1,96 @@
+/* Classes for the drawings of weer (./weer.js), next to .plaatje in src/style.css. Mixed from the colour tokens, so
+   the light and the dark theme both work: the sky darkens with the panel, the clouds stay light. */
+.plaatje .w-lucht { fill: color-mix(in srgb, var(--blauw) 24%, var(--paneel)); }
+.plaatje .w-band { fill: color-mix(in srgb, var(--paneel) 22%, transparent); }
+.plaatje .w-grond { fill: color-mix(in srgb, var(--fam-natuur) 38%, var(--paneel)); }
+.plaatje .w-stam { stroke: #8b5a2b; stroke-width: 2.5; }
+.plaatje .w-boom { fill: color-mix(in srgb, var(--fam-natuur) 75%, var(--inkt)); }
+.plaatje .wolk { fill: color-mix(in srgb, #ffffff 84%, var(--paneel)); }
+.plaatje .wolk-voet { stroke: color-mix(in srgb, #8a96a3 60%, var(--paneel)); stroke-width: 3; stroke-linecap: round; }
+.plaatje .w-licht { fill: color-mix(in srgb, #d5dbe1 85%, var(--paneel)); }
+.plaatje .w-grijs { fill: color-mix(in srgb, #a7b1bb 80%, var(--paneel)); }
+.plaatje .w-laag { fill: color-mix(in srgb, #9aa5b0 80%, var(--paneel)); }
+.plaatje .w-donker { fill: color-mix(in srgb, #4e5966 88%, var(--paneel)); }
+.plaatje .w-sluier { fill: color-mix(in srgb, #ffffff 34%, transparent); }
+.plaatje .w-matglas { fill: color-mix(in srgb, #9aa5b0 55%, transparent); }
+.plaatje .w-rand { fill: none; stroke: color-mix(in srgb, #9aa5b0 80%, var(--paneel)); stroke-width: 6; }
+.plaatje .w-halo { fill: none; stroke: color-mix(in srgb, #ffffff 70%, transparent); stroke-width: 3; }
+.plaatje .w-veeg { fill: none; stroke: color-mix(in srgb, #ffffff 88%, var(--paneel)); stroke-width: 3; stroke-linecap: round; }
+.plaatje .w-veeg.dun { stroke-width: 1.6; }
+.plaatje .w-regen { stroke: var(--blauw); stroke-width: 1.4; stroke-linecap: round; }
+.plaatje .w-motregen { stroke: var(--blauw); stroke-width: 1.4; stroke-linecap: round; stroke-dasharray: 1 5; }
+.plaatje .w-flits { fill: #f4c400; stroke: #b88a00; stroke-width: 0.8; }
+.plaatje .w-zon { fill: #ffd84a; stroke: #f0a800; stroke-width: 1.5; }
+.plaatje .w-zon-klein { fill: #ffd84a; stroke: #e09400; stroke-width: 1.2; }
+.plaatje .w-zon-mat { fill: #fff6cf; }
+.plaatje .w-straal { stroke: #f0a800; stroke-width: 2; stroke-linecap: round; }
+.plaatje .w-kaartje { fill: var(--paneel); opacity: 0.92; }
+.plaatje .op-donker { fill: #ffffff; }
+
+.plaatje .w-windpijl { stroke: var(--blauw); stroke-width: 2.5; stroke-linecap: round; stroke-linejoin: round; fill: none; }
+.plaatje .w-zee { fill: color-mix(in srgb, var(--blauw) 55%, var(--paneel)); }
+.plaatje .w-land { fill: color-mix(in srgb, #d9a441 55%, var(--paneel)); }
+.plaatje .w-luchtpijl { stroke: var(--blauw); stroke-width: 3; stroke-linecap: round; stroke-linejoin: round; fill: none; }
+.plaatje .w-luchtpijl.dun { stroke-width: 1.8; stroke-dasharray: 5 4; }
+.plaatje .w-luchtpijl.warm { stroke: var(--rood); }
+.plaatje .w-laagdruk { fill: color-mix(in srgb, var(--rood) 14%, var(--paneel)); stroke: var(--rood); stroke-width: 1.5; }
+.plaatje .w-hoogdruk { fill: color-mix(in srgb, var(--blauw) 14%, var(--paneel)); stroke: var(--blauw); stroke-width: 1.5; }
+
+.plaatje .w-front { fill: none; stroke-width: 3; }
+.plaatje .w-front.warm { stroke: #d1141b; }
+.plaatje .w-front.koud { stroke: #1f6fd1; }
+.plaatje .w-front.occlusie { stroke: #8e3fa0; }
+.plaatje .w-warm { fill: #d1141b; }
+.plaatje .w-koud { fill: #1f6fd1; }
+.plaatje .w-occlusie { fill: #8e3fa0; }
+.plaatje .w-koudelucht { fill: color-mix(in srgb, var(--blauw) 20%, transparent); }
+
+.plaatje .w-zonlicht { stroke: #e0a000; stroke-width: 2; stroke-linecap: round; }
+.plaatje .w-nachtkant { fill: rgb(0 0 0 / 0.45); }
+.plaatje .w-maan { fill: #f3efd9; }
+.plaatje .w-maan-donker { fill: #39424f; }
+.plaatje .w-baan { fill: none; stroke-width: 2.5; stroke-linecap: round; }
+.plaatje .w-baan.zomer { stroke: #e07b00; }
+.plaatje .w-baan.lente { stroke: var(--accent); stroke-dasharray: 6 4; }
+.plaatje .w-baan.winter { stroke: var(--blauw); }
+
+/* weer bijhouden, waarschuwingen, zonkracht */
+.plaatje .w-schaduw { fill: color-mix(in srgb, var(--inkt) 16%, transparent); }
+.plaatje .w-water { fill: color-mix(in srgb, var(--blauw) 45%, var(--paneel)); }
+.plaatje .w-avondgloed { fill: color-mix(in srgb, #f08a3c 55%, var(--paneel)); }
+.plaatje .w-zon-laag { fill: #ff9a3c; stroke: #e0601c; stroke-width: 1.5; }
+.plaatje .w-avondrood { fill: color-mix(in srgb, #e2513a 80%, var(--paneel)); }
+.plaatje .w-zonstraal { stroke: #f0a800; stroke-width: 1.4; stroke-dasharray: 4 4; fill: none; }
+.plaatje .w-zonstraal.sterk { stroke-width: 3; stroke-dasharray: none; }
+.plaatje .w-code-geel { fill: #f7d417; }
+.plaatje .w-code-oranje { fill: #f28c00; }
+.plaatje .w-code-rood { fill: #d71920; }
+.plaatje .w-code-geel-tekst, .plaatje .w-code-oranje-tekst { fill: #1f1a00; }
+.plaatje .w-code-rood-tekst { fill: #ffffff; }
+.plaatje .w-zk1 { fill: #bfe3a8; }
+.plaatje .w-zk2 { fill: #f7e27a; }
+.plaatje .w-zk3 { fill: #f6a85a; }
+.plaatje .w-zk4 { fill: #e9665a; }
+.plaatje .w-zk-getal { fill: #1d1d1d; }
+
+/* the night sky keeps its own dark colours in both themes, as in the sky pieces */
+.plaatje .w-nachtgrond, .plaatje .w-silhouet { fill: #050a10; }
+.plaatje .w-lood { stroke: #ff8a8a; stroke-width: 1.5; stroke-dasharray: 4 4; }
+.plaatje .w-pool { fill: none; stroke: #f4e700; stroke-width: 1.5; }
+.plaatje .w-zuid { fill: #ff8a8a; font-weight: 800; }
+.plaatje .w-nachttekst { fill: #e8eef8; }
+.plaatje .w-stadlucht { fill: #3a3550; }
+.plaatje .w-melkweg { fill: rgb(220 228 255 / 0.13); }
+.plaatje .w-stofwolk { fill: rgb(5 10 16 / 0.5); }
+.plaatje .w-issbaan { fill: none; stroke: rgb(255 255 255 / 0.25); stroke-width: 1; stroke-dasharray: 2 4; }
+.plaatje .w-iss { fill: #ffffff; }
+.plaatje .w-vliegbaan { stroke: rgb(255 255 255 / 0.2); stroke-width: 1; stroke-dasharray: 6 5; }
+.plaatje .w-rood-licht { fill: #ff4040; }
+.plaatje .w-groen-licht { fill: #3ddc6a; }
+.plaatje .w-knipper { stroke: #ffffff; stroke-width: 1.2; stroke-linecap: round; }
+.plaatje .w-schemer { fill: #1d3150; opacity: 0.85; }
+.plaatje .w-ecliptica { stroke: #f4c400; stroke-width: 1.2; stroke-dasharray: 5 5; }
+.plaatje .w-gloed { fill: rgb(255 248 214 / 0.25); }
+.plaatje .w-planeet { fill: #fff8d6; }
+.plaatje .w-schemergloed { fill: #7a4e4a; }
+.plaatje .w-avondgloed-nacht { fill: #b0684a; opacity: 0.8; }

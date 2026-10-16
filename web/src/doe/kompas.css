@@ -1,0 +1,51 @@
+/* The compass to turn (kompas.js). Side by side when there is room, else the picture above the words. */
+.doe-kompas { display: grid; gap: 12px; }
+@container (min-width: 560px) { .doe-kompas { grid-template-columns: minmax(0, 300px) minmax(0, 1fr); align-items: start; } }
+
+.kk-beeld { max-width: 320px; width: 100%; margin: 0 auto; }
+.kk-svg { display: block; width: 100%; height: auto; touch-action: none; user-select: none; -webkit-user-select: none; cursor: grab; border-radius: 50%; }
+.kk-svg.sleept { cursor: grabbing; }
+.kk-svg:focus-visible { outline: 3px solid var(--accent); outline-offset: 3px; }
+
+.kk-grond { fill: var(--zacht); }
+.kk-wereld-streep { stroke: var(--lijn-sterk); stroke-width: 1.2; }
+.kk-wereld-letter { fill: var(--stil); font-size: 15px; font-weight: 700; }
+.kk-wereld-letter.noord { fill: var(--rood); }
+.kk-doel-rond { fill: var(--paneel); stroke: var(--blauw); stroke-width: 1.5; }
+.kk-doel-teken { font-size: 16px; }
+
+.kk-plaat-vlak { fill: color-mix(in srgb, var(--paneel) 70%, transparent); stroke: var(--lijn-sterk); stroke-width: 1.5; }
+.kk-richting { fill: var(--accent); }
+.kk-index { stroke: var(--inkt); stroke-width: 2.5; }
+.kk-liniaal { stroke: var(--stil); stroke-width: 1; }
+.kk-klein { fill: var(--stil); font-size: 9px; }
+
+.kk-ring { fill: var(--paneel); stroke: var(--inkt); stroke-width: 1.5; }
+.kk-binnen { fill: color-mix(in srgb, var(--blauw) 7%, var(--paneel)); }
+.kk-streep { stroke: var(--inkt); stroke-width: 1.2; }
+.kk-streep.dun { stroke-width: 0.6; }
+.kk-letter { fill: var(--inkt); font-size: 11px; font-weight: 700; }
+.kk-getal { fill: var(--stil); font-size: 8.5px; }
+.kk-noordlijn { stroke: color-mix(in srgb, var(--rood) 45%, transparent); stroke-width: 1; }
+.kk-huisje { fill: none; stroke: var(--rood); stroke-width: 2; stroke-linejoin: round; }
+.in-huisje .kk-huisje { stroke: var(--accent); stroke-width: 3; }
+
+.kk-naald-noord { fill: var(--rood); }
+.kk-naald-zuid { fill: var(--paneel); stroke: var(--stil); stroke-width: 1; }
+.kk-as { fill: var(--inkt); }
+@media (prefers-reduced-motion: no-preference) {
+  .kk-naald, .kk-wereld, .kk-doel { transition: transform 0.12s linear; }
+}
+
+.kk-tekst { display: flex; flex-direction: column; gap: 10px; min-width: 0; }
+.kk-tekst p { margin: 0; }
+.kk-opdracht { font-size: 16px; }
+.kk-stappen { margin: 0; padding-left: 22px; color: var(--stil); }
+.kk-stappen li { margin: 2px 0; }
+.kk-stappen li.klaar { color: var(--inkt); }
+.kk-stappen li.klaar::marker { content: '✓  '; color: var(--accent); font-weight: 700; }
+.kk-stand { display: flex; flex-direction: column; gap: 2px; font-variant-numeric: tabular-nums; }
+.kk-melding { min-height: 1.5em; color: var(--accent); font-weight: 600; }
+.kk-knoppen { display: flex; flex-wrap: wrap; gap: 8px 16px; }
+.kk-knopgroep { display: inline-flex; align-items: center; gap: 6px; }
+.kk-knoplabel { color: var(--stil); font-size: 14px; min-width: 52px; }

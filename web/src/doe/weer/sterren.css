@@ -1,0 +1,46 @@
+/* The star pieces of weer (sterrenkaart.js, poolster-zoeken.js, sterrenbeelden.js). The night sky keeps its own dark
+   colours in both themes. */
+.doe-sterrenkaart, .doe-poolster, .doe-sterrenbeelden { display: flex; flex-direction: column; gap: 12px; }
+.sk-svg { border-radius: 50%; }
+/* the sky as large as the piece allows: on top, the controls under it (not beside it, as the other sky pieces) */
+.doe-sterrenkaart .hm-beeld { max-width: 640px; }
+/* on a phone the sky takes the full width of the block, and the four directions sit two by two */
+@container (max-width: 520px) {
+  .doe-sterrenkaart .hm-beeld { width: calc(100% + 20px); max-width: none; margin-inline: -10px; }
+  .doe-sterrenkaart > .chips { display: grid; grid-template-columns: 1fr 1fr; }
+  .doe-sterrenkaart > .chips .chip { justify-content: center; }
+}
+@container (min-width: 600px) {
+  .doe-sterrenkaart .hm { grid-template-columns: minmax(0, 1fr); }
+  .doe-sterrenkaart .hm-tekst { display: grid; grid-template-columns: repeat(2, minmax(0, 1fr)); gap: 10px 20px; align-items: start; }
+  .doe-sterrenkaart .hm-tekst > :is(p, .sk-lijst, [aria-live]) { grid-column: 1 / -1; }
+}
+.sk-grond { fill: var(--zacht); stroke: var(--lijn); stroke-width: 1; }
+.sk-lucht { transition: fill 0.3s; }
+.sk-richting { fill: var(--stil); font-size: 13px; font-weight: 700; }
+.sk-richting.tussen { font-size: 10px; font-weight: 600; }
+.sk-richting.kijk { fill: var(--accent); font-size: 15px; }
+.sk-keuze { fill: none; stroke: #ffd84a; stroke-width: 1.5; }
+.hm-beeldnaam.licht { fill: #ffd84a; }
+.sk-lijst { color: var(--stil); font-size: 14px; }
+@media (prefers-reduced-motion: reduce) { .sk-lucht { transition: none; } }
+
+.pz-beeld { max-width: 600px; }
+.pz-svg { cursor: pointer; border-radius: 14px; }
+.pz-bomen { fill: #050a10; }
+.pz-wijslijn { stroke: #ffd84a; stroke-width: 1.5; stroke-dasharray: 5 5; }
+.pz-tel { fill: #ffd84a; }
+.pz-lood { stroke: #ff8a8a; stroke-width: 1.5; stroke-dasharray: 4 4; }
+.pz-noord { fill: #ff8a8a; font-size: 16px; font-weight: 800; }
+.pz-opdracht { margin: 0; font-weight: 600; }
+
+.sb-plek { display: flex; flex-direction: column; gap: 10px; }
+.sb-plek p { margin: 0; }
+.sb-svg { max-width: 600px; border-radius: 14px; }
+.sb-lijn { stroke-width: 1.6; stroke: rgb(170 200 255 / 0.7); }
+.sb-naam { font-size: 18px; font-weight: 700; }
+.sb-opties { display: grid; gap: 8px; }
+@container (min-width: 480px) { .sb-opties { grid-template-columns: 1fr 1fr; } }
+.sb-optie { justify-content: flex-start; }
+.sb-optie.goed { background: var(--accent); border-color: var(--accent); color: var(--op-accent); opacity: 1; }
+.sb-optie.fout { border-color: var(--rood); color: var(--rood); opacity: 1; }

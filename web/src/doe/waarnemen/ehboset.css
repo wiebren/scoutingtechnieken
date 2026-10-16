@@ -1,0 +1,10 @@
+/* Pak de EHBO-set in (ehboset.js) */
+.es-doos { display: flex; align-items: center; gap: 12px; padding: 8px 12px; border-radius: 10px; border: 2px solid #1f8a4c; background: color-mix(in srgb, #1f8a4c 10%, var(--paneel)); }
+.es-kruis { position: relative; width: 30px; height: 30px; flex: none; border-radius: 6px; background: #1f8a4c; }
+.es-kruis::before, .es-kruis::after { content: ''; position: absolute; background: #fff; }
+.es-kruis::before { left: 12px; top: 5px; width: 6px; height: 20px; }
+.es-kruis::after { left: 5px; top: 12px; width: 20px; height: 6px; }
+.es-doos .wn-groot { font-size: 16px; }
+.es-ding.goed { background: color-mix(in srgb, var(--accent) 22%, var(--paneel)); border-color: var(--accent); color: var(--inkt); }
+.es-ding.gemist { background: repeating-linear-gradient(45deg, transparent 0 6px, color-mix(in srgb, var(--accent) 22%, transparent) 6px 12px); border: 1px dashed var(--accent); color: var(--inkt); }
+.es-ding.teveel { background: color-mix(in srgb, var(--rood) 16%, var(--paneel)); border-color: var(--rood); color: var(--inkt); }

@@ -1,0 +1,71 @@
+/* What the pieces of kamperen share (./*.js): a picture beside or above the words, the colours of the drawn
+   terrain, a list of findings, and answer buttons that turn green or red. Mixed from the theme colours, so they
+   follow the dark theme by themselves. */
+.kd { display: grid; gap: 12px; }
+@container (min-width: 560px) {
+  .kd.naast { grid-template-columns: minmax(0, 1.25fr) minmax(0, 1fr); align-items: start; }
+}
+.kd-svg { display: block; width: 100%; height: auto; border-radius: 10px; touch-action: manipulation; user-select: none; -webkit-user-select: none; }
+.kd-svg:focus { outline: none; }
+.kd-svg:focus-visible { outline: 2px solid var(--accent); outline-offset: 2px; }
+.kd-tekst { display: flex; flex-direction: column; gap: 10px; min-width: 0; }
+.kd-tekst > p { margin: 0; }
+.kd-vraag { font-weight: 600; }
+.kd-lijst { margin: 0; padding-left: 20px; display: flex; flex-direction: column; gap: 4px; }
+.kd-lijst li.goed::marker { color: var(--accent); }
+.kd-lijst li.fout::marker { color: var(--rood); }
+.kd-lijst li.matig::marker { color: var(--oranje); }
+.kd-score { margin: 0; color: var(--stil); font-size: 14px; }
+.kd-keuzes { display: flex; flex-direction: column; gap: 8px; }
+.kd-keuzes .knop { justify-content: flex-start; text-align: left; white-space: normal; height: auto; }
+.knop.kd-goed { border-color: var(--accent); background: color-mix(in srgb, var(--accent) 14%, var(--paneel)); }
+.knop.kd-fout { border-color: var(--rood); background: color-mix(in srgb, var(--rood) 12%, var(--paneel)); }
+.knop.kd-goed:disabled, .knop.kd-fout:disabled { opacity: 1; }
+
+/* the drawn terrain */
+.kd-gras { fill: color-mix(in srgb, var(--fam-natuur) 16%, var(--paneel)); }
+.kd-rand { fill: none; stroke: var(--lijn-sterk); stroke-width: 1; }
+.kd-water { fill: color-mix(in srgb, var(--blauw) 30%, var(--paneel)); }
+.kd-water-lijn { fill: none; stroke: color-mix(in srgb, var(--blauw) 45%, var(--paneel)); stroke-linecap: round; stroke-linejoin: round; }
+.kd-laagte { fill: color-mix(in srgb, var(--blauw) 12%, transparent); stroke: var(--blauw); stroke-width: 1; stroke-dasharray: 4 3; }
+.kd-hoogte { fill: none; stroke: var(--bruin); stroke-width: 1.2; }
+.kd-pad { fill: none; stroke: color-mix(in srgb, var(--bruin) 35%, var(--paneel)); stroke-linecap: round; stroke-linejoin: round; }
+.kd-kruin { fill: color-mix(in srgb, var(--fam-natuur) 45%, var(--paneel)); stroke: var(--fam-natuur); stroke-width: 1.2; }
+.kd-dood { fill: none; stroke: var(--stil); stroke-width: 2.5; stroke-linecap: round; }
+.kd-steen { fill: color-mix(in srgb, var(--stil) 45%, var(--paneel)); stroke: var(--stil); stroke-width: 0.8; }
+.kd-vuur { fill: #f39c12; }
+.kd-label { fill: var(--stil); font-size: 11px; }
+.kd-label.blauw { fill: var(--blauw); }
+.kd-label.vet { fill: var(--inkt); font-weight: 700; }
+.kd-wind { fill: none; stroke: var(--blauw); stroke-width: 2.5; stroke-linecap: round; stroke-linejoin: round; }
+.kd-tent { fill: color-mix(in srgb, var(--fam-kamp) 55%, var(--paneel)); stroke: var(--inkt); stroke-width: 1.5; }
+.kd-tent.goed { stroke: var(--accent); stroke-width: 3; }
+.kd-tent.fout { stroke: var(--rood); stroke-width: 3; }
+.kd-deur { fill: var(--inkt); }
+.kd-cursor { fill: none; stroke: var(--inkt); stroke-width: 1.5; stroke-dasharray: 3 3; }
+.kd-zeil { fill: color-mix(in srgb, var(--blauw) 26%, var(--paneel)); stroke: var(--blauw); stroke-width: 1.5; stroke-linejoin: round; }
+.kd-paal { stroke: var(--bruin); stroke-width: 5; stroke-linecap: round; fill: none; }
+.kd-touw { stroke: var(--stil); stroke-width: 1.2; fill: none; }
+.kd-regen { stroke: var(--blauw); stroke-width: 1.4; stroke-linecap: round; opacity: 0.75; }
+.kd-grond { fill: color-mix(in srgb, var(--fam-natuur) 16%, var(--paneel)); stroke: var(--inkt); stroke-width: 1.2; }
+
+/* pegs and guy lines (haring.js) */
+.hr-haring { stroke: var(--inkt); stroke-width: 5; stroke-linecap: round; }
+.hr-haring.goed { stroke: var(--accent); }
+.hr-haring.fout { stroke: var(--rood); }
+.hr-lijn { stroke: var(--stil); stroke-width: 2; fill: none; }
+.hr-hulp { stroke: var(--lijn-sterk); stroke-width: 1; stroke-dasharray: 3 3; }
+.hr-boog { fill: none; stroke: var(--inkt); stroke-width: 1; }
+.hr-pijl { fill: none; stroke: var(--rood); stroke-width: 2.2; stroke-linecap: round; stroke-linejoin: round; }
+
+/* tentopzetten "Bekijk": the stappenbalk (../stappen.css) under the drawing, across both columns when they stand
+   side by side. It is its own container, so it hides the names by its own width; too narrow even for the one name,
+   the line with the step in full says it */
+.kd-stappen { container-type: inline-size; }
+@container (min-width: 560px) {
+  .kd.naast > .kd-stappen { grid-column: 1 / -1; }
+  .kd.naast > .kd-rechts { grid-row: 1; grid-column: 2; }
+}
+@container (max-width: 360px) {
+  .kd-stappen .stb-naam { display: none; }
+}

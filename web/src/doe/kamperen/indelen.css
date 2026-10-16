@@ -1,0 +1,23 @@
+/* Lay out a camp site (indelen.js): a grid of squares, each a button. */
+.ki-veld { display: grid; gap: 0; border: 1px solid var(--lijn-sterk); border-radius: 10px; overflow: hidden; background: var(--lijn); }
+.ki-rij { display: grid; grid-template-columns: repeat(10, minmax(0, 1fr)); }
+.ki-cel {
+  aspect-ratio: 1; min-width: 0; padding: 0; border: 0; border-right: 1px solid color-mix(in srgb, var(--lijn-sterk) 45%, transparent);
+  border-bottom: 1px solid color-mix(in srgb, var(--lijn-sterk) 45%, transparent);
+  background: color-mix(in srgb, var(--fam-natuur) 16%, var(--paneel)); color: var(--inkt);
+  font: inherit; font-size: clamp(7px, 1.9cqi, 11px); letter-spacing: -0.02em; font-weight: 600; line-height: 1.05; overflow: hidden; cursor: pointer;
+}
+.ki-cel:focus-visible { outline: 2px solid var(--accent); outline-offset: -2px; position: relative; z-index: 1; }
+.ki-cel.ki-water, .ki-l.ki-water { background: color-mix(in srgb, var(--blauw) 34%, var(--paneel)); }
+.ki-cel.ki-boom, .ki-l.ki-boom { background: radial-gradient(circle, color-mix(in srgb, var(--fam-natuur) 60%, var(--paneel)) 55%, color-mix(in srgb, var(--fam-natuur) 25%, var(--paneel)) 58%); }
+.ki-cel.ki-laagte, .ki-l.ki-laagte { background: color-mix(in srgb, var(--blauw) 14%, color-mix(in srgb, var(--fam-natuur) 16%, var(--paneel))); }
+.ki-cel.ki-pad, .ki-l.ki-pad { background: color-mix(in srgb, var(--bruin) 28%, var(--paneel)); }
+.ki-cel.ki-kraan, .ki-l.ki-kraan { color: var(--blauw); background: color-mix(in srgb, var(--blauw) 10%, var(--paneel)); }
+.ki-cel.bezet { background-image: none; box-shadow: inset 0 0 0 3px color-mix(in srgb, var(--fam-kamp) 65%, var(--paneel)); background-color: color-mix(in srgb, var(--fam-kamp) 22%, var(--paneel)); }
+.ki-cel.goed { box-shadow: inset 0 0 0 3px var(--accent); }
+.ki-cel.matig { box-shadow: inset 0 0 0 3px var(--oranje); }
+.ki-cel.fout { box-shadow: inset 0 0 0 3px var(--rood); }
+.ki-wind { margin: 0 0 4px; color: var(--blauw); font-size: 13px; font-weight: 600; }
+.ki-legenda { display: flex; flex-wrap: wrap; align-items: center; gap: 4px 10px; margin: 6px 0 0; color: var(--stil); font-size: 12px; }
+.ki-l { display: inline-block; width: 12px; height: 12px; border-radius: 3px; border: 1px solid var(--lijn-sterk); vertical-align: middle; }
+.ki-item { display: inline-flex; align-items: center; gap: 4px; white-space: nowrap; }

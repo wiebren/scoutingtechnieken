@@ -1,0 +1,17 @@
+/* Oefen een 112-melding (melding112.js) */
+.m1-situatie { padding: 10px 12px; border-radius: 10px; background: var(--zacht); }
+.m1-situatie p { margin: 0 0 6px; }
+.m1-titel { margin: 0 0 4px; font-size: 15px; }
+.m1-zie-kop { font-size: 14px; font-weight: 600; color: var(--stil); }
+.m1-zie { margin: 0; padding-left: 20px; font-size: 14px; }
+.m1-gesprek { display: flex; flex-direction: column; gap: 6px; }
+.m1-zin { max-width: 92%; margin: 0; padding: 7px 11px; border-radius: 12px; font-size: 15px; }
+.m1-zin.centrale { align-self: flex-start; background: color-mix(in srgb, var(--fam-veilig) 14%, var(--paneel)); border: 1px solid color-mix(in srgb, var(--fam-veilig) 35%, var(--paneel)); }
+.m1-zin.jij { align-self: flex-end; background: color-mix(in srgb, var(--accent) 14%, var(--paneel)); border: 1px solid color-mix(in srgb, var(--accent) 35%, var(--paneel)); }
+.m1-zin.uitleg { align-self: stretch; max-width: none; padding: 2px 4px; font-size: 14px; }
+.m1-zin.uitleg.goed { color: var(--accent); }
+.m1-zin.uitleg.fout { color: var(--rood); }
+.m1-zin.stil { align-self: center; color: var(--stil); font-size: 13px; font-style: italic; background: none; border: 0; }
+.m1-keuzes { display: flex; flex-direction: column; gap: 6px; }
+.m1-keuze { justify-content: flex-start; text-align: left; font-weight: 500; }
+.m1-eind { margin: 4px 0 0; font-weight: 700; }

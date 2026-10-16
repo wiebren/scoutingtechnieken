@@ -1,0 +1,27 @@
+/* The scale to reckon with (schaal.js). The two fields side by side when there is room, else one under the other. */
+.doe-schaal { display: flex; flex-direction: column; gap: 12px; }
+.doe-schaal p { margin: 0; }
+
+.sc-velden { display: grid; gap: 12px; }
+@container (min-width: 480px) { .sc-velden { grid-template-columns: repeat(2, minmax(0, 1fr)); } }
+.sc-veld { display: flex; flex-direction: column; gap: 6px; min-width: 0; }
+.sc-invoer { display: flex; align-items: center; gap: 6px; }
+.sc-getal { flex: 0 1 12ch; font-size: 17px; font-variant-numeric: tabular-nums; }
+.sc-getal[aria-invalid="true"] { border-color: var(--rood); }
+.sc-eenheid { width: auto; flex: none; }
+
+.sc-beeld { width: 100%; max-width: 560px; }
+.sc-svg { display: block; width: 100%; height: auto; touch-action: pan-y; user-select: none; -webkit-user-select: none; }
+.sc-liniaal { fill: var(--zacht); stroke: var(--lijn-sterk); stroke-width: 1; }
+.sc-streep { stroke: var(--inkt); stroke-width: 0.8; }
+.sc-cijfer { fill: var(--inkt); font-size: 9px; font-variant-numeric: tabular-nums; }
+.sc-klein { fill: var(--stil); font-size: 9px; }
+.sc-balk { fill: var(--accent); }
+.sc-greep { fill: var(--paneel); stroke: var(--accent); stroke-width: 2.5; cursor: ew-resize; }
+.sc-balktekst { fill: var(--accent); font-size: 12px; font-weight: 700; font-variant-numeric: tabular-nums; }
+.sc-blok { fill: var(--inkt); }
+.sc-blok.licht { fill: var(--paneel); stroke: var(--inkt); stroke-width: 0.8; }
+
+.sc-uitkomst { font-size: 18px; font-variant-numeric: tabular-nums; }
+.sc-som, .sc-noot { color: var(--stil); font-size: 14px; }
+.sc-lopen { padding: 8px 12px; border-radius: 10px; background: var(--zacht); }

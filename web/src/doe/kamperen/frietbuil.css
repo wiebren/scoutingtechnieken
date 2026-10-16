@@ -1,0 +1,35 @@
+/* The frietbuil in 3D (frietbuil3d.js). The plastic is dark blue in both themes; the tape orange, as in the
+   drawing kamp-frietbuil. */
+.doe-frietbuil { --fb-plastic: #1b2740; --fb-licht: #6f8fcf; --fb-flap: #8aa2d4; }
+@media (prefers-color-scheme: dark) {
+  :root:not([data-theme="light"]) .doe-frietbuil { --fb-plastic: #263a63; --fb-licht: #9cb6ea; --fb-flap: #6d89c2; }
+}
+:root[data-theme="dark"] .doe-frietbuil { --fb-plastic: #263a63; --fb-licht: #9cb6ea; --fb-flap: #6d89c2; }
+
+.fb-beeld { display: flex; flex-direction: column; gap: 6px; min-width: 0; }
+.fb-svg { background: color-mix(in srgb, var(--blauw) 7%, var(--paneel)); border: 1px solid var(--lijn); cursor: grab; touch-action: none; }
+.fb-svg.sleept { cursor: grabbing; }
+.fb-hint { font-size: 13px; }
+.fb-zicht { min-height: 1.4em; }
+.fb-zichten .chip { white-space: nowrap; }
+
+.fb-grond { fill: color-mix(in srgb, var(--fam-natuur) 18%, var(--paneel)); stroke: color-mix(in srgb, var(--fam-natuur) 40%, var(--paneel)); stroke-width: 1; }
+.fb-raster { stroke: color-mix(in srgb, var(--fam-natuur) 28%, var(--paneel)); stroke-width: 0.7; fill: none; }
+.fb-wind { stroke: var(--blauw); stroke-width: 2.4; fill: var(--blauw); stroke-linecap: round; stroke-linejoin: round; }
+.fb-label { fill: var(--stil); font-size: 14px; paint-order: stroke; stroke: var(--paneel); stroke-width: 3px; stroke-linejoin: round; }
+.fb-label.blauw { fill: var(--blauw); font-weight: 600; }
+.fb-flap { fill: var(--fb-flap); }
+.fb-rand { fill: none; stroke: color-mix(in srgb, var(--fb-plastic) 60%, #000); stroke-width: 1; stroke-linejoin: round; }
+.fb-dak { fill-opacity: 0.9; stroke: none; }
+.fb-tape { fill: none; stroke: var(--oranje); stroke-width: 3.5; stroke-linecap: round; stroke-linejoin: round; }
+.fb-stip { fill: none; stroke: #e6ecf7; stroke-width: 1.8; stroke-dasharray: 1.5 4; stroke-linecap: round; }
+.fb-paal { stroke: var(--bruin); stroke-width: 5; stroke-linecap: round; fill: none; }
+.fb-touw { stroke: var(--stil); stroke-width: 1.4; fill: none; }
+.fb-haring { stroke: var(--inkt); stroke-width: 3; stroke-linecap: round; }
+.fb-punt { fill: var(--stil); }
+.fb-zak { fill: color-mix(in srgb, var(--fam-kamp) 55%, var(--paneel)); stroke: var(--inkt); stroke-width: 0.8; }
+.fb-hoofd { fill: color-mix(in srgb, var(--fam-kamp) 30%, var(--paneel)); stroke: var(--inkt); stroke-width: 0.8; }
+.fb-letter { fill: var(--paneel); stroke: var(--inkt); stroke-width: 1.3; }
+.fb-letter-tekst { fill: var(--inkt); font-size: 13px; font-weight: 700; }
+.fb-flap-tekst { fill: #10182a; font-size: 13px; font-weight: 700; }
+.doe-frietbuil .achter { opacity: 0.35; }

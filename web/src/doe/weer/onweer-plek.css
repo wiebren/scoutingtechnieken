@@ -1,0 +1,36 @@
+/* Waar schuil je bij onweer (onweer-plek.js). */
+.doe-onweerplek { display: flex; flex-direction: column; gap: 10px; }
+.doe-onweerplek p { margin: 0; }
+.op-beeld { max-width: 520px; }
+.op-svg { display: block; width: 100%; height: auto; cursor: pointer; font-family: inherit; }
+.op-knoppen { display: grid; gap: 6px; }
+@container (min-width: 480px) { .op-knoppen { grid-template-columns: 1fr 1fr; } }
+.op-knop { justify-content: flex-start; text-align: left; }
+.op-knop.goed { border-color: var(--accent); box-shadow: inset 4px 0 0 var(--accent); }
+.op-knop.nood { border-color: var(--oranje); box-shadow: inset 4px 0 0 var(--oranje); }
+.op-knop.fout { border-color: var(--rood); box-shadow: inset 4px 0 0 var(--rood); }
+
+.op-lucht { fill: color-mix(in srgb, #5d6b7c 55%, var(--paneel)); }
+.op-wolk { fill: color-mix(in srgb, #3d4652 72%, var(--inkt)); }
+.op-flits { fill: #f4c400; stroke: #b88a00; stroke-width: 0.8; }
+.op-heuvel { fill: color-mix(in srgb, var(--fam-natuur) 45%, var(--paneel)); }
+.op-gras { fill: color-mix(in srgb, var(--fam-natuur) 30%, var(--paneel)); }
+.op-water { fill: color-mix(in srgb, var(--blauw) 55%, var(--paneel)); }
+.op-boot { fill: #8b5a2b; }
+.op-toren { fill: none; stroke: var(--inkt); stroke-width: 2; }
+.op-huis { fill: #b5653a; stroke: var(--inkt); stroke-width: 1.2; }
+.op-deur { fill: none; stroke: var(--inkt); stroke-width: 1.2; }
+.op-auto { fill: #2f6db5; stroke: var(--inkt); stroke-width: 1; }
+.op-wiel { fill: var(--inkt); }
+.op-stam { stroke: #8b5a2b; stroke-width: 5; }
+.op-boom { fill: color-mix(in srgb, var(--fam-natuur) 80%, var(--inkt)); }
+.op-boom.laag { fill: color-mix(in srgb, var(--fam-natuur) 65%, var(--inkt)); }
+.op-tent { fill: #e07b00; stroke: var(--inkt); stroke-width: 1; }
+.op-hokje { fill: none; stroke: var(--inkt); stroke-width: 2; }
+.op-hek { fill: none; stroke: #6b5a3a; stroke-width: 2; }
+.op-merk { stroke: #fff; stroke-width: 1.5; }
+.op-merk.goed { fill: var(--accent); }
+.op-merk.nood { fill: var(--oranje); }
+.op-merk.fout { fill: var(--rood); }
+.op-merkteken { fill: #fff; font-size: 11px; font-weight: 800; }
+.doe-onweerplek .doe-melding.nood { color: var(--inkt); }

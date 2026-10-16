@@ -1,0 +1,14 @@
+/* The fluitsignalen (fluit.js). */
+.doe-fluit { display: flex; flex-direction: column; gap: 12px; }
+.doe-fluit p { margin: 0; }
+.fl-lijst { display: flex; flex-direction: column; gap: 10px; margin: 0; padding: 0; list-style: none; }
+.fl-lijst li { display: flex; align-items: flex-start; gap: 10px; }
+.fl-lijst li > div { min-width: 0; }
+.fl-speel { flex: none; min-width: 44px; }
+.fl-speel.aan { background: var(--accent); border-color: var(--accent); color: var(--op-accent); }
+.fl-ritme { display: block; max-width: 100%; height: auto; margin-top: 4px; fill: var(--fam-sein); }
+.fl-paneel { display: flex; flex-direction: column; gap: 10px; }
+.fl-opties { display: grid; gap: 6px; }
+.fl-optie { justify-content: flex-start; text-align: left; white-space: normal; height: auto; }
+.fl-optie.goed { background: var(--accent); border-color: var(--accent); color: var(--op-accent); }
+.fl-optie.fout { border-color: var(--rood); color: var(--rood); }

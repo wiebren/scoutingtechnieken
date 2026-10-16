@@ -1,0 +1,9 @@
+/* One place in RD, degrees and UTM (coordinaten.js). */
+.doe-coordinaten { display: flex; flex-direction: column; gap: 12px; }
+.co-velden { display: grid; gap: 10px; }
+@container (min-width: 620px) { .co-velden { grid-template-columns: repeat(3, minmax(0, 1fr)); } }
+.co-velden .doe-veld { font-variant-numeric: tabular-nums; }
+.co-graden { display: grid; grid-template-columns: max-content 1fr; gap: 4px 14px; margin: 0; font-size: 14px; }
+.co-graden dt { color: var(--stil); }
+.co-graden dd { margin: 0; font-variant-numeric: tabular-nums; overflow-wrap: anywhere; }
+@container (max-width: 420px) { .co-graden { grid-template-columns: 1fr; } .co-graden dd { margin-bottom: 6px; } }

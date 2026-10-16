@@ -1,0 +1,84 @@
+/* Classes for the drawings of kamperen (./kamperen.js), next to .plaatje in src/style.css. Mixed from the theme
+   colours, so they follow the dark theme by themselves. */
+.plaatje .kp-gras { fill: color-mix(in srgb, var(--fam-natuur) 16%, var(--paneel)); }
+.plaatje .kp-doek { fill: color-mix(in srgb, var(--fam-kamp) 26%, var(--paneel)); stroke: var(--inkt); stroke-width: 1.5; stroke-linejoin: round; }
+.plaatje .kp-doek2 { fill: color-mix(in srgb, var(--fam-kamp) 46%, var(--paneel)); stroke: var(--inkt); stroke-width: 1.5; stroke-linejoin: round; }
+.plaatje .kp-binnen { fill: color-mix(in srgb, var(--inkt) 22%, var(--paneel)); stroke: var(--inkt); stroke-width: 1; stroke-linejoin: round; }
+.plaatje .kp-grondzeil { stroke: var(--blauw); stroke-width: 4; fill: none; }
+.plaatje .kp-paal { stroke: var(--bruin); stroke-width: 5; stroke-linecap: round; fill: none; }
+.plaatje .kp-tak { stroke: var(--bruin); stroke-width: 2.4; stroke-linecap: round; fill: none; }
+.plaatje .kp-tak.dik { stroke-width: 4; }
+.plaatje .kp-stam { stroke: var(--bruin); stroke-width: 8; stroke-linecap: round; fill: none; }
+.plaatje .kp-kruin { fill: color-mix(in srgb, var(--fam-natuur) 45%, var(--paneel)); stroke: var(--fam-natuur); stroke-width: 1.2; }
+.plaatje .kp-stok { stroke: var(--accent); stroke-width: 3; stroke-linecap: round; fill: none; }
+.plaatje .kp-frame { stroke: var(--stil); stroke-width: 4; stroke-linecap: round; }
+.plaatje .kp-gewicht { fill: var(--stil); }
+.plaatje .kp-touw { stroke: var(--stil); stroke-width: 1.2; fill: none; }
+.plaatje .kp-touw.dik { stroke-width: 2.2; }
+.plaatje .kp-haring { stroke: var(--inkt); stroke-width: 2.5; stroke-linecap: round; }
+.plaatje .kp-haring-groot { stroke: var(--inkt); stroke-width: 3; stroke-linecap: round; stroke-linejoin: round; fill: none; }
+.plaatje .kp-zeil { fill: color-mix(in srgb, var(--blauw) 26%, var(--paneel)); stroke: var(--blauw); stroke-width: 1.5; stroke-linejoin: round; }
+.plaatje .kp-zeil-licht { fill: color-mix(in srgb, var(--blauw) 14%, transparent); stroke: var(--blauw); stroke-width: 1.2; stroke-linejoin: round; }
+.plaatje .kp-zeil-lijn { stroke: var(--blauw); stroke-width: 4; stroke-linecap: round; fill: none; }
+.plaatje .kp-wind { stroke: var(--blauw); stroke-width: 2; fill: none; stroke-linecap: round; stroke-linejoin: round; }
+.plaatje .kp-regen { stroke: var(--blauw); stroke-width: 1.4; stroke-linecap: round; opacity: 0.7; }
+.plaatje .kp-bladdek { fill: color-mix(in srgb, var(--bruin) 30%, var(--paneel)); stroke: var(--bruin); stroke-width: 1.2; stroke-linejoin: round; }
+.plaatje .kp-blaadje { fill: color-mix(in srgb, var(--bruin) 55%, var(--paneel)); }
+.plaatje .kp-slaper { fill: color-mix(in srgb, var(--fam-kamp) 60%, var(--paneel)); }
+.plaatje .kp-slaapzak { fill: color-mix(in srgb, var(--fam-kamp) 40%, var(--paneel)); stroke: var(--inkt); stroke-width: 1; }
+.plaatje .kp-mat { fill: var(--accent); }
+.plaatje .kp-band { fill: var(--accent); }
+.plaatje .kp-band-lijn { stroke: var(--accent); stroke-width: 6; stroke-linecap: round; fill: none; }
+.plaatje .kp-vlam { fill: #f39c12; }
+.plaatje .kp-rugzak { fill: color-mix(in srgb, var(--fam-touw) 24%, var(--paneel)); stroke: var(--inkt); stroke-width: 1.5; stroke-linejoin: round; }
+.plaatje .kp-zwaar { fill: color-mix(in srgb, var(--fam-kamp) 50%, var(--paneel)); stroke: var(--inkt); stroke-width: 1; }
+.plaatje .kp-warm { fill: color-mix(in srgb, var(--fam-natuur) 40%, var(--paneel)); }
+.plaatje .kp-koel { fill: color-mix(in srgb, var(--oranje) 45%, var(--paneel)); }
+.plaatje .kp-koud { fill: color-mix(in srgb, var(--blauw) 45%, var(--paneel)); }
+.plaatje .kp-laag1 { fill: color-mix(in srgb, var(--fam-natuur) 40%, var(--paneel)); stroke: var(--inkt); stroke-width: 1.2; stroke-linejoin: round; }
+.plaatje .kp-laag2 { fill: color-mix(in srgb, var(--fam-kamp) 40%, var(--paneel)); stroke: var(--inkt); stroke-width: 1.2; stroke-linejoin: round; }
+.plaatje .kp-laag3 { fill: color-mix(in srgb, var(--blauw) 40%, var(--paneel)); stroke: var(--inkt); stroke-width: 1.2; stroke-linejoin: round; }
+.plaatje .kp-water { fill: color-mix(in srgb, var(--blauw) 30%, var(--paneel)); }
+.plaatje .kp-water-lijn { stroke: var(--blauw); stroke-width: 2; fill: none; stroke-linecap: round; }
+.plaatje .kp-pad { stroke: color-mix(in srgb, var(--bruin) 45%, var(--paneel)); stroke-width: 10; fill: none; stroke-linecap: round; }
+.plaatje .kp-vak { fill: color-mix(in srgb, var(--fam-kamp) 26%, var(--paneel)); stroke: var(--inkt); stroke-width: 1; }
+.plaatje .kp-vak2 { fill: color-mix(in srgb, var(--oranje) 30%, var(--paneel)); stroke: var(--inkt); stroke-width: 1; }
+.plaatje .kp-vak3 { fill: color-mix(in srgb, var(--stil) 30%, var(--paneel)); stroke: var(--inkt); stroke-width: 1; }
+.plaatje .kp-veld { fill: color-mix(in srgb, var(--fam-natuur) 30%, var(--paneel)); stroke: var(--fam-natuur); stroke-width: 1; stroke-dasharray: 4 3; }
+.plaatje .kp-vuur { fill: #f39c12; stroke: var(--bruin); stroke-width: 3; }
+.plaatje .kp-kuil { fill: color-mix(in srgb, var(--bruin) 14%, var(--paneel)); stroke: var(--bruin); stroke-width: 1.4; }
+.plaatje .kp-aarde { fill: color-mix(in srgb, var(--bruin) 50%, var(--paneel)); }
+.plaatje .kp-grind { fill: color-mix(in srgb, var(--stil) 40%, var(--paneel)); stroke: var(--stil); stroke-width: 0.8; }
+.plaatje .kp-zeef { stroke: var(--inkt); stroke-width: 3; stroke-dasharray: 3 2; }
+.plaatje .kp-emmer, .plaatje .kp-teil { fill: color-mix(in srgb, var(--stil) 22%, var(--paneel)); stroke: var(--inkt); stroke-width: 1.4; stroke-linejoin: round; }
+.plaatje .kp-steel { stroke: var(--bruin); stroke-width: 4; stroke-linecap: round; }
+.plaatje .kp-jerrycan { fill: color-mix(in srgb, var(--blauw) 34%, var(--paneel)); stroke: var(--inkt); stroke-width: 1.2; }
+.plaatje .kp-blad-hout { fill: color-mix(in srgb, var(--bruin) 40%, var(--paneel)); stroke: var(--bruin); stroke-width: 1; }
+.plaatje .kp-gasfles { fill: color-mix(in srgb, var(--rood) 60%, var(--paneel)); stroke: var(--inkt); stroke-width: 1.4; }
+.plaatje .kp-slang { stroke: var(--inkt); stroke-width: 3; fill: none; stroke-linecap: round; }
+.plaatje .tekst.kp-op-accent { fill: var(--op-accent); }
+.plaatje .kp-paalkop { fill: var(--bruin); }
+.plaatje .tekst.kp-halo { paint-order: stroke; stroke: var(--paneel); stroke-width: 3px; stroke-linejoin: round; }
+.plaatje .kp-kruis { stroke: var(--rood); stroke-width: 2.6; stroke-linecap: round; fill: none; }
+.plaatje .kp-pijl { stroke: var(--accent); stroke-width: 2.4; stroke-linecap: round; stroke-linejoin: round; fill: none; }
+.plaatje .kp-muts { fill: var(--rood); }
+.plaatje .kp-koude { stroke: var(--blauw); stroke-width: 2; stroke-linecap: round; stroke-linejoin: round; fill: none; }
+.plaatje .kp-zak { fill: color-mix(in srgb, var(--stil) 26%, var(--paneel)); stroke: var(--inkt); stroke-width: 1.2; stroke-linejoin: round; }
+.plaatje .kp-schors { fill: color-mix(in srgb, var(--bruin) 40%, var(--paneel)); stroke: var(--bruin); stroke-width: 1.4; }
+.plaatje .kp-jute { fill: color-mix(in srgb, var(--oranje) 30%, var(--paneel)); stroke: var(--inkt); stroke-width: 1; stroke-dasharray: 2 2; }
+.plaatje .kp-cirkel { fill: color-mix(in srgb, var(--fam-kamp) 10%, transparent); stroke: var(--fam-kamp); stroke-width: 1.4; stroke-dasharray: 5 4; }
+.plaatje .kp-druppel { fill: var(--blauw); }
+/* the frietbuil plan (kamp-frietbuil): dark plastic in both themes, tape in orange */
+.plaatje { --kp-folie: #1f2c47; --kp-folie-licht: #4a6191; }
+@media (prefers-color-scheme: dark) {
+  :root:not([data-theme="light"]) .plaatje { --kp-folie: #2b4068; --kp-folie-licht: #5873a6; }
+}
+:root[data-theme="dark"] .plaatje { --kp-folie: #2b4068; --kp-folie-licht: #5873a6; }
+.plaatje .kp-folie { fill: var(--kp-folie); }
+.plaatje .kp-folie-flap { fill: var(--kp-folie-licht); }
+.plaatje .tekst.kp-op-folie { fill: #ffffff; }
+.plaatje .kp-tape { stroke: var(--oranje); stroke-width: 5; stroke-linecap: round; stroke-linejoin: round; fill: none; }
+.plaatje .kp-stippel { stroke: #e6ecf7; stroke-width: 2; stroke-dasharray: 2 4; stroke-linecap: round; fill: none; }
+.plaatje .kp-stippel.donker { stroke: var(--inkt); }
+.plaatje .kp-punt { fill: var(--inkt); stroke: var(--paneel); stroke-width: 1.2; }
+.plaatje .kp-letter { fill: var(--paneel); stroke: var(--inkt); stroke-width: 1.4; }
