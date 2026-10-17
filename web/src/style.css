@@ -298,15 +298,16 @@ p, li { text-wrap: pretty; }
 .voortgang .balkje { height: 8px; border-radius: 4px; }
 .balkje-rij { position: relative; display: flex; align-items: center; min-width: 0; }
 .balkje-rij .balkje { flex: 1; min-width: 0; }
-/* the hat or the star lies over the end of the full bar, on a round patch of the panel so it reads on the colour */
+/* the hat or the gold insigne lies over the end of the full bar, without a patch, as large as fits */
 .balkje-teken {
-  position: absolute; right: -4px; top: 50%; width: 24px; height: 24px; padding: 3px; transform: translateY(-50%);
-  border-radius: 50%; background: var(--paneel); box-shadow: 0 0 0 2px var(--niv, var(--accent)); color: var(--inkt);
+  position: absolute; right: -8px; top: 50%; width: 26px; height: 26px; transform: translateY(-50%); color: var(--inkt);
 }
+.balkje-teken { filter: drop-shadow(0 0 1px var(--paneel)) drop-shadow(0 0 1px var(--paneel)); }
 .balkjes { padding: 9px 6px 0 0; column-gap: 12px; }
-.voortgang .balkje-teken { width: 32px; height: 32px; padding: 4px; right: -6px; }
+.voortgang .balkje-teken { width: 36px; height: 36px; right: -10px; }
 .insigne-stand .voortgang { min-height: 34px; }
 .icoon.is-ster { fill: #f4c430; stroke: #a77800; }
+.icoon.is-ster path + path { fill: #a77800; stroke: none; }
 .niveau-tab-teken { width: 20px; height: 20px; margin-left: 2px; }
 
 /* where you are with a niveau: the bar, and once you can do it all the hat, once you have it the star */
@@ -318,7 +319,7 @@ p, li { text-wrap: pretty; }
 .stand-teken { flex: none; width: 40px; height: 40px; color: var(--inkt); stroke-width: 1.5; }
 .stand-kaart.gekregen { position: relative; }
 .stand-badge { width: 56px; height: auto; flex: none; }
-.stand-ster { position: absolute; left: 50px; top: 6px; width: 26px; height: 26px; stroke-width: 1.4; }
+.stand-ster { position: absolute; left: 48px; top: 2px; width: 32px; height: 32px; stroke-width: 1.4; }
 .knop-link { padding: 4px 0; border: 0; background: none; color: var(--stil); font: inherit; font-size: 14px; text-decoration: underline; text-underline-offset: 3px; cursor: pointer; }
 .al-gekregen { display: flex; justify-content: flex-end; margin-top: 6px; }
 .al-vraag { flex: 1; padding: 10px 12px; border: 1px solid var(--lijn); border-radius: 12px; background: var(--paneel); }

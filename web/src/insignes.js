@@ -38,7 +38,7 @@ const STAND_TEKST = { niet: 'nog niet begonnen', bezig: 'mee bezig', alles: 'je 
 const balkje = (niveau, { klaar, totaal }, st = 'bezig') => h('span.balkje-rij', { 'data-stand': st, 'data-niveau': niveau },
   h('span.balkje', { 'data-niveau': niveau, title: `Niveau ${niveau}: ${klaar} van ${totaal}, ${STAND_TEKST[st]}` },
     h('span.balkje-vul', { style: `width: ${st === 'gekregen' || !totaal ? (st === 'gekregen' ? 100 : 0) : (100 * klaar) / totaal}%` })),
-  st === 'alles' && icoon('hoed', 'icoon balkje-teken'), st === 'gekregen' && icoon('ster', 'icoon balkje-teken is-ster'));
+  st === 'alles' && icoon('hoed', 'icoon balkje-teken'), st === 'gekregen' && icoon('gekregen', 'icoon balkje-teken is-ster'));
 
 /** The niveaus to show, from the choice in the menu. */
 const getoondeNiveaus = () => { const nrs = insigneNiveaus(niveauKeuze()); return NIVEAUS.filter(({ niveau }) => nrs.includes(niveau)); };
@@ -81,7 +81,7 @@ export function insignesView() {
       h('div.niveaus', { role: 'tablist', 'aria-label': 'Niveau' }, NIVEAUS.filter((x) => x.niveau === niveau || getoondeNiveaus().includes(x)).map(({ niveau: nr, naam }) => h('a.niveau-tab', {
         href: href('insignes', { i: i.id, n: nr }), role: 'tab', 'aria-selected': String(nr === niveau), 'data-niveau': nr, 'data-vervang': true,
       }, badge(i.id, nr, 'niveau-tab-badge'), naam,
-        stand(i, nr) === 'alles' && icoon('hoed', 'icoon niveau-tab-teken'), stand(i, nr) === 'gekregen' && icoon('ster', 'icoon niveau-tab-teken is-ster')))));
+        stand(i, nr) === 'alles' && icoon('hoed', 'icoon niveau-tab-teken'), stand(i, nr) === 'gekregen' && icoon('gekregen', 'icoon niveau-tab-teken is-ster')))));
 
     const { klaar, totaal } = voortgang(i, niveau);
     // a requirement without a blad is an "opdracht": the label, and once on the page what that means
@@ -118,9 +118,9 @@ export function insignesView() {
         icoon('hoed', 'icoon stand-teken'),
         h('div', h('p', h('strong', 'Je kunt alles voor dit insigne.'), ' Vraag je leiding of je het mag laten zien.'),
           h('p.scoutbadger', 'Gebruikt je groep ', h('a', { href: SCOUTBADGER, target: '_blank', rel: 'noopener' }, 'ScoutBadger', icoon('extern', 'icoon klein')), '? Dan zet je leiding het daarin.'),
-          h('button.knop.hoofd.klein', { type: 'button', onclick: krijg(true) }, icoon('ster', 'icoon klein'), 'Ik heb hem gekregen'))),
+          h('button.knop.hoofd.klein', { type: 'button', onclick: krijg(true) }, icoon('gekregen', 'icoon klein'), 'Ik heb hem gekregen'))),
       st === 'gekregen' && h('div.stand-kaart.gekregen',
-        badge(i.id, niveau, 'stand-badge'), icoon('ster', 'icoon stand-ster is-ster'),
+        badge(i.id, niveau, 'stand-badge'), icoon('gekregen', 'icoon stand-ster is-ster'),
         h('div', h('p', h('strong', 'Gekregen!')),
           h('button.knop-link', { type: 'button', onclick: krijg(false) }, 'Toch niet'))),
       (st === 'niet' || st === 'bezig') && alGekregen(i, niveau));
@@ -135,7 +135,7 @@ export function insignesView() {
       vul(plek, h('div.al-vraag', { role: 'group', 'aria-label': 'Heb je dit insigne al gekregen?' },
         h('p', h('strong', 'Heb je dit insigne al gekregen?'), ' Dat kan ook als je nog niet alles hebt afgevinkt.'),
         h('div.knop-rij', nee,
-          h('button.knop.klein.hoofd', { type: 'button', onclick: () => zetGekregen(i.id, niveau, true) }, icoon('ster', 'icoon klein'), 'Ja, ik heb hem'))));
+          h('button.knop.klein.hoofd', { type: 'button', onclick: () => zetGekregen(i.id, niveau, true) }, icoon('gekregen', 'icoon klein'), 'Ja, ik heb hem'))));
       nee.focus();
     }
     vraag();
@@ -174,7 +174,7 @@ export function insignesView() {
       for (const tab of sv.lijstBalk.querySelectorAll('.niveau-tab')) {
         const st = stand(i, Number(tab.dataset.niveau));
         tab.querySelector('.niveau-tab-teken')?.remove();
-        if (st === 'alles' || st === 'gekregen') tab.append(st === 'alles' ? icoon('hoed', 'icoon niveau-tab-teken') : icoon('ster', 'icoon niveau-tab-teken is-ster'));
+        if (st === 'alles' || st === 'gekregen') tab.append(st === 'alles' ? icoon('hoed', 'icoon niveau-tab-teken') : icoon('gekregen', 'icoon niveau-tab-teken is-ster'));
       }
     } else if (!i) teken();
   });

@@ -31,8 +31,10 @@ const PADEN = {
   sluit: '<path d="M6 6l12 12M18 6 6 18"/>',
   extern: '<path d="M14 4h6v6M20 4l-9 9"/><path d="M18 14v5a1 1 0 0 1-1 1H5a1 1 0 0 1-1-1V7a1 1 0 0 1 1-1h5"/>',
   vink: '<path d="M5 12.5l4.5 4.5L19 7.5"/>',
-  // the insignes: all done (a hopman's hat: ask your leiding) and received (a star)
+  // the insignes: all done (a hopman's hat: ask your leiding) and received (the insigne badge, as in the menu)
   hoed: '<path d="M2.5 16.2c0-1.5 4.3-2.6 9.5-2.6s9.5 1.1 9.5 2.6-4.3 2.6-9.5 2.6-9.5-1.1-9.5-2.6z"/><path d="M6.6 14.4C7 9.6 9 6.3 12 6c3 .3 5 3.6 5.4 8.4"/><path d="M12 6v3.6M9.6 7.6l1.2 2.9M14.4 7.6l-1.2 2.9"/><path d="M6.8 12.8c3.4.8 7 .8 10.4 0"/>',
+  // received: the same badge as Insignes in the menu, in gold
+  gekregen: '<path d="M2.5 12 7.25 3.8h9.5L21.5 12l-4.75 8.2h-9.5z"/><path d="M12 8l1.2 2.5 2.7.4-2 1.9.5 2.7-2.4-1.3-2.4 1.3.5-2.7-2-1.9 2.7-.4z"/>',
   ster: '<path d="M12 3.2l2.7 5.6 6.1.9-4.4 4.3 1 6.1L12 17.2l-5.4 2.9 1-6.1-4.4-4.3 6.1-.9z"/>',
 };
 
