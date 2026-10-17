@@ -1,6 +1,6 @@
 // One place in three systems: type it in RD, in degrees (any of the three ways) or in UTM, and the other two follow;
 // MGRS and the Plus Code are shown too, written out only. what3words can't be worked out (the words are the
-// company's): the two known places carry their words, looked up once on what3words.com; for any other place it is a
+// company's): the two known places carry their words, looked up once on what3words.com (2026-10-17); for any other place it is a
 // link that opens their site there, and only then does the place leave the device.
 // Two known places to start from, and "Waar ben ik?" with the location of the phone (asked only on a tap, and it
 // stays on the device).
@@ -11,8 +11,8 @@ import './vorm.css';
 import './coordinaten.css';
 
 const PLEKKEN = [
-  ['De toren van Amersfoort', { lat: 52.1551744, lon: 5.38720621, w3w: { en: 'purest.cheer.silks' } }],
-  ['De Dam in Amsterdam', utmNaarGraden({ zone: 31, oost: 628830, noord: 5804225 })],
+  ['De toren van Amersfoort', { lat: 52.1551744, lon: 5.38720621, w3w: { nl: 'telkens.aangezien.skihelm', en: 'purest.cheer.silks' } }],
+  ['De Dam in Amsterdam', { ...utmNaarGraden({ zone: 31, oost: 628830, noord: 5804225 }), w3w: { nl: 'stookt.ekster.breng', en: 'edits.clay.widest' } }],
 ];
 const W3W_TAAL = { nl: 'Nederlands', en: 'Engels' };
 
