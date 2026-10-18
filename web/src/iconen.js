@@ -23,8 +23,6 @@ const PADEN = {
   natuur: '<path d="M5 19.5C5 11 10 5 20 4c0 9.5-5.5 15.5-13.5 15.5z"/><path d="M4 21c3.5-5 7-8.5 11.5-12"/>',
   weer: '<path d="M7 19h10a4 4 0 0 0 .4-8 5.5 5.5 0 0 0-10.6 1.2A3.4 3.4 0 0 0 7 19z"/><path d="M16 3.5v1.5M20.5 5.5l-1 1M22 9.5h-1.5"/>',
   veiligheid: '<path d="M12 2.8 19.5 6v5.6c0 4.5-3.2 8.2-7.5 9.6-4.3-1.4-7.5-5.1-7.5-9.6V6z"/><path d="M12 8.5v7M8.5 12h7"/>',
-  // the app's own mark, as on its icon (scripts/icons.mjs)
-  windroos: '<path d="M12 1.5l1.9 8.6 8.6 1.9-8.6 1.9-1.9 8.6-1.9-8.6L1.5 12l8.6-1.9z" fill="currentColor" stroke="none"/>',
   // small
   terug: '<path d="M15 5l-7 7 7 7"/>',
   verder: '<path d="M9 5l7 7-7 7"/>',

@@ -18,6 +18,7 @@
 import { mkdirSync, readdirSync, readFileSync, statSync, writeFileSync } from 'node:fs';
 import { dirname, join, relative, resolve } from 'node:path';
 import { fileURLToPath } from 'node:url';
+import { merkSvg } from '../src/merk.js';
 
 const SITE = dirname(fileURLToPath(import.meta.url));
 const SRC = join(SITE, '..', 'src');
@@ -85,7 +86,7 @@ function kop(bestand, diepte) {
   <a class="overslaan" href="#inhoud">Naar de inhoud</a>
   <header class="kop">
     <nav class="kop-nav" aria-label="Site">
-      <a class="merk" href="${ommetje('./', diepte)}"><span class="merk-teken">${icoon('windroos')}</span><span>Scoutingtechnieken</span></a>
+      <a class="merk" href="${ommetje('./', diepte)}"><span class="merk-teken" aria-hidden="true">${merkSvg({ size: 36 })}</span><span>Scoutingtechnieken</span></a>
       <a class="kop-link" href="${ommetje('./', diepte)}"${huidig(thuis)}>Home</a>
       <a class="kop-link" href="${ommetje('handleiding/', diepte)}"${huidig(handleiding)}>Handleiding</a>
       <a class="knop hoofd klein" data-app="" href="">Open de app</a>

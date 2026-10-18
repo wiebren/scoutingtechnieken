@@ -23,6 +23,7 @@ import { UPDATES } from './data/updates.js';
 import { h } from './dom.js';
 import { icoon } from './iconen.js';
 import { insignesView } from './insignes.js';
+import { merkSvg } from './merk.js';
 import { niveauMenu } from './niveaukeuze.js';
 import { oefenenView } from './oefenen.js';
 import { updatesGezien, volgNiveauKeuze } from './opslag.js';
@@ -83,7 +84,7 @@ const niveau = niveauMenu();
 // bottom of the menu from 760px (style.css, .nav-onder)
 navLinks.over.setAttribute('aria-label', 'Instellingen');
 const nav = h('nav.nav', { 'aria-label': 'Hoofdmenu' },
-  h('div.merk', h('span.merk-teken', icoon('windroos')), h('span.merk-naam', 'Scoutingtechnieken')),
+  h('div.merk', h('span.merk-teken', { html: merkSvg({ size: 40 }), 'aria-hidden': 'true' }), h('span.merk-naam', 'Scoutingtechnieken')),
   h('div.nav-items', PAGINAS.filter((p) => p !== 'over').map((p) => navLinks[p]), niveau.knop),
   niveau.zij,
   h('div.nav-onder', navLinks.over));
