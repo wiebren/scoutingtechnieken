@@ -1,7 +1,9 @@
 // Checks the data before a build (`pnpm check`, and the first step of `pnpm build`): every id once, every blad in
 // a groep its category has, every link to a blad that exists (also from a tile of `soorten`, with its drawing),
 // the insignelaag pointing only at bladen that are there, every zonderBlad key once and every old key
-// (oude-sleutels.js) leading to one, and no interactive piece hiding another of the same name. A mistake stops the build with a list of what is wrong; what is only odd (a piece
+// (oude-sleutels.js) leading to one, no interactive piece hiding another of the same name, and - when the local
+// file with the sources is there (src/data/referenties.local.js) - sources only for bladen that exist, each a page
+// with naam and url or a book. A mistake stops the build with a list of what is wrong; what is only odd (a piece
 // or a drawing no blad uses) is listed, and the build goes on. At the end: how many bladen each niveau of the menu
 // shows (src/data/niveaus.js).
 import { existsSync, readdirSync, readFileSync } from 'node:fs';
@@ -120,6 +122,23 @@ for (const naam of Object.keys(PLAATJES)) if (!plaatjeGebruikt.has(naam)) opmerk
 for (const naam of Object.keys(BEELDEN)) if (!beeldGebruikt.has(naam)) opmerkingen.push(`beeld ${naam}: geen blad gebruikt het`);
 
 if (UPDATES.some((u, k) => k > 0 && u.datum > UPDATES[k - 1].datum)) fout('updates', 'de nieuwste datum hoort bovenaan');
+
+// the sources per blad (src/data/referenties.local.js): only local for now, so only checked when the file is there
+const referentiesLokaal = new URL('../src/data/referenties.local.js', import.meta.url);
+if (existsSync(referentiesLokaal)) {
+  const { REFERENTIES, INSIGNE_REFERENTIES } = await import(referentiesLokaal);
+  const lijsten = [...Object.entries(REFERENTIES ?? {}).map(([id, l]) => [id, l, !!BLAD[id], 'blad']),
+    ...Object.entries(INSIGNE_REFERENTIES ?? {}).map(([id, l]) => [id, l, INSIGNES.some((i) => i.id === id), 'insigne'])];
+  for (const [id, lijst, bestaat, soort] of lijsten) {
+    const waar = `referenties ${id}`;
+    if (!bestaat) fout(waar, `geen ${soort} met deze id`);
+    if (!Array.isArray(lijst)) { fout(waar, 'geen lijst'); continue; }
+    for (const r of lijst) {
+      if (r?.boek ? typeof r.boek !== 'string' : !(r?.naam && /^https?:\/\//.test(r?.url ?? ''))) fout(waar, 'een bron heeft naam en url, of boek');
+      else if (r.url && !/^https?:\/\//.test(r.url)) fout(waar, `geen webadres: ${r.url}`);
+    }
+  }
+}
 
 if (fouten.length) {
   console.error(`De data klopt niet (${fouten.length}):\n${fouten.map((f) => `  - ${f}`).join('\n')}`);

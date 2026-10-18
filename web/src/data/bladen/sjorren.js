@@ -295,7 +295,7 @@ export default [
     naar: [{ blad: 'blok-onderdelen' }, { blad: 'materiaalkeuring' }, { blad: 'hijsmateriaal' }] },
 
   // Verankeren
-  { id: 'piket', naam: 'Piket', ook: ['haring', 'pionierharing', 'houten haring'], en: 'stake, picket', groep: 'verankeren', bron: 'SGV-GS p. 37, kamperen haringen',
+  { id: 'piket', naam: 'Piket', ook: ['haring', 'pionierharing', 'houten haring'], en: 'stake, picket', groep: 'verankeren', bron: 'SGV-GS p. 37, SW Tentharing, BA',
     plaatje: 'sj-piket',
     waarvoor: 'Een korte, stevige paal (of grote houten haring) die je in de grond slaat om een tui of touw aan vast te zetten.',
     uitleg: [

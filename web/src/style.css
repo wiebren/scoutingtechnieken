@@ -16,7 +16,6 @@
   --lijn-sterk: #b9c6bc;
 
   --groen: #00803f;          /* scouting green, dark enough for text and for white on it */
-  --groen-merk: #00a551;     /* the green of scouting.nl itself: surfaces only */
   --blauw: #0066b2;
   --teal: #009c94;           /* the insignes of 2025 */
   --rood: #d1141b;
@@ -406,6 +405,15 @@ p, li { text-wrap: pretty; }
 .namen a { display: inline-flex; align-items: center; gap: 3px; color: inherit; }
 .namen dt { color: var(--stil); }
 .namen dd { margin: 0; min-width: 0; overflow-wrap: anywhere; }
+/* where the facts come from (src/data/referenties.js): as quiet as the names above it, one source per line */
+.bronnen { margin: 24px 0 0; padding-top: 12px; border-top: 1px solid var(--lijn); color: var(--stil); font-size: 13px; line-height: 1.4; }
+.namen + .bronnen { margin-top: 10px; padding-top: 0; border-top: 0; }
+.bronnen h3 { margin: 0 0 4px; font-size: 12px; }
+.bronnen ul { margin: 0; padding: 0; list-style: none; }
+.bronnen li { margin: 0 0 3px; overflow-wrap: anywhere; }
+.bronnen a { color: inherit; text-underline-offset: 2px; }
+.bronnen a .icoon { margin-left: 3px; vertical-align: -3px; }
+.bronnen cite { font-style: italic; }
 .waarvoor p { font-size: 18px; line-height: 1.45; }
 .nognie { padding: 10px 14px; border-radius: 10px; background: var(--zacht); color: var(--stil); font-style: italic; }
 .letop { margin: 18px 0; padding: 10px 14px; border-left: 4px solid var(--oranje); border-radius: 0 10px 10px 0; background: color-mix(in srgb, var(--oranje) 10%, var(--paneel)); }
@@ -606,8 +614,8 @@ a.soort:active { transform: scale(0.98); }
     padding: calc(var(--safe-t) + 14px) 6px 14px calc(var(--safe-l) + 6px);
   }
   .merk { display: grid; place-items: center; }
-  .merk-teken { display: grid; place-items: center; width: 40px; height: 40px; border-radius: 11px; background: var(--groen-merk); color: #fff; }
-  .merk-teken .icoon { width: 26px; height: 26px; }
+  .merk-teken { display: block; width: 40px; height: 40px; }
+  .merk-teken svg { display: block; width: 100%; height: 100%; }
   .merk-naam { display: none; }
   .nav-items { flex-direction: column; gap: 6px; }
   .nav-item { flex: none; }

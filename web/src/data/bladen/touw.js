@@ -148,7 +148,7 @@ export default [
       'In oude zeilboeken heet hij ook visserssteek. Dat is een andere knoop dan de vissersknoop, waarmee je twee touwen verbindt.',
     ],
     naar: [{ blad: 'rondtorn' }] },
-  { id: 'tonsteek', naam: 'Tonsteek', en: 'barrel hitch', groep: 'steken', bron: 'TU',
+  { id: 'tonsteek', naam: 'Tonsteek', en: 'barrel hitch', groep: 'steken', bron: 'TU; AK-BH',
     plaatje: 'touw-tonsteek',
     waarvoor: 'Een ton of emmer rechtop ophijsen.',
     uitleg: [
@@ -480,7 +480,7 @@ export default [
       'Knopen maken een touw zwakker, oud en nat touw is zwakker, en de hele keten telt: ook de sluitingen, de katrollen en waar het touw aan vastzit.',
     ],
     naar: [{ blad: 'veilige-belasting' }, { blad: 'touw-controleren' }] },
-  { id: 'duurzaam-touw', naam: 'Touw en het milieu', ook: ['duurzaam touw', 'hergebruik'], groep: 'touwkunde', bron: 'TU',
+  { id: 'duurzaam-touw', naam: 'Touw en het milieu', ook: ['duurzaam touw', 'hergebruik'], groep: 'touwkunde', bron: 'TU; WP-NL, PLY-ROPE, SN-VVS',
     waarvoor: 'Kiezen welk touw je koopt, en zo lang mogelijk doen met wat je hebt.',
     uitleg: [
       'Natuurtouw komt van planten en vergaat weer. Raakt er een stuk kwijt in de natuur, dan verdwijnt het vanzelf. Voor touw dat je kort of af en toe gebruikt is dat een voordeel.',

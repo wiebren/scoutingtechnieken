@@ -136,7 +136,7 @@ export default [
     naar: [{ blad: 'semafoor' }] },
 
   // Seinvlaggen
-  { id: 'seinvlaggen', naam: 'Seinvlaggen', ook: ['Internationaal Seinboek', 'ICS', 'lettervlaggen', 'vlaggenalfabet'], en: 'International Code of Signals', groep: 'vlaggen', bron: 'NAV §4c, VLET',
+  { id: 'seinvlaggen', naam: 'Seinvlaggen', ook: ['Internationaal Seinboek', 'ICS', 'lettervlaggen', 'vlaggenalfabet'], en: 'International Code of Signals', groep: 'vlaggen', bron: 'NAV §4c (ICS-NGA), VLET',
     plaatje: 'seinvlaggen-alfabet',
     doe: 'seinvlaggen',
     uitleg: [
@@ -150,7 +150,7 @@ export default [
     tabel: { kop: ['Vlag', 'Spelwoord', 'Alleen betekent hij'], rijen: LETTERVLAGGEN.map((v) => [v.id, v.spelwoord, v.betekenis]) },
     letOp: 'Er is geen officiële Nederlandse tekst van het Seinboek. De betekenissen hier zijn een eigen, korte vertaling van de Engelse tekst.',
     naar: [{ blad: 'cijferwimpels' }, { blad: 'noodseinen-water' }, { blad: 'spelalfabet' }] },
-  { id: 'cijferwimpels', naam: 'Cijferwimpels en vervangwimpels', ook: ['onderscheidingswimpel', 'vervanger', 'wimpels'], groep: 'vlaggen', bron: 'VLET',
+  { id: 'cijferwimpels', naam: 'Cijferwimpels en vervangwimpels', ook: ['onderscheidingswimpel', 'vervanger', 'wimpels'], groep: 'vlaggen', bron: 'ICS-NGA, VLET',
     plaatje: 'cijferwimpels',
     doe: 'seinvlaggen-cijfers',
     uitleg: [

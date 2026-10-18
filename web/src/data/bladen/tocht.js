@@ -691,7 +691,7 @@ export default [
     ],
     verwijs: [{ naam: 'VERON: Vossenjachten (ARDF)', url: 'https://veron.nl/activiteiten/vossenjachten-ardf/' }, { naam: 'Scoutpedia: Radio vossenjacht', url: 'https://nl.scoutwiki.org/Radio_vossenjacht' }],
     naar: [{ blad: 'kruispeiling-route' }, { blad: 'morse' }, { blad: 'jota-joti' }] },
-  { id: 'tochtafstanden', naam: 'Hoe ver loop je?', ook: ['tochtafstanden', 'afstand per niveau'], groep: 'vormen', bron: 'EIS',
+  { id: 'tochtafstanden', naam: 'Hoe ver loop je?', ook: ['tochtafstanden', 'afstand per niveau'], groep: 'vormen', bron: 'EIS §1.3 (SN-NAV); VAK WNET',
     plaatje: 'tocht-tochtafstanden',
     uitleg: [
       'Bij het insigne Navigeren hoort een tocht. Bij elk niveau wordt die langer:',

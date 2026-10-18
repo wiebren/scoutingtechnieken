@@ -702,7 +702,7 @@ export default [
       ['Geel tot oranjebruin', 'Droge buitenste schillen van uien'],
       ['Bruin', 'De groene bolsters van walnoten'],
       ['Groengeel', 'Brandnetels'],
-      ['Roze', 'Rode bieten (verbleekt snel)'],
+      ['Roze tot roestrood', 'Rode bieten (verbleekt snel)'],
       ['Paars tot blauw', 'Rode kool (verandert van kleur met azijn of soda)'],
       ['Blauwpaars', 'Rijpe vlierbessen of bramen'],
     ] },

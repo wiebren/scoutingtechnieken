@@ -1,12 +1,14 @@
 // The card of a blad, as Zoeken and Insignes show it: the name and its other names, the uitleg, what it is for,
 // what to watch out for, where to read on (EHBO: the Rode Kruis app, not steps of our own), related bladen, and
-// where it is in the insignelaag. The source is shown for rules (`letterlijk`): there it matters where it comes
-// from and how recent it is. Elsewhere `bron` is for us (a key of the notes) and stays out of sight.
+// where it is in the insignelaag, and at the foot its sources (src/data/referenties.js, with the ABOK number of a
+// knot). The source of a rule (`letterlijk`) is shown with it: there it matters where it comes from and how recent it
+// is. Elsewhere `bron` is for us (a key of the notes) and stays out of sight.
 import { BEELDEN, BRONNEN } from './data/beelden.js';
 import { DOE } from './doe/index.js';
 import { abokLink, abokPagina } from './data/abok.js';
 import { BLAD } from './data/bladen/index.js';
 import { CATEGORIE, groepNaam } from './data/categorieen.js';
+import { REFERENTIES } from './data/referenties.js';
 import { inLaag, insigneBeeld } from './data/insignes.js';
 import { inKeuze, niveausVan } from './data/niveaus.js';
 import { h } from './dom.js';
@@ -131,6 +133,26 @@ function doe(naam) {
   return h('section.doe', h('h3', d.titel), plek);
 }
 
+/** One source: a web page by its name, a book as "Titel — Auteur (jaar), blz. N"; a link when it can be read online. */
+export function bron(r) {
+  const tekst = r.boek
+    ? [h('cite', r.boek), r.auteur && ` — ${r.auteur}`, r.jaar && ` (${r.jaar})`, r.nr && `, nr. ${r.nr}`, r.blz && `, blz. ${r.blz}`, r.par && `, ${r.par}`]
+    : [r.naam];
+  return r.url ? h('a', { href: r.url, target: '_blank', rel: 'noopener' }, tekst, icoon('extern', 'icoon klein')) : tekst;
+}
+
+/** The sources of a blad, small at the foot of the card; the ABOK number of a knot is one of them (a link to that page
+ *  of the scan). Not "Lees verder" (`verwijs`): these are where the facts come from. A page that is already under
+ *  "Lees verder" is not shown twice. */
+function bronnen(blad) {
+  const alVerwezen = new Set((blad.verwijs ?? []).map((v) => v.url));
+  const lijst = (REFERENTIES[blad.id] ?? []).filter((r) => !alVerwezen.has(r.url));
+  if (blad.abok) {
+    lijst.unshift({ boek: 'The Ashley Book of Knots', auteur: 'Clifford W. Ashley', jaar: 1944, nr: blad.abok, blz: abokPagina(blad.abok), url: abokLink(blad.abok) });
+  }
+  return lijst.length > 0 && h('section.bronnen', h('h3', 'Bronnen'), h('ul', lijst.map((r) => h('li', bron(r)))));
+}
+
 /**
  * @param blad the blad
  * @param linkNaar (id) => the address of another blad in the same view
@@ -177,12 +199,11 @@ export function bladKaart(blad, { linkNaar }) {
       h('ul.chips', laag.map(({ insigne, niveau }) => h('li', h('a.chip.niveau', { href: href('insignes', { i: insigne.id, n: niveau }), 'data-niveau': niveau },
         h('img.chip-badge', { src: insigneBeeld(insigne.id, niveau), alt: '', width: 240, height: 208 }),
         insigne.naam, h('span.niveau-nr', niveau)))))),
-    // other names and the number in the Ashley Book of Knots: at the foot, small
-    (ook.length || blad.en || blad.abok) && h('dl.namen',
+    // other names and the sources: at the foot, small
+    (ook.length || blad.en) && h('dl.namen',
       ook.length > 0 && [h('dt', 'Ook'), h('dd', ook.join(' · '))],
-      blad.en && [h('dt', 'Engels'), h('dd', { lang: 'en' }, blad.en)],
-      blad.abok && [h('dt', 'Ashley'), h('dd', h('a', { href: abokLink(blad.abok), target: '_blank', rel: 'noopener' },
-        `nr. ${blad.abok}${abokPagina(blad.abok) ? `, blz. ${abokPagina(blad.abok)}` : ''} in The Ashley Book of Knots`, icoon('extern', 'icoon klein')))]),
+      blad.en && [h('dt', 'Engels'), h('dd', { lang: 'en' }, blad.en)]),
+    bronnen(blad),
     blad.letterlijk && blad.bron && h('p.bron', 'Bron: ', blad.bron, blad.bronDatum && ` (${blad.bronDatum})`),
     h('p.meld-link', h('button', { type: 'button', onclick: () => meld({ blad: blad.id }) }, 'Klopt er iets niet? Meld het')));
 }

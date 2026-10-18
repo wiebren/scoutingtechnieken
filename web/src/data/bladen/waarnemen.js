@@ -111,7 +111,7 @@ export default [
     naar: [{ blad: 'passen-tellen' }, { blad: 'tocht-uitzetten' }, { blad: 'flits-donder' }] },
 
   // Meten bij water
-  { id: 'rivierbreedte', naam: 'Breedte van een rivier', ook: ['breedte schatten', 'breedte van een sloot'], en: 'river width', groep: 'water', bron: 'WU AOM, JV, PT; VAK §13',
+  { id: 'rivierbreedte', naam: 'Breedte van een rivier', ook: ['breedte schatten', 'breedte van een sloot'], en: 'river width', groep: 'water', bron: 'WU AOM, JV, PT; TOP-LEG',
     uitleg: [
       'Er zijn een paar manieren om de breedte te bepalen zonder dat je naar de overkant hoeft:',
       '- De Napoleonmethode: snel en zonder spullen, maar grof.',

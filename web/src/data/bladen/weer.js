@@ -248,7 +248,7 @@ export default [
   // Onweer
   { id: 'flits-donder', naam: 'Flits en donder tellen', ook: ['onweer', 'bliksem', 'afstand onweer'], groep: 'onweer',
     doe: 'onweer',
-    bron: 'KNMI (afstand); Scouting Nederland (veiligheid bij onweer)',
+    bron: 'KNMI-O (afstand); Scouting Nederland (veiligheid bij onweer)',
     uitleg: [
       'Tel de seconden tussen de flits en de donder. Geluid gaat ongeveer 1 kilometer in 3 seconden. Deel het aantal seconden door 3, dan heb je de afstand in kilometers.',
       'Hoor je de donder binnen 10 seconden, dan is het onweer gevaarlijk dichtbij. Stop de activiteit en zoek een veilige plek.',
@@ -430,15 +430,15 @@ export default [
     ],
     naar: [{ blad: 'melkweg' }, { blad: 'sterrenhemel' }] },
   { id: 'leeuw', naam: 'Leeuw', ook: ['Regulus', 'Leo'], en: 'Leo', groep: 'sterren',
-    bron: 'TKN §6.6', doe: 'sterrenkaart-leeuw',
+    bron: 'TKN §6.6, WPen-Leo', doe: 'sterrenkaart-leeuw',
     uitleg: 'Het sterrenbeeld van de voorjaarsavond, van februari tot juni, in het zuiden. De kop van de leeuw ziet eruit als een achterstevoren vraagteken (een sikkel); de punt eronder is de heldere ster Regulus. Naar links eindigt de leeuw in een driehoekje van sterren.',
     naar: [{ blad: 'grote-beer' }] },
   { id: 'tweelingen', naam: 'Tweelingen', ook: ['Castor', 'Pollux', 'Gemini'], en: 'Gemini', groep: 'sterren',
-    bron: 'TKN §6.6', doe: 'sterrenkaart-tweelingen',
+    bron: 'TKN §6.6, WPen-Gemini, WPen-Orion', doe: 'sterrenkaart-tweelingen',
     uitleg: 'Twee heldere sterren naast elkaar, Castor en Pollux, met elk een rij zwakkere sterren eronder: de twee broers. Je ziet ze op winter- en voorjaarsavonden, van december tot mei, linksboven Orion.',
     naar: [{ blad: 'orion' }] },
   { id: 'stier-plejaden', naam: 'Stier en Plejaden', ook: ['Plejaden', 'Zevengesternte', 'Aldebaran', 'Taurus'], en: 'Taurus and the Pleiades', groep: 'sterren',
-    bron: 'TKN §6.6', doe: 'sterrenkaart-stier',
+    bron: 'TKN §6.6, WPen-Orion, WPen-Taurus, WPen-Pleiades, WP-PLEJ', doe: 'sterrenkaart-stier',
     uitleg: [
       'Volg de gordel van Orion naar rechtsboven. Eerst kom je bij Aldebaran, een oranje ster in een V van sterren: de kop van de Stier. Nog verder staat een klein, dicht groepje sterren: de Plejaden of het Zevengesternte.',
       'Je ziet ze op herfst- en winteravonden, van november tot maart. Hoeveel sterren van de Plejaden zie jij? Met gewone ogen zijn het er meestal zes of zeven.',
@@ -451,13 +451,13 @@ export default [
     ],
     letOp: 'Het Zuiderkruis is een eigen sterrenbeeld, naast de Centaur (Centaurus). Het is geen deel van de Centaur.',
     naar: [{ blad: 'poolster' }] },
-  { id: 'melkweg', naam: 'Melkweg', ook: ['Melkwegstelsel', 'donkere hemel', 'Dark Sky Park'], en: 'Milky Way', groep: 'sterren', bron: 'TKN §6.6', plaatje: 'melkweg',
+  { id: 'melkweg', naam: 'Melkweg', ook: ['Melkwegstelsel', 'donkere hemel', 'Dark Sky Park'], en: 'Milky Way', groep: 'sterren', bron: 'TKN §6.6, WP-MW, WP-DSP', plaatje: 'melkweg',
     uitleg: [
       'Een lichte, wazige band over de hemel. Het zijn miljarden sterren van ons eigen sterrenstelsel, zo ver weg dat je ze niet los ziet.',
       'Je ziet hem alleen waar het echt donker is: ver van steden en lantaarnpalen, zonder maan, als je ogen een kwartier aan het donker gewend zijn. In de zomer en herfst loopt hij door de Zwaan en Cassiopeia. Donkere plekken in Nederland zijn bijvoorbeeld het Lauwersmeer en de Boschplaat op Terschelling.',
     ],
     naar: [{ blad: 'zomerdriehoek' }, { blad: 'cassiopeia' }] },
-  { id: 'iss', naam: 'ISS en satellieten', ook: ['ruimtestation', 'satelliet', 'International Space Station'], en: 'International Space Station', groep: 'sterren', bron: 'TKN §6.6', plaatje: 'iss-baan',
+  { id: 'iss', naam: 'ISS en satellieten', ook: ['ruimtestation', 'satelliet', 'International Space Station'], en: 'International Space Station', groep: 'sterren', bron: 'TKN §6.6, WP-ISS', plaatje: 'iss-baan',
     uitleg: [
       'Zie je een licht dat rustig en snel over de hemel schuift, zonder te knipperen? Dan is het een satelliet. De helderste is het ruimtestation ISS: in een paar minuten gaat het over de hele hemel, en het verdwijnt soms ineens als het in de schaduw van de aarde komt.',
       'Een vliegtuig knippert, met rode en groene lichtjes. Een ster beweegt niet. Op de site van NASA zie je wanneer het ISS over Nederland komt.',

@@ -3,9 +3,11 @@
 // only. Only the niveaus chosen in the menu are shown (all three when only Extra is chosen); a link to another
 // niveau still opens it. Per niveau you go from nothing ticked, to some, to all of it (a hopman's hat: ask your
 // leiding to show it), to having the insigne (a star), which you set yourself. Address: #/insignes?i=&n=&blad=
+import { bron } from './bladkaart.js';
 import { BLAD } from './data/bladen/index.js';
 import { afvinkbaar, INSIGNE, insigneBeeld, INSIGNES, NIVEAUS } from './data/insignes.js';
 import { insigneNiveaus } from './data/niveaus.js';
+import { INSIGNE_REFERENTIES } from './data/referenties.js';
 import { h, vul } from './dom.js';
 import { icoon } from './iconen.js';
 import { isAfgevinkt, isGekregen, niveauKeuze, volgAfgevinkt, zetAfgevinkt, zetGekregen } from './opslag.js';
@@ -104,7 +106,15 @@ export function insignesView() {
         h('div.rijen', d.bladen.filter((id) => BLAD[id]).map((id) => vink(id, BLAD[id].naam, true)),
           (d.zonderBlad ?? []).map(({ k, t }) => vink(k, t, false)))))
         : h('p.leeg', 'Voor dit niveau staat er nog niets in de app.'),
+      bronnen(i),
       voetnoot());
+  }
+
+  /** Where the eisen come from: the insigneblad (one for all three niveaus), and older eisen the bladen were
+   *  checked against. Only there when the local references are (src/data/referenties.js). */
+  function bronnen(i) {
+    const lijst = INSIGNE_REFERENTIES[i.id] ?? [];
+    return lijst.length > 0 && h('section.bronnen', h('h3', 'Bronnen'), h('ul', lijst.map((r) => h('li', bron(r)))));
   }
 
   /** The bar with how far you are, and once you can do it all: ask your leiding, and then: you have it. */
