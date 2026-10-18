@@ -3,8 +3,6 @@
 // The navigation also holds the choice of niveau (src/niveaukeuze.js), which every page follows at once.
 // Installing and updates work as in vlet's app.html: the browser's own install prompt where there is one,
 // otherwise how to do it in this browser; and a new build is offered as soon as the service worker has it.
-// first: on the new address it puts back the address the router reads (src/verhuizen.js)
-import { nieuwAdres, opOudAdres, overgenomen } from './verhuizen.js';
 import './style.css';
 import './plaatjes/tocht.css';
 import './plaatjes/waarnemen.css';
@@ -71,22 +69,6 @@ const installDialoog = h('dialog.dialoog', { 'aria-labelledby': 'installeren-tit
   addEventListener('appinstalled', () => installDialoog.close());
 }
 
-// -- the move to scoutvaardig.nl (src/verhuizen.js): on the old address a browser tab goes on at once; an installed
-// app asks first, as it has to be installed again there. On the new address, what came along is said once.
-if (opOudAdres && !standalone) location.replace(nieuwAdres());
-const verhuisDialoog = h('dialog.dialoog', { 'aria-labelledby': 'verhuisd-titel' },
-  h('h2', { id: 'verhuisd-titel' }, 'De app is verhuisd'),
-  h('p', 'Scoutingtechnieken staat nu op scoutvaardig.nl. Hier krijgt de app straks geen nieuwe versies meer.'),
-  h('p', 'Open hem op het nieuwe adres en installeer hem daar opnieuw. Wat je hebt afgevinkt en je instellingen gaan mee. Daarna kun je deze app weghalen.'),
-  h('div.knoppen', h('button.knop', { type: 'button', onclick: () => verhuisDialoog.close() }, 'Later'),
-    h('button.knop.hoofd', { type: 'button', onclick: () => {
-      const tab = window.open(nieuwAdres(), '_blank');
-      if (tab) tab.opener = null; else location.assign(nieuwAdres());
-    } }, 'Naar scoutvaardig.nl')));
-const meegekomen = h('div.nieuw', { role: 'status', hidden: overgenomen === 0 },
-  h('span', 'Wat je had afgevinkt en ingesteld, is meegekomen van het oude adres.'),
-  h('button.knop', { type: 'button', onclick: () => { meegekomen.hidden = true; } }, 'Oké'));
-
 // -- the pages and the navigation
 const views = {
   zoeken: zoekenView(),
@@ -112,8 +94,7 @@ const nieuw = h('div.nieuw', { role: 'status', hidden: true },
   h('span', 'Er is een nieuwe versie.'),
   h('button.knop.hoofd', { type: 'button', onclick: () => location.reload() }, 'Bijwerken'));
 
-document.getElementById('app').replaceWith(h('div.app', { id: 'app' }, nav, main, nieuw, meegekomen, installDialoog, verhuisDialoog, niveau.pop));
-if (opOudAdres && standalone) verhuisDialoog.showModal();
+document.getElementById('app').replaceWith(h('div.app', { id: 'app' }, nav, main, nieuw, installDialoog, niveau.pop));
 
 let pagina = null;
 let plek = null;

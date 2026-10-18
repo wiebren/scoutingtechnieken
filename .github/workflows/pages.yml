@@ -1,7 +1,9 @@
 name: Pages
 
-# Builds the site and publishes it to GitHub Pages: the homepage and the handleiding (web/site/) at the root, the app
-# (web/dist/) in app/. See web/scripts/pages.mjs.
+# Builds the site, as a check: the homepage and the handleiding (web/site/) at the root, the app (web/dist/) in app/
+# (web/scripts/pages.mjs). It is published at scoutvaardig.nl/scoutingtechnieken/ by wiebren/scoutvaardig, which
+# builds the commit this workflow last passed. Here, at wiebren.github.io/scoutingtechnieken/, GitHub Pages only
+# sends every address on to the same page there (.github/doorsturen.html).
 
 on:
   push:
@@ -39,12 +41,14 @@ jobs:
 
       - run: pnpm install --frozen-lockfile
 
-      # pnpm check (data and tests), the app, and the pages around it
+      # pnpm check (data and tests), the app, and the pages around it: whether this commit can go to scoutvaardig.nl
       - run: pnpm build:pages
 
+      - name: Doorsturen
+        working-directory: .
+        run: mkdir _site && cp .github/doorsturen.html _site/index.html && cp .github/doorsturen.html _site/404.html
+
       - uses: actions/upload-pages-artifact@v3
-        with:
-          path: web/pages
 
   deploy:
     needs: build
