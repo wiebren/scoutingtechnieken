@@ -58,7 +58,7 @@ export function overView({ installeer }) {
           h('h2', 'Scoutingtechnieken'),
           h('p', 'Technieken opzoeken en leren: knopen en sjorringen, kaart en kompas, tochttechnieken, seinen en geheimschriften, vuur, buitenkoken, kamperen, natuur, weer en veiligheid. Voor scouts, leiding en iedereen die het wil kunnen.'),
           h('p', 'Hoe alles werkt, en tips voor leiding, staat in de ', extern(HANDLEIDING, 'handleiding'), '.'),
-          h('p', 'Varen en de lelievlet hebben een eigen app: ', extern('https://wiebren.github.io/lelievlet/', 'Lelievlet 3D'), '.'),
+          h('p', 'Varen en de lelievlet hebben een eigen app: ', extern('https://scoutvaardig.nl/lelievlet/', 'Lelievlet 3D'), '.'),
           h('p', 'Tik in het menu een of meer niveaus aan: 1, 2 of 3, net als bij de insignes. Extra is alles wat in geen insigne zit. Zoeken, Oefenen en Insignes laten dan alleen zien wat daarbij hoort. Staat er niets aan? Dan zie je alles.'),
           h('p.melding', 'De knopen hebben voor nu een eenvoudige tekening. De stappen om ze te leggen komen later, uit een apart project.')),
         h('section.over-blok',

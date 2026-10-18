@@ -3,7 +3,7 @@
 Een installeerbare webapp (PWA, werkt helemaal lokaal) om scoutingtechnieken te leren en te verkennen: knopen en
 sjorringen, kaart en kompas, tochttechnieken, seinen en geheimschriften, vuur, kamperen, natuur, weer en EHBO.
 Interface en documentatie in het Nederlands, code in het Engels. Zusterproject van
-[lelievlet](https://wiebren.github.io/lelievlet/), dat het water voor zijn rekening neemt.
+[lelievlet](https://scoutvaardig.nl/lelievlet/), dat het water voor zijn rekening neemt.
 
 De app heeft Zoeken (ruim 550 onderwerpen in veertien categorieën), Insignes, Oefenen (alles om zelf te doen, per
 categorie) en Instellingen (achter het tandwiel: licht, donker of automatisch, en wat er over de app te weten valt). In het menu kies je een niveau (1, 2, 3 of Extra, zoals bij de insignes); de lijsten tonen dan
@@ -28,7 +28,7 @@ pnpm icons      # de app-iconen opnieuw tekenen (vraagt rsvg-convert)
 pnpm insignes   # de insignes uit de insignebladen in reference/ halen (vraagt pdfimages en magick)
 ```
 
-Online: <https://wiebren.github.io/scoutingtechnieken/> (de app: `app/`). Elke push naar `main` bouwt en publiceert
+Online: <https://scoutvaardig.nl/scoutingtechnieken/> (de app: `app/`). Elke push naar `main` bouwt en publiceert
 de site via `.github/workflows/pages.yml`.
 
 ## Hoe de app in elkaar zit
