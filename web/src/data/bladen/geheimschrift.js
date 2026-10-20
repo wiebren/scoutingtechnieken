@@ -141,8 +141,7 @@ export default [
   { id: 'zigzagcode', naam: 'Zigzagcode', ook: ['rail fence', 'zigzag'], en: 'rail fence cipher', groep: 'verwisselen', bron: 'NAV §5c, WP-Transpositie',
     plaatje: 'zigzagcode',
     doe: 'code-zigzag',
-    uitleg: 'Schrijf je boodschap in een zigzag over twee of drie regels: de eerste letter boven, de tweede een regel lager, en zo verder, op en neer. Lees daarna regel voor regel.',
-    letOp: 'Deze code komt niet uit een Nederlandse scoutingbron; hij is bekend uit Engelstalig materiaal.' },
+    uitleg: 'Schrijf je boodschap in een zigzag over twee of drie regels: de eerste letter boven, de tweede een regel lager, en zo verder, op en neer. Lees daarna regel voor regel.' },
   { id: 'scytale', naam: 'Scytale', ook: ['stokcode', 'skytale'], en: 'scytale', groep: 'verwisselen', bron: 'NAV §5c (KLJ, WP-Geheim)',
     plaatje: 'scytale',
     uitleg: [

@@ -256,8 +256,9 @@ function sjorring(s, P) {
       }
       voeg(pad);
       const S = rA + rr * 6.4; const T = rB + rr * 6.4; const nf = (rA + hh - rB) / 2;
-      for (let j = 0; j < 2; j++) {
-        const c = plus(pA, keer(n, nf + (j - 0.5) * rr * 1.6));
+      // three woelslagen, as the blad says (the book: three or four)
+      for (let j = 0; j < 3; j++) {
+        const c = plus(pA, keer(n, nf + (j - 1) * rr * 1.6));
         voeg(ovaal(c, bv, u, S + j * rr * 1.6, T + j * rr * 1.6, 12, 0.3), true);
       }
       voeg(ring(A, Q(0, -(rB + rr * 7.6), 0), rr));
@@ -286,12 +287,16 @@ function sjorring(s, P) {
     w = eenheid(w);
     const c = s.p;
     const cirkels = palen.map((p) => ({ q: snijpunt(p, c, w), r: p.r }));
-    const b = band(c, w, cirkels, soort === 'acht' ? 5 : 4, { rr });
+    // the book (Vianney 2008 §2.4.2, §2.4.5): 6 to 8 slagen for the acht, 7 or 8 for the vork
+    const b = band(c, w, cirkels, soort === 'acht' ? 6 : 7, { rr });
     voeg(glad(b.pad, false, 1));
-    // woelslagen between neighbours (in the order round the band)
-    const paren = cirkels.length === 2 ? [[0, 1]] : [[0, 1], [1, 2], [2, 0]];
+    // woelslagen between neighbours: the first and second pole, the second and third; the eights never pass between
+    // the first and the third
+    const paren = cirkels.length === 2 ? [[0, 1]] : [[0, 1], [1, 2]];
     for (const [i, j] of paren) for (const x of woelen(c, w, cirkels[i], cirkels[j], b.hoog, 3, rr)) voeg(x.pad, true);
+    // begun with a mastworp on the first pole at one side, ended with one on the last pole at the other side
     voeg(ring(palen[0], plus(c, keer(w, -(b.hoog / 2 + rr * 3))), rr));
+    voeg(ring(palen.at(-1), plus(c, keer(w, b.hoog / 2 + rr * 3)), rr));
     if (s.nok != null) {
       // a third pole lying across the fork (the ridge of an eetshelter): the eights also go over it
       const N = P[s.nok]; const q = snijpunt(N, c, N.dir);
@@ -327,6 +332,7 @@ function sjorring(s, P) {
     const cirkels = palen.map((p, i) => ({ q: qs[i], r: p.r }));
     for (let i = 0; i < qs.length - 1; i++) for (const x of woelen(c, w, cirkels[i], cirkels[i + 1], rr * 13, 2, rr)) voeg(x.pad, true);
     voeg(ring(palen[0], plus(c, keer(w, -rr * 10)), rr));
+    voeg(ring(palen.at(-1), plus(c, keer(w, rr * 10)), rr));
     void e1;
   } else if (soort === 'steiger') {
     const [M, S] = s.palen.map((i) => P[i]); const w = M.dir; const c = s.p;

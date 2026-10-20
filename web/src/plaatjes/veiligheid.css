@@ -41,3 +41,22 @@
 .plaatje .vh-wol { fill: #c9b48a; stroke: #7c6a45; stroke-width: 1; }
 .plaatje .vh-kunststof { fill: #6fa8dc; stroke: #2f5f8f; stroke-width: 1; }
 .plaatje .vh-druppel { fill: #f08a1c; }
+.plaatje .vh-nummer { fill: var(--paneel); stroke: var(--accent); stroke-width: 1.4; }
+.plaatje .vh-mat { fill: color-mix(in srgb, var(--bruin) 35%, var(--paneel)); }
+.plaatje .vh-deken { fill: color-mix(in srgb, #8a6fb0 55%, var(--paneel)); stroke: #6a508f; stroke-width: 1.2; }
+.plaatje .vh-doek { fill: #f6f4ee; stroke: #9a968a; stroke-width: 1.2; }
+.plaatje .vh-bloed { fill: none; stroke: #b3121b; stroke-width: 4; stroke-linecap: round; }
+.plaatje .vh-oogwit { fill: #fbfbf8; }
+.plaatje .vh-iris { fill: #5d8a6a; }
+.plaatje .vh-pupil { fill: #111111; }
+.plaatje .vh-traanvlees { fill: #e7a4a0; }
+.plaatje .vh-tand { fill: #fbfaf4; stroke: #8a8578; stroke-width: 1.2; }
+.plaatje .vh-wortel { fill: #ecd9a8; stroke: #8a7a4a; stroke-width: 1.2; }
+.plaatje .vh-melk { fill: #f4f2ea; stroke: #b9b5a8; stroke-width: 1; }
+.plaatje .vh-boom { fill: color-mix(in srgb, var(--fam-natuur) 60%, var(--paneel)); }
+.plaatje .vh-kompres { fill: #ffffff; stroke: #9a968a; stroke-width: 1.2; }
+.plaatje .vh-zwachtel { fill: #f3efe4; stroke: #8a8578; stroke-width: 1; }
+.plaatje .vh-elastisch { fill: #e6cfa6; stroke: #9a7d4a; stroke-width: 1; }
+.plaatje .vh-slip { fill: none; stroke: #b9b3a2; stroke-width: 4; stroke-linecap: round; }
+.plaatje .vh-mitella-slip { fill: none; stroke: #e2ded2; stroke-width: 7; stroke-linecap: round; }
+.plaatje .vh-shirt { fill: color-mix(in srgb, #3f8f5a 45%, var(--paneel)); }

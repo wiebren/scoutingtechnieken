@@ -185,7 +185,7 @@ function driepoot() {
     ligPalen.push(b.paal([-1.6, d / 2, z], [1.4, d / 2 + 0.07, z], d, 'liggend'));
   }
   b.paal([0.75, DUN / 2, -0.5], [0.75, DUN / 2, 0.5], DUN, 'hulppaaltje');
-  b.stap('Achtsjorring', 'Leg de achtsjorring: begin met een timmersteek om een buitenste paal, ga in achten over en onder de palen (drie slagen per paal), woel twee keer en eindig met een mastworp op de andere buitenste paal.', { tot: 3, kopie: true });
+  b.stap('Achtsjorring', 'Leg de achtsjorring: begin met een mastworp om een buitenste paal, leg zes tot acht slagen in achten over en onder de palen, woel twee keer (begin aan de kant van de mastworp) en eindig met een mastworp op de andere buitenste paal.', { tot: 3, kopie: true });
   b.sjor('acht-liggend', ligPalen, { p: [1.0, 0, 0], naam: 'om de drie palen, liggend' });
 
   b.stap('Overeind', 'Zet de driepoot overeind en zet de poten uit elkaar. De sjorring komt nu strak.');

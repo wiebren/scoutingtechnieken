@@ -80,5 +80,5 @@ export default function wolken() {
   const modi = h('div.chips', { role: 'group', 'aria-label': 'Sleutel of raden' },
     keuze([['sleutel', 'Welke wolk zie ik?'], ['raad', 'Raad de wolk']], modus, (m) => { modus = m; if (m === 'raad') raad(); else sleutel(); }));
   sleutel();
-  return h('div.doe-wolken', modi, plek, h('p.doe-stil', 'Indeling en hoogtes naar het KNMI (bron: KNMI).'));
+  return h('div.doe-wolken', modi, plek);
 }

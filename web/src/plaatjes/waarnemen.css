@@ -31,3 +31,12 @@
 .plaatje .wn-koe { fill: #ffffff; stroke: #333; stroke-width: 0.7; }
 .plaatje .wn-vlek { fill: #333; }
 .plaatje .wn-schaduw { fill: rgb(0 0 0 / 0.25); }
+/* plattegrond op schaal: millimeter paper, the mm lines faint and every cm stronger */
+.plaatje .wn-mm { fill: none; stroke: color-mix(in srgb, #e07b00 22%, var(--paneel)); stroke-width: 0.5; }
+.plaatje .wn-cm { fill: none; stroke: color-mix(in srgb, #e07b00 50%, var(--paneel)); stroke-width: 0.9; }
+.plaatje .wn-muur { fill: none; stroke: var(--inkt); stroke-width: 4; stroke-linecap: square; }
+/* sluipen: the figures as thick strokes, the far arm and leg lighter; grass on the ground line */
+.plaatje .wn-pop { fill: none; stroke: var(--inkt); stroke-width: 4.5; stroke-linecap: round; stroke-linejoin: round; }
+.plaatje .wn-pop.ver { stroke: var(--stil); }
+.plaatje .wn-kop { fill: var(--inkt); }
+.plaatje .wn-spriet { fill: none; stroke: var(--fam-natuur); stroke-width: 1.2; stroke-linecap: round; }

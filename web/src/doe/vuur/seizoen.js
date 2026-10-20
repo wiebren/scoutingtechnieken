@@ -75,7 +75,7 @@ export default function seizoen() {
     h('div.vk-rij', { role: 'group', 'aria-label': 'Bekijk' },
       keuze([['maand', 'Per maand'], ['soort', 'Per soort']], wijze, (w) => { wijze = w; toon(); })),
     perMaand, perSoort, inhoud, status,
-    h('p.doe-stil', 'Uit de groente- en fruitkalender van het Voedingscentrum: in deze maanden is het te koop uit de Nederlandse volle grond, een plastic tunnel of een kas zonder verwarming.'));
+    h('p.doe-stil', 'In deze maanden is het te koop uit de Nederlandse volle grond, een plastic tunnel of een kas zonder verwarming.'));
 
   function toon() {
     perMaand.hidden = wijze !== 'maand';

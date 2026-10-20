@@ -147,6 +147,28 @@ geen boek [S, zie programma/BRONNEN].
 Niet gevonden in de KB-catalogus: een oriëntatieloopbond-uitgave (NOLB), een NKBV-kaart-en-kompasboek, een
 KNNV-jeugdgids. Daar heb ik niet verder naar gezocht.
 
+### F. *Handboek Scouting technieken*, Vereniging Scouting Johannes Vianney (2008) — **gezaghebbend** [V]
+
+Sleutel **VIA08**. Op verzoek van de gebruiker (2026-10-20) een gezaghebbende bron, niet een van de groepsboekjes van
+`../regionaal/`: zie de rangorde in `../README.md`. Vijf hoofdstukken als losse PDF, eerder op
+`scoutnet.nl/~vianney/techniek-hstN.pdf` (nu alleen in de Wayback Machine, bv.
+<https://web.archive.org/web/2013/http://www.scoutnet.nl/~vianney/techniek-hst3.pdf>); de inhoudsopgave
+(`techniek-inh.pdf`) staat daar ook. Gedownload in `vianney-handboek-2008/`: de PDF's (versie van april 2015), de tekst
+(`pdftotext -layout`, `.txt`) en elke pagina als PNG (`paginas/`). Citeer het **gedrukte paginanummer** onderaan de
+pagina ("Pagina 38 Handboek …"), niet het PDF-paginanummer.
+
+| Hfst. | Bestand | Blz. | Inhoud |
+|---|---|---|---|
+| 1 | `techniek-hst1.pdf` (9 p.) | 4–12 | **Bijl en mes**: soorten bijlen, onderdelen, veiligheid, hakken met kleine en grote bijl, bomen vellen (omzagen met valkerf, omhakken, rooien), onderhoud en slijpen, nieuwe steel, zagen, schilschop |
+| 2 | `techniek-hst2.pdf` (25 p.) | 13–37 | **Pionieren**: touw en touwverzorging, 20 knopen (2.3.1–2.3.20), 5 sjorringen, werken met blokken, houvasten, splitsen (eind-, oog-, korte splits), plattings, traditioneel fluitkoord |
+| 3 | `techniek-hst3.pdf` (23 p.) | 38–60 | **Kaart en kompas**: Recta-kompas, 32 streken, vier kompashandgrepen (andere nummering dan de app), coördinaten (achtcijfermethode), kaarttekens (legenda 2008, verouderd), oriënteren zonder kompas, routetechnieken, landschapsschetsen, hoogte-, breedte- en dieptemeting, verslag |
+| 4 | `techniek-hst4.pdf` (15 p.) | 61–75 | **Natuur**: spoortekens, afdrukken (gips, roet, carbon), bomen, vuren, brandbaarheid hout, sterren, weer, weerrapportage, sluipen |
+| 5 | `techniek-hst5.pdf` (27 p.) | 76–102 | **E.H.B.O.**: medisch **verouderd** (drukpunten, beademing zonder borstcompressies, polscontrole): alleen onderwerpen, namen en verband- en vervoertekeningen; de inhoud volgt de *Nederlandse Richtlijnen Eerste Hulp* |
+
+Licentie: © Vereniging Scouting Johannes Vianney, geen licentie genoemd → feiten en indeling in eigen woorden, geen
+tekeningen overtrekken. Bekende fouten in het boek (Beaufort 8 als 34–50 kn, wind om een hogedrukgebied "tegen de klok
+in", "ED : AD" voor "CB : AB" bij de hoogtemeting): zie `vianney-handboek-2008/REVIEW.md`, het verslag van de review van de app tegen het boek (2026-10-20).
+
 ## Inhoudsopgaven en indeling
 
 **HOY10 — *Op! Hollandsche jongens naar buiten!* (1910)** [V Scoutpedia + scan]: Aan den Hollandschen Jongen · Het

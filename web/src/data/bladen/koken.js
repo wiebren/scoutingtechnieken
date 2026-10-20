@@ -116,7 +116,7 @@ export default [
       '- Zet een barbecue nooit in een tent of een dichte ruimte, ook niet als je klaar bent: de kolen maken nog lang koolmonoxide.',
       'Bij een barbecue kun je direct grillen (boven de kolen) of indirect garen (naast de kolen, met een deksel erop).',
     ],
-    letOp: 'De brandweer zegt: blaas niet in de kolen, gebruik een blaasbalg. Bij een houtvuurtje mag je wel zachtjes blazen om tondel aan te krijgen.',
+    letOp: 'Blaas niet in de kolen, gebruik een blaasbalg. Bij een houtvuurtje mag je wel zachtjes blazen om tondel aan te krijgen.',
     naar: [{ blad: 'gasbrander' }, { blad: 'brandstoffen' }, { blad: 'grillen-en-roken' }] },
 
   { id: 'grillen-en-roken', naam: 'Direct, indirect en roken', ook: ['direct grillen', 'indirect grillen', '50/50', 'twee zones', 'roken', 'rookhout', 'luchtrooster', 'temperatuur'], groep: 'branders',
@@ -124,7 +124,7 @@ export default [
     plaatje: 'bbq-zones',
     uitleg: [
       'Op een barbecue met een deksel kun je op een paar manieren garen. Begin pas als de kolen bedekt zijn met een laagje witte as. Dat duurt een half uur tot een uur.',
-      'Temperatuur regelen: hoe meer lucht, hoe harder de kolen branden. Zet de luchtroosters verder open voor meer hitte, en verder dicht voor minder. Hoe ver precies, verschilt per barbecue. Weber zegt: voor langzaam garen rond 120 °C half open.',
+      'Temperatuur regelen: hoe meer lucht, hoe harder de kolen branden. Zet de luchtroosters verder open voor meer hitte, en verder dicht voor minder. Hoe ver precies, verschilt per barbecue. Voor langzaam garen rond 120 °C staan ze meestal half open.',
       'Rookhout geeft smaak. Appel en kers zijn zacht, en passen bij kip en varkensvlees. Hickory en pecan smaken sterker. Ook beuk en eik worden gebruikt.',
     ],
     tabel: { kop: ['Manier', 'Hoe', 'Voor'], rijen: [
@@ -158,11 +158,11 @@ export default [
   // Water
   { id: 'water-koken', naam: 'Water koken', ook: ['water zuiveren', 'drinkwater', 'waterfilter', 'tabletten'], en: 'boiling water', groep: 'water', bron: 'VKG VC-WL, CDC, SN-VK',
     uitleg: [
-      'Twijfel je of water te drinken is, en heb je geen flessenwater? Kook het dan. Het Voedingscentrum zegt: kook het 5 minuten en laat het afkoelen. Daarna is het nog hooguit 1 dag drinkbaar. Bewaar het in een schone, dichte fles of jerrycan.',
+      'Twijfel je of water te drinken is, en heb je geen flessenwater? Kook het dan 5 minuten en laat het afkoelen. Daarna is het nog hooguit 1 dag drinkbaar. Bewaar het in een schone, dichte fles of jerrycan.',
       'Koken doodt bacteriën, virussen en andere ziekmakers. Maar het haalt gif, lood of andere chemicaliën niet uit het water. Water dat vies is van olie, mest of afval wordt door koken niet veilig.',
       'Er zijn ook waterfilters en tabletten. Die werken niet allemaal tegen alles: lees wat het filter of de tablet wel en niet doet.',
     ],
-    letOp: 'Bronnen verschillen in hoe lang. De Amerikaanse gezondheidsdienst (CDC) zegt minstens 1 minuut flink koken, en boven ongeveer 2000 m 3 minuten. Met 5 minuten zit je altijd goed.',
+    letOp: 'Laat het water flink koken, niet alleen even borrelen. Met 5 minuten zit je altijd goed, ook hoog in de bergen.',
     verwijs: [{ naam: 'Voedingscentrum: veilig eten en drinken in warme landen', url: 'https://www.voedingscentrum.nl/nl/thema/5xveilig/in-warme-landen.aspx' }],
     naar: [{ blad: 'drinkwater-op-kamp' }] },
   { id: 'drinkwater-op-kamp', naam: 'Drinkwater op kamp', ook: ['pompwater', 'jerrycan', 'kraanwater'], groep: 'water', bron: 'VKG SN-VK',
@@ -251,7 +251,7 @@ export default [
       'In de winkel liggen bijna altijd aardbeien en tomaten. Maar in Nederland groeien ze maar een deel van het jaar. Dat is hun seizoen.',
       'In hun seizoen groeien groente en fruit hier buiten, onder plastic, of in een kas zonder verwarming. Daar is weinig energie voor nodig. Buiten hun seizoen komen ze vaak uit een verwarmde kas, of met het vliegtuig van ver weg. Dat kost veel energie, en dat is slecht voor het klimaat.',
       '- Aardbeien en frambozen in de winter komen vaak met het vliegtuig of uit een verwarmde kas. Kies dan liever een appel of een peer.',
-      '- Groente en fruit uit het seizoen is ook een tip van het Voedingscentrum om goedkoper boodschappen te doen.',
+      '- Groente en fruit uit het seizoen is vaak ook goedkoper.',
       'Kijk hieronder wat er deze maand in het seizoen is. Of zoek op in welke maanden jouw groente of fruit hier groeit.',
     ],
     letOp: 'Fruit uit een ver land is niet altijd slecht. Komt het met de boot, zoals bananen, sinaasappels en ananas, dan is het toch een goede keus.',
@@ -305,7 +305,7 @@ export default [
       '- Geen kunstmest en geen gif op het land, en de dieren hebben het beter.',
       '- Er komt minder van een akker. Voor dezelfde hoeveelheid eten is daarom meestal meer grond nodig.',
       '- Het is meestal duurder in de winkel.',
-      '- Of het gezonder is voor jou, is niet aangetoond, zegt het Voedingscentrum.',
+      '- Of het gezonder is voor jou, is niet aangetoond.',
     ],
     verwijs: [
       { naam: 'Milieu Centraal: biologisch', url: 'https://www.milieucentraal.nl/eten-en-drinken/milieubewust-eten/biologisch/' },
@@ -321,7 +321,7 @@ export default [
       '- Na 5 tot 7 keer frituren vervang je alle olie. Vul oude olie niet aan met nieuwe.',
       '- Oude olie gaat in de inzamelbak voor frituurvet, nooit door de gootsteen.',
       'Een airfryer bakt met hete lucht in plaats van in een bad olie. Gebruik je hooguit een eetlepel olie, dan eet je veel minder vet. Er ontstaat ook minder acrylamide: een ongezonde stof die ontstaat als je iets heel heet bakt. Zet hem op hooguit 180 °C. Hij gebruikt ongeveer evenveel stroom als een frituurpan.',
-      'Welke olie is het duurzaamst? Dat is niet simpel. Palmolie geeft veel meer olie per akker, maar voor palmplantages wordt regenwoud gekapt. Zonnebloemolie of raapzaadolie uit Europa is in sommige opzichten beter, maar heeft veel meer grond nodig. Milieu Centraal raadt aan: kies je palmolie, neem dan olie met het RSPO-keurmerk.',
+      'Welke olie is het duurzaamst? Dat is niet simpel. Palmolie geeft veel meer olie per akker, maar voor palmplantages wordt regenwoud gekapt. Zonnebloemolie of raapzaadolie uit Europa is in sommige opzichten beter, maar heeft veel meer grond nodig. Kies je palmolie, neem dan olie met het RSPO-keurmerk.',
     ],
     letOp: 'Vlam in de pan? Nooit water erop. Zet de warmte uit en dek de pan af. En frituur nooit op een houtvuur.',
     verwijs: [

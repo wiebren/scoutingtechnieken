@@ -55,6 +55,8 @@
 .plaatje .w-baan.winter { stroke: var(--blauw); }
 
 /* weer bijhouden, waarschuwingen, zonkracht */
+.plaatje .w-teken { fill: var(--inkt); }
+.plaatje .w-tekenlijn { fill: none; stroke: var(--inkt); stroke-width: 1.8; stroke-linecap: round; stroke-linejoin: round; }
 .plaatje .w-schaduw { fill: color-mix(in srgb, var(--inkt) 16%, transparent); }
 .plaatje .w-water { fill: color-mix(in srgb, var(--blauw) 45%, var(--paneel)); }
 .plaatje .w-avondgloed { fill: color-mix(in srgb, #f08a3c 55%, var(--paneel)); }

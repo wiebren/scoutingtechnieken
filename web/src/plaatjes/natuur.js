@@ -119,6 +119,16 @@ function handSamengesteld({ blaadjes, steel = 40 }) {
   return uit;
 }
 
+/** A hawthorn leaf, base at (0, 0): a wedge-shaped foot, two pairs of deep lobes and an end lobe, teeth at the tips. */
+function meidoornBlad(steel = 22) {
+  const rechts = [[0, 0], [5, -10], [9, -19], [16, -22], [22, -24], [27, -27], [25, -30], [30, -33], [22, -35], [8, -34],
+    [14, -41], [24, -45], [31, -49], [28, -52], [34, -57], [30, -59], [20, -58], [7, -55],
+    [12, -62], [16, -69], [13, -72], [15, -78], [10, -80], [8, -86], [3, -86], [0, -90]];
+  const links = rechts.slice(0, -1).reverse().map(([x, y]) => [-x * 0.94, y + (y < -5 ? 2 : 0)]);
+  const nerf = `M0 ${steel} V-86 M0 -22 L22 -31 M0 -24 L-21 -31 M0 -42 L27 -54 M0 -44 L-25 -53`;
+  return `<path d="${lijn([...rechts, ...links])}Z" class="blad"/><path d="${nerf}" class="nerf nt-nerf"/>`;
+}
+
 // -- needles, cones and fruit -------------------------------------------------------------------------------------
 
 /** A twig from (0, 0) to (len, 0) with needles along it; soort: den, spar, lariks, douglas, taxus. */
@@ -337,6 +347,14 @@ export const BOMEN = {
     vrucht: () => `<path d="M0 -36 V-10 M0 -26 L-14 -6 M0 -26 L14 -8" class="nt-steeltje"/>${g(0, -10, 180, kegel(20, 13, { rijen: 4, rond: true }))}${g(-14, -6, 170, kegel(18, 12, { rijen: 4, rond: true }))}${g(14, -8, 190, kegel(19, 12, { rijen: 4, rond: true }))}`,
     regels: ['rond blad met een ingedeukte top', 'kleine houten dennenappeltjes'],
   },
+  'grauwe-els': {
+    naam: 'Grauwe els', vak: [-40, -105, 80, 128],
+    blad: () => blad({ lengte: 96, breedte: 60, a: 0.75, b: 1.05, rand: 'dubbel', n: 11, diep: 2, steel: 18, nerven: 9, klasse: 'blad nt-zilver' }),
+    // the cones sit close together on very short stalks; above them the catkins for next spring
+    vrucht: () => `<path d="M0 -40 V-12 M0 -20 L-9 -10 M0 -20 L9 -10" class="nt-steeltje"/>${g(0, -10, 180, kegel(20, 13, { rijen: 4, rond: true }))}${g(-10, -9, 168, kegel(18, 12, { rijen: 4, rond: true }))}${g(10, -9, 192, kegel(18, 12, { rijen: 4, rond: true }))}`
+      + g(-14, -44, 20, katje(30, { dik: 3 })) + g(-6, -46, 8, katje(34, { dik: 3 })),
+    regels: ['eirond blad met een spitse top', 'onderkant grijs behaard; elzenproppen'],
+  },
   haagbeuk: {
     naam: 'Haagbeuk', vak: [-40, -115, 80, 135],
     blad: () => blad({ lengte: 104, breedte: 58, a: 0.6, b: 1.2, rand: 'dubbel', n: 15, diep: 2, steel: 10, nerven: 12 }),
@@ -348,6 +366,20 @@ export const BOMEN = {
       return uit;
     },
     regels: ['dubbel gezaagd en geplooid blad', 'nootjes aan een blaadje met drie slippen'],
+  },
+  iep: {
+    naam: 'Iep', vak: [-42, -112, 84, 146],
+    blad: () => blad({ lengte: 108, breedte: 64, a: 0.6, b: 1.15, rand: 'dubbel', n: 13, diep: 2.2, hart: [0.28, 0], steel: 6, nerven: 11 }),
+    // round papery wings with the seed in the middle and a small notch at the top, in a bunch
+    vrucht: () => {
+      let uit = '';
+      for (const [x, y, hoek] of [[0, -6, 0], [-16, 0, -30], [16, 0, 30], [-10, 16, -60], [10, 16, 60], [0, 24, 180]]) {
+        uit += `<path d="M0 0 L${x * 0.4} ${y * 0.4}" class="nt-steeltje dun"/>`;
+        uit += g(x, y, hoek, '<path d="M0 -10 C-3 -12 -10 -10 -10 -1 C-10 7 -5 10 0 10 C5 10 10 7 10 -1 C10 -10 3 -12 0 -10Z" class="nt-vleugel"/><ellipse cx="0" cy="0" rx="2.6" ry="3.4" class="nt-zaadje"/>');
+      }
+      return `<path d="M-30 -2 L30 -2" class="nt-tak dun"/>${uit}`;
+    },
+    regels: ['dubbel gezaagd blad met een scheve voet', 'zaadjes in een rond vliesje'],
   },
   paardenkastanje: {
     naam: 'Paardenkastanje', vak: [-110, -130, 220, 175],
@@ -373,6 +405,20 @@ export const BOMEN = {
     blad: () => geveerd({ paren: 6, lengte: 140, hoek: 70, steel: 20, blaadje: { lengte: 46, breedte: 15, a: 0.8, b: 1, rand: 'zaag', n: 10, diep: 1.2, nerven: 0 } }),
     vrucht: () => bessen([[-20, 6], [-10, -2], [0, 8], [12, -2], [22, 6], [-14, 16], [4, 20], [16, 14], [-4, -8], [8, -10], [-24, -6], [26, -6]], 5.2, 'nt-bes-oranje'),
     regels: ['geveerd blad, bladeren om en om', 'trossen oranjerode bessen'],
+  },
+  robinia: {
+    naam: 'Robinia', vak: [-46, -180, 92, 212],
+    // two thorns at the foot of the leaf stalk, then the rounded, entire leaflets
+    blad: () => '<path d="M0 22 L-11 30 L-2 19Z M0 22 L11 30 L2 19Z" class="nt-doorn"/>'
+      + geveerd({ paren: 5, lengte: 140, hoek: 72, steel: 22, blaadje: { lengte: 36, breedte: 22, a: 1, b: 0.65, nerven: 0 } }),
+    vrucht: () => `<path d="M-6 -36 V-24 M-6 -24 L-16 -18 M-6 -24 L6 -18" class="nt-steeltje"/>${g(-16, -18, 12, '<path d="M0 0 C-4 14 -4 40 2 62 C6 64 9 62 9 58 C5 38 6 16 6 2 Z" class="nt-peul"/><path d="M1 12 q-2 6 0 10 M1 28 q-2 6 0 10 M2 44 q-2 6 0 10" class="nt-peulzaad"/>')}${g(6, -18, -10, '<path d="M0 0 C-4 14 -4 36 2 54 C6 56 9 54 9 50 C5 32 6 14 6 2 Z" class="nt-peul"/><path d="M1 12 q-2 6 0 10 M1 28 q-2 6 0 10" class="nt-peulzaad"/>')}`,
+    regels: ['geveerd blad, ronde gave blaadjes; doorns', 'witte bloemtrossen, platte peulen'],
+  },
+  meidoorn: {
+    naam: 'Meidoorn', vak: [-36, -92, 72, 116],
+    blad: () => meidoornBlad(),
+    vrucht: () => `<path d="M-34 -14 L34 -14" class="nt-tak dun"/><path d="M-18 -14 L-24 -26 L-14 -15Z M16 -14 L22 -26 L12 -15Z" class="nt-doorn"/>${g(0, 6, 0, bessen([[-9, 2], [4, -2], [-2, 10], [10, 9], [-12, 14]], 5, 'nt-bes-rood'))}`,
+    regels: ['klein blad met diepe, getande lobben', 'doorns aan de twijg; rode besjes'],
   },
   hulst: {
     naam: 'Hulst', vak: [-40, -100, 80, 118],
@@ -443,10 +489,14 @@ const BOOM_PLAATJES = {
   'boom-schietwilg': () => boomPlaat('schietwilg', { bladX: 120, bladY: 190, vruchtX: 255, vruchtY: 130 }),
   'boom-populier': () => boomPlaat('populier', { bladX: 115, bladY: 160, vruchtX: 265, vruchtY: 90 }),
   'boom-zwarte-els': () => boomPlaat('zwarte-els', { bladX: 115, bladY: 175, vruchtX: 262, vruchtY: 120 }),
+  'boom-grauwe-els': () => boomPlaat('grauwe-els', { bladX: 115, bladY: 185, vruchtX: 262, vruchtY: 140 }),
   'boom-haagbeuk': () => boomPlaat('haagbeuk', { bladX: 115, bladY: 190, vruchtX: 262, vruchtY: 120 }),
+  'boom-iep': () => boomPlaat('iep', { bladX: 115, bladY: 190, vruchtX: 262, vruchtY: 110 }),
   'boom-paardenkastanje': () => boomPlaat('paardenkastanje', { bladX: 125, bladY: 160, vruchtX: 286, vruchtY: 160 }),
   'boom-tamme-kastanje': () => boomPlaat('tamme-kastanje', { bladX: 120, bladY: 200, vruchtX: 262, vruchtY: 115 }),
   'boom-lijsterbes': () => boomPlaat('lijsterbes', { bladX: 110, bladY: 212, vruchtX: 272, vruchtY: 110 }),
+  'boom-robinia': () => boomPlaat('robinia', { bladX: 110, bladY: 190, vruchtX: 270, vruchtY: 100 }),
+  'boom-meidoorn': () => boomPlaat('meidoorn', { bladX: 112, bladY: 178, schaal: 1.45, vruchtX: 262, vruchtY: 110 }),
   'boom-hulst': () => boomPlaat('hulst', { bladX: 120, bladY: 180, vruchtX: 262, vruchtY: 110 }),
   'boom-taxus': () => boomPlaat('taxus', { bladX: 14, bladY: 150, vruchtX: 285, vruchtY: 100 }),
   'boom-gewone-vlier': () => boomPlaat('gewone-vlier', { bladX: 115, bladY: 200, vruchtX: 270, vruchtY: 110 }),
@@ -1203,6 +1253,51 @@ function gipsafdruk() {
   return svg(360, 166, 'Een gipsafdruk maken: zet een ring om de prent, giet er gips in en graaf het na een half uur uit; de prent staat dan bol', uit);
 }
 
+/** A leaf print in soot or carbon, base at (0, 0): a grey leaf, the veins (they press hardest) darker. */
+const bladAfdruk = (x, y, hoek = 0) => g(x, y, hoek, blad({ lengte: 70, breedte: 42, a: 0.7, b: 1, rand: 'dubbel', n: 11, diep: 1.6, steel: 12, nerven: 8, klasse: 'nt-afdruk' })
+  .replace('class="nerf nt-nerf"', 'class="nt-afdruknerf"'));
+/** Rubbing to and fro, as a zigzag with a double arrow. */
+const wrijven = (x, y) => `<path d="M${x - 16} ${y} l6 -6 l6 12 l6 -12 l6 12 l6 -6" class="nt-wrijf"/>`;
+const papier = (x, y, w, h, extra = '') => `<rect x="${x}" y="${y}" width="${w}" height="${h}" rx="2" class="nt-papier${extra}"/>`;
+const bijschrift = (x, kop, sub) => tekst(x, 142, kop, { maat: 10.5, klasse: 'vet' }) + tekst(x, 156, sub, { maat: 10, klasse: 'stil' });
+
+/** A soot print: soot on a tin lid over a candle, the leaf pressed on it, then printed on paper. */
+function roetafdruk() {
+  let uit = '';
+  // 1: a candle under a tin lid, held with pliers; the soot gathers under the lid
+  uit += '<rect x="44" y="84" width="20" height="40" rx="2" class="nt-kaars"/><path d="M54 84 V78" class="lijn dun"/>';
+  uit += '<path d="M54 56 C47 66 48 76 54 79 C60 76 61 66 54 56Z" class="nt-vlam"/><path d="M54 66 C51 71 51 76 54 78 C57 76 57 71 54 66Z" class="nt-vlam-binnen"/>';
+  uit += '<rect x="18" y="40" width="72" height="8" rx="2" class="nt-blik"/><ellipse cx="54" cy="49.5" rx="20" ry="2.6" class="nt-roet"/>';
+  uit += '<path d="M90 44 L110 38 M90 44 L110 50" class="nt-tang"/>';
+  uit += bijschrift(60, '1. roet op een blik', 'boven een kaarsvlam');
+  // 2: the leaf on the soot, rubbed gently
+  uit += '<rect x="128" y="34" width="100" height="78" rx="4" class="nt-blik"/><rect x="138" y="42" width="80" height="62" rx="10" class="nt-roet"/>';
+  uit += g(178, 102, 0, blad({ lengte: 70, breedte: 42, a: 0.7, b: 1, rand: 'dubbel', n: 11, diep: 1.6, steel: 12, nerven: 8 })) + wrijven(178, 64);
+  uit += bijschrift(178, '2. blad op het roet', 'zacht over wrijven');
+  // 3: printed on white paper
+  uit += papier(256, 24, 88, 100) + bladAfdruk(300, 108, 0);
+  uit += bijschrift(300, '3. op wit papier', 'vel erover, wrijven');
+  return svg(360, 166, 'Een roetafdruk maken: houd een blikken deksel boven een kaarsvlam tot er roet op zit, druk het blad op het roet, leg het blad op wit papier en wrijf erover. De nerven drukken het donkerst af.', uit);
+}
+
+/** A carbon print: the leaf rubbed on carbon paper, then printed on white paper. */
+function carbonafdruk() {
+  let uit = '';
+  // 1: carbon paper, the leaf on it veins down, a sheet over it (half folded back) and rubbing
+  uit += '<rect x="10" y="24" width="96" height="96" rx="2" class="nt-carbon"/>';
+  uit += g(58, 108, 0, blad({ lengte: 70, breedte: 42, a: 0.7, b: 1, rand: 'dubbel', n: 11, diep: 1.6, steel: 12, nerven: 8 }));
+  uit += '<path d="M10 24 H70 L54 120 H10Z" class="nt-papier doorzicht"/>' + wrijven(40, 72);
+  uit += bijschrift(58, '1. blad op carbon', 'papier erover, wrijven');
+  // 2: the leaf, carbon side down, on white paper; a sheet over it and rubbing
+  uit += papier(132, 24, 92, 96) + '<path d="M132 24 H192 L176 120 H132Z" class="nt-papier doorzicht"/>';
+  uit += g(178, 108, 0, blad({ lengte: 70, breedte: 42, a: 0.7, b: 1, rand: 'dubbel', n: 11, diep: 1.6, steel: 12, nerven: 8 })) + wrijven(160, 72);
+  uit += bijschrift(178, '2. op wit papier', 'carbon naar beneden');
+  // 3: the print
+  uit += papier(256, 24, 88, 100) + bladAfdruk(300, 108, 0);
+  uit += bijschrift(300, '3. de afdruk', 'met alle nerven');
+  return svg(360, 166, 'Een carbonafdruk maken: leg het blad met de nerven op carbonpapier, papier erover en wrijven; leg het blad dan met de zwarte kant op wit papier, weer een vel erover en wrijven. Dan staat de afdruk op het papier.', uit);
+}
+
 /** Metamorphosis in two rows: frog spawn, tadpole, tadpole with legs, frog; eggs on a leaf, caterpillar, pupa, butterfly. */
 function levenscyclus() {
   const pijl = (x, y) => `<path d="M${x} ${y}h16" class="lijn stil"/><path d="M${x + 11} ${y - 4}l5 4l-5 4" class="lijn stil"/>`;
@@ -1225,7 +1320,7 @@ function levenscyclus() {
   for (let i = 0; i < 7; i++) uit += `<circle cx="${104 + i * 7}" cy="${186 - Math.sin(i * 0.9) * 3}" r="5" class="nt-rups"/>`;
   uit += '<circle cx="152" cy="184" r="5.5" class="nt-rups"/><circle cx="154" cy="182" r="1.2" class="nt-oogje"/>';
   uit += '<path d="M196 158H232" class="nt-tak dun"/><path d="M214 158q-9 10 -6 24q2 10 6 14q4 -4 6 -14q3 -14 -6 -24z" class="nt-pop"/>';
-  uit += '<g transform="translate(300 184)"><path d="M0 -2C-8 -22 -30 -24 -28 -8C-26 2 -10 2 0 -2Z" class="nt-vleugel"/><path d="M0 -2C8 -22 30 -24 28 -8C26 2 10 2 0 -2Z" class="nt-vleugel"/><path d="M0 0C-6 6 -22 18 -18 4Z" class="nt-vleugel"/><path d="M0 0C6 6 22 18 18 4Z" class="nt-vleugel"/><path d="M-27 -12q2 -8 8 -9q-6 6 -8 9zM27 -12q-2 -8 -8 -9q6 6 8 9z" class="nt-vleugelpunt"/><path d="M0 -12V10" class="nt-lijfje"/></g>';
+  uit += '<g transform="translate(300 184)"><path d="M0 -2C-8 -22 -30 -24 -28 -8C-26 2 -10 2 0 -2Z" class="nt-vlindervleugel"/><path d="M0 -2C8 -22 30 -24 28 -8C26 2 10 2 0 -2Z" class="nt-vlindervleugel"/><path d="M0 0C-6 6 -22 18 -18 4Z" class="nt-vlindervleugel"/><path d="M0 0C6 6 22 18 18 4Z" class="nt-vlindervleugel"/><path d="M-27 -12q2 -8 8 -9q-6 6 -8 9zM27 -12q-2 -8 -8 -9q6 6 8 9z" class="nt-vleugelpunt"/><path d="M0 -12V10" class="nt-lijfje"/></g>';
   [72, 166, 240].forEach((x) => { uit += pijl(x, 184); });
   [['eitjes', 42], ['rups', 128], ['pop', 214], ['vlinder', 300]].forEach(([t, x]) => { uit += tekst(x, 226, t, { maat: 11 }); });
   return svg(340, 236, 'Gedaanteverwisseling. Kikker: kikkerdril, kikkervisje, kikkervisje met pootjes, kikker. Vlinder: eitjes op een blad, rups, pop, vlinder', uit);
@@ -1252,6 +1347,8 @@ export default {
   uitwerpselen,
   braakbal,
   gipsafdruk,
+  roetafdruk,
+  carbonafdruk,
   vraatsporen,
   tuinvogels,
   'vogels-kijken': vogelsKijken,

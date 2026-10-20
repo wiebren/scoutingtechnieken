@@ -1,6 +1,6 @@
 // Drawings for gereedschap. See ../plaatjes.js and ./basis.js; the parts and the colours (vk-*) come from ./vuur.js
 // and ./vuur.css. The bloedcirkel is in ../plaatjes.js.
-import { svg, tekst } from './basis.js';
+import { pol, svg, tekst } from './basis.js';
 import { blok, fout, goed, grond, kop, label, pijl } from './vuur.js';
 
 /** A simple mitten of a hand, its palm at (x, y), turned by `hoek` degrees. */
@@ -169,7 +169,8 @@ function kloven() {
   return svg(320, 230, 'Kloven: het blok staat rechtop op een hakblok, en de bijl komt in het midden of langs een scheur op de kopse kant', uit);
 }
 
-/** Five axes side by side, roughly to scale: from the hand axe to the splitting axe. */
+/** Four axes side by side, roughly to scale: from the hand axe to the splitting axe. The axes for chopping have a
+ *  curved handle (a bokkenpoot), the splitting axe a straight one. */
 function soortenBijlen() {
   const voet = 214;
   const bijl = (x, lang, { krom = false, zwaar = false } = {}) => {
@@ -182,11 +183,11 @@ function soortenBijlen() {
     return s;
   };
   let uit = `<path d="M0 ${voet}H360" class="lijn dun stil"/>`;
-  uit += bijl(50, 70) + bijl(118, 120) + bijl(186, 180, { krom: true }) + bijl(254, 180) + bijl(322, 160, { zwaar: true });
-  const naam = [[38, 'handbijl'], [106, 'driekwart'], [174, 'aks'], [242, 'velbijl'], [312, 'kloofbijl']];
+  uit += bijl(60, 76, { krom: true }) + bijl(146, 126, { krom: true }) + bijl(232, 180, { krom: true }) + bijl(318, 168, { zwaar: true });
+  const naam = [[48, 'handbijl'], [134, 'driekwart'], [220, 'aks'], [308, 'kloofbijl']];
   for (const [x, n] of naam) uit += tekst(x, voet + 18, n, { maat: 11 });
-  uit += tekst(106, voet + 31, 'bijl', { maat: 11 });
-  return svg(360, 252, 'Vijf soorten bijlen naast elkaar, ongeveer op schaal: een korte handbijl, een driekwart bijl, een aks met een gebogen steel, een velbijl met een rechte steel, en een kloofbijl met een zware kop', uit);
+  uit += tekst(134, voet + 31, 'bijl', { maat: 11 });
+  return svg(360, 252, 'Vier soorten bijlen naast elkaar, ongeveer op schaal: een korte handbijl, een driekwart bijl en een lange aks, alle drie met een gebogen steel, en een kloofbijl met een zware kop op een rechte steel', uit);
 }
 
 /** Four saws: fret saw, bow saw, folding saw and pull saw. */
@@ -358,6 +359,127 @@ function bijlWiggen() {
   return svg(320, 192, 'Een nieuwe steel in een bijl, van bovenaf gezien: het eind van de steel zit in het oog van de kop, met een houten wig in de lengte van het oog en een stalen wig schuin eroverheen', uit);
 }
 
+/** Bomen vellen: the fall zone from above, and under it the notch from the side. */
+function bomenVellen() {
+  const binnen = (s, x, y) => s.replace(/^<svg class="plaatje" viewBox="0 0 (\d+) (\d+)" role="img" aria-label="([^"]*)" xmlns="[^"]*">/,
+    (_, w, h) => `<svg x="${x}" y="${y}" width="${w}" height="${h}" viewBox="0 0 ${w} ${h}">`);
+  return svg(380, 524, 'Bomen vellen. Boven: van bovenaf gezien, een pijl wijst de valrichting aan, gestippeld de plek waar de boom zal liggen; de vluchtwegen gaan schuin naar achteren; kijkers blijven buiten een cirkel van twee boomlengtes. Onder: omzagen met een valkerf, van opzij: eerst een wig uit de stam aan de kant waar hij heen moet vallen, een vijfde tot een derde van de dikte diep; dan de velsnede aan de andere kant, iets hoger en niet helemaal door; het hout ertussen, de breuklijst, werkt als een scharnier',
+    binnen(valzone(), 20, 0) + `<path d="M20 284H360" class="lijn haar"/>` + binnen(valkerf(), 0, 292));
+}
+
+/** Felling, from above: the fall direction, the tree where it will lie, the escape routes diagonally back, and a
+ *  circle of two tree lengths that nobody else comes into. */
+function valzone() {
+  const [bx, by, L] = [130, 132, 60];
+  let uit = `<circle cx="${bx}" cy="${by}" r="${2 * L}" fill="none" class="lijn rood-lijn" stroke-dasharray="6 5"/>`;
+  // where the tree will lie: the trunk and the crown, dashed
+  uit += `<path d="M${bx + 8} ${by - 3}H${bx + L - 14}M${bx + 8} ${by + 3}H${bx + L - 14}" class="lijn dun stil" stroke-dasharray="3 3"/>`;
+  uit += `<ellipse cx="${bx + L - 2}" cy="${by}" rx="16" ry="20" class="accent-licht" opacity="0.5"/>`;
+  uit += `<ellipse cx="${bx + L - 2}" cy="${by}" rx="16" ry="20" fill="none" class="lijn dun stil" stroke-dasharray="3 3"/>`;
+  uit += kop(bx, by, 9);
+  uit += pijl(bx + 6, by - 34, bx + L + 6, by - 34, { warm: true }) + tekst(bx + 36, by - 42, 'valrichting', { maat: 10.5 });
+  // the escape routes: diagonally back, away from the fall direction
+  uit += pijl(bx - 10, by - 10, bx - 50, by - 50) + pijl(bx - 10, by + 10, bx - 50, by + 50);
+  uit += tekst(bx - 30, by - 60, 'vluchtweg', { maat: 10.5 }) + tekst(bx - 30, by + 68, 'vluchtweg', { maat: 10.5 });
+  // one tree length, measured along the fallen tree
+  uit += `<path d="M${bx} ${by + 30}V${by + 38}M${bx + L} ${by + 30}V${by + 38}M${bx} ${by + 34}H${bx + L}" class="lijn dun"/>`;
+  uit += tekst(bx + L / 2, by + 50, '1 boomlengte', { maat: 10 });
+  // onlookers outside the circle
+  for (const [x, y] of [[292, 40], [306, 48], [296, 58]]) uit += `<circle cx="${x}" cy="${y}" r="5" class="vol"/>`;
+  uit += tekst(300, 80, 'kijkers', { maat: 10.5 });
+  uit += tekst(170, 274, 'niemand binnen twee boomlengtes', { maat: 10.5, klasse: 'stil' });
+  return svg(340, 282, 'Een boom vellen, van bovenaf gezien: een pijl wijst de valrichting aan, gestippeld de plek waar de boom zal liggen. De vluchtwegen gaan schuin naar achteren, van de valrichting af. Een rode cirkel van twee boomlengtes rond de boom: kijkers blijven daarbuiten', uit);
+}
+
+/** Felling with a notch, from the side: the notch on the side it must fall to, the back cut a little higher on the
+ *  other side, and the hinge of wood left between them. */
+function valkerf() {
+  const voet = 214;
+  const [x1, x2] = [150, 250]; // the trunk, 100 wide
+  const [kerfOnder, kerfBoven, diep] = [176, 140, 25]; // a quarter of the diameter deep
+  const vel = kerfOnder - 5; // the back cut, a little higher than the floor of the notch
+  const lijst = x1 + diep + 10; // the hinge: a tenth of the diameter
+  let uit = grond(voet, 380);
+  uit += `<path d="M${x1} 0H${x2}V${voet}H${x1}V${kerfOnder}H${x1 + diep}L${x1} ${kerfBoven}Z" class="vk-hout-vol"/>`;
+  uit += `<path d="M${x1} ${kerfOnder}H${x1 + diep}L${x1} ${kerfBoven}Z" fill="none" class="lijn dun stil" stroke-dasharray="3 3"/>`;
+  uit += `<path d="M${x2} ${vel}H${lijst}" style="stroke: var(--vk-gat)" stroke-width="2.6"/>`;
+  uit += pijl(136, 40, 72, 96, { warm: true }) + tekst(60, 32, 'valrichting', { maat: 10.5, anker: 'start' });
+  uit += tekst(x1 - 8, kerfOnder + 6, '1', { maat: 13, klasse: 'vet', anker: 'end' }) + tekst(x2 + 8, vel + 20, '2', { maat: 13, klasse: 'vet', anker: 'start' });
+  uit += label(124, 132, 'valkerf', x1 + 8, kerfOnder - 10, 'end') + tekst(124, 146, '1/5 tot 1/3 diep', { maat: 10.5, anker: 'end' });
+  uit += label(262, 140, 'velsnede: iets hoger,', x2 - 6, vel - 2, 'start') + tekst(262, 154, 'niet helemaal door', { maat: 10.5, anker: 'start' });
+  uit += label(136, 204, 'breuklijst: het scharnier', x1 + diep + 5, kerfOnder - 2, 'end');
+  return svg(380, 232, 'Omzagen met een valkerf, van opzij: eerst een wig uit de stam aan de kant waar hij heen moet vallen, een vijfde tot een derde van de dikte diep. Dan de velsnede aan de andere kant, iets hoger, en niet helemaal door. Het hout dat ertussen blijft staan, de breuklijst, werkt als een scharnier', uit);
+}
+
+/** Chopping down a thin tree: a low V on the side it must fall to, then a V a little higher on the other side. */
+function omhakken() {
+  const voet = 214;
+  const [x1, x2] = [150, 180];
+  let uit = grond(voet, 320);
+  uit += `<ellipse cx="${(x1 + x2) / 2}" cy="54" rx="56" ry="44" class="accent-licht"/>`;
+  uit += `<path d="M${x1 + 4} 70H${x2 - 4}V150L${x2 - 12} 162L${x2} 174V${voet}H${x1}V184L${x1 + 10} 172L${x1} 160V96Z" class="vk-hout-vol"/>`;
+  uit += pijl(110, 86, 60, 126, { warm: true }) + tekst(70, 76, 'valrichting', { maat: 10.5 });
+  uit += label(136, 190, '1 laag, aan de valkant', x1 + 3, 172, 'end');
+  uit += label(196, 136, '2 iets hoger,', x2 - 4, 162, 'start') + tekst(196, 150, 'aan de andere kant', { maat: 10.5, anker: 'start' });
+  uit += tekst(160, 240, 'niet rondom de stam hakken', { maat: 10.5, klasse: 'stil' });
+  return svg(320, 248, 'Een dun boompje omhakken: eerst een lage V aan de kant waar het heen moet vallen, dan een V iets hoger aan de andere kant, tot het valt. Je hakt niet rondom de stam', uit);
+}
+
+/** Grubbing out a tree, from above: the pit round it, the roots cut in order: first the fall side, then the back,
+ *  last the two heavy roots across the fall direction. */
+function rooien() {
+  const [cx, cy] = [170, 144];
+  let uit = `<circle cx="${cx}" cy="${cy}" r="88" class="vk-grond"/><circle cx="${cx}" cy="${cy}" r="88" fill="none" class="lijn dun stil" stroke-dasharray="5 4"/>`;
+  const wortels = [[-35, 8, 1], [35, 8, 1], [145, 8, 2], [215, 8, 2], [92, 13, 3], [268, 13, 3]];
+  for (const [g, d] of wortels) {
+    const [ax, ay] = pol(cx, cy, 20, g); const [bx, by] = pol(cx, cy, 80, g);
+    uit += blok(ax, ay, bx, by, d);
+  }
+  uit += kop(cx, cy, 24);
+  for (const [g, , n] of wortels) {
+    const [x, y] = pol(cx, cy, 56, g);
+    uit += `<circle cx="${x}" cy="${y}" r="9" class="vlak" stroke="var(--inkt)" stroke-width="1.2"/>` + tekst(x, y + 4, String(n), { maat: 11, klasse: 'vet' });
+  }
+  uit += pijl(cx, 50, cx, 12, { warm: true }) + tekst(cx + 10, 30, 'valrichting', { maat: 10.5, anker: 'start' });
+  uit += label(276, 112, 'trekwortels', 252, 140, 'start') + label(52, 112, 'kuil', 92, 128, 'end');
+  uit += tekst(cx, 254, '1 valkant · 2 achterkant · 3 trekwortels als laatste', { maat: 10.5 });
+  return svg(340, 262, 'Een boom rooien, van bovenaf gezien: een ruime kuil rond de stam, zodat je de wortels ziet. Eerst hak je de wortels aan de valkant door (1), dan die aan de achterkant (2), en als laatste de twee dikke trekwortels die dwars op de valrichting staan (3)', uit);
+}
+
+/** Taking the side branches off a felled tree: from the foot to the top, each one flush with the trunk. */
+function uitsnoeien() {
+  let uit = `<path d="M24 76L304 92V104L24 120Z" class="vk-hout-vol"/><ellipse cx="24" cy="98" rx="6" ry="22" class="vk-kop"/>`;
+  for (const x of [80, 128, 172]) uit += `<ellipse cx="${x}" cy="${80 + x * 0.057}" rx="7" ry="3" class="vk-kop"/>`;
+  uit += blok(214, 88, 250, 44, 6) + blok(244, 102, 282, 140, 5) + blok(272, 92, 312, 60, 4) + blok(196, 104, 226, 138, 6);
+  uit += label(108, 40, 'glad langs de stam', 128, 84, 'middle');
+  uit += tekst(24, 142, 'voet', { maat: 10.5 }) + tekst(318, 100, 'top', { maat: 10.5, anker: 'start' });
+  uit += pijl(50, 162, 280, 162) + tekst(165, 182, 'van de voet naar de top', { maat: 10.5 });
+  return svg(340, 190, 'Een gevelde stam uitsnoeien: je werkt van de voet naar de top en hakt elke zijtak glad langs de stam af; de takken staan schuin naar de top', uit);
+}
+
+/** A billhook: a short handle and a broad blade with a hooked tip, the edge along the inside. */
+function hiep() {
+  let uit = `<rect x="20" y="82" width="96" height="20" rx="8" class="vk-hout-vol"/><rect x="112" y="80" width="14" height="24" rx="2" class="vk-metaal"/>`;
+  uit += `<path d="M126 78L250 66Q292 64 286 110Q282 126 266 128Q276 110 262 104Q252 100 244 108L126 106Z" class="vk-staal"/>`;
+  uit += `<path d="M126 106L244 108Q252 100 262 104Q276 110 266 128" class="vk-snede"/>`;
+  uit += label(70, 136, 'handvat', 60, 102, 'start') + label(150, 46, 'breed blad', 176, 76, 'end');
+  uit += label(300, 50, 'kromme punt', 284, 82, 'end') + label(206, 142, 'snede', 196, 108, 'start');
+  return svg(320, 150, 'Een hiep: een kort houten handvat en een breed stalen blad met een kromme punt; de snede loopt langs de onderkant en de binnenkant van de punt', uit);
+}
+
+/** Peeling a pine trunk with a barking spade: push it under the bark, from the foot to the top. */
+function schilschop() {
+  let uit = `<path d="M20 110H178V140H20Z" class="vk-kop"/><path d="M178 110H320V140H178Z" class="vk-hout-vol"/>`;
+  for (const x of [198, 222, 294, 312]) uit += `<path d="M${x} 114l-6 10l4 12" class="vk-hout-rand" stroke-width="1.2" fill="none"/>`;
+  uit += `<path d="M190 106q6 -14 18 -10q4 4 -4 8" fill="none" class="vk-hout-rand" stroke-width="3" stroke-linecap="round"/>`;
+  uit += blok(36, 52, 160, 102, 7);
+  uit += `<g transform="translate(160 102) rotate(22)"><path d="M0 -7L32 -11V11L0 7Z" class="vk-staal"/><path d="M32 -11V11" class="vk-snede"/></g>`;
+  uit += label(60, 30, 'steel van 1 tot 1,3 m', 80, 66, 'start') + label(230, 70, 'schilschop', 182, 104, 'start');
+  uit += tekst(98, 130, 'geschild', { maat: 10.5 }) + tekst(250, 130, 'schors', { maat: 10.5 });
+  uit += pijl(40, 160, 290, 160) + tekst(165, 180, 'van de voet naar de top', { maat: 10.5 });
+  return svg(340, 188, 'Naaldhout schillen met een schilschop: de schop met de scherpe kant voorop duw je onder de schors, van de voet van de stam naar de top. Links het geschilde deel, rechts nog de schors', uit);
+}
+
 export default {
   zakmes,
   'mes-doorgeven': mesDoorgeven,
@@ -379,4 +501,10 @@ export default {
   'tentharing-snijden': tentharing,
   snijgrepen,
   'bijl-wiggen': bijlWiggen,
+  'bomen-vellen': bomenVellen,
+  omhakken,
+  rooien,
+  uitsnoeien,
+  hiep,
+  schilschop,
 };

@@ -141,6 +141,10 @@ export const OUDE_SLEUTELS = {
   'veilig-gezond-2-deur-openen': 'deur-bij-brand', // Bij brand veilig een deur openen om te kijken of er nog iemand in d…
   'veilig-gezond-3-brand-in-huis': 'brand-in-huis', // De meest voorkomende oorzaken van brand in huis, en hoe je ze voork…
   'veilig-gezond-3-stoffen': 'brandbaarheid-stoffen', // Uitzoeken en laten zien hoe goed stoffen als wol, katoen, polyester…
+  // 2026-10-20: the EHBO lines of Veilig & Gezond 3 that a blad now covers
+  'veilig-gezond-3-verbanden': 'verbanden', // Een vingerverband, een drukverband en een snelverband aanleggen.
+  'veilig-gezond-3-rautekgreep': 'verplaatsen', // Iemand in nood verplaatsen met de Rautekgreep.
+  'veilig-gezond-3-stabiele-zijligging': 'stabiele-zijligging', // Iemand in de stabiele zijligging leggen.
 };
 
 /** The keys a stored tick stands for now: the map followed to the end; a key that is not in it stays as it is. */

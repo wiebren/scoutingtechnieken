@@ -60,7 +60,7 @@ export const QUIZ = {
     { vraag: 'Bij welke brander zie je de vlam overdag bijna niet?', keuzes: ['Spiritusbrander', 'Houtbrander', 'Tablettenbrander', 'Kampvuur'], uitleg: 'Een spiritusvlam is bij daglicht bijna onzichtbaar. Pas op dat je je niet brandt.' },
     { vraag: 'Mag je in je slaaptent koken op een brander?', keuzes: ['Nee, nooit: koolmonoxide', 'Ja, met de rits open', 'Ja, als het regent', 'Alleen met gas'], uitleg: 'Koolmonoxide ruik je niet, en het kan je doden.' },
     { vraag: 'Je ruikt gas. Hoe vind je het lek?', keuzes: ['Met een kwastje met afwasmiddel: waar het belletjes blaast', 'Met een aansteker', 'Door er met je neus vlakbij te gaan', 'Je hoort het altijd sissen'], uitleg: 'Nooit met een vlam zoeken.' },
-    { vraag: 'Hoe oud mag een wegwerpgasbusje hooguit zijn?', keuzes: ['Drie jaar', 'Tien jaar', 'Maakt niet uit', 'Een maand'], uitleg: 'Zo zegt de brandweer het.' },
+    { vraag: 'Hoe oud mag een wegwerpgasbusje hooguit zijn?', keuzes: ['Drie jaar', 'Tien jaar', 'Maakt niet uit', 'Een maand'], uitleg: 'Gebruik geen wegwerpgasbusjes die ouder zijn dan drie jaar.' },
     { vraag: 'Wanneer vul je een brander bij?', keuzes: ['Als hij uit en afgekoeld is', 'Terwijl hij nog brandt', 'Als hij nog warm is, dat gaat sneller', 'Boven de vlam van een ander'], uitleg: 'Brandstof bij een vlam of een hete brander kan in één keer vlam vatten.' },
   ],
   grepen: [

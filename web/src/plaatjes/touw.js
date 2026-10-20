@@ -910,17 +910,27 @@ export const TEKENINGEN = {
       labels: [{ t: 'oog', x: 316, y: 78, anker: 'end' }, { t: 'staand part', x: 6, y: 130, anker: 'start' }],
     };
   })(),
-  // Tonsteek, as the barrel hitch: the barrel stands on the rope; the half knot on top is opened, so that one half
-  // goes round the front of the barrel and the other round the back; the two ends go up to the hook.
-  'touw-tonsteek': {
-    w: 320, h: 214, titel: 'Tonsteek (barrel hitch): de ton staat op het touw, het touw gaat om de ton heen, en beide einden gaan naar de haak.',
-    strengen: [
-      { p: [[160, 54], [160, 206]], soort: 'ton', dik: 120 },
-      { p: [[154, 4, 0.5], [130, 40, 0.5], [100, 74, 0.5], [96, 86, 0], [110, 92, -1], [210, 104, -1], [226, 112, 0], [228, 150, 0.3], [226, 196, 0], [212, 204, -1],
-        [110, 204, -1], [94, 196, 0], [92, 150, 0.3], [94, 108, 0.6], [104, 100, 1], [160, 98, 1], [216, 98, 1], [226, 92, 0.6], [222, 70, 0.5], [190, 36, 0.5],
-        [166, 4, 0.5]], dik: 10 },
-    ],
-    labels: [{ t: 'naar de haak', x: 176, y: 14, anker: 'start' }, { t: 'ton', x: 270, y: 160, naar: [222, 160] }],
+  // Tonsteek, as the Handboek Scouting technieken (Vianney 2008, §2.3.16) has it: the barrel stands on the rope; the
+  // overhand knot on top is opened, so that one half goes round the front of the barrel and the other round the back;
+  // above the barrel the end is tied to the standing part with a paalsteek, whose loop is the rope round the barrel.
+  // The paalsteek is the knot part of touw-paalsteek, smaller.
+  'touw-tonsteek': () => {
+    const ps = TEKENINGEN['touw-paalsteek'].strengen[0].p;
+    const klein = (pts) => zet(pts, [0.55, 0, 86, 0, 0.55, 4]);
+    const uit = ps.findIndex(([x, y]) => x === 200 && y === 128);   // where the loop leaves the knot, on the right
+    const terug = ps.findIndex(([x, y]) => x === 96 && y === 172);  // where it comes back into it, on the left
+    // the rope round the barrel, from the right leg to the left one (the barrel stands from y 130 to 282)
+    const ton = [[196, 112, 0], [214, 150, 0.5], [222, 164, 0.6], [216, 174, 1], [160, 174, 1], [104, 176, 1], [94, 184, 0.6], [92, 226, 0.3], [94, 272, 0],
+      [110, 280, -1], [212, 280, -1], [226, 272, 0], [228, 226, 0.3], [226, 188, 0], [210, 180, -1], [110, 168, -1], [96, 162, 0], [100, 150, 0.5], [130, 124, 0.5]];
+    return knoop({
+      w: 320, h: 290, titel: 'Tonsteek: de ton staat op het touw, het touw gaat om de ton heen, en boven de ton is het eind met een paalsteek aan het staande part geknoopt.',
+      strengen: [
+        { p: [[160, 130], [160, 282]], soort: 'ton', dik: 120 },
+        { p: [...klein(ps.slice(0, uit + 1)), ...ton, ...klein(ps.slice(terug))], dik: 7, begin: 'staand', eind: 'eind' },
+      ],
+      labels: [{ t: 'naar de haak', x: 160, y: 12, anker: 'start' }, { t: 'paalsteek', x: 250, y: 70, anker: 'start', naar: [196, 62] },
+        { t: 'ton', x: 270, y: 236, naar: [222, 236] }],
+    });
   },
   // Turkse knoop: a 3-lead, 4-bight Turk's head laid flat: one rope, over and under in turn all the way round.
   'touw-turkse-knoop': {
@@ -1133,6 +1143,229 @@ export const TEKENINGEN = {
     ],
     labels: platLabels,
   },
+
+  // ---- knots from the Handboek Scouting technieken (Vianney 2008, §2.3.13-2.3.19, §2.7.3, §2.8, §2.9) ----
+
+  // Gareelsteek (artillery loop, ABOK #1050), as the book's last figure has it (§2.3.17), drawn anew: from the lower
+  // end up, the rope goes under the curl and over the upper part, up the right-hand column under both legs of the loop,
+  // over the top as a small loop that lies over the upper part, out to the right as the loop (under the upper part,
+  // over the column, back the same way), round the curl at the bottom, and up as the upper part.
+  'touw-gareelsteek': {
+    w: 290, h: 244, titel: 'Gareelsteek: een vaste lus midden in het touw, die opzij uitsteekt. Het touw loopt van onder naar boven; de lus steekt naar rechts.',
+    strengen: [{ p: [[110, 242, 0], [112, 210, -1], [116, 192, -1], [124, 176, 0], [140, 165, 1], [158, 154, 0.5], [170, 142, 0], [172, 128, -1],
+      [172, 100, -1], [172, 75, -1], [170, 54, 0], [162, 40, 0.5], [150, 33, 1], [140, 32, 1], [124, 33, 0.5], [108, 40, 0], [101, 54, 0], [108, 68, 0],
+      [124, 75, -1], [140, 76, -1], [156, 76, 0], [172, 76, 1], [192, 76, 1], [222, 77, 0], [246, 86, 0], [256, 102, 0], [246, 118, 0], [222, 127, 0],
+      [192, 128, 1], [172, 128, 1], [156, 128, 0], [140, 128, -1], [122, 130, -0.5], [104, 136, 0], [90, 152, 0], [88, 172, 0.5], [98, 188, 1],
+      [114, 194, 1], [128, 191, 0.5], [138, 181, 0], [140, 172, -1], [140, 165, -1], [140, 150, 0], [140, 128, 1], [140, 100, 0.5], [140, 76, 1],
+      [140, 54, 0], [140, 32, -1], [140, 16, 0], [140, 2, 0]], dik: 10, begin: 'staand', eind: 'staand' }],
+    labels: [{ t: 'lus', x: 282, y: 106, anker: 'end' }],
+  },
+  // Treksteek (highwayman's hitch, as §2.3.13 tells it): bight 1 behind the branch, hanging over the front; bight 2
+  // of the load end pushed up through it; bight 3 of the other end pushed up through bight 2. Bight 1 lies over the
+  // legs of 2, the legs of 3 over bight 1, and bight 2 over the legs of 3. A pull on the end of 3 frees it all.
+  'touw-treksteek': {
+    w: 300, h: 240, titel: 'Treksteek: drie bochten boven de tak. Bocht 1 ligt om de tak, bocht 2 zit door bocht 1, bocht 3 zit door bocht 2. Aan het ene eind hangt de last; trek je aan het andere eind, dan schiet alles los.',
+    strengen: [paal(124, 8, 292, 26), { p: [
+      [135, 238, 1.5], [135, 190, 1.5], [135, 156, 1.5], [135, 124, 1], [135, 96, 0], [135, 74, -0.5], [136, 56, -0.2], [142, 44, 0.5], [160, 37, 0.5],
+      [178, 44, 0.5], [184, 56, -0.2], [185, 74, -0.5], [185, 96, 0], [185, 124, 1], [187, 146, 0.5], [196, 156, 0], [207, 150, -0.5], [210, 124, -1],
+      [210, 100, -0.3], [206, 84, 0], [196, 76, 0.5], [185, 74, 0.5], [170, 74, 0.5], [150, 74, 0.5], [135, 74, 0.5], [122, 77, 0.3], [113, 86, 0],
+      [110, 100, -0.3], [110, 124, -1], [112, 146, -0.5], [120, 156, 0], [135, 158, 0.5], [146, 152, 0.8], [150, 136, 1], [150, 124, 1], [150, 96, 1],
+      [150, 74, 1], [150, 56, 0], [150, 40, -0.5], [151, 22, 0], [160, 12, 0], [169, 22, 0], [170, 40, -0.5], [170, 56, 0], [170, 74, 1], [170, 96, 1],
+      [170, 124, 1], [170, 170, 1], [170, 222, 1]], dik: 9, begin: 'staand', eind: 'eind' }],
+    labels: [{ t: '1', x: 222, y: 82, anker: 'start' }, { t: '2', x: 194, y: 42, anker: 'start' }, { t: '3', x: 180, y: 16, anker: 'start' },
+      { t: 'last', x: 126, y: 230, anker: 'end' }, { t: 'trek: los', x: 180, y: 216, anker: 'start' }, { t: 'tak', x: 286, y: 108, anker: 'end' }],
+  },
+  // Zitsteek (fireman's chair knot, §2.3.14): two loops laid half over each other, the left part of the right loop
+  // pulled left through the left loop and the right part of the left loop right through the right loop (a handcuff
+  // knot), drawn flat, the loops pulled long. Then each end makes a half hitch round the neck of the loop on its side,
+  // as in the trompetsteek. The central crossings are those of the book's figure, worked out strand by strand.
+  'touw-zitsteek': {
+    w: 320, h: 182, titel: 'Zitsteek: twee lussen naast elkaar, in het midden de knoop, en om de hals van elke lus een halve steek met het eind aan die kant.',
+    strengen: [{ p: [[4, 20, 0], [22, 28, 0], [42, 40, 0.5], [64, 60, 1], [76, 74, 0.5], [79, 88, -1], [79, 116, -1], [77, 132, -0.5], [70, 142, 0],
+      [58, 142, 0], [51, 132, 0.5], [49, 116, 1], [49, 88, 1], [52, 74, 0.5], [64, 60, -1], [80, 46, 0], [100, 38, 0], [120, 40, 0.5], [138, 52, 1],
+      [150, 66, 0], [160, 80, -1], [172, 87, 0], [190, 88, 0.5], [216, 88, 1], [250, 88, 0.3], [286, 88, 0], [302, 92, 0], [308, 102, 0], [302, 112, 0],
+      [286, 116, 0], [250, 116, 0.3], [216, 116, 1], [190, 116, 0], [172, 119, 0], [160, 124, -1], [140, 130, 0], [118, 130, 0.5], [106, 124, 0.8],
+      [104, 116, 1], [104, 88, 1], [106, 72, 0.5], [118, 58, 0], [138, 52, -1], [160, 52, 0], [182, 52, 1], [204, 58, 0.5], [214, 72, 0], [216, 88, -1],
+      [216, 116, -1], [214, 124, -0.5], [202, 130, 0], [180, 130, 0.5], [160, 124, 1], [148, 119, 0], [136, 116, -0.5], [104, 116, -1], [79, 116, 0],
+      [34, 116, 0], [18, 112, 0], [12, 102, 0], [18, 92, 0], [34, 88, 0], [79, 88, 0], [104, 88, -1], [130, 88, -0.5], [148, 86, 0], [160, 80, 1],
+      [170, 70, 0], [182, 52, -1], [196, 42, 0], [220, 38, 0], [240, 46, 0], [256, 60, -1], [268, 74, 0.5], [271, 88, 1], [271, 116, 1], [269, 132, 0.5],
+      [262, 142, 0], [250, 142, 0], [243, 132, -0.5], [241, 116, -1], [241, 88, -1], [244, 74, 0.5], [256, 60, 1], [278, 40, 0.5], [298, 28, 0],
+      [316, 20, 0]], dik: 8, begin: 'staand', eind: 'eind' }],
+    labels: [{ t: 'lus', x: 8, y: 80, anker: 'start' }, { t: 'lus', x: 312, y: 80, anker: 'end' }, { t: 'halve steek', x: 40, y: 172, anker: 'start', naar: [62, 146] },
+      { t: 'halve steek', x: 280, y: 172, anker: 'end', naar: [258, 146] }],
+  },
+  // Topreepsteek (§2.3.15): two overhand knots in the line, a little apart; the end goes round the peg and back up,
+  // through the knot farthest from it and then through the other, over and under the knots' parts in turn. Each
+  // knot is an open trefoil (enkeleKnoop).
+  'touw-topreepsteek': () => {
+    const L = 92;
+    const hoofd = [[L, 2, 0], [L, 26, 0], [L + 2, 40, 0], ...enkeleKnoop(132, 70), [L + 2, 100, 0], [L, 112, 0], [L + 2, 122, 0], ...enkeleKnoop(132, 152),
+      [L + 2, 182, 0], [L, 196, 0], [L + 2, 216, 0], [112, 230, -0.5], [150, 234, -1], [186, 230, -0.5], [206, 212, 0], [214, 160, 0], [214, 60, 0],
+      [206, 26, 0], [186, 12, 0], [164, 12, 0], [146, 18, 0], [138, 26, 0], [136, 34, 0]];
+    // the end straight down through both knots: over, under, over, under where it crosses their parts
+    const eind = [];
+    [39, 59, 81, 101, 121, 141, 163, 183].forEach((y, i) => eind.push([136, y, i % 2 ? -2 : 2], [136, y + 10, 0]));
+    return knoop({
+      w: 280, h: 252, titel: 'Topreepsteek: twee enkele knopen in de lijn. Het eind gaat om de haring en terug omhoog, eerst door de bovenste knoop en dan door de onderste.',
+      voor: '<path d="M4 242H276" class="lijn stil"/>',
+      strengen: [{ p: [[150, 214], [150, 252]], soort: 'paal', dik: 10 }, { p: [...hoofd, ...eind.slice(0, -1), [136, 204, 0]], dik: 8, begin: 'staand', eind: 'eind' }],
+      labels: [{ t: 'naar de tent', x: 84, y: 14, anker: 'end' }, { t: 'enkele knopen', x: 6, y: 112, anker: 'start' }, { t: 'eind', x: 128, y: 206, anker: 'end' },
+        { t: 'haring', x: 162, y: 248, anker: 'start' }],
+    });
+  },
+  // Bootsmanstoeltje (§2.3.18) in the book's steps, the plank a little from above. Where the rope goes behind or under
+  // the plank it ends in a round cap; what hangs down behind is drawn before the plank. 1: three turns, the first is
+  // laid over the second; 2: the second turn is lifted over the end of the plank; 3: done, the second turn binds the
+  // other two along both edges and the end is tied round the standing part with a paalsteek (the knot part of
+  // touw-paalsteek, small, as in touw-tonsteek); 4: one at each end of the plank, and you sit between them.
+  'touw-bootsmanstoeltje': () => {
+    const ps = TEKENINGEN['touw-paalsteek'].strengen[0].p;
+    const uit = ps.findIndex(([x, y]) => x === 200 && y === 128);   // where the loop leaves the knot, on the right
+    const terug = ps.findIndex(([x, y]) => x === 96 && y === 172);  // where it comes back into it, on the left
+    const plank = (x1, x2, y, [dx, dy] = [26, 22], dik = 12) => `<path d="M${x1} ${y}L${x2} ${y}L${x2 + dx} ${y - dy}L${x1 + dx} ${y - dy}Z" class="tw-hout-licht"/>`
+      + `<path d="M${x1} ${y}L${x2} ${y}L${x2} ${y + dik}L${x1} ${y + dik}Z" class="tw-hout"/><path d="M${x2} ${y}L${x2 + dx} ${y - dy}L${x2 + dx} ${y - dy + dik}L${x2} ${y + dik}Z" class="tw-hout"/>`;
+    // a turn as you see it: up the front of the plank and diagonally over the top to the back edge
+    const slag = (a, z = 0) => ({ p: [[a, 124, z], [a, 112, z], [a + 4, 107, z], [a + 22, 91, z], [a + 26, 87, z]], dik: 7 });
+    const nr = (x, y, t) => tekst(x, y, t, { maat: 11 });
+    // a curved arrow from a to b, bending towards c
+    const boog = ([ax, ay], [cx, cy], [bx, by]) => {
+      const l = Math.hypot(bx - cx, by - cy); const ux = (bx - cx) / l; const uy = (by - cy) / l;
+      return `<path d="M${ax} ${ay}Q${cx} ${cy} ${r1(bx - ux * 4)} ${r1(by - uy * 4)}" class="tw-pijl"/>`
+        + `<path d="M${r1(bx - ux * 8 - uy * 4.5)} ${r1(by - uy * 8 + ux * 4.5)}L${bx} ${by}L${r1(bx - ux * 8 + uy * 4.5)} ${r1(by - uy * 8 - ux * 4.5)}Z" class="tw-pijlpunt"/>`;
+    };
+    const vak = (x, y, def, onder) => `<g transform="translate(${x} ${y})">${knoopBinnen(def)}${tekst(100, 196, onder, { maat: 11, klasse: 'stil' })}</g>`;
+
+    // 1: three turns side by side; the arrow lays the first over the second
+    const een = vak(0, 0, {
+      voor: stukTouw([[134, 96], [134, 140], [132, 186]], 'a', 7) + plank(12, 150, 110),
+      strengen: [{ ...slag(56), p: [[50, 184, 0], [52, 150, 0], ...slag(56).p], begin: 'eind' }, slag(82), slag(108)],
+      na: boog([69, 94], [86, 46], [114, 92]) + nr(64, 140, '1') + nr(90, 140, '2') + nr(116, 140, '3'),
+    }, '1 drie slagen; 1 over 2 heen');
+    // 2: the first now lies between the others; the second is pulled out and goes over the end of the plank
+    const twee = vak(200, 0, {
+      voor: plank(12, 150, 110),
+      strengen: [{ p: [[54, 184, 0], [56, 150, 0], [60, 123, 0]], dik: 7, begin: 'eind' }, slag(82), slag(108),
+        { p: [[140, 88, 0], [142, 60, 0], [148, 2, 0]], dik: 7 },
+        { p: [[66, 124, 2], [66, 112, 2], [68, 100, 2], [80, 78, 2], [110, 62, 2], [150, 56, 2], [178, 58, 2], [190, 68, 2], [186, 80, 2], [160, 82, 2],
+          [120, 84, 2], [94, 88, 2]], dik: 7 }],
+      na: boog([196, 74], [210, 100], [184, 126]) + nr(92, 140, '1') + nr(118, 140, '3') + nr(120, 52, '2'),
+    }, '2 slag 2 over het eind');
+    // 3: pulled tight and tied
+    const klein = (pts) => zet(pts, [0.36, 0, 36, 0, 0.36, 4]);
+    const drie = vak(0, 200, {
+      voor: plank(12, 150, 110),
+      strengen: [slag(70), slag(96),
+        { p: [[84, 88, 1], [88, 93, 1], [106, 95, 1], [124, 93, 1], [128, 88, 1]], dik: 7 },
+        { p: [[60, 122, 1], [64, 118, 1], [86, 117, 1], [106, 118, 1], [110, 122, 1]], dik: 7 },
+        { p: [...klein(ps.slice(0, uit + 1)), [114, 64, 0], [122, 80, 0], [126, 88, 0]], dik: 7, begin: 'staand' },
+        { p: [[50, 122, 2], [52, 112, 2], [58, 92, 2], [66, 74, 2], ...klein(ps.slice(terug))], dik: 7, eind: 'eind' }],
+      na: nr(42, 104, '1') + nr(134, 70, '3') + nr(140, 100, '2'),
+      labels: [{ t: 'paalsteek', x: 120, y: 26, anker: 'start', naar: [96, 34] }],
+    }, '3 aantrekken, paalsteek erboven');
+    // 4: the seat
+    const x0 = (x) => r1(0.16 * 200 + x - 10);   // where the loop of the small paalsteek leaves the knot: a hitch at each end, you sit on the plank between the ropes
+    let vier = stukTouw([[64, 126], [x0(44), 51]], 'a', 4) + stukTouw([[164, 126], [x0(144), 51]], 'a', 4);   // behind: the back legs
+    vier += plank(20, 176, 136, [12, 10], 9);
+    for (const x of [44, 144]) {
+      const mini = (pts) => zet(pts, [0.16, 0, x - 10, 0, 0.16, 30]);
+      vier += stukTouw([[x - 2, 145], [x + 1, 136], [x + 10, 127]], 'a', 4) + stukTouw([[x + 5, 145], [x + 8, 136], [x + 17, 127]], 'a', 4)
+        + knoopBinnen({ strengen: [{ p: [[x + 9, 0, 0], ...mini(ps.slice(0, uit + 1))], dik: 3.5, begin: 'staand' },
+          { p: [[x - 4, 145, 0], [x - 2, 120, 0], ...mini(ps.slice(terug))], dik: 3.5, eind: 'eind' }] });
+    }
+    vier += `<circle cx="104" cy="84" r="7" class="vol"/><path d="M104 91V128M104 128L94 140L92 170M104 128L114 140L116 170M104 98L66 92M104 98L146 92" class="lijn dik"/>`;
+    vier = `<g transform="translate(200 200)"><g class="tw">${vier}</g>${tekst(100, 196, '4 aan beide kanten, jij ertussen', { maat: 11, klasse: 'stil' })}</g>`;
+    return svg(400, 404, 'Bootsmanstoeltje in vier stappen. 1: sla het touw drie keer om de plank en leg de eerste slag over de tweede heen. 2: haal de tweede slag over het eind van de plank. 3: trek aan; de tweede slag klemt de andere twee langs beide randen, en boven de plank knoop je het eind met een paalsteek om het staande part. 4: maak er een aan elk eind van de plank; je zit ertussen en houdt de touwen vast.', een + twee + drie + vier);
+  },
+  // Galeisteek (marlinespike hitch, §2.3.19): a loop in the rope, laid over the standing part; the rod goes
+  // over the sides of the loop and under the standing part. The end comes out over the top. It holds only while the
+  // pull is on the standing part.
+  'touw-galeisteek': {
+    w: 300, h: 236, titel: 'Galeisteek: een lus in het touw met een stok erdoor. De stok ligt over de zijkanten van de lus en onder het touw dat naar de last gaat.',
+    strengen: [paal(116, 8, 292, 22), { p: [
+      [150, 234, 0], [150, 196, 0], [150, 172, -1], [150, 150, 0.5], [150, 116, 1], [150, 86, 0.5], [150, 62, -1], [151, 44, 0], [158, 26, 0], [172, 16, -0.5],
+      [188, 18, -1], [202, 30, 0], [208, 52, 0], [208, 90, -0.4], [208, 116, -1], [208, 140, -0.4], [204, 160, 0], [188, 172, 0.6], [150, 176, 1],
+      [112, 172, 0.6], [96, 160, 0], [92, 140, -0.4], [92, 116, -1], [93, 90, -0.4], [100, 74, 0], [118, 64, 0.6], [150, 62, 1], [170, 50, 1],
+      [186, 18, 1], [194, 4, 1]], dik: 9, begin: 'staand', eind: 'eind' }],
+    labels: [{ t: 'stok', x: 286, y: 100, anker: 'end' }, { t: 'naar de last', x: 158, y: 228, anker: 'start' }, { t: 'eind', x: 204, y: 14, anker: 'start' }],
+  },
+  // Leeuwerikskop (cow hitch, lark's head, §2.9.4), from the side of the bight: the bight lies across the front of
+  // the stick, its two legs go up over the stick, down behind it and come out under it, through the bight.
+  'touw-leeuwerikskop': {
+    w: 300, h: 210, titel: 'Leeuwerikskop: een bocht om een stok of door een oog. De bocht ligt over de voorkant, de twee benen komen eronder uit.',
+    strengen: [paal(90, 8, 292, 32), { p: [
+      [140, 208, 0], [140, 150, 0], [140, 112, 0], [140, 100, -1], [134, 90, -1], [124, 78, -1], [122, 70, -0.5], [120, 66, 0], [118, 72, 1], [118, 84, 1],
+      [124, 94, 1], [150, 96, 1], [176, 94, 1], [182, 84, 1], [182, 72, 1], [180, 66, 0], [178, 70, -0.5], [176, 78, -1], [166, 90, -1], [160, 100, -1],
+      [160, 112, 0], [160, 150, 0], [160, 208, 0]], dik: 9, begin: 'staand', eind: 'staand' }],
+    labels: [{ t: 'stok, ring of oog', x: 286, y: 64, anker: 'end' }, { t: 'bocht', x: 60, y: 140, anker: 'start', naar: [126, 98] }, { t: 'twee benen', x: 170, y: 190, anker: 'start' }],
+  },
+  // Korte splits (§2.7.3): 1, the strands of both ends unlaid and pushed into each other, each between two of the other
+  // rope, a seizing round one side; 2, done: the strands tucked in, the splice thicker than the rope.
+  'touw-korte-splits': () => {
+    let uit = geslagen(8, 122, 64, 24, 'a') + geslagen(198, 312, 64, 24, 'b');
+    const aY = [44, 64, 84]; const bY = [34, 54, 74];
+    for (let i = 0; i < 3; i++) uit += stukTouw([[202, 58 + 6 * i], [180, (58 + 6 * i + bY[i]) / 2], [150, bY[i]], [132, bY[i]]], 'b', 7);
+    for (let i = 0; i < 3; i++) uit += stukTouw([[118, 58 + 6 * i], [140, (58 + 6 * i + aY[i]) / 2], [170, aY[i]], [188, aY[i]]], 'a', 7);
+    for (let x = 222; x <= 238; x += 3.2) uit += stukTouw([[x, 51], [x + 0.5, 64], [x, 77]], 'garen', 3.2);
+    // done: in the splice the strands of the two ropes lie side by side, in turn
+    uit += geslagen(8, 130, 176, 24, 'a') + geslagen(190, 312, 176, 24, 'b') + geslagen(116, 204, 176, 30, 'a');
+    for (let x = 126; x < 196; x += 37.2) {
+      uit += `<path d="M${r1(x)} 162.6L${r1(x + 18.6)} 162.6L${r1(x + 31.2)} 189.4L${r1(x + 12.6)} 189.4Z" class="tw-lijf-vul b"/>`;
+    }
+    uit += label({ t: 'vliegertouwtje', x: 230, y: 104, naar: [230, 78] }) + tekst(160, 128, '1 strengen om en om in elkaar', { maat: 11, klasse: 'stil' })
+      + tekst(160, 222, '2 ingestoken: de splits is dikker', { maat: 11, klasse: 'stil' });
+    return svg(320, 230, 'Korte splits: de strengen van twee touwen om en om in elkaar geschoven, en daarna in het andere touw gestoken. De splits wordt dikker dan het touw.', `<g class="tw">${uit}</g>`);
+  },
+  // Boerenplatting (§2.8): three strands plaited, each in turn over the middle one.
+  'touw-boerenplatting': {
+    w: 300, h: 120, afwisselend: true, titel: 'Boerenplatting: drie strengen gevlochten. Om de beurt gaat de buitenste over de middelste heen.',
+    strengen: ['a', 'b', 'c'].map((soort, i) => ({ soort, dik: 12, p: Array.from({ length: 41 }, (_, k) => {
+      const x = 14 + k * 6.8; const t = (x / 54) * Math.PI + (i * 2 * Math.PI) / 3;
+      return [r1(x), r1(60 + 26 * Math.sin(t)), 0];
+    }) })),
+  },
+  // Bootsmansplatting (§2.8): platte knopen one under the other round a stick. One cord makes every bar in front and
+  // turns round at the sides; the other goes behind the stick every time and comes out over the turn of the first.
+  'touw-bootsmansplatting': () => {
+    let uit = '<rect x="138" y="4" width="24" height="192" rx="3" class="tw-hout"/>';
+    const ys = Array.from({ length: 9 }, (_, k) => 26 + 18 * k);
+    const a = [[118, 6], [126, 18]];
+    ys.forEach((y, k) => {
+      const s = k % 2 === 0 ? 1 : -1; const naar = 150 + 18 * s;
+      a.push([150 - 18 * s, y], [150, y + 0.5], [naar, y]);
+      if (k < ys.length - 1) a.push([naar + 8 * s, y + 4], [naar + 9 * s, y + 9], [naar + 8 * s, y + 14]);
+    });
+    uit += stukTouw(a, 'b', 8);
+    ys.slice(0, -1).forEach((y, k) => {
+      const s = k % 2 === 0 ? -1 : 1; const x0 = 150 + s * 12;
+      uit += stukTouw([[x0, y - 6], [x0 + s * 10, y - 7], [x0 + s * 20, y - 2], [x0 + s * 22, y + 6], [x0 + s * 18, y + 12], [x0 + s * 6, y + 12], [x0, y + 12]], 'c', 7);
+    });
+    return svg(300, 200, 'Bootsmansplatting: platte knopen onder elkaar om een stok. Het ene koord ligt steeds voor, het andere gaat steeds achter de stok langs.', `<g class="tw">${uit}</g>`);
+  },
+  // Kroonplatting (§2.8): one crown of four strands, from above. Each strand lies over the next one and its end goes
+  // down under the bight of that next one. Crowns stacked on each other make the platting.
+  'touw-kroonplatting': (() => {
+    const plan = [[9, 0, 0], [30, -4, -1], [50, 4, 0], [62, 28, 0], [54, 58, 0.3], [33, 90, 1], [33, 112, 0], [50, 128, -1], [80, 140, -0.5]];
+    return {
+      w: 300, h: 200, titel: 'Kroonplatting, van boven: een kroon van vier strengen. Elke streng ligt over de volgende en gaat onder de bocht van die volgende door.',
+      voor: '<circle cx="150" cy="100" r="19" class="tw-lijf-vul a"/>',
+      strengen: [0, 1, 2, 3].map((i) => ({ soort: i % 2 ? 'b' : 'a', dik: 12, eind: 'eind', p: plan.map(([r, g, z]) => {
+        const h = ((90 * i + g) * Math.PI) / 180;
+        return [r1(150 + r * Math.cos(h)), r1(100 + r * Math.sin(h)), z];
+      }) })),
+    };
+  })(),
 };
+
+/** An overhand knot in a line that comes down from above, as an open trefoil with its crossings over and under in
+ *  turn, around (cx, cy); the line comes in and goes out on the left, at about x = cx - 38. */
+function enkeleKnoop(cx, cy, sx = 10, sy = 12, n = 40) {
+  const uit = [];
+  for (let i = n - 4; i >= 4; i--) {
+    const t = Math.PI + (2 * Math.PI * i) / n;
+    const x = Math.sin(t) + 2 * Math.sin(2 * t); const y = Math.cos(t) - 2 * Math.cos(2 * t);
+    uit.push([r1(cx + y * sx), r1(cy + x * sy), r1(Math.sin(3 * t) * 100) / 100]);
+  }
+  return uit;
+}
 
 export default Object.fromEntries(Object.entries(TEKENINGEN).map(([naam, def]) => [naam, typeof def === 'function' ? def : () => knoop(def)]));

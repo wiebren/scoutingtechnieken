@@ -1,6 +1,7 @@
 // Waarnemen en schatten: notities/technieken/navigatie-en-seinen.md §1h (NAV) and the sources in
 // notities/technieken/waarnemen-uitwerking.md (WU): Scouting for Boys 1908 (public domain), the Pooltochten-boekje
 // 2023, the Winterhike-schetsen, the handboek of Scouting Johannes Vianney 2008, the NPV-eisen of 1916 and 1928.
+// Plattegrond op schaal and sluipen come straight from that handboek (VIA08, reference/boeken/vianney-handboek-2008).
 // The order within a groep is the order to learn it in.
 
 export default [
@@ -24,14 +25,14 @@ export default [
     uitleg: [
       'Tel hoeveel dubbelpassen je over 100 m doet: elke keer dat je linkervoet neerkomt. Dan weet je onderweg hoe ver je gelopen hebt.',
       'Meet het een paar keer op een stuk dat je zeker weet, zoals van het ene hectometerpaaltje langs de weg naar het volgende, en neem het gemiddelde.',
-      'Heuvelop, in zand, in hoog gras en in het donker worden je passen korter. Snel lopen ook: Baden-Powell schreef al dat snelle passen korter zijn dan langzame.',
+      'Heuvelop, in zand, in hoog gras en in het donker worden je passen korter. Snel lopen ook: snelle passen zijn korter dan langzame.',
     ],
     naar: [{ blad: 'tijd-en-afstand' }, { blad: 'lichaamsmaten' }] },
   { id: 'afstand-schatten', naam: 'Afstand schatten op zicht', ook: ['afstanden schatten', 'schatten op het oog'], en: 'judging distance', groep: 'schatten', bron: 'WU SfB 1908; EIS NPV 1916',
     doe: 'zicht-afstand',
     uitleg: [
       'Hoe ver iets weg is, leer je alleen door het vaak te doen: schat eerst, en loop of meet het daarna na.',
-      'Wat je van iemand nog ziet, zegt iets over de afstand. Het Duitse leger leerde zijn soldaten (zo schreef Baden-Powell in 1908, in yards; hier omgerekend):',
+      'Wat je van iemand nog ziet, zegt iets over de afstand. Het Duitse leger leerde zijn soldaten vroeger (in yards; hier omgerekend):',
       '- ±45 m: je ziet de mond en de ogen goed.',
       '- ±90 m: de ogen zijn puntjes.',
       '- ±180 m: knopen en details van de kleding zie je nog.',
@@ -53,7 +54,6 @@ export default [
       '- Doe de sprong keer 10: dat is ongeveer de afstand.',
       'Het werkt omdat je arm ongeveer tien keer zo lang is als de afstand tussen je ogen. Bij iedereen is dat een beetje anders: probeer het eens op een afstand die je weet, dan weet je of jij keer 9 of keer 11 moet doen.',
     ],
-    letOp: 'De Nederlandse naam duimsprong hebben we niet in een bron gevonden; in het Engels heet het thumb jump.',
     naar: [{ blad: 'afstand-schatten' }, { blad: 'lichaamsmaten' }] },
   { id: 'driehoekmethode', naam: 'Driehoekmethode', ook: ['gelijkvormige driehoeken', 'stappenmethode', 'afstand over het water'], en: 'stride method', groep: 'schatten', bron: 'WU AOM, JV',
     doe: 'driehoekmethode',
@@ -88,7 +88,8 @@ export default [
       'Met een stok zo lang als je arm tot je vuist: houd hem rechtop met je arm gestrekt, en loop achteruit tot je over de punt van de stok net de top van de boom ziet en over je vuist de voet. Je afstand tot de boom is dan ongeveer zijn hoogte.',
       'Het werkt omdat de stok even lang is als de afstand van je oog tot de stok: de kleine driehoek heeft dezelfde vorm als de grote.',
       'Met elke stok kan het ook, als je rekent: hoogte = afstand tot de boom × lengte van de stok ÷ afstand van je oog tot de stok.',
-      'Voorbeeld uit het Pooltochten-boekje: sta je 15 m van de boom, steekt de stok 2 m uit en is je oog 3 m van de stok, dan is de boom 15 × 2 ÷ 3 = 10 m.',
+      'Het kan ook zonder je arm: zet de stok rechtop in de grond en ga erachter liggen, met je oog vlak bij de grond. Schuif tot je over de top van de stok net de top van de boom ziet. Dan geldt dezelfde som, met de afstand van je oog tot de stok en tot de boom.',
+      'Een voorbeeld: sta je 15 m van de boom, steekt de stok 2 m uit en is je oog 3 m van de stok, dan is de boom 15 × 2 ÷ 3 = 10 m.',
     ],
     letOp: 'De stok moet de hele boom bedekken: de punt bij de top en je vuist bij de voet. Houd hem echt rechtop, en je arm gestrekt. Op een helling klopt het minder.',
     naar: [{ blad: 'hoogte-potlood' }, { blad: 'hoogte-schaduw' }, { blad: 'lichaamsmaten' }] },
@@ -137,7 +138,7 @@ export default [
     doe: 'dwarsprofiel',
     uitleg: [
       'Een tekening van de beek alsof je hem doormidden snijdt: hoe diep is hij op elke plek van oever tot oever.',
-      '- Span een touw over de beek, met bijvoorbeeld om de 50 cm (of om de meter bij een brede rivier) een merkteken.',
+      '- Span een touw over de beek, met bijvoorbeeld om de 50 cm een merkteken. Bij een smal beekje om de 10 cm, bij een brede rivier om de meter.',
       '- Laat bij elk merkteken een steentje aan een touwtje zakken tot het net op de bodem ligt, en meet hoe lang het touwtje is. Bij een brede rivier kan het met een lange stok vanaf een brug of een kano.',
       '- Zet de metingen op schaal uit op millimeterpapier en verbind de punten.',
       '- Schrijf de schaal en de plek van de meting erbij.',
@@ -160,7 +161,7 @@ export default [
   { id: 'soorten-schetsen', naam: 'Soorten schetsen', ook: ['schetsen', 'schetsenmatrix', 'contourschets', 'aangezichtsschets', 'fotoschets'], en: 'field sketches', groep: 'schetsen', bron: 'WU WH, PT, JV', ken: true,
     plaatje: 'schetsen-rooster',
     uitleg: [
-      'Er zijn veel soorten schetsen. De Winterhike zet ze in een rooster: wat teken je (een gebouw, van bovenaf, of een landschap), en hoeveel detail.',
+      'Er zijn veel soorten schetsen. Je kunt ze in een rooster zetten: wat teken je (een gebouw, van bovenaf, of een landschap), en hoeveel detail.',
       'Zet op elke schets een kader met de gegevens: je naam, de soort schets, de datum, het weer en het zicht, je kompas, de plek waar je stond, en de schaal als die er is.',
       'Maak de schets eerst in het klad, en werk hem daarna netjes uit.',
     ],
@@ -175,6 +176,7 @@ export default [
     soorten: [
       { naam: 'Situatieschets', plaatje: 'situatieschets', blad: 'situatieschets', bij: 'Van bovenaf: hoe kom je ergens? Niet op schaal.' },
       { naam: 'Routeschets', plaatje: 'routeschets', blad: 'routeschets', bij: 'Een verslag van een gelopen route, op een formulier met kolommen.' },
+      { naam: 'Plattegrond op schaal', plaatje: 'plattegrond-op-schaal', blad: 'plattegrond-op-schaal', bij: 'Van bovenaf en precies op maat, met noordpijl, schaal en legenda.' },
       { naam: 'Horizonschets', plaatje: 'soort-horizonschets', blad: 'horizonschets', bij: 'Alleen de lijn van het landschap tegen de lucht, ingekleurd.' },
       { naam: 'Recognografische schets', plaatje: 'soort-recognografische-schets', blad: 'recognografische-schets', bij: 'Het landschap met alles wat blijft staan, zoals wegen, hekken en huizen.' },
       { naam: 'Panoramaschets', plaatje: 'soort-panoramaschets', blad: 'panoramaschets', bij: 'Alles wat je ziet, in kleur: ook de koeien, de fietser en de wolken.' },
@@ -188,8 +190,8 @@ export default [
       '- Teken alleen wat nodig is: de wegen die je neemt, de afslagen, en opvallende punten onderweg (een kerk, een brug, een wegwijzer), met een woordje uitleg.',
       '- Hoe dichter bij het doel, hoe meer detail.',
     ],
-    letOp: 'Over de noordpijl verschillen de bronnen: het Pooltochten-boekje en het handboek van Johannes Vianney zeggen dat hij niet hoeft, de Winterhike vraagt er wel een. Zet hem er gewoon op.',
-    naar: [{ blad: 'routeschets' }, { blad: 'soorten-schetsen' }] },
+    letOp: 'Zet er altijd een noordpijl op: dan weet wie de schets leest hoe hij hem moet draaien.',
+    naar: [{ blad: 'routeschets' }, { blad: 'plattegrond-op-schaal' }, { blad: 'soorten-schetsen' }] },
   { id: 'routeschets', naam: 'Routeschets', ook: ['routeschetsformulier', 'routeverslag'], en: 'route sketch', groep: 'schetsen', bron: 'WU WH, JV',
     plaatje: 'routeschets',
     uitleg: [
@@ -199,10 +201,21 @@ export default [
       '- Afstand: tussen twee punten.',
       '- Totale afstand: vanaf het begin.',
       '- Kompasrichting van de weg die je inslaat.',
-      '- De tekening van de weg, van bovenaf.',
-      'Je leest en schrijft van onder naar boven, net als een stripkaart. Loopt de tekening van het papier, trek dan een streep over het hele formulier en ga in een nieuwe rij verder.',
+      '- De tekening van de weg, van bovenaf, op schaal, met een noordpijl en kaarttekens.',
+      'Je leest en schrijft van onder naar boven, net als een stripkaart. Loopt de tekening van het papier, of gaat de weg zo dwars lopen dat de gegevens niet meer op dezelfde hoogte passen? Trek dan een streep over het hele formulier en ga in een nieuwe rij verder.',
     ],
     naar: [{ blad: 'stripkaart' }, { blad: 'situatieschets' }, { blad: 'passen-tellen' }, { blad: 'soorten-schetsen' }] },
+  { id: 'plattegrond-op-schaal', naam: 'Plattegrond op schaal', ook: ['plattegrond', 'tekening op schaal', 'millimeterpapier', 'plattegrond tekenen'], en: 'scale plan', groep: 'schetsen', bron: 'VIA08 §3.6.7',
+    plaatje: 'plattegrond-op-schaal',
+    uitleg: [
+      'Een tekening van bovenaf waarin elke maat klopt: van je clubhuis, een kampterrein of een speelveld. Anders dan een situatieschets is hij precies op schaal.',
+      '- Loop eerst rond en maak een kladtekening. Meet alles op en schrijf de maten erbij: de lengte van de muren, waar deuren, ramen en bomen staan. Meet met een meetlint, of tel je passen als je je paslengte weet.',
+      '- Kies een schaal waarbij alles op je papier past. 1:100 betekent: 1 cm op papier is 1 m in het echt; bij 1:200 is 1 cm 2 m.',
+      '- Reken alle maten om en teken de plattegrond netjes over op millimeterpapier. Dan hoef je niet te passen en te meten: je telt hokjes.',
+      '- Zet erbij: een noordpijl, de schaal, en een legenda die zegt wat je tekens en kleuren betekenen.',
+    ],
+    letOp: 'Een kampplattegrond, om te bedenken waar de tenten, de keuken en de HUDO komen, is iets anders: die mag een schets zijn. Een plattegrond op schaal van het terrein helpt wel om te zien wat er past.',
+    naar: [{ blad: 'situatieschets' }, { blad: 'kampplattegrond' }, { blad: 'schaal' }, { blad: 'legenda' }, { blad: 'passen-tellen' }, { blad: 'soorten-schetsen' }] },
   { id: 'horizonschets', naam: 'Horizonschets', ook: ['luchtlijnschets', 'kimschets'], en: 'skyline sketch', groep: 'schetsen', bron: 'WU WH, JV, PT',
     doe: 'schets-horizon',
     uitleg: [
@@ -210,6 +223,7 @@ export default [
       '- Leg het papier liggend. Teken onderaan een rechte lijn: de horizon.',
       '- Teken daarboven de luchtlijn, en kleur het stuk tussen horizon en luchtlijn donker.',
       '- Zet bij opvallende punten de kompasrichting en de geschatte afstand, in vakjes boven de tekening.',
+      '- Onderaan komt een vak met je kompas en de plek waar je stond, bijvoorbeeld als coördinaat.',
     ],
     naar: [{ blad: 'recognografische-schets' }, { blad: 'panoramaschets' }, { blad: 'afstand-schatten' }, { blad: 'soorten-schetsen' }] },
   { id: 'recognografische-schets', naam: 'Recognografische schets', ook: ['herkenningsschets', 'terreinschets'], en: 'landscape sketch', groep: 'schetsen', bron: 'WU WH, JV, PT',
@@ -220,7 +234,7 @@ export default [
       '- Geen kleine details zoals losse dakpannen.',
       '- Net als bij de horizonschets: kompasrichtingen en geschatte afstanden bij opvallende punten.',
     ],
-    letOp: 'Over kleur verschillen de bronnen: de Winterhike zegt geen kleur, het handboek van Johannes Vianney zegt wel kleuren. Vraag wat de opdracht wil.',
+    letOp: 'Soms wil de opdracht een schets zonder kleur, soms met kleuren. Vraag wat de opdracht wil.',
     naar: [{ blad: 'horizonschets' }, { blad: 'panoramaschets' }, { blad: 'soorten-schetsen' }] },
   { id: 'panoramaschets', naam: 'Panoramaschets', ook: ['landschapsschets'], en: 'panorama sketch', groep: 'schetsen', bron: 'WU WH, JV, PT',
     doe: 'schets-panorama',
@@ -269,7 +283,20 @@ export default [
       'In 1908 moest een scout tweede klasse een spoor van een kwart mijl (400 m) volgen in een kwartier.',
     ],
     letOp: 'Spoorzoeken als routetechniek (pijlen van takken, krijt, lintjes) staat bij de tochttechnieken.',
-    naar: [{ blad: 'sporen-lezen' }, { blad: 'spoor-ouderdom' }, { blad: 'spoortekens' }, { blad: 'spoor-leggen' }] },
+    naar: [{ blad: 'sporen-lezen' }, { blad: 'spoor-ouderdom' }, { blad: 'sluipen' }, { blad: 'spoortekens' }, { blad: 'spoor-leggen' }] },
+  { id: 'sluipen', naam: 'Sluipen', ook: ['besluipen', 'apengang', 'ganzengang', 'kattengang', 'kattensluipgang', 'robbengang'], en: 'stalking', groep: 'spoorzoeken', bron: 'VIA08 §4.9',
+    plaatje: 'sluipen',
+    uitleg: [
+      'Sluipen is zo dicht mogelijk bij iets of iemand komen, zonder dat die je ziet of hoort. Zoek steeds dekking: een struik, een boom, een greppel, hoog gras. Praat niet, hoest niet en trap niet op takjes.',
+      'Hoe dichterbij je komt, hoe lager je gaat:',
+      '- Apengang: voorovergebogen, met je handen op je knieën. Zo loop je zolang je nog ver weg bent.',
+      '- Ganzengang: gehurkt vooruit. Voor korte, snelle stukjes, als je nog een flink eind weg bent.',
+      '- Kattengang: op handen en knieën, of op je onderarmen en knieën. Voel met je handen of er takjes liggen, en leg ze zacht opzij. Je hoofd is het hoogste punt: hoofd omhoog, billen laag.',
+      '- Kattensluipgang: plat op de grond, een beetje op je zij. Trek je knie zijwaarts op en duw je zo vooruit; je handen helpen mee. Let ook nu op takjes.',
+      '- Robbengang: helemaal plat. Je duwt je vooruit op je onderarmen en ellebogen en op je tenen of de zijkant van je voeten. Til je lijf steeds net van de grond, schuif een stukje op en zak weer.',
+    ],
+    letOp: 'Heb je door gras of struiken gekropen? Kijk daarna je huid na op teken.',
+    naar: [{ blad: 'spoorzoeken-spel' }, { blad: 'sporen-lezen' }, { blad: 'tekencheck' }] },
 
   // Kim en opmerken
   { id: 'kims-spel', naam: "Kim's spel", ook: ['kimspel', 'kim', 'onthoudspel'], en: "Kim's game", groep: 'kim', bron: 'EIS §2; WU SfB 1908, SP-Kim',

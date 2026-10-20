@@ -5,7 +5,7 @@
 // See ../plaatjes.js and ./basis.js.
 import { r1, svg, tekst } from './basis.js';
 import { fout, goed } from './vuur.js';
-import { opgeschotenBos } from './touw.js';
+import { knoop, opgeschotenBos, stukTouw } from './touw.js';
 
 const P = (x, y) => `${r1(x)} ${r1(y)}`;
 /** A path through points [[x, y], ...]. */
@@ -55,13 +55,6 @@ function mastworpLiggend(x, y, d, { staart = true } = {}) {
   let uit = touw(lijn([[x, t], [x + 3, b]])) + touw(lijn([[x + 9, t], [x + 12, b]]));
   uit += touw(lijn([[x + 11, t + 3], [x + 1, b - 3]]));
   if (staart) uit += touw(`M${P(x + 11, b)}Q${P(x + 14, b + 10)} ${P(x + 24, b + 14)}`, 6, { rond: true }) + eind(x + 24, b + 14, 20);
-  return uit;
-}
-/** A timmersteek on a lying pole: one turn at x, its end twisted back along the pole. */
-function timmersteekLiggend(x, y, d) {
-  const t = y - d / 2 - 2; const b = y + d / 2 + 2;
-  let uit = touw(lijn([[x, t], [x + 3, b]]));
-  uit += touw(`M${P(x - 1, y - 3)}q-6 5 -12 0t-12 0t-12 0`, 5, { rond: true }) + eind(x - 37, y - 3, 180, 5);
   return uit;
 }
 /** A platte knoop as a small symbol at (x, y), its two ends leaving to the lower right. */
@@ -358,15 +351,17 @@ function achtsjorring() {
   const ys = [180, 226, 272];
   const slagen = [150, 166, 182];
   uit += tekenAcht(ys, slagen, d, 16, w - 16, true);
-  uit += timmersteekLiggend(124, ys[0], d);
+  // the begin: a mastworp, its short end worked away round the rope
+  uit += mastworpLiggend(120, ys[0], d, { staart: false });
+  uit += touw(`M${P(119, ys[0] - 3)}q-6 5 -12 0t-12 0t-12 0`, 5, { rond: true }) + eind(83, ys[0] - 3, 180, 5);
   uit += mastworpLiggend(222, ys[2], d);
   uit += tekst(16, 132, '2. dan woelen en afmaken', { anker: 'start', maat: 12 });
-  uit += wijs(64, 146, 'begin: timmersteek', 112, ys[0] - r - 2, 'middle');
-  uit += wijs(234, 146, 'achten, 3 per paal', 168, ys[0] - r - 2, 'middle');
+  uit += wijs(64, 146, 'begin: mastworp', 112, ys[0] - r - 2, 'middle');
+  uit += wijs(234, 146, '6 slagen in achten', 168, ys[0] - r - 2, 'middle');
   uit += wijs(186, 346, '2× woelen', 196, (ys[1] + ys[2]) / 2 + 4, 'middle');
   uit += wijs(290, 330, 'eind: mastworp', 238, ys[2] + r + 4, 'middle');
   uit += wijs(64, 330, 'onderkanten gelijk', 20, ys[2] + r, 'middle');
-  return svg(w, h, 'Achtsjorring: drie palen naast elkaar, de onderkanten gelijk. Boven: eerst sla je het touw in achten over en onder de palen, drie keer om elke paal. Onder: de hele sjorring, begonnen met een timmersteek om een buitenste paal, met woelslagen tussen elk paar palen, en een mastworp om de andere buitenste paal', uit);
+  return svg(w, h, 'Achtsjorring: drie palen naast elkaar, de onderkanten gelijk. Boven: eerst sla je het touw in achten over en onder de palen, zes slagen. Onder: de hele sjorring, begonnen met een mastworp om een buitenste paal, met woelslagen tussen elk paar palen, en een mastworp om de andere buitenste paal', uit);
 }
 
 /** Two poles in a narrow fork: the vorksjorring. */
@@ -376,23 +371,23 @@ function vorksjorring() {
   const xOp = ([[x1, y1], [x2, y2]], y) => x1 + ((x2 - x1) * (y - y1)) / (y2 - y1);
   let uit = paal(B[0][0], B[0][1], B[1][0], B[1][1], d, { kop2: true }) + paal(A[0][0], A[0][1], A[1][0], A[1][1], d, { kop2: true });
   const yk = 118;  // where they cross
-  for (let i = 0; i < 6; i++) {
-    const y = yk - 14 + i * 5.5;
+  for (let i = 0; i < 8; i++) {
+    const y = yk - 18 + i * 5;
     uit += touw(lijn([[Math.min(xOp(A, y), xOp(B, y)) - d / 2 - 4, y], [Math.max(xOp(A, y), xOp(B, y)) + d / 2 + 4, y + 2]]));
   }
   for (const x of [156, 162]) uit += touw(lijn([[x, yk - 34], [x + 1, yk + 30]]), 5);
-  // begin on one pole, end on the other, both under the lashing
-  const ys = 170; const ye = 192;
+  // begin on one pole under the lashing, end on the other pole above it
+  const ys = 170; const ye = 56;
   uit += touw(lijn([[xOp(B, ys) - d / 2 - 2, ys], [xOp(B, ys) + d / 2 + 2, ys + 3]])) + touw(lijn([[xOp(B, ys + 9) - d / 2 - 2, ys + 9], [xOp(B, ys + 9) + d / 2 + 2, ys + 12]]));
   uit += touw(lijn([[xOp(A, ye) - d / 2 - 2, ye], [xOp(A, ye) + d / 2 + 2, ye + 3]])) + touw(lijn([[xOp(A, ye + 9) - d / 2 - 2, ye + 9], [xOp(A, ye + 9) + d / 2 + 2, ye + 12]]));
   // the crossing part of each mastworp, over its two turns
   uit += touw(lijn([[xOp(B, ys + 11) - d / 2 + 1, ys + 11], [xOp(B, ys + 1) + d / 2 - 1, ys + 1]]));
   uit += touw(lijn([[xOp(A, ye + 11) - d / 2 + 1, ye + 11], [xOp(A, ye + 1) + d / 2 - 1, ye + 1]]));
   uit += wijs(312, 214, 'begin: mastworp', xOp(B, ys) + 10, ys + 6, 'end') + tekst(312, 228, 'met voorslag', { anker: 'end', maat: 10.5 });
-  uit += wijs(8, 252, 'eind: mastworp', xOp(A, ye) - 10, ye + 6, 'start');
-  uit += wijs(312, 96, 'slagen om beide palen', xOp(A, yk) + 18, yk, 'end');
-  uit += wijs(8, 66, 'woelen tussen de palen', 157, yk - 30, 'start');
-  return svg(w, h, 'Vorksjorring: twee palen die bovenaan een smalle vork vormen, met slagen om beide palen waar ze kruisen en woelslagen tussen de palen door; begin met een mastworp met voorslag op de ene paal, eindig op de andere paal onder de sjorring', uit);
+  uit += tekst(312, 20, 'eind: mastworp,', { anker: 'end', maat: 10.5 }) + tekst(312, 34, 'andere paal,', { anker: 'end', maat: 10.5 }) + wijs(312, 48, 'andere kant', xOp(A, ye) + 12, ye + 6, 'end');
+  uit += wijs(312, 112, '7 of 8 slagen', xOp(A, yk) + 18, yk, 'end') + tekst(312, 126, 'om beide palen', { anker: 'end', maat: 10.5 });
+  uit += wijs(8, 160, 'woelen tussen de palen', 157, yk + 26, 'start');
+  return svg(w, h, 'Vorksjorring: twee palen die bovenaan een smalle vork vormen, met slagen om beide palen waar ze kruisen en woelslagen tussen de palen door; begin met een mastworp met voorslag op de ene paal onder de sjorring, eindig met een mastworp op de andere paal boven de sjorring', uit);
 }
 
 /** Two poles crossing at a slant: the diagonaalsjorring and the Filipijnse. */
@@ -422,32 +417,45 @@ function diagonaal(filipijns = false) {
   return svg(w, h, 'Diagonaalsjorring: twee palen die schuin kruisen. 1 een timmersteek met drie slagen door de grootste hoeken, 2 drie slagen de andere kant op door de kleinste hoeken, 3 woelen tussen de palen, 4 eindig met een mastworp', uit);
 }
 
-/** Two poles end to end with a spalk beside them and four steigersjorringen with wedges. */
+/** Steigersjorringen with wedges: left two poles overlapping (two lashings, never one), right two poles end to end
+ *  with a spalk beside them (each pole two lashings to the spalk: four). */
 function steigersjorring() {
-  const w = 320; const h = 400; const x = 150; const d = 24; const xs = x + 23; const ds = 20;
+  const w = 400; const h = 410; const d = 24; const ds = 20;
   let uit = '';
-  uit += paal(xs, 160, xs, 282, ds, { kop1: true, kop2: true });
-  uit += paal(x, 388, x, 222, d) + paal(x, 220, x, 12, d, { kop2: true });
-  uit += `<path d="M${P(x - d / 2, 221)}H${x + d / 2}" style="stroke: var(--sj-hout-rand); stroke-width: 2"/>`;
-  for (const y0 of [172, 200, 232, 260]) {
+  /** One lashing at y0 between a pole at xa (d thick) and one at xb (db thick): crossing turns, the knot at the side,
+   *  and the wedge driven in from above between the poles and the turns. */
+  const sjor = (xa, xb, db, y0) => {
+    let u = '';
     for (let i = 0; i < 6; i++) {
       const y = y0 + i * 3.6; const s = i % 2 ? -3 : 3;
-      uit += touw(lijn([[x - d / 2 - 2, y - s], [xs + ds / 2 + 2, y + s]]), 5);
+      u += touw(lijn([[xa - d / 2 - 2, y - s], [xb + db / 2 + 2, y + s]]), 5);
     }
-    uit += touw(`M${P(xs + ds / 2 + 2, y0 + 8)}q8 2 9 9`, 4.5, { rond: true });
-    // the wedge, driven in from above between the poles and the turns
-    uit += `<path d="M${P(x + d / 2 - 2, y0 - 12)}h9l-4.5 22z" class="sj-hout-licht"/>`;
-  }
+    u += touw(`M${P(xb + db / 2 + 2, y0 + 8)}q8 2 9 9`, 4.5, { rond: true });
+    return u + `<path d="M${P(xa + d / 2 - 2, y0 - 12)}h9l-4.5 22z" class="sj-hout-licht"/>`;
+  };
+  // 1: overlapping
+  const xa = 110; const xb = xa + d;
+  uit += paal(xa, 384, xa, 120, d, { kop2: true }) + paal(xb, 300, xb, 20, d, { kop1: true, kop2: true });
+  for (const y0 of [140, 262]) uit += sjor(xa, xb, d, y0);
+  uit += pijl(xa + 14, 96, xa + 14, 124);
+  uit += wijs(8, 72, 'wig: van boven', xa + 10, 128, 'start') + tekst(8, 86, 'naar beneden', { anker: 'start', maat: 10.5 });
+  uit += wijs(8, 206, '2 sjorringen,', xa - d / 2 - 2, 268, 'start') + tekst(8, 220, 'nooit één', { anker: 'start', maat: 10.5 });
+  uit += wijs(188, 186, 'platte knoop', xb + d / 2 + 8, 276, 'middle');
+  uit += tekst(xa + d / 2, 404, '1. overlappen', { maat: 12 });
+  // 2: with a spalk
+  const x = 284; const xs = x + 23;
+  uit += paal(xs, 160, xs, 282, ds, { kop1: true, kop2: true });
+  uit += paal(x, 384, x, 222, d) + paal(x, 220, x, 20, d, { kop2: true });
+  uit += `<path d="M${P(x - d / 2, 221)}H${x + d / 2}" style="stroke: var(--sj-hout-rand); stroke-width: 2"/>`;
+  for (const y0 of [172, 200, 232, 260]) uit += sjor(x, xs, ds, y0);
   uit += pijl(x + 17, 136, x + 17, 158);
-  uit += wijs(8, 120, 'wig: van boven', x + 13, 160, 'start') + tekst(8, 134, 'naar beneden', { anker: 'start', maat: 10.5 });
-  uit += wijs(36, 200, 'de naad', x - d / 2, 221, 'middle');
-  uit += wijs(220, 330, '4 sjorringen', x + d / 2 + 4, 266, 'middle');
-  // measures: the whole length and the spalk
-  uit += `<path d="M${xs + 40} 160V282M${xs + 34} 160h12M${xs + 34} 282h12" class="sj-maat"/>`;
-  uit += tekst(xs + 48, 214, 'spalk ≈ ⅓', { anker: 'start' }) + tekst(xs + 48, 228, 'van het geheel', { anker: 'start' });
-  uit += `<path d="M96 12V388M90 12h12M90 388h12" class="sj-maat"/>`;
-  uit += `<text x="88" y="300" class="tekst" font-size="10.5" text-anchor="middle" transform="rotate(-90 88 300)">de hele lengte</text>`;
-  return svg(w, h, 'Steigersjorring: twee palen in elkaars verlengde met een spalk ernaast van ongeveer een derde van de hele lengte; vier sjorringen, bij elk uiteinde van de spalk en van de palen, elk met wiggen die van boven naar beneden zijn ingeslagen', uit);
+  uit += wijs(228, 120, 'de naad', x - d / 2, 221, 'middle');
+  uit += wijs(340, 340, '4 sjorringen', x + d / 2 + 4, 266, 'middle');
+  uit += `<path d="M${xs + 22} 160V282M${xs + 16} 160h12M${xs + 16} 282h12" class="sj-maat"/>`;
+  uit += tekst(xs + 30, 214, 'spalk ≈ ⅓', { anker: 'start', maat: 10.5 }) + tekst(xs + 30, 228, 'van het', { anker: 'start', maat: 10.5 })
+    + tekst(xs + 30, 242, 'geheel', { anker: 'start', maat: 10.5 });
+  uit += tekst(x, 404, '2. met een spalk', { maat: 12 });
+  return svg(w, h, 'Steigersjorringen, met wiggen die van boven naar beneden tussen palen en touw zijn ingeslagen. Links twee palen die een flink stuk overlappen, met twee sjorringen: één is nooit genoeg. Elke sjorring is afgeknoopt met een platte knoop aan de zijkant. Rechts twee palen in elkaars verlengde met een spalk ernaast van ongeveer een derde van de hele lengte, en twee sjorringen per paal: vier in totaal', uit);
 }
 
 /** Two poles overlapping side by side, two round lashings. */
@@ -673,6 +681,103 @@ function hijsmateriaal() {
   return svg(w, h, 'Hijsmateriaal: een D-sluiting met een rechte beugel en een schroefpen, een harpsluiting met een bolle beugel en pen, een hijsband als platte lus, en een klapblok waarvan een wang openklapt om het touw erin te leggen', uit);
 }
 
+// ---- touw aan een haak (Handboek Scouting technieken 2008, §2.5) ----
+// Drawn with the knot helper of ./touw.js, so over and under come from z, as in the knots: the hook is a metal
+// "pole" (soort 'kikker'), a rope with z < 0 goes behind it. HAAKKNOPEN holds the definitions, so a script can list
+// their crossings with kruisingen().
+
+/** A hook hanging from a block: the shank from (x, y) down `lang`, the bend of radius r, the bill up on the right. */
+const haak = (x, y, lang, r) => ({ soort: 'kikker', dik: 10, p: [[x, y], [x, y + lang * 0.5], [x, y + lang], [x + r * 0.29, y + lang + r * 0.71],
+  [x + r, y + lang + r], [x + r * 1.71, y + lang + r * 0.71], [x + 2 * r, y + lang], [x + 2 * r, y + lang - r * 0.6], [x + 2 * r - 4, y + lang - r * 0.95]] });
+/** The lower half of a block, its sheave and the swivel the hook hangs from at (cx, y). */
+const blokBoven = (cx, y) => `<rect x="${cx - 28}" y="${y - 50}" width="56" height="42" rx="18" class="sj-metaal"/>`
+  + `<circle cx="${cx}" cy="${y - 29}" r="14" class="sj-hout-licht"/><circle cx="${cx}" cy="${y - 29}" r="3" class="sj-metaal-licht"/>`
+  + `<rect x="${cx - 8}" y="${y - 12}" width="16" height="14" rx="4" class="sj-metaal"/>`;
+/** One of two strands twisted round each other, from a to b, θ running from th0 to th1: x = c ± amp·sin θ, z = cos θ.
+ *  The other strand runs at θ + π, so at every crossing the right one lies on top, as in a real twist. `spiegel`
+ *  gives the other hand. */
+function getwist([ax, ay], [bx, by], th0, th1, amp, spiegel = false) {
+  const stappen = Math.round((Math.abs(th1 - th0) / Math.PI) * 4); const uit = [];
+  for (let i = 0; i <= stappen; i++) {
+    const f = i / stappen; const th = th0 + f * (th1 - th0);
+    uit.push([r1(ax + (bx - ax) * f + (spiegel ? -1 : 1) * amp * Math.sin(th)), r1(ay + (by - ay) * f), r1(Math.cos(th))]);
+  }
+  return uit;
+}
+
+/** Engelse kink: left the bight laid back over the two parts (two loops), right both loops twisted and on the hook. */
+function katteklauwDef() {
+  // left: the two parts come down from above; the bight is laid back over them as a bar, so there are two loops
+  const vouw = { dik: 9, begin: 'staand', eind: 'staand', p: [[66, 40, 0], [66, 60, 0], [66, 78, -1], [66, 100, 0], [64, 136, 0], [52, 158, 0],
+    [34, 156, 0], [24, 126, 0], [26, 92, 0], [36, 80, 0.5], [56, 76, 1], [79, 75, 1], [102, 76, 1], [122, 80, 0.5], [132, 92, 0], [134, 126, 0],
+    [124, 156, 0], [106, 158, 0], [94, 136, 0], [92, 100, 0], [92, 78, -1], [92, 60, 0], [92, 40, 0]] };
+  // right: from the load up the left part, behind the bar, twisted, round the hook, twisted back, the bar in front
+  // of both parts, the same on the right (twisted the other way), behind the bar and down again
+  const H = Math.PI / 2; const T = 3 * Math.PI;                                     // three half turns
+  const lt = getwist([234, 194], [247, 148], H, H + T, 6);                           // up, from the right of the base
+  const ln = getwist([247, 148], [234, 194], 3 * H + T, 3 * H, 6);                   // the other strand, down
+  const rt = getwist([290, 194], [271, 148], 3 * H, 3 * H + T, 6, true);
+  const rn = getwist([271, 148], [290, 194], H + T, H, 6, true);
+  const klauw = { dik: 8, begin: 'staand', eind: 'staand', p: [[254, 268, 0], [252, 236, 0], [248, 214, -1], [242, 202, -0.5], ...lt,
+    [241, 138, 0.5], [241, 128, 1], [242, 120, 0.5], [247, 115, 0], [252, 120, -0.5], [253, 128, -1], [253, 138, -0.5], ...ln,
+    [226, 202, 0.5], [234, 212, 1], [258, 214, 1], [280, 212, 1], [296, 202, 0.5], ...rt,
+    [265, 138, 0.5], [265, 128, 1], [266, 120, 0.5], [271, 115, 0], [276, 120, -0.5], [277, 128, -1], [277, 138, -0.5], ...rn,
+    [276, 202, -0.5], [270, 214, -1], [266, 236, 0], [264, 268, 0]] };
+  return {
+    w: 360, h: 296,
+    titel: 'Engelse kink of katteklauw. Links: neem een bocht in het touw en leg die terug over de twee parten, zodat er twee lussen ontstaan. Draai elke lus een paar keer naar buiten, de ene linksom en de andere rechtsom. Rechts: de twee ogen die zo ontstaan hangen samen over de haak, de parten gaan naar de last',
+    strengen: [haak(225, 52, 48, 34), vouw, klauw],
+    voor: blokBoven(225, 52),
+    na: pijl(50, 178, 18, 178) + pijl(108, 178, 140, 178) + tekst(79, 200, 'draai elke lus', { maat: 10.5 }) + tekst(79, 213, 'naar buiten', { maat: 10.5 })
+      + tekst(79, 22, '1. bocht terugleggen', { maat: 11, klasse: 'vet' }) + tekst(259, 290, '2. in de haak', { maat: 11, klasse: 'vet' }),
+    labels: [{ t: 'gedraaid', x: 306, y: 170, anker: 'start', naar: [292, 172] }, { t: 'ogen over de haak', x: 352, y: 20, anker: 'end', naar: [272, 116] }],
+  };
+}
+
+/** Haaksteek: left the plain one (a turn round the back of the hook, the end nipped under the standing part), right
+ *  the one in the book (round the kraag, round the bend, the end along the standing part and seized to it). */
+function haaksteekDef() {
+  const enkel = { dik: 9, begin: 'staand', eind: 'eind', p: [[104, 262, 0], [104, 214, 0.5], [106, 186, 1], [106, 170, 1], [104, 156, 1], [95, 140, 1],
+    [86, 126, 0.5], [78, 115, -0.5], [70, 110, -1], [60, 108, -1], [53, 114, -0.5], [53, 124, 0], [60, 131, 0.6], [70, 133, 1], [80, 133, 0],
+    [90, 131, -1], [102, 128, -0.5], [114, 121, 0]] };
+  const boek = { dik: 9, begin: 'staand', eind: 'eind', p: [[262, 262, 0], [262, 214, 0.5], [262, 186, 1], [262, 170, 1], [259, 154, 1],
+    [250, 136, 1], [240, 118, 1], [230, 108, 1], [220, 105, 0.5], [214, 98, 0], [218, 91, -0.5], [230, 89, -1], [242, 87, -0.5], [248, 80, 0],
+    [242, 73, 0.5], [230, 74, 1], [216, 77, 1], [205, 86, 1], [200, 104, 1], [201, 128, 1], [207, 152, 0.5], [220, 166, -0.5], [237, 162, -1],
+    [246, 152, -1], [256, 150, -1], [266, 154, 0], [271, 162, 1], [272, 172, 1], [273, 190, 0.5], [273, 214, 0], [273, 232, 0]] };
+  const bindsel = [204, 210, 216].map((y) => stukTouw([[255, y], [280, y + 1]], 'garen', 3.2)).join('');
+  return {
+    w: 340, h: 296,
+    titel: 'Haaksteek of nekslag. Links de gewone: het touw ligt in de haak, gaat met een slag achter de rug van de haak om, en het eind ligt in de keel van de haak onder het staande part, dat het vastklemt als er last aan hangt. Rechts de stevigere: in de haak, met een slag om de kraag en een slag om de haak, en het eind met een bindsel aan het staande part',
+    strengen: [haak(70, 70, 70, 30), haak(230, 70, 70, 30), enkel, boek],
+    voor: blokBoven(70, 70) + blokBoven(230, 70),
+    na: bindsel + tekst(100, 290, 'gewone haaksteek', { maat: 11, klasse: 'vet' }) + tekst(262, 290, 'stevigere haaksteek', { maat: 11, klasse: 'vet' }),
+    labels: [{ t: 'eind klemt hier', x: 20, y: 196, anker: 'start', naar: [89, 131] }, { t: 'naar de last', x: 96, y: 258, anker: 'end' },
+      { t: 'om de kraag', x: 336, y: 40, anker: 'end', naar: [246, 80] }, { t: 'bindsel', x: 336, y: 222, anker: 'end', naar: [280, 211] }],
+  };
+}
+
+/** A strop round a pole, both bights in the hook of a block; a grommer below it. */
+function stropDef() {
+  const strop = { dik: 7, dicht: true, p: [[253, 118, 0], [246, 114, 1], [228, 112, 1], [160, 96, 1], [95, 90, 1], [62, 90, 1], [50, 96, 0.5],
+    [47, 113, 0], [51, 130, -0.5], [62, 136, -1], [95, 136, -1], [160, 135, -0.5], [228, 136, 0], [241, 135, -1], [253, 131, 0], [241, 128, 1],
+    [228, 128, 0.5], [160, 129, -0.5], [95, 129, -1], [66, 128, -1], [57, 121, -0.5], [56, 110, 0], [61, 100, 0.5], [95, 97, 1], [160, 103, 1],
+    [228, 120, 0], [241, 121, -1]] };
+  const grommer = { dik: 6, dicht: true, p: Array.from({ length: 8 }, (_, i) => [r1(170 + 15 * Math.cos(i * Math.PI / 4)), r1(196 + 11 * Math.sin(i * Math.PI / 4))]) };
+  const blok = `<rect x="296" y="82" width="46" height="44" rx="20" class="sj-metaal"/><circle cx="320" cy="104" r="15" class="sj-hout-licht"/><circle cx="320" cy="104" r="3" class="sj-metaal-licht"/>`;
+  return {
+    w: 360, h: 230,
+    titel: 'Een strop is een ring van touw. Leg hem om de paal of boom en haal beide bochten samen in de haak van het blok. Een kleine strop heet een grommer',
+    strengen: [{ p: [[80, 8], [80, 222]], soort: 'paal', dik: 30 }, { soort: 'kikker', dik: 9, p: [[300, 104], [280, 105], [262, 106], [248, 112], [242, 126], [248, 140], [262, 146], [280, 145], [288, 137]] },
+      strop, grommer],
+    voor: stukTouw([[320, 89], [360, 87]], 'a', 7) + stukTouw([[320, 119], [360, 121]], 'a', 7),
+    na: blok,
+    labels: [{ t: 'strop', x: 160, y: 70, naar: [160, 96] }, { t: 'paal of boom', x: 104, y: 222, anker: 'start' }, { t: 'haak van het blok', x: 340, y: 176, anker: 'end', naar: [276, 148] },
+      { t: 'grommer: een kleine strop', x: 196, y: 200, anker: 'start' }],
+  };
+}
+
+export const HAAKKNOPEN = { 'sj-katteklauw': katteklauwDef, 'sj-haaksteek': haaksteekDef, 'sj-strop': stropDef };
+
 // ---- verankeren ----
 
 /** One picket, slanting away from the pull, the rope low. */
@@ -691,43 +796,54 @@ function piket() {
   return svg(w, h, 'Een piket: schuin in de grond geslagen met de kop van de trek af, het meeste in de grond, en het touw laag aan de piket, vlak bij de grond', uit);
 }
 
-/** A row of three pickets, each head tied to the foot of the next one. */
+/** Three groups of pickets in a row, three in front, then two, then one: the head of each group tied to the foot of
+ *  the next. They lean 30 degrees back and stand so far apart that each tie is square to them. */
 function haringenSerie() {
-  const w = 360; const h = 220; const gy = 126;
+  const w = 440; const h = 220; const gy = 126; const hel = Math.tan(graad(30));
   let uit = grond(gy, w, 94);
-  const voet = [[96, 200], [186, 200], [276, 200]]; const kop = [[76, 52], [166, 52], [256, 52]];
-  for (let i = 0; i < 3; i++) uit += paal(voet[i][0], voet[i][1], kop[i][0], kop[i][1], 18, { kop2: true });
+  const voet = [110, 256, 402]; const kop = voet.map((x) => x - 148 * hel);   // feet at y 200, heads at y 52
+  const opY = (i, y) => voet[i] - (200 - y) * hel;                              // the axis of group i at height y
+  for (let i = 0; i < 3; i++) {
+    for (let k = i; k >= 0; k--) uit += paal(voet[i] + k * 7, 200 - k * 4, kop[i] + k * 7, 52 - k * 4, 18, { kop2: true });
+  }
   uit += `<rect x="0" y="${gy + 1}" width="${w}" height="94" class="sj-grond-over"/>`;
   for (let i = 2; i > 0; i--) {
-    const a = [kop[i][0] + 3, kop[i][1] + 14]; const b = [voet[i - 1][0] - 9, gy - 4];
+    const a = [opY(i, 64) + 4, 64]; const b = [opY(i - 1, gy - 4) + 7, gy - 4];
     for (const o of [-3, 3]) uit += touw(lijn([[a[0], a[1] + o], [b[0], b[1] + o]]), 4.5);
-    uit += touw(lijn([[a[0] + (b[0] - a[0]) * 0.45 - 4, a[1] + (b[1] - a[1]) * 0.45 - 7], [a[0] + (b[0] - a[0]) * 0.45 + 4, a[1] + (b[1] - a[1]) * 0.45 + 7]]), 4.5);
-    uit += touw(lijn([[a[0] + (b[0] - a[0]) * 0.55 - 4, a[1] + (b[1] - a[1]) * 0.55 - 7], [a[0] + (b[0] - a[0]) * 0.55 + 4, a[1] + (b[1] - a[1]) * 0.55 + 7]]), 4.5);
+    for (const f of [0.45, 0.55]) {
+      const m = [a[0] + (b[0] - a[0]) * f, a[1] + (b[1] - a[1]) * f];
+      uit += touw(lijn([[m[0] - 4, m[1] - 7], [m[0] + 4, m[1] + 7]]), 4.5);
+    }
   }
-  uit += touw(lijn([[352, 116], [270, 120]]), 6) + touw(lijn([[262, 112], [280, 118]]), 6) + touw(lijn([[263, 120], [281, 126]]), 6);
-  uit += pijl(312, 96, 350, 96, { kracht: true }) + tekst(331, 86, 'trek', { maat: 10.5 });
-  uit += wijs(352, 30, 'voorste piket: de meeste kracht', 258, 58, 'end');
-  uit += wijs(8, 200, 'kop naar de voet van de volgende', 186, 104, 'start');
-  uit += wijs(8, 50, 'slingersjorring', 126, 92, 'start');
-  return svg(w, h, 'Haringen in serie: drie piketten op een rij, schuin van de trek af; het touw van de last zit laag aan de voorste, en de kop van elke piket is met een slingersjorring verbonden met de voet van de volgende', uit);
+  const x0 = opY(2, 116);
+  uit += touw(lijn([[432, 114], [x0 + 10, 117]]), 6) + touw(lijn([[x0 - 8, 109], [x0 + 10, 114]]), 6) + touw(lijn([[x0 - 7, 117], [x0 + 11, 122]]), 6);
+  uit += pijl(392, 96, 430, 96, { kracht: true }) + tekst(411, 86, 'trek', { maat: 10.5 });
+  voet.forEach((x, i) => { uit += nummer(opY(i, 168), 168, i + 1); });
+  uit += wijs(432, 22, 'voorop de meeste piketten', kop[2] + 4, 58, 'end');
+  uit += wijs(150, 22, 'slingersjorring', (opY(2, 64) + opY(1, gy - 4)) / 2 + 6, 93, 'middle');
+  uit += wijs(8, 210, 'kop naar de voet van de volgende, haaks op de piketten', (opY(1, 64) + opY(0, gy - 4)) / 2 + 6, 98, 'start');
+  return svg(w, h, 'Haringen in serie: drie groepen piketten op een rij in het verlengde van de trek, voorop drie, dan twee, achteraan één, schuin van de trek af; het touw van de last zit laag aan de voorste groep, en de kop van elke groep is met een slingersjorring verbonden met de voet van de volgende, haaks op de piketten', uit);
 }
 
-/** A buried balk as anchor, in section. */
+/** A buried balk as anchor, in section: the rope comes up flat (here 20 degrees; at most 25 under a big pull). */
 function dodeMan() {
   const w = 340; const h = 230; const gy = 70;
   let uit = `<rect x="0" y="${gy}" width="${w}" height="${h - gy}" class="sj-aarde"/><path d="M0 ${gy}H${w}" class="sj-maaiveld"/>`;
   // the trench, filled again and tamped; the side towards the load stays untouched, and a narrow slot leads the rope
-  uit += `<path d="M78 ${gy}V204H138V176L240 ${gy}H218L138 150V${gy}Z" class="sj-grond"/>`;
-  uit += `<path d="M78 ${gy}V204H138V176L240 ${gy}M218 ${gy}L138 150V${gy}" class="sj-onder"/>`;
-  uit += paal(142, 132, 142, 214, 12, { kop1: true });
-  uit += touw(lijn([[116, 184], [229, 72], [330, 34]]), 6);
-  uit += kopVanBoven(116, 184, 20);
-  uit += pijl(282, 30, 324, 14, { kracht: true }) + tekst(322, 62, 'trek', { maat: 10.5 });
-  uit += wijs(8, 30, 'sleuf weer dicht en aangestampt', 100, 100, 'start');
-  uit += wijs(8, 222, 'balk, dwars op de trek', 110, 200, 'start');
-  uit += wijs(250, 210, 'piket voor de balk', 146, 196, 'middle');
-  uit += wijs(332, 124, 'touw door een schuine geul', 196, 112, 'end');
-  return svg(w, h, 'Dode man, in doorsnede: een balk ligt dwars op de trek diep in een sleuf, tegen de vaste grond aan de kant van de last, met een piket ervoor in de vaste grond; het touw komt door een smalle schuine geul in de richting van de last naar boven, en de sleuf is weer dichtgegooid en aangestampt', uit);
+  // up in a straight line, as flat as the pull
+  const hel = 0.36;
+  uit += `<path d="M40 ${gy}V178H100V166L340 ${r1(166 - 240 * hel)}V${gy}H${r1(100 + (138 - gy) / hel)}L100 138V${gy}Z" class="sj-grond"/>`;
+  uit += `<path d="M40 ${gy}V178H100V166L340 ${r1(166 - 240 * hel)}M${r1(100 + (138 - gy) / hel)} ${gy}L100 138V${gy}" class="sj-onder"/>`;
+  uit += paal(108, 118, 108, 204, 12, { kop1: true });
+  const ex = 70 + (152 - gy) / hel;
+  uit += touw(lijn([[70, 152], [ex, gy], [340, gy - (340 - ex) * hel]]), 6);
+  uit += kopVanBoven(70, 152, 20);
+  uit += pijl(262, 30, 318, 10, { kracht: true }) + tekst(290, 14, 'trek', { maat: 10.5, anker: 'end' });
+  uit += wijs(8, 30, 'sleuf weer dicht en aangestampt', 64, 100, 'start');
+  uit += wijs(8, 222, 'balk, dwars op de trek', 58, 170, 'start');
+  uit += wijs(200, 214, 'piket voor de balk', 112, 196, 'middle');
+  uit += wijs(332, 126, 'touw door een schuine geul,', 200, 106, 'end') + tekst(332, 140, 'niet steiler dan 25°', { anker: 'end', maat: 10.5 });
+  return svg(w, h, 'Dode man, in doorsnede: een balk ligt dwars op de trek diep in een sleuf, tegen de vaste grond aan de kant van de last, met een piket ervoor in de vaste grond; het touw komt in een rechte lijn door een smalle schuine geul in de richting van de last naar boven, niet steiler dan 25 graden, en de sleuf is weer dichtgegooid en aangestampt', uit);
 }
 
 /** A tree as anchor: rope low round the trunk, over a protection. */
@@ -1148,6 +1264,9 @@ export default {
   'sj-grondanker': grondanker,
   'sj-eigen-veiligheid': eigenVeiligheid,
   'sj-bouwplan': bouwplan,
+  'sj-katteklauw': () => knoop(katteklauwDef()),
+  'sj-haaksteek': () => knoop(haaksteekDef()),
+  'sj-strop': () => knoop(stropDef()),
   'tb-touwbrug-varianten': touwbrugVarianten,
   'tb-buikschuif': buikschuifHouding,
   'tb-spanknoop': spanknoop,

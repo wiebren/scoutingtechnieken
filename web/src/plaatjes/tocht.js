@@ -113,8 +113,8 @@ const KORT = {
   'sp-binnen30': 'verstopt|binnen 30 m', 'sp-gevaar': 'gevaar', 'sp-hindernis': 'hindernis:|eroverheen',
   'sp-kamp-bewoond': 'bewoond kamp', 'sp-kamp-leeg': 'leeg kamp', 'sp-water': 'drinkwater', 'sp-water-niet': 'water niet|drinken',
   'sp-vriend': 'vriendschap', 'sp-vijand': 'vijandschap',
-  'nt-grasdot': 'grasdot:|punten wijzen', 'nt-stenen-weg': 'kleine steen|wijst de weg', 'nt-stenen-stop': 'drie op elkaar:|niet doorgaan',
-  'nt-tak': 'schuine tak|wijst de weg', 'nt-tak-afstand': 'twee steuntakken:|2× de afstand', 'nt-stop-gras': 'drie dwars:|niet doorgaan',
+  'nt-grasdot': 'grasdot:|punten wijzen', 'nt-stenen-weg': 'kleine steen|wijst de weg', 'nt-stenen-goed': 'niets ernaast:|goede weg', 'nt-stenen-stop': 'drie op elkaar:|niet doorgaan',
+  'nt-tak': 'schuine tak|wijst de weg', 'nt-tak-afstand': 'twee steuntakken:|2× de afstand', 'nt-tak-vork': 'in een vork: hoge|eind wijst de weg', 'nt-stop-gras': 'drie dwars:|niet doorgaan',
   'nt-lucifer': 'lucifer: kopje|wijst de weg',
 };
 const metKort = (lijst) => lijst.map((t) => ({ inhoud: t.teken, kort: KORT[t.id] ?? t.naam }));
@@ -152,16 +152,44 @@ function stripkaartRoute() {
 
 function noordpijlRoute() { return kruispuntenroute({ noord: true }); }
 
+/** The aangezichtskruispunt as you see it when you walk up to it: your road runs away from you to the horizon, the
+ * crossing road runs left and right, with a house behind a fence, trees and a signpost. Perspective with one
+ * vanishing point (150, 78). */
 function aangezichtsKruispunt() {
+  const [VX, VY] = [150, 78];
+  // the half width of your road at height y: 54 at the bottom, 0 at the horizon
+  const half = (y) => r1((54 * (y - VY)) / (220 - VY));
+  const [voor, achter] = [150, 128];   // near and far edge of the crossing road
   let uit = '<rect x="0" y="0" width="300" height="220" rx="10" class="vlak2"/>';
-  uit += kruispunt(150, 120, 100, [270, 0, 90], 90, { pen: false });
-  uit += '<path d="M60 40h50v42h-50z" class="tw-huis"/><path d="M54 42L85 18L116 42Z" class="tw-huis"/>';
-  for (const [x, y] of [[210, 40], [236, 54], [262, 38], [240, 176], [270, 198]]) uit += `<circle cx="${x}" cy="${y}" r="13" class="tw-boom"/>`;
-  uit += '<path d="M184 150h22v6h-22zM186 156v8M204 156v8" class="lijn"/>';
-  uit += '<path d="M110 172V140M110 140l-16 -10M110 140l16 -10" class="lijn dik"/>';
-  uit += `<path d="M150 210V120" class="tw-pen"/>${pijl(150, 120, 236, 120, { klasse: 'tw-pen', punt: 12 })}`;
-  uit += tekst(68, 100, 'boerderij', { maat: 10 }) + tekst(196, 178, 'bankje', { maat: 10 }) + tekst(86, 186, 'wegwijzer', { maat: 10 });
-  return svg(300, 220, 'Aangezichtskruispunt: het kruispunt met een boerderij, bomen, een bankje en een wegwijzer erbij; de pijl gaat rechtsaf', uit);
+  uit += `<path d="M0 ${VY}H300V210Q300 220 290 220H10Q0 220 0 210Z" class="tw-bos"/>`;
+  // a wood on the horizon, where your road disappears
+  uit += `<path d="M118 ${VY}Q122 66 132 70Q140 60 150 68Q160 60 170 70Q180 64 186 ${VY}Z" class="tw-kroon"/>`;
+  const weg = `M96 220L${VX - half(voor)} ${voor}H0V${achter}H${VX - half(achter)}L${VX} ${VY}L${VX + half(achter)} ${achter}H300V${voor}H${VX + half(voor)}L204 220Z`;
+  uit += `<path d="${weg}" class="tw-zand"/>`;
+  uit += `<path d="M96 220L${VX - half(voor)} ${voor}H0M0 ${achter}H${VX - half(achter)}L${VX} ${VY}L${VX + half(achter)} ${achter}H300M300 ${voor}H${VX + half(voor)}L204 220" class="lijn dun"/>`;
+  // the house on the far left corner: its front faces you, its side runs to the vanishing point
+  const naar = ([x, y], t) => [r1(x + (VX - x) * t), r1(y + (VY - y) * t)];
+  const t = 0.25;
+  const [z1, z2, n1, n2] = [naar([84, 118], t), naar([84, 92], t), naar([59, 72], t), naar([88, 92], t)];
+  uit += `<path d="M84 118L${z1[0]} ${z1[1]}L${z2[0]} ${z2[1]}L84 92Z" class="vlak"/><path d="M84 118L${z1[0]} ${z1[1]}L${z2[0]} ${z2[1]}L84 92Z" class="lijn dun"/>`;
+  uit += '<rect x="34" y="92" width="50" height="26" class="vlak"/><rect x="34" y="92" width="50" height="26" class="lijn dun"/>';
+  uit += `<path d="M59 72L${n1[0]} ${n1[1]}L${n2[0]} ${n2[1]}L88 92Z" class="tw-dak"/><path d="M30 92L59 72L88 92Z" class="tw-dak"/>`;
+  uit += '<path d="M54 118v-14h10v14M40 98h9v7h-9zM69 98h9v7h-9z" class="lijn dun"/>';
+  // a fence along the far side of the crossing road, in front of the house
+  uit += '<path d="M8 120H116M8 114H116' + [8, 20, 32, 44, 56, 68, 80, 92, 104, 116].map((x) => `M${x} 125V110`).join('') + '" class="tw-pen dun"/>';
+  // trees on the far right, smaller further away, and one close by
+  for (const [x, y, k] of [[198, 120, 0.5], [222, 121, 0.6], [248, 119, 0.55], [278, 122, 0.7], [276, 216, 1.1]]) {
+    uit += `<rect x="${r1(x - 3.5 * k)}" y="${r1(y - 24 * k)}" width="${r1(7 * k)}" height="${r1(24 * k)}" class="tw-stam"/><circle cx="${x}" cy="${r1(y - 37 * k)}" r="${r1(17 * k)}" class="tw-kroon"/>`;
+  }
+  // a signpost on the near left corner, its arms along the crossing road
+  uit += '<path d="M98 176V112" class="tw-pen"/>';
+  uit += '<path d="M100 114h26l6 5l-6 5h-26z" class="tw-bord-licht"/><path d="M96 126h-26l-6 5l6 5h26z" class="tw-bord-licht"/>';
+  // a bench on the near right
+  uit += '<path d="M212 182h38M214 174h34M216 182v10M246 182v10M214 174v8M248 174v8" class="tw-pen dun"/>';
+  // the way you go: up your road, and at the crossing to the right
+  const midden = (voor + achter) / 2;
+  uit += `<path d="M150 212V${midden}" class="tw-pen"/>${pijl(150, midden, 270, midden, { klasse: 'tw-pen', punt: 12 })}`;
+  return svg(300, 220, 'Aangezichtskruispunt, getekend zoals je het ziet als je aankomt: jouw weg loopt van je af naar de horizon, de dwarsweg loopt naar links en rechts. Links achter een hek een huis, rechts bomen, op de hoek links een wegwijzer en rechts vooraan een bankje. De pijl gaat rechtsaf', uit);
 }
 
 function ogenroute() {
@@ -899,7 +927,7 @@ function dobbelsteenTocht() {
     } else uit += tekst(cx + 34, cy + 9, i === 4 ? '!' : '?', { maat: 26, klasse: 'vet' });
     uit += tekst(cx, cy + 46, `${i + 1}: ${t}`, { maat: 12, klasse: 'vet' });
   });
-  return svg(340, 214, 'Dobbelsteentocht: wat elk getal betekent bij Jong Nederland. 1 rechtsaf, 2 linksaf, 3 rechtdoor, 4 terug, 5 een opdracht, 6 jullie kiezen zelf', uit);
+  return svg(340, 214, 'Dobbelsteentocht: wat elk getal kan betekenen. 1 rechtsaf, 2 linksaf, 3 rechtdoor, 4 terug, 5 een opdracht, 6 jullie kiezen zelf', uit);
 }
 
 function radiovos() {

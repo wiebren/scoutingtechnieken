@@ -9,6 +9,7 @@ import { abokLink, abokPagina } from './data/abok.js';
 import { BLAD } from './data/bladen/index.js';
 import { CATEGORIE, groepNaam } from './data/categorieen.js';
 import { REFERENTIES } from './data/referenties.js';
+import { termLinks } from './termlinks.js';
 import { inLaag, insigneBeeld } from './data/insignes.js';
 import { inKeuze, niveausVan } from './data/niveaus.js';
 import { h } from './dom.js';
@@ -17,8 +18,9 @@ import { meld } from './melden.js';
 import { isAfgevinkt, niveauKeuze, volgAfgevinkt, zetAfgevinkt } from './opslag.js';
 import { href } from './router.js';
 
-/** Text as paragraphs: a string, or a list of them; lines starting with "- " are put together in a list. */
-export function alinea(tekst) {
+/** Text as paragraphs: a string, or a list of them; lines starting with "- " are put together in a list. `links`
+ *  turns our own words into text with links (src/termlinks.js); a quote stays as it is. */
+export function alinea(tekst, links = (t) => t) {
   const regels = Array.isArray(tekst) ? tekst : [tekst];
   const uit = [];
   // a line that is a quote („…”, a rule taken over word for word) looks like one, apart from our own words
@@ -31,8 +33,8 @@ export function alinea(tekst) {
       const vorige = uit.at(-1);
       const lijst = vorige?.tagName === 'UL' && vorige.classList.contains('citaten') === citaat(item) ? vorige
         : uit[uit.push(h(citaat(item) ? 'ul.citaten' : 'ul')) - 1];
-      lijst.append(h('li', citaat(item) ? zonderTekens(item) : item));
-    } else uit.push(citaat(regel) ? h('p.citaat', zonderTekens(regel)) : h('p', regel));
+      lijst.append(h('li', citaat(item) ? zonderTekens(item) : links(item)));
+    } else uit.push(citaat(regel) ? h('p.citaat', zonderTekens(regel)) : h('p', links(regel)));
   }
   return uit;
 }
@@ -171,14 +173,15 @@ export function bladKaart(blad, { linkNaar }) {
   const leeg = !blad.uitleg && !blad.waarvoor;
   const laag = inLaag(blad.id);
   const naar = (blad.naar ?? []).filter((n) => n.blad && BLAD[n.blad]);
+  const links = termLinks(blad.id, linkNaar);
 
   return h('article.blad', { 'data-familie': categorie.kleur },
     h('p.pad', h('a', { href: href('zoeken', { c: categorie.id }) }, categorie.naam), ' › ',
       h('a', { href: href('zoeken', { c: categorie.id, g: blad.groep }) }, groepNaam(categorie.id, blad.groep))),
     h('h2', { tabindex: '-1' }, blad.naam),
     buitenNiveau(blad.id),
-    blad.waarvoor && h('section.waarvoor', h('h3', 'Waarvoor'), h('p', blad.waarvoor)),
-    blad.uitleg && h('section.uitleg', blad.waarvoor && h('h3', 'Uitleg'), alinea(blad.uitleg)),
+    blad.waarvoor && h('section.waarvoor', h('h3', 'Waarvoor'), h('p', links(blad.waarvoor))),
+    blad.uitleg && h('section.uitleg', blad.waarvoor && h('h3', 'Uitleg'), alinea(blad.uitleg, links)),
     blad.soorten?.length > 0 && soorten(blad.soorten, blad.naam, linkNaar),
     blad.plaatje && plaatje(blad.plaatje),
     blad.beelden?.length > 0 && beelden(blad.beelden),
@@ -187,11 +190,11 @@ export function bladKaart(blad, { linkNaar }) {
       h('thead', h('tr', blad.tabel.kop.map((k) => h('th', { scope: 'col' }, k)))),
       h('tbody', blad.tabel.rijen.map((rij) => h('tr', rij.map((cel, i) => (i === 0 ? h('th', { scope: 'row' }, cel) : h('td', cel)))))))),
     leeg && h('p.nognie', categorie.nogNiet ?? 'De uitleg hiervan komt nog.'),
-    blad.letOp && h('aside.letop', h('strong', 'Let op'), h('p', blad.letOp), blad.letOpPlaatje && plaatje(blad.letOpPlaatje)),
+    blad.letOp && h('aside.letop', h('strong', 'Let op'), h('p', blad.letOp.startsWith('„') ? blad.letOp : links(blad.letOp)), blad.letOpPlaatje && plaatje(blad.letOpPlaatje)),
     blad.verwijs?.length > 0 && h('aside.verwijs',
       h('strong', blad.categorie === 'veiligheid' && blad.groep === 'ehbo' ? 'Wat je moet doen, stap voor stap' : 'Lees verder'),
       blad.categorie === 'veiligheid' && blad.groep === 'ehbo'
-        && h('p', 'In deze app staan geen stappenplannen voor eerste hulp. Die staan in een echte EHBO-app. En je leert ze op een EHBO-cursus.'),
+        && h('p', 'Deze app is geen EHBO-app. Het hele stappenplan staat in een echte EHBO-app, en je leert het op een EHBO-cursus.'),
       h('ul', blad.verwijs.map((v) => h('li', h('a', { href: v.url, target: '_blank', rel: 'noopener' }, v.naam, icoon('extern', 'icoon klein')))))),
     naar.length > 0 && h('section.zieook', h('h3', 'Zie ook'),
       h('ul.chips', naar.map((n) => h('li', h('a.chip', { href: linkNaar(n.blad) }, BLAD[n.blad].naam))))),

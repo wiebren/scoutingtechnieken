@@ -4,7 +4,8 @@
 // loads everywhere.
 //
 // Sources: Baden-Powell, Scouting for Boys (1908), Camp Fire Yarn 3 [NAV §3a]; the larger set and the natural signs
-// from Scoutpedia, Spoortekens [NAV §3b]; the waymarks from Wandelnet and nl.wikipedia, Lange-afstand-wandelpad
+// from Scoutpedia, Spoortekens [NAV §3b], two of them (stone on stone, a stick in a forked stick) from the Handboek
+// Scouting technieken of Scouting Johannes Vianney, 2008, §4.1 [VIA08]; the waymarks from Wandelnet and nl.wikipedia, Lange-afstand-wandelpad
 // [VAK WNET, tocht-uitwerking.md].
 
 const r = (n) => Math.round(n * 10) / 10;
@@ -81,9 +82,12 @@ export const UITGEBREID = [
 export const NATUUR = [
   { id: 'nt-grasdot', vorm: 'een plukje gras, aan de punten samengeknoopt en neergelegd', naam: 'Deze weg: geknoopte grasdot, de punten wijzen', teken: grasdot(50, 78, 0, 1.6) },
   { id: 'nt-stenen-weg', vorm: 'twee stenen op elkaar met een kleine steen ernaast', naam: 'Deze weg: twee stenen op elkaar, een kleine ernaast', teken: steen(44, 62, 24, 17) + steen(42, 46, 15, 11) + steen(82, 64, 9, 7) },
+  { id: 'nt-stenen-goed', vorm: 'twee stenen op elkaar, zonder steen ernaast', naam: 'Goede weg, ga zo door: twee stenen op elkaar, niets ernaast', teken: steen(50, 62, 24, 17) + steen(48, 46, 15, 11) },
   { id: 'nt-stenen-stop', vorm: 'drie stenen op elkaar gestapeld', naam: 'Niet doorgaan: drie stenen op elkaar', teken: steen(50, 72, 26, 14) + steen(50, 52, 19, 11) + steen(50, 36, 12, 8) },
   { id: 'nt-tak', vorm: 'een tak schuin in de grond', naam: 'Deze weg: tak schuin in de grond, zonder steuntakken', teken: lijn('M8 82H92', 'tk-grond') + tak(26, 82, 80, 26) },
   { id: 'nt-tak-afstand', vorm: 'een schuine tak met twee steuntakken eronder', naam: 'Deze weg, twee keer de afgesproken afstand: tak met twee steuntakken', teken: lijn('M8 82H92', 'tk-grond') + tak(22, 82, 78, 24) + tak(56, 82, 50, 54) + tak(70, 82, 62, 42) },
+  // the long stick rests in the fork of an upright stick; the high end points the way, the fork says nothing about distance
+  { id: 'nt-tak-vork', vorm: 'een lange tak die op een rechtopstaande gevorkte stok rust', naam: 'Deze weg: lange tak in een gevorkte stok, het hoge eind wijst', teken: lijn('M8 82H92', 'tk-grond') + tak(70, 82, 70, 52) + tak(70, 52, 61, 36) + tak(12, 82, 86, 40) + tak(70, 52, 79, 36) },
   { id: 'nt-stop-gras', vorm: 'drie grasplukjes dwars over het pad', naam: 'Niet doorgaan: drie grasdotjes dwars op de weg', teken: lijn('M24 10V90M76 10V90', 'tk-grond') + [24, 50, 76].map((y) => grasdot(34, y, 90, 0.85)).join('') },
   { id: 'nt-lucifer', vorm: 'een lucifer in de schors van een boom', naam: 'Deze weg: lucifer in de schors, het kopje wijst', teken: `<rect x="18" y="8" width="64" height="84" rx="10" class="tk-schors"/>`
     + lijn('M30 20v26M44 30v30M58 16v20M70 50v30M36 62v22', 'tk-schorslijn') + `<path d="M28 58L70 40" class="tk-lucifer"/><circle cx="72" cy="39" r="5" class="tk-kopje"/>` },

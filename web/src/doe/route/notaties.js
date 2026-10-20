@@ -310,7 +310,7 @@ export const TECHNIEKEN = {
     },
     sleutel: [
       'Eén kraal per kruispunt. Je begint bij de lus.',
-      'Lila is linksaf, groen is rechtdoor, rood is rechtsaf. Zo staat het op Scoutpedia.',
+      'Lila is linksaf, groen is rechtdoor, rood is rechtsaf.',
       'De kleuren spreekt de leiding af en ze kunnen per groep verschillen. Lees altijd de sleutel die je meekrijgt.',
     ],
   },
@@ -324,7 +324,7 @@ export const TECHNIEKEN = {
     },
     sleutel: [
       'Eén knoop per kruispunt, van boven (de lus) naar beneden.',
-      'Paalsteek is linksaf, halve steek is rechtdoor, achtknoop is rechtsaf. Zo staat het op Scoutpedia.',
+      'Paalsteek is linksaf, halve steek is rechtdoor, achtknoop is rechtsaf.',
       'Andere groepen tellen knoopjes (1 = rechtdoor, 2 = rechtsaf, 3 = linksaf). Vraag altijd welke afspraak geldt.',
     ],
   },
@@ -343,7 +343,7 @@ export const TECHNIEKEN = {
       'Elke tijd hoort bij een kruispunt.',
       'Zet de tijd op een wijzerklok (of denk hem je in). Houd de klok zo dat de kleine wijzer naar het noorden wijst.',
       'De grote wijzer wijst dan de weg die je neemt. 03:00 is west, 06:00 zuid, 09:00 oost.',
-      'Sommige groepen zetten de kleine wijzer op de weg waar je vandaan komt. Hier geldt: kleine wijzer op het noorden (Scoutpedia).',
+      'Sommige groepen zetten de kleine wijzer op de weg waar je vandaan komt. Hier geldt: kleine wijzer op het noorden.',
     ],
   },
   rll: {

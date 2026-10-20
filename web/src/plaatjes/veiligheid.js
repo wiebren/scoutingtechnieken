@@ -1,6 +1,6 @@
 // Drawings for veiligheid. See ../plaatjes.js and ./basis.js. Flags, lights and fire keep their real colours in
 // both themes; the rest uses the .plaatje classes in style.css and the vh- classes in ./veiligheid.css.
-import { pol, svg, tekst } from './basis.js';
+import { pol, r1, svg, tekst } from './basis.js';
 
 let teller = 0;
 
@@ -46,6 +46,56 @@ function signalen(id, stappen, titel) {
   });
   return svg(380, 132, titel, d).replace('class="plaatje"', `class="plaatje vh-${id}"`);
 }
+
+// People in the EHBO drawings: thick lines in the colour of their clothes, the helper blue, the one who needs help
+// green.
+const HUID = '#e9b98f';
+const HELPER = '#3c78c8';
+const GEWONDE = '#3f8f5a';
+/** A person, or a part of one: lines through the points [[x, y], …] and, when given, a head. */
+function mens(hoofd, delen, { kleur = HELPER, dikte = 5, r = 8 } = {}) {
+  const d = delen.map((p) => `M${p.map(([x, y]) => `${x} ${y}`).join(' L')}`).join(' ');
+  return `<path d="${d}" stroke="${kleur}" stroke-width="${dikte}" stroke-linecap="round" stroke-linejoin="round" fill="none"/>`
+    + (hoofd ? `<circle cx="${hoofd[0]}" cy="${hoofd[1]}" r="${r}" fill="${HUID}"/>` : '');
+}
+
+/** Three tiles side by side, each a small drawing round (0, 0), a name and a line (as in weren-kleren-smeren). */
+function drieTegels(tegels, titel) {
+  let d = '';
+  tegels.forEach(([naam, onder, ikoon], i) => {
+    const x = 4 + i * 126;
+    d += `<rect x="${x}" y="4" width="120" height="132" rx="10" class="vlak2"/>`;
+    d += `<g transform="translate(${x + 60} 54)">${ikoon}</g>`;
+    d += tekst(x + 60, 112, naam, { maat: 12, klasse: 'vet' }) + tekst(x + 60, 127, onder, { maat: 9.5 });
+  });
+  return svg(380, 140, titel, d);
+}
+
+/** Numbered steps side by side: [drawing in a cell from (0, 0), line, line]; the cell is (380 - gaps) / n wide. */
+function stappen(lijst, hoog, titel) {
+  const n = lijst.length; const w = (380 - 4 * (n - 1)) / n;
+  let d = '';
+  lijst.forEach(([teken, regel1, regel2], i) => {
+    const x = r1(i * (w + 4));
+    d += `<rect x="${x}" y="0" width="${r1(w)}" height="${hoog}" rx="8" class="vlak2"/>`;
+    d += `<g transform="translate(${x} 0)">${teken}</g>`;
+    d += `<circle cx="${x + 13}" cy="13" r="9" class="vh-nummer"/>` + tekst(x + 13, 17, String(i + 1), { maat: 11, klasse: 'vet' });
+    d += tekst(r1(x + w / 2), hoog - 21, regel1, { maat: 9.5 }) + tekst(r1(x + w / 2), hoog - 8, regel2, { maat: 9.5 });
+  });
+  return svg(380, hoog, titel, d);
+}
+
+/** A forearm lying across, from x0 to x1, its top at y (about 30 thick). */
+const onderarm = (x0, x1, y) => `<path d="M${x0} ${y + 2} Q${(x0 + x1) / 2} ${y - 3} ${x1} ${y} L${x1} ${y + 30} Q${(x0 + x1) / 2} ${y + 32} ${x0} ${y + 36} Z" class="vh-huid"/>`;
+/** Turns of a bandage over an arm: slanted bands from x0, `n` of them `stap` apart, from y to y + h. */
+const slagen = (x0, n, stap, y, h, klasse = 'vh-zwachtel') => Array.from({ length: n }, (_, k) => {
+  const x = x0 + k * stap;
+  return `<path d="M${x} ${y} L${x + 9} ${y - 1} L${x + 13} ${y + h} L${x + 4} ${y + h + 1} Z" class="${klasse}"/>`;
+}).join('');
+/** A reef knot with two short ends, seen from above. */
+const knoopje = (x, y) => `<path d="M${x} ${y} q8 2 14 10 M${x} ${y} q11 -3 17 2" class="vh-slip"/><circle cx="${x}" cy="${y}" r="4.5" class="vh-zwachtel"/>`;
+/** A roll of bandage, end on. */
+const rol = (x, y, r = 7) => `<circle cx="${x}" cy="${y}" r="${r}" class="vh-zwachtel"/><circle cx="${x}" cy="${y}" r="${r * 0.4}" class="lijn dun stil"/>`;
 
 export default {
   strandvlaggen: () => {
@@ -365,7 +415,7 @@ export default {
     d += '<circle cx="90" cy="82" r="3" class="vh-beet"/><circle cx="90" cy="82" r="14" class="vh-ring"/>';
     d += '<circle cx="290" cy="82" r="3" class="vh-beet"/><circle cx="290" cy="82" r="54" class="vh-ring"/><circle cx="290" cy="82" r="38" class="vh-ring-licht"/>';
     d += '<path d="M182 82 h18 m-6 -5 l6 5 l-6 5" class="lijn stil"/>';
-    d += tekst(90, 170, 'dagen tot weken na de beet', { maat: 9.5, klasse: 'stil' }) + tekst(290, 170, 'de ring wordt groter', { maat: 9.5, klasse: 'vet' });
+    d += tekst(90, 170, 'dagen tot 3 maanden na de beet', { maat: 9.5, klasse: 'stil' }) + tekst(290, 170, 'de ring wordt groter', { maat: 9.5, klasse: 'vet' });
     return svg(380, 180, 'Na een tekenbeet kan er een rode, gelige of blauwrode vlek of ring om de plek komen, die groter wordt. Ga dan naar de huisarts', d);
   },
 
@@ -411,5 +461,225 @@ export default {
     d += '<path d="M306 116 q-3 6 0 8 q3 -2 0 -8Z M318 128 q-3 6 0 8 q3 -2 0 -8Z M310 140 q-3 6 0 8 q3 -2 0 -8Z" class="vh-druppel"/>';
     return svg(380, 190, 'Een strookje stof in een vlam. Katoen vat snel vlam. Wol vat moeilijk vlam en smeult hooguit even. Polyester en nylon vatten moeilijker vlam, maar smelten en druppelen: die hete druppels geven brandwonden', d);
   },
-};
+  // ---- EHBO, round 2 (VIA08 hfst. 5, following NREH 2026) ----
 
+  'bloeding-drukken': () => {
+    let d = '<rect x="0" y="0" width="380" height="200" class="vlak2"/>';
+    d += '<rect x="30" y="150" width="270" height="10" rx="4" class="vh-mat"/>';
+    // the helper, kneeling on the far side, arms straight down onto the wound
+    d += mens([206, 60], [[[268, 148], [238, 148], [228, 112], [212, 76]], [[214, 82], [206, 104], [202, 126]], [[210, 82], [198, 106], [194, 126]]], { dikte: 6, r: 10 });
+    // the one who bleeds, on their back, a blanket over the chest
+    d += mens([58, 136], [[[74, 140], [168, 141]], [[168, 141], [216, 142], [266, 142]], [[168, 140], [214, 136], [262, 137]], [[88, 138], [118, 146], [146, 146]]], { kleur: GEWONDE, dikte: 8, r: 10 });
+    d += '<path d="M70 150 Q72 126 96 126 L150 126 Q164 128 164 150 Z" class="vh-deken"/>';
+    // the cloth on the wound, a little blood, the hands on top
+    d += '<path d="M182 130 Q178 140 186 146 M214 132 Q222 140 214 147" class="vh-bloed"/>';
+    d += '<rect x="182" y="126" width="34" height="14" rx="3" class="vh-doek"/>';
+    d += `<circle cx="194" cy="128" r="6" fill="${HUID}"/><circle cx="203" cy="128" r="6" fill="${HUID}"/>`;
+    d += '<path d="M244 64 l-26 50" class="lijn accent-lijn" stroke-width="2"/><path d="M220 104 l-2 10 l8 -6" class="lijn accent-lijn" stroke-width="2"/>';
+    d += tekst(250, 34, 'druk hard op de wond,', { maat: 11, anker: 'start', klasse: 'vet accent-tekst' })
+      + tekst(250, 48, 'met een doek ertussen', { maat: 11, anker: 'start', klasse: 'vet accent-tekst' })
+      + tekst(250, 62, 'minstens 3 minuten', { maat: 10, anker: 'start' });
+    d += tekst(70, 32, 'bel 112', { maat: 13, klasse: 'vet rood-tekst' });
+    d += tekst(110, 180, 'laten liggen en warm houden', { maat: 10.5, klasse: 'vet' });
+    return svg(380, 200, 'Een hevige bloeding aan het been: de gewonde ligt op zijn rug met een deken over zich heen. Een helper knielt ernaast en drukt met twee handen en gestrekte armen hard op een doek op de wond, minstens 3 minuten. Bel 112', d);
+  },
+
+  'flauwte-voorkomen': () => drieTegels([
+    ['handen haken', 'en uit elkaar trekken',
+      `<path d="M-46 18 L-10 2 M46 18 L10 2" stroke="${HUID}" stroke-width="10" stroke-linecap="round"/>`
+      + `<path d="M-12 2 Q-2 -14 6 -2 M12 2 Q2 18 -6 6" stroke="${HUID}" stroke-width="6" fill="none" stroke-linecap="round"/>`
+      + '<path d="M-26 -18 h-20 m6 -5 l-6 5 l6 5 M26 -18 h20 m-6 -5 l6 5 l-6 5" class="lijn accent-lijn" stroke-width="2"/>'],
+    ['benen kruisen', 'en knijpen',
+      mens(null, [[[-8, -30], [10, 0], [10, 34]], [[8, -30], [-10, 0], [-10, 34]]], { dikte: 8 })
+      + '<path d="M-34 0 h12 m-5 -5 l5 5 l-5 5 M34 0 h-12 m5 -5 l-5 5 l5 5" class="lijn accent-lijn" stroke-width="2"/>'],
+    ['helpt dat niet?', 'ga liggen',
+      '<rect x="-50" y="18" width="100" height="6" rx="3" class="vh-mat"/>'
+      + mens([-40, 8], [[[-30, 10], [12, 10]], [[12, 10], [48, 10]], [[-22, 10], [0, 14]]], { kleur: GEWONDE, dikte: 7 })],
+  ], 'Voel je dat je flauwvalt? Haak je handen in elkaar en trek ze uit elkaar, kruis je benen en knijp ze tegen elkaar. Helpt dat niet, ga dan liggen'),
+
+  'shock-liggen': () => {
+    let d = '<rect x="0" y="0" width="380" height="190" class="vlak2"/>';
+    d += '<rect x="20" y="132" width="250" height="12" rx="5" class="vh-mat"/>';
+    d += mens([44, 118], [[[60, 122], [150, 122]], [[150, 122], [200, 124], [250, 124]], [[150, 121], [198, 118], [248, 119]]], { kleur: GEWONDE, dikte: 9, r: 11 });
+    d += '<path d="M56 132 Q58 100 86 100 L236 104 Q258 106 260 132 Z" class="vh-deken"/>';
+    d += '<path d="M120 60 L130 98 M226 160 L210 140" class="lijn stil"/>';
+    d += tekst(120, 52, 'iets eroverheen', { maat: 11, klasse: 'vet' }) + tekst(240, 174, 'iets eronder', { maat: 11, klasse: 'vet' });
+    // a cup, crossed out
+    d += '<g transform="translate(322 104)"><path d="M-14 -20 h28 l-4 34 h-20 z" class="vlak lijn"/><path d="M-24 -30 L24 22 M24 -30 L-24 22" class="lijn rood-lijn" stroke-width="4" stroke-linecap="round"/></g>';
+    d += tekst(322, 146, 'niets eten', { maat: 10.5, klasse: 'vet rood-tekst' }) + tekst(322, 160, 'of drinken', { maat: 10.5, klasse: 'vet rood-tekst' });
+    d += tekst(300, 30, 'bel 112', { maat: 13, klasse: 'vet rood-tekst' });
+    return svg(380, 190, 'Iemand in shock ligt op zijn rug, met iets eronder en een deken eroverheen tegen de kou. Niets eten of drinken, en bel 112', d);
+  },
+
+  'oog-vuiltje': () => {
+    let d = '<rect x="0" y="0" width="380" height="200" class="vlak2"/>';
+    // a right eye seen from the front: the nose is on the left
+    d += '<path d="M64 104 Q190 22 316 98 Q190 182 64 104 Z" class="vh-oogwit"/>';
+    d += '<circle cx="196" cy="100" r="40" class="vh-iris"/><circle cx="196" cy="100" r="16" class="vh-pupil"/><circle cx="186" cy="90" r="5" fill="#ffffff" opacity="0.8"/>';
+    d += '<ellipse cx="76" cy="104" rx="9" ry="6" class="vh-traanvlees"/>';
+    d += '<path d="M64 104 Q190 22 316 98 Q190 182 64 104 Z" class="lijn"/>';
+    // a speck on the white, swept to the inner corner; one on the coloured part, left alone
+    d += '<circle cx="130" cy="114" r="3.5" class="vol"/><path d="M122 112 Q106 108 92 106" class="lijn accent-lijn" stroke-width="2" stroke-dasharray="4 3"/><path d="M98 101 l-7 5 l8 3" class="lijn accent-lijn" stroke-width="2"/>';
+    d += '<circle cx="214" cy="82" r="3.5" class="vol"/><circle cx="214" cy="82" r="10" class="lijn rood-lijn" stroke-width="2"/>';
+    d += tekst(20, 108, 'neus', { maat: 10, klasse: 'stil' });
+    d += '<path d="M130 120 L118 160" class="lijn dun"/>' + tekst(118, 174, 'op het wit: veeg het', { maat: 10.5, klasse: 'vet accent-tekst' }) + tekst(118, 187, 'naar de hoek bij de neus', { maat: 10.5, klasse: 'vet accent-tekst' });
+    d += '<path d="M222 76 L262 30" class="lijn dun"/>' + tekst(300, 18, 'op het gekleurde deel:', { maat: 10.5, klasse: 'vet rood-tekst' }) + tekst(300, 31, 'blijf eraf', { maat: 10.5, klasse: 'vet rood-tekst' });
+    d += tekst(300, 178, 'niet wrijven', { maat: 11, klasse: 'vet' });
+    return svg(380, 200, 'Een oog van voren. Zit een vuiltje op het wit, veeg het dan voorzichtig naar de ooghoek bij de neus. Zit het op het gekleurde deel, blijf er dan af. Niet wrijven', d);
+  },
+
+  'tand-kroon': () => {
+    let d = '<rect x="0" y="0" width="380" height="190" class="vlak2"/>';
+    // a front tooth, lying on its side: the crown on the left, the root to the right
+    d += '<g transform="rotate(-12 150 100)">'
+      + '<path d="M150 82 Q206 80 252 96 Q262 100 252 104 Q206 120 150 118 Z" class="vh-wortel"/>'
+      + '<path d="M150 82 Q120 76 90 84 Q80 100 90 116 Q120 124 150 118 Z" class="vh-tand"/>'
+      + '<path d="M150 82 Q144 100 150 118" class="lijn dun stil"/></g>';
+    // two fingers holding the crown
+    d += `<ellipse cx="114" cy="80" rx="16" ry="10" fill="${HUID}" stroke="#a8745a"/><ellipse cx="124" cy="132" rx="16" ry="10" fill="${HUID}" stroke="#a8745a"/>`;
+    d += tekst(100, 30, 'pak hem bij de kroon', { maat: 11, klasse: 'vet accent-tekst' }) + '<path d="M100 36 L108 66" class="lijn dun"/>';
+    d += tekst(222, 160, 'niet aan de wortel', { maat: 11, klasse: 'vet rood-tekst' }) + '<path d="M222 148 L218 106" class="lijn dun"/>';
+    // a glass of milk
+    d += '<g transform="translate(326 100)"><path d="M-22 -40 h44 l-5 72 h-34 z" class="vlak lijn"/><path d="M-20.5 -18 h41 l-3.5 50 h-34 z" class="vh-melk"/>'
+      + '<path d="M-6 6 Q0 2 6 6 Q8 14 4 18 Q0 16 -4 18 Q-8 14 -6 6Z" class="vh-tand"/></g>';
+    d += tekst(326, 152, 'niet terug te zetten?', { maat: 9.5 }) + tekst(326, 165, 'bewaar hem in melk', { maat: 10.5, klasse: 'vet' }) + tekst(326, 178, 'nooit droog', { maat: 9.5 });
+    return svg(380, 190, 'Een tand die eruit is: pak hem bij de kroon, het deel waarmee je bijt, en niet bij de wortel. Kun je hem niet terugzetten, bewaar hem dan in melk, nooit droog', d);
+  },
+
+  'stroom-uit': () => drieTegels([
+    ['stekker eruit', 'als dat kan',
+      '<rect x="-46" y="-30" width="40" height="40" rx="8" class="vlak lijn"/><circle cx="-26" cy="-10" r="12" class="lijn"/><circle cx="-31" cy="-10" r="2.5" class="vol"/><circle cx="-21" cy="-10" r="2.5" class="vol"/>'
+      + '<path d="M8 -16 h16 v12 h-16 z M4 -12 h-6 M4 -8 h-6" class="lijn" stroke-width="2"/><path d="M24 -10 Q40 -10 40 14 Q40 30 22 30" class="lijn"/>'
+      + '<path d="M-2 20 h-18 m5 -5 l-5 5 l5 5" class="lijn accent-lijn" stroke-width="2" transform="scale(-1 1)"/>'],
+    ['stroom uit', 'in de meterkast',
+      '<rect x="-40" y="-32" width="80" height="62" rx="4" class="vlak lijn"/>'
+      + [-24, -8, 8, 24].map((x, i) => `<rect x="${x - 5}" y="-16" width="10" height="26" rx="2" class="lijn"/><rect x="${x - 3}" y="${i === 1 ? -2 : -14}" width="6" height="10" rx="1" class="${i === 1 ? 'accent' : 'vol'}"/>`).join('')
+      + '<path d="M-8 18 v10" class="lijn accent-lijn" stroke-width="2"/>'],
+    ['hoogspanning:', 'blijf weg, bel 112',
+      '<path d="M0 -36 L38 28 H-38 Z" fill="#f5b300" stroke="#1b1b1b" stroke-width="3" stroke-linejoin="round"/><path d="M4 -16 L-8 6 H2 L-4 22 L10 -2 H0 Z" fill="#1b1b1b"/>'],
+  ], 'Een ongeluk met stroom: trek de stekker eruit, of zet de stroom uit in de meterkast. Bij hoogspanning blijf je weg en bel je 112'),
+
+  'verkeersongeluk-stappen': () => drieTegels([
+    ['hesje aan', 'en van de rijbaan af',
+      '<path d="M-14 -34 L-24 -30 L-30 28 H30 L24 -30 L14 -34 Q0 -18 -14 -34 Z" fill="#e6f000" stroke="#7a7f00" stroke-width="1.4"/>'
+      + '<path d="M-28 4 H28 M-29 16 H29" stroke="#c9ccd2" stroke-width="5"/>'],
+    ['waarschuw', 'ander verkeer',
+      '<path d="M0 -36 L36 24 H-36 Z" fill="none" stroke="#d7262b" stroke-width="7" stroke-linejoin="round"/><path d="M0 -14 L16 14 H-16 Z" class="vol-licht"/><path d="M-30 30 h60" class="lijn dik"/>'],
+    ['motor uit', 'sleutel 5 meter weg',
+      '<rect x="-46" y="-26" width="22" height="34" rx="9" class="vol"/><circle cx="-35" cy="-14" r="4" class="vlak"/><path d="M-35 8 v14 h5 m-5 -6 h4" class="lijn dik"/>'
+      + '<path d="M-14 0 H40 M-8 -6 l-6 6 l6 6 M34 -6 l6 6 l-6 6" class="lijn accent-lijn" stroke-width="2"/>' + tekst(13, -8, '5 m', { maat: 13, klasse: 'vet accent-tekst' })],
+  ], 'Bij een verkeersongeluk: trek een hesje aan en ga van de rijbaan af. Waarschuw ander verkeer, met een gevarendriehoek. Zet de motor uit en leg de sleutel minstens 5 meter van de auto'),
+
+  'vergiftiging-wegen': () => drieTegels([
+    ['ingeslikt', 'mond spoelen, uitspugen',
+      '<path d="M-36 -26 h26 l-4 50 h-18 z" class="vlak lijn"/><path d="M-34.5 -10 h23 l-3 32 h-17 z" class="water"/>'
+      + '<path d="M4 -10 Q22 -10 28 6" class="lijn accent-lijn" stroke-width="2"/><path d="M22 4 l6 4 l2 -8" class="lijn accent-lijn" stroke-width="2"/>'
+      + '<path d="M30 18 q-4 7 0 9 q4 -2 0 -9Z M38 26 q-4 7 0 9 q4 -2 0 -9Z" class="blauw"/>'],
+    ['ingeademd', 'naar de frisse lucht',
+      '<path d="M-48 -8 q8 -10 16 0 t16 0 M-48 4 q8 -10 16 0 t16 0 M-48 16 q8 -10 16 0 t16 0" class="lijn stil" stroke-width="2.4"/>'
+      + '<path d="M-10 4 H14 M8 -2 l6 6 l-6 6" class="lijn accent-lijn" stroke-width="2"/>'
+      + '<path d="M36 34 V8" stroke="#8a5a2b" stroke-width="5"/><circle cx="36" cy="-6" r="18" class="vh-boom"/>'],
+    ['op de huid', '45 minuten spoelen',
+      '<path d="M-40 -34 H6 V-22 H-6 V-16 H-18 V-22 H-40Z" class="vol"/><path d="M-12 -16 Q-13 0 -10 14" class="vh-straal"/>'
+      + `<path d="M-44 20 Q0 10 48 22 L46 36 Q0 26 -44 34Z" fill="${HUID}"/>`],
+  ], 'Vergiftiging. Ingeslikt: laat de mond spoelen en uitspugen. Ingeademd: naar de frisse lucht. Op de huid: spoel 45 minuten met lauw water'),
+
+  // Bandages: each kind finished, as a tile, and the snelverband step by step.
+  'verband-snel': () => svg(160, 120, 'Een snelverband om een onderarm, met de knoop naast het kompres',
+    onderarm(6, 154, 40) + '<rect x="50" y="34" width="56" height="48" rx="3" class="vh-kompres"/>' + slagen(46, 7, 8.5, 37, 44) + knoopje(124, 38)),
+  'verband-wonddruk': () => {
+    // the turns go over the pad on the wound, so they bulge up in the middle
+    let d = onderarm(6, 154, 44);
+    for (let k = 0; k < 10; k++) {
+      const x = 40 + k * 7; const t = Math.max(0, 1 - ((x + 6 - 80) / 30) ** 2);
+      const y = r1(42 - 12 * Math.sqrt(t));
+      d += `<path d="M${x} ${y} L${x + 9} ${y - 1} L${x + 13} 84 L${x + 4} 85 Z" class="vh-elastisch"/>`;
+    }
+    d += '<path d="M80 2 v18 M74 14 l6 6 l6 -6" class="lijn accent-lijn" stroke-width="2"/>';
+    return svg(160, 120, 'Een wonddrukverband: een stevig pakje op het kompres op de wond, en daar strak een zwachtel omheen', d);
+  },
+  'verband-steun': () => {
+    let d = `<path d="M54 0 H82 L86 62 Q92 76 120 84 L148 92 Q156 100 146 106 L66 108 Q50 104 54 86 Z" class="vh-huid"/>`;
+    // turns round the ankle, and the figure of eight over the instep and under the foot
+    d += '<path d="M52 30 L84 28 L85 38 L53 41 Z M53 41 L85 38 L86 48 L54 52 Z M54 52 L86 48 L87 58 L55 62 Z" class="vh-elastisch"/>';
+    d += '<path d="M86 58 L118 104 L106 106 L76 62 Z M56 64 L112 84 L106 94 L54 76 Z" class="vh-elastisch"/>';
+    d += '<path d="M104 80 L122 84 L118 104 L100 104 Z" class="vh-elastisch"/>';
+    return svg(160, 120, 'Een steunverband om een verstuikte enkel: een elastische zwachtel om de enkel en in een acht over de voet', d);
+  },
+  'verband-vinger': () => {
+    let d = `<path d="M40 118 V70 Q40 58 52 58 H108 Q120 58 120 70 V118 Z" fill="${HUID}"/>`;
+    for (const [x, top] of [[66, 22], [86, 18], [106, 26]]) d += `<rect x="${x - 7}" y="${top}" width="14" height="${70 - top}" rx="7" fill="${HUID}"/>`;
+    d += `<path d="M40 86 Q24 74 22 58 Q26 52 32 58 Q40 70 46 74" fill="${HUID}"/>`;
+    // the index finger, bandaged: a cap over the top and turns round it
+    d += '<rect x="38" y="12" width="18" height="52" rx="9" class="vh-zwachtel"/>';
+    d += '<path d="M39 30 L55 24 M39 40 L55 34 M39 50 L55 44 M39 60 L55 54" class="lijn dun stil"/>';
+    return svg(160, 120, 'Een vingerverband: een zwachtel over de top van de vinger en daarna in slagen om de vinger', d);
+  },
+  mitella: () => {
+    let d = mens([80, 16], [[[80, 28], [80, 36]]], { kleur: GEWONDE, dikte: 8, r: 12 });
+    d += '<path d="M48 40 Q80 32 112 40 L114 118 H46 Z" class="vh-shirt"/>';
+    // the hurt arm: upper arm down, forearm across the chest, a little up
+    d += mens(null, [[[50, 42], [46, 84], [100, 70]]], { kleur: GEWONDE, dikte: 12 });
+    d += `<circle cx="104" cy="68" r="6" fill="${HUID}"/>`;
+    // the triangular cloth under the forearm, up round the neck, knotted on the good shoulder
+    d += '<path d="M38 70 L40 96 L112 78 L108 60 Z" class="vh-doek"/><path d="M38 70 Q44 44 60 36 Q80 26 100 34 L108 60" class="vh-mitella-slip"/>';
+    d += knoopje(104, 40);
+    return svg(160, 120, 'Een mitella: een driekante doek als draagdoek onder de onderarm, om de nek en geknoopt op de goede schouder', d);
+  },
+  'snelverband-stappen': () => stappen([
+    ['<rect x="22" y="40" width="48" height="44" rx="3" class="vh-kompres"/>' + rol(34, 50) + rol(58, 50)
+      + '<path d="M38 66 l16 12 M54 66 l-16 12" class="lijn rood-lijn" stroke-width="2.4"/>', 'pak de rolletjes,', 'niet het kompres'],
+    [`<circle cx="12" cy="40" r="7" fill="${HUID}"/><circle cx="80" cy="40" r="7" fill="${HUID}"/>` + rol(19, 42, 5) + rol(73, 42, 5)
+      + '<path d="M22 44 L34 64 M70 44 L58 64" class="vh-slip"/><rect x="30" y="62" width="32" height="30" rx="2" class="vh-kompres"/>'
+      + '<path d="M30 28 h-14 m4 -4 l-4 4 l4 4 M62 28 h14 m-4 -4 l4 4 l-4 4" class="lijn accent-lijn" stroke-width="2"/>', 'uit elkaar trekken:', 'hij klapt open'],
+    [onderarm(0, 92, 52) + '<rect x="36" y="48" width="26" height="40" rx="2" class="vh-kompres"/>' + slagen(28, 1, 0, 48, 40)
+      + '<path d="M41 88 Q36 104 20 108" class="vh-slip"/>' + rol(16, 108, 5), 'op de wond, dan', 'om en om wikkelen'],
+    [onderarm(0, 92, 52) + '<rect x="34" y="48" width="28" height="40" rx="2" class="vh-kompres"/>' + slagen(26, 5, 8, 49, 38) + knoopje(76, 52), 'knoop naast', 'de wond, niet erop'],
+  ], 152, 'Een snelverband aanleggen. 1: pak de twee rolletjes, raak het kompres niet aan. 2: trek ze uit elkaar, dan klapt het kompres open. 3: leg het meteen op de wond en wikkel de einden er om en om overheen. 4: knoop ze vast naast de wond, niet erop'),
+
+  // Moving someone out of danger, in the order of NREH 2026.
+  'verplaats-ondersteunen': () => svg(160, 120, 'Iemand ondersteunen die nog kan hinkelen: hij slaat een arm om je schouders, jij een arm om zijn middel',
+    mens([100, 18], [[[100, 28], [100, 70]], [[100, 70], [92, 112]], [[100, 70], [108, 112]], [[100, 36], [112, 46], [106, 34]]])
+    + mens([60, 20], [[[62, 30], [64, 72]], [[64, 72], [60, 112]], [[64, 72], [54, 92], [66, 100]]], { kleur: GEWONDE })
+    + mens(null, [[[100, 38], [80, 56], [66, 60]]])
+    + mens(null, [[[62, 36], [86, 28], [104, 32]]], { kleur: GEWONDE })),
+  'verplaats-rautek': () => svg(160, 120, 'De Rautekgreep: de helper staat achter de gewonde, de armen onder zijn oksels door, en sleept hem achteruit lopend weg',
+    mens([62, 20], [[[56, 62], [60, 32]], [[56, 62], [46, 84], [52, 112]], [[56, 62], [70, 84], [64, 112]]])
+    + mens([70, 50], [[[74, 62], [100, 102]], [[100, 102], [152, 106]], [[100, 102], [150, 112]], [[76, 66], [90, 78], [80, 84]]], { kleur: GEWONDE })
+    + mens(null, [[[60, 38], [74, 66], [86, 80]]])
+    + '<path d="M40 116 H8 M14 110 l-6 6 l6 6" class="lijn accent-lijn" stroke-width="2"/>'),
+  'verplaats-slepen': () => svg(160, 120, 'Slepen: lukt niets anders, trek de gewonde dan aan zijn kleren weg uit het gevaar',
+    mens([58, 96], [[[68, 100], [112, 102]], [[112, 102], [154, 104]], [[112, 102], [152, 108]]], { kleur: GEWONDE })
+    + mens([46, 36], [[[28, 70], [40, 44]], [[28, 70], [20, 110]], [[28, 70], [38, 110]], [[40, 48], [60, 74], [72, 98]]])
+    + '<path d="M40 14 H8 M14 8 l-6 6 l6 6" class="lijn accent-lijn" stroke-width="2"/>'),
+  'rautekgreep-stappen': () => stappen([
+    [mens([42, 104], [[[54, 106], [92, 106]], [[92, 106], [120, 108]], [[92, 106], [118, 112]]], { kleur: GEWONDE })
+      + mens([24, 42], [[[16, 84], [22, 54]], [[16, 84], [26, 112], [6, 112]], [[22, 60], [38, 84], [48, 98]]]), 'kniel achter', 'het hoofd'],
+    [mens([30, 30], [[[24, 76], [28, 42]], [[24, 76], [16, 112], [4, 112]], [[24, 76], [48, 76], [50, 112]]])
+      + mens([56, 58], [[[58, 70], [76, 110]], [[76, 110], [120, 112]], [[76, 110], [118, 116]], [[60, 76], [72, 88], [62, 94]]], { kleur: GEWONDE })
+      + mens(null, [[[28, 48], [56, 76], [66, 90]]]), 'zet hem rechtop,', 'pak één onderarm'],
+    [mens([58, 20], [[[52, 62], [56, 32]], [[52, 62], [42, 84], [48, 112]], [[52, 62], [66, 84], [60, 112]]])
+      + mens([66, 50], [[[70, 62], [96, 102]], [[96, 102], [122, 106]], [[96, 102], [120, 112]], [[72, 66], [86, 78], [76, 84]]], { kleur: GEWONDE })
+      + mens(null, [[[56, 38], [70, 66], [82, 80]]])
+      + '<path d="M36 118 H8 M14 112 l-6 6 l6 6" class="lijn accent-lijn" stroke-width="2"/>', 'kom overeind en', 'loop achteruit'],
+  ], 160, 'De Rautekgreep. 1: kniel achter het hoofd van de gewonde. 2: zet hem rechtop tegen je aan, steek je armen onder zijn oksels door en pak één van zijn onderarmen voor zijn borst. 3: kom overeind en sleep hem achteruit lopend uit het gevaar'),
+
+  zijligging: () => {
+    // seen from above: lying on the side, the front of the body towards the bottom of the drawing
+    let d = '<rect x="0" y="0" width="380" height="200" class="vlak2"/>';
+    const o = { kleur: GEWONDE, dikte: 11 };
+    d += mens(null, [[[100, 100], [100, 154], [62, 156]]], o); // the bottom arm, on the ground, bent
+    d += mens(null, [[[200, 92], [322, 94]]], o); // the bottom leg, straight
+    d += mens(null, [[[90, 92], [204, 92]]], { kleur: GEWONDE, dikte: 18 }); // the body
+    d += mens(null, [[[204, 98], [228, 144], [296, 146]]], o); // the top leg, bent at hip and knee
+    d += mens(null, [[[108, 96], [138, 128], [82, 116]]], o); // the top arm, the hand under the cheek
+    d += `<circle cx="66" cy="96" r="18" fill="${HUID}"/><circle cx="80" cy="116" r="6" fill="${HUID}"/><circle cx="58" cy="156" r="6" fill="${HUID}"/>`;
+    d += '<path d="M52 108 q8 6 16 4" class="lijn dun"/>';
+    d += tekst(66, 34, 'hoofd licht achterover,', { maat: 10.5, klasse: 'vet' }) + tekst(66, 47, 'mond naar beneden', { maat: 10.5, klasse: 'vet' }) + '<path d="M66 54 V74" class="lijn dun"/>';
+    d += tekst(196, 190, 'hand onder de wang', { maat: 10.5, klasse: 'vet' }) + '<path d="M160 180 L86 122" class="lijn dun"/>';
+    d += tekst(300, 172, 'bovenste been gebogen:', { maat: 10.5, klasse: 'vet' }) + tekst(300, 185, 'zo rolt hij niet door', { maat: 10.5 }) + '<path d="M270 162 L256 150" class="lijn dun"/>';
+    d += tekst(270, 60, 'onderste been gestrekt', { maat: 10.5, klasse: 'vet' }) + '<path d="M270 66 L282 86" class="lijn dun"/>';
+    d += tekst(372, 18, 'van bovenaf', { maat: 9.5, anker: 'end', klasse: 'stil' });
+    return svg(380, 200, 'De zijligging van bovenaf: op de zij, het hoofd licht achterover met de mond naar beneden, de bovenste hand onder de wang, de onderste arm gebogen op de grond, het onderste been gestrekt en het bovenste gebogen, zodat hij niet doorrolt', d);
+  },
+};

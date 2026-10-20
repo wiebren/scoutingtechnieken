@@ -89,6 +89,7 @@ export const GROEPICONEN = {
   'gereedschap/mes': '<rect x="2.5" y="14" width="12" height="5" rx="2.5"/><path d="M12.5 14 21 5.5c.5 4-2.5 8-6 8.5"/>' + stip(5, 16.5, 0.9),
   'gereedschap/bijl': '<path d="M14.5 2.5v19"/><path d="M14.5 4.5h-4c-1.5 0-3.5-1-4.8-2-1.3 3.5-1.3 7.5 0 11 1.3-1 3.3-2 4.8-2h4"/>',
   'gereedschap/zaag': '<g transform="rotate(-35 12 12)"><path d="M14 9 2 12.5v2.5h12"/><path d="M3 15l.8 1.4.8-1.4.8 1.4.8-1.4.8 1.4.8-1.4.8 1.4.8-1.4.8 1.4.8-1.4.8 1.4.8-1.4"/><path d="M14 7h5.5a2 2 0 0 1 2 2v6a2 2 0 0 1-2 2H14z"/><path d="M16.5 10h2.5v4h-2.5z"/></g>',
+  'gereedschap/vellen': '<path d="M2.5 20.5h19"/><path d="M7 15v2.5c0 1.5-1 2.5-2.5 3M17 15v2.5c0 1.5 1 2.5 2.5 3"/><ellipse cx="12" cy="15" rx="5" ry="1.8"/><path d="M9.4 13.4C10.3 11 10.7 8 10.4 5.3L13 4.8c-.2 3 .5 6.2 2.1 8.8"/><path d="M13.1 6.6 21.5 4"/>',
   'gereedschap/onderhoud': '<rect x="2.5" y="15.5" width="19" height="5" rx="1"/><path d="M5 12.5 18 5.5c1.5 2 1 4-1 5L6 13.5z"/><path d="M5 12.5 2.5 14"/>',
   'gereedschap/sierwerk': '<ellipse cx="15.5" cy="8.5" rx="3.5" ry="5.3" transform="rotate(45 15.5 8.5)"/><path d="M12.6 11.4 5 19a1.5 1.5 0 0 1-2-2l7.6-7.6"/>',
   'gereedschap/regels': '<path d="M12 3 21.5 20h-19z"/><path d="M12 9.5v5"/>' + stip(12, 17.3, 1.1),

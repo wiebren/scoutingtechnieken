@@ -33,7 +33,7 @@ export const INSIGNES = [
       2: { kort: 'De knopen die je het meest gebruikt goed kunnen leggen en gebruiken, en een fluitkoord knopen. Weten hoe touw in elkaar zit, zelf touw slaan, een touw repareren en het op schade controleren.',
         delen: [
           { titel: 'Knopen', bladen: ['mastworp-voorslag', 'dubbele-schootsteek', 'derdehandsteek', 'vrachtrijdersteek', 'dubbele-achtknoop',
-            'marlsteek', 'rondtorn', 'werpankersteek', 'werplijnknoop', 'scheerlijnknoop', 'turkse-knoop', 'fluitkoord'] },
+            'marlsteek', 'rondtorn', 'werpankersteek', 'werplijnknoop', 'scheerlijnknoop', 'turkse-knoop', 'fluitkoord', 'plattingen'] },
           { titel: 'Touw', bladen: ['opbouw-touw', 'touwslaan', 'marlpriem'] },
           { titel: 'Repareren', bladen: ['eindsplits', 'oogsplits', 'takeling'] },
           { titel: 'Veiligheid', bladen: ['touw-controleren'] },
@@ -66,13 +66,13 @@ export const INSIGNES = [
             'bouw-driepoot', 'bouw-bok', 'bouw-ladder', 'bouw-eetshelter', 'bouw-poort', 'bouw-hudo', 'bouw-wip', 'bouw-reuzenkatapult', 'bouw-kruipgang', 'bouw-muurtje', 'bouw-brancard'],
             zonderBlad: [{ k: 'pionieren-2-object-bouwen', t: 'Met je subgroep een eenvoudig pionierobject bouwen.' }] },
           { titel: 'Onderhoud', bladen: ['hout-controleren', 'hout-opslag', 'boombescherming'] },
-          { titel: 'Krachten en materiaal', bladen: ['hijsmateriaal'] },
+          { titel: 'Krachten en materiaal', bladen: ['hijsmateriaal', 'katteklauw', 'haaksteek', 'strop'] },
           { titel: 'Veilig bouwen', bladen: ['veiligheid-pionierobjecten', 'geen-keuring-3m', 'veilig-touwbanen', 'valdemping-toezicht', 'tuien'] },
         ] },
       3: { kort: 'De specialistische sjorringen, een zwaar grondanker, en een buikschuif of apenbrug spannen met een vierloper. Meewerken aan een groot bouwwerk met een bouw- en veiligheidsplan. Blokken onderhouden, veilige belasting rekenen, bomen tuien, veilig op hoogte werken en het materiaal keuren.',
         delen: [
           { titel: 'Sjorringen en technieken', bladen: ['polypedestrasjorring', 'woelsjorring', 'japanse-kruissjorring', 'grondanker', 'haringen-in-serie', 'dode-man',
-            'bouw-apenbrug', 'vierlopertakel', 'bouw-buikschuif', 'touw-spannen', 'piket', 'boomanker'] },
+            'bouw-apenbrug', 'vierlopertakel', 'bouw-buikschuif', 'touw-spannen', 'piket', 'boomanker', 'strop'] },
           { titel: 'Praktijk', bladen: ['bouw-uitkijktoren', 'bouw-schragenbrug', 'bouw-reuzenrad', 'bouw-veiligheidsplan', 'bouw-v-touwbrug',
             'bouw-hangbrug', 'bouw-zandlopertoren', 'bouw-vlaggenmast', 'bouw-ophaalbrug', 'bouw-draaibrug', 'bouw-familieschommel', 'bouw-vikingschip'],
             zonderBlad: [{ k: 'pionieren-3-groot-object', t: 'Meewerken aan het voorbereiden en leiden van een groot pionierobject.' }] },
@@ -170,7 +170,7 @@ export const INSIGNES = [
       3: { kort: 'Een oefenstok (Trystick) maken en de sneden erin uitleggen, en batonneren. Met een grote bijl een stam doorhakken, met een wig werken, hout kloven, en grote bijlen kennen. Een klapzaag en een trekzaag gebruiken, alleen en met z\'n tweeën. Een bijlsteel en zaagbladen vervangen, een bijl slijpen, en gereedschap lang goed bewaren. Chip carving en kohlrosing.',
         delen: [
           { titel: 'Mes', bladen: ['oefenstok', 'batonneren'] },
-          { titel: 'Bijl', bladen: ['hakken', 'kloven', 'soorten-bijlen', 'kindling-cracker'] },
+          { titel: 'Bijl', bladen: ['hakken', 'kloven', 'soorten-bijlen', 'kindling-cracker', 'bomen-vellen', 'dunne-boom-omhakken'] },
           { titel: 'Zaag', bladen: ['zagen-soorten'] },
           { titel: 'Kennis en onderhoud', bladen: ['bijl-onderhoud', 'beugelzaag', 'mes-onderhoud', 'steel-en-zaagblad'] },
           { titel: 'Sierwerk', bladen: ['chip-carving'] },
@@ -183,7 +183,7 @@ export const INSIGNES = [
         delen: [
           { titel: 'Inpakken', bladen: ['paklijst'] },
           { titel: 'Tenten', bladen: ['tentplek', 'tent-opzetten', 'tent-afbreken'] },
-          { titel: 'Kampterrein', bladen: ['kampplattegrond'], zonderBlad: [
+          { titel: 'Kampterrein', bladen: ['kampplattegrond', 'plattegrond-op-schaal'], zonderBlad: [
             { k: 'kamperen-1-kampregels', t: 'Je eigen lijst met de belangrijkste kampregels: over hoe je met elkaar omgaat, over schoon blijven, over veiligheid en over de natuur.' }] },
           { titel: 'Kampkeuken', bladen: ['corvee', 'afwas-drie-teilen'] },
           { titel: 'Hygiëne', bladen: ['hygiene-op-kamp', 'afval-op-kamp'] },
@@ -195,7 +195,7 @@ export const INSIGNES = [
           { titel: 'Kamperen', bladen: ['tent-opzetten', 'patrouilletent', 'vendeltent', 'scheerlijnen', 'frietbuil', 'afdak-shelter', 'a-frame-shelter',
             'tent-luchten', 'tent-onderhoud'], zonderBlad: [
             { k: 'kamperen-2-kamp-week', t: 'Een kamp van zeven nachten of langer, in een tent of op een vlet.' }] },
-          { titel: 'Kampterrein', bladen: ['kampplattegrond', 'hudo', 'gasflessen-op-kamp', 'terrein-ontzien'], zonderBlad: [
+          { titel: 'Kampterrein', bladen: ['kampplattegrond', 'plattegrond-op-schaal', 'hudo', 'gasflessen-op-kamp', 'terrein-ontzien'], zonderBlad: [
             { k: 'kamperen-2-terreinafspraken', t: 'Eigen afspraken voor het terrein: hoe je er zuinig op bent, hoeveel lawaai kan, en hoe iedereen overal kan komen.' }] },
           { titel: 'Kampkeuken', bladen: ['kampkeuken', 'afvoerputje', 'branders', 'brander-gebruiken', 'gasbrander'] },
           { titel: 'Hygiëne', bladen: ['vijf-keer-veilig', 'afval-op-kamp', 'handen-wassen-koken', 'hygiene-op-kamp', 'warm-slapen'] },
@@ -270,7 +270,7 @@ export const INSIGNES = [
           { titel: 'Materialen uit de natuur', bladen: ['afdak-shelter', 'a-frame-shelter', 'bladhut'] },
           { titel: 'Weer', bladen: ['weerlogboek', 'windrichting'], zonderBlad: [
             { k: 'natuur-buitenleven-1-weerbericht', t: 'Je weerlogboek als een weerbericht laten zien aan je speltak.' }] },
-          { titel: 'Bomen, planten en sporen', bladen: ['pootafdrukken', 'herbarium', 'bomen-herkennen'] },
+          { titel: 'Bomen, planten en sporen', bladen: ['pootafdrukken', 'herbarium', 'roetafdruk', 'carbonafdruk', 'bomen-herkennen'] },
           { titel: 'De mens en de natuur', bladen: ['zwerfafval'] },
           { titel: 'Maan en sterren', bladen: ['maan-waarom', 'maanstanden', 'maan-achterkant'], zonderBlad: [
             { k: 'natuur-buitenleven-1-planetarium', t: 'Een planetarium of sterrenwacht bezoeken.' }] },
@@ -292,7 +292,7 @@ export const INSIGNES = [
       3: { kort: 'Een mand vlechten, of spinnen of brood bakken van eigen graan. Het weer voorspellen zonder apparaten, weerspreuken toetsen, wolken herkennen, en windrichting en luchtdruk koppelen. Biotoop, ecosysteem en habitat, een biotoop bij je clubhuis, en een hike in een heel ander gebied. Lichtvervuiling of biodiversiteit aanpakken. Een sterrenkaart, de dierenriem en vallende sterren.',
         delen: [
           { titel: 'Materialen uit de natuur', bladen: ['mand-vlechten'] },
-          { titel: 'Weer', bladen: ['weerspreuken', 'wolkenreeks-warmtefront', 'wolken-herkennen', 'buys-ballot', 'weerkaart', 'wolken-ontstaan'] },
+          { titel: 'Weer', bladen: ['weerspreuken', 'wolkenreeks-warmtefront', 'wolken-herkennen', 'buys-ballot', 'weerkaart', 'weersymbolen', 'wolken-ontstaan'] },
           { titel: 'Planten, dieren en hun omgeving', bladen: ['biotoop'], zonderBlad: [
             { k: 'natuur-buitenleven-3-natuurdocumentaire', t: 'Een biotoop bij je clubhuis vastleggen in een eigen natuurdocumentaire.' },
             { k: 'natuur-buitenleven-3-andere-streek', t: 'Een hike in een gebied dat heel anders is dan thuis: beschrijven wat er anders is, sporen van vijftien dieren en tien planten verzamelen en op naam brengen, en uitleggen waarom ze thuis niet voorkomen.' }] },
@@ -322,7 +322,7 @@ export const INSIGNES = [
         delen: [
           { titel: 'EHBO', bladen: ['oververhitting', 'onderkoeling', 'brandwond', 'blaren', 'splinter', '112-bellen', 'huisarts-of-112'] },
           { titel: 'Brandveiligheid', bladen: ['vluchtplan', 'bij-brand', 'blusmiddelen', 'vlam-in-de-pan', 'deur-bij-brand'] },
-          { titel: 'Veilig op pad', bladen: ['veiligheidsplan-hike', 'hike-verkeer', 'zichtbaar-onderweg', 'hitte', 'kou-en-nat', 'verdwaald'] },
+          { titel: 'Veilig op pad', bladen: ['veiligheidsplan-hike', 'hike-verkeer', 'verkeersongeluk', 'zichtbaar-onderweg', 'hitte', 'kou-en-nat', 'verdwaald'] },
           { titel: 'Veilig op kamp', bladen: ['hygiene-op-kamp', 'vijf-keer-veilig'], zonderBlad: [
             { k: 'veilig-gezond-2-schoonmaakplan', t: 'Een schoonmaakplan voor het kamp, met taken, hygiëneregels en milieuvriendelijke schoonmaakmiddelen.' }] },
           { titel: 'Sociale veiligheid', bladen: [], zonderBlad: [
@@ -331,10 +331,7 @@ export const INSIGNES = [
         ] },
       3: { kort: 'Verbanden aanleggen, een verstuiking verzorgen, wat je doet bij ernstige verslikking, de Rautekgreep en de stabiele zijligging; het best leer je dat op een EHBO-cursus. De branddriehoek, hoe brand in huis ontstaat, hoe stoffen branden, en een brandveiligheidsplan voor een groot evenement. Een veiligheidsplan voor een hike in het buitenland, en een noodbericht seinen. Duurzaamheidscoördinator op kamp. De gedragscode en de cyclus veilige groep.',
         delen: [
-          { titel: 'EHBO', bladen: ['eerste-hulp-basis', 'verstuiking', 'verslikking'], zonderBlad: [
-            { k: 'veilig-gezond-3-verbanden', t: 'Een vingerverband, een drukverband en een snelverband aanleggen.' },
-            { k: 'veilig-gezond-3-rautekgreep', t: 'Iemand in nood verplaatsen met de Rautekgreep.' },
-            { k: 'veilig-gezond-3-stabiele-zijligging', t: 'Iemand in de stabiele zijligging leggen.' }] },
+          { titel: 'EHBO', bladen: ['eerste-hulp-basis', 'verbanden', 'ernstige-bloeding', 'verstuiking', 'verslikking', 'verplaatsen', 'stabiele-zijligging'] },
           { titel: 'Brandveiligheid', bladen: ['vuurdriehoek', 'blusmiddelen', 'stookplek', 'stookverbod', 'vuurvijfhoek', 'brand-in-huis', 'brandbaarheid-stoffen', 'brandveiligheidsplan'], zonderBlad: [
             { k: 'veilig-gezond-3-brandveiligheidsplan', t: 'Een brandveiligheidsplan voor een groot evenement van je groep met vuur.' }] },
           { titel: 'Veilig op pad', bladen: ['veiligheidsplan-hike', 'morse', 'morse-seinmiddelen', 'semafoor', 'seinvlaggen', 'sos'], zonderBlad: [

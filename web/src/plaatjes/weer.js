@@ -436,6 +436,65 @@ function weerlogboek() {
   return svg(340, 220, 'Een bladzijde uit een weerlogboek met per dag de temperatuur, de luchtdruk en of die daalt, de wind, de bewolking en de neerslag. Daaronder de bewolking in achtsten: 0 is onbewolkt, 8 is helemaal dicht.', uit);
 }
 
+// -- the station model and the weather signs (WMO, as on the KNMI weather maps) ------------------------------------
+
+/** A weather sign round (0, 0), about 20 wide: the WMO symbols for the weather of the moment. */
+const WEERTEKEN = {
+  regen: '<circle cx="0" cy="0" r="3.6" class="w-teken"/>',
+  motregen: '<circle cx="0" cy="-2" r="3.2" class="w-teken"/><path d="M2.6 -1 Q3 5 -2.5 8" class="w-tekenlijn"/>',
+  bui: '<path d="M-8 -6 H8 L0 8Z" class="w-tekenlijn"/>',
+  onweer: '<path d="M-7 9 V-8 H7 L0 1 L6 7" class="w-tekenlijn"/><path d="M8.5 9.5 L2.6 8.4 L6.8 4.6Z" class="w-teken"/>',
+  heiig: '<path d="M0 0 C-3 -5 -10 -5 -10 0 C-10 5 -3 5 0 0 C3 -5 10 -5 10 0 C10 5 3 5 0 0Z" class="w-tekenlijn"/>',
+  mist: '<path d="M-9 -5 H9 M-9 0 H9 M-9 5 H9" class="w-tekenlijn"/>',
+  nevel: '<path d="M-9 -2.5 H9 M-9 2.5 H9" class="w-tekenlijn"/>',
+  sneeuw: '<path d="M0 -8 V8 M-6.9 -4 L6.9 4 M-6.9 4 L6.9 -4" class="w-tekenlijn"/>',
+  hagel: '<path d="M0 -7 L8 6 H-8Z" class="w-teken"/>',
+};
+
+/** A station model: cover in eighths (k), wind from `uit` degrees with `knopen`, temperature, weather of now. */
+function stationsmodel(x, y, { k, uit, knopen, temp, weer }) {
+  const r = 16;
+  let c = `<circle cx="${x}" cy="${y}" r="${r}" class="vlak"/>`;
+  if (k >= 8) c += `<circle cx="${x}" cy="${y}" r="${r}" class="w-teken"/>`;
+  else if (k > 0) { const [ex, ey] = pol(x, y, r, k * 45); c += `<path d="M${x} ${y} V${r1(y - r)} A${r} ${r} 0 ${k > 4 ? 1 : 0} 1 ${ex} ${ey}Z" class="w-teken"/>`; }
+  c += `<circle cx="${x}" cy="${y}" r="${r}" class="w-tekenlijn"/>`;
+  // the shaft points to where the wind comes from; the barbs sit at its far end, on the clockwise side (northern
+  // hemisphere), leaning out: a long one for 10 knots, a short one for 5
+  const [ax, ay] = pol(x, y, r, uit); const lang = 70; const [bx, by] = pol(x, y, r + lang, uit);
+  let w = `<path d="M${ax} ${ay} L${bx} ${by}" class="w-tekenlijn"/>`;
+  let rest = knopen; let d = 0;
+  while (rest >= 5) {
+    const lengte = rest >= 10 ? 24 : 12; rest -= rest >= 10 ? 10 : 5;
+    const [px, py] = pol(x, y, r + lang - d, uit); const [qx, qy] = pol(px, py, lengte, uit + 60);
+    w += `<path d="M${px} ${py} L${qx} ${qy}" class="w-tekenlijn"/>`;
+    d += 10;
+  }
+  return c + w + tekst(x - 28, y - 14, String(temp), { maat: 14, anker: 'end', klasse: 'vet' }) + `<g transform="translate(${x - 36} ${y + 2})">${WEERTEKEN[weer]}</g>`;
+}
+
+function weersymbolen() {
+  let uit = '';
+  // the station model with labels
+  uit += stationsmodel(176, 82, { k: 6, uit: 225, knopen: 15, temp: 12, weer: 'regen' });
+  const label = (x, y, regels, anker = 'start') => regels.map((t, i) => tekst(x, y + i * 12, t, { maat: 10, anker, klasse: i ? 'stil' : 'vet' })).join('');
+  uit += '<path d="M142 58 L120 40" class="lijn haar"/>' + label(118, 30, ['temperatuur', '12 °C'], 'end');
+  uit += '<path d="M132 88 L104 96" class="lijn haar"/>' + label(100, 92, ['weer nu', 'regen'], 'end');
+  uit += '<path d="M192 70 L222 48" class="lijn haar"/>' + label(226, 44, ['bewolking', '6 van de 8 achtsten']);
+  uit += '<path d="M112 150 L150 164" class="lijn haar"/>' + label(154, 166, ['wind uit het zuidwesten', '15 knopen: lang 10 + kort 5']);
+  uit += '<path d="M8 190 H332" class="lijn haar"/>';
+  // the signs
+  const tekens = [['regen', 'regen'], ['motregen', 'motregen'], ['bui', 'bui'], ['onweer', 'onweer'],
+    ['sneeuw', 'sneeuw'], ['hagel', 'hagel'], ['mist', 'mist'], ['heiig', 'heiig']];
+  tekens.forEach(([id, naam], i) => {
+    const x = 46 + (i % 4) * 82; const y = 218 + Math.floor(i / 4) * 52;
+    uit += `<g transform="translate(${x} ${y})">${WEERTEKEN[id]}</g>` + tekst(x, y + 26, naam, { maat: 10.5 });
+  });
+  // at a distance, and in the past hour
+  uit += `<path d="M26 316 q-7 10 0 20 M42 316 q7 10 0 20" class="w-tekenlijn"/><g transform="translate(34 326)">${WEERTEKEN.regen}</g>` + label(56, 324, ['tussen haakjes', 'in de buurt, niet hier'], 'start');
+  uit += `<g transform="translate(196 326)">${WEERTEKEN.sneeuw}</g><path d="M208 316 H212 V336 H208" class="w-tekenlijn"/>` + label(220, 324, ['met ] erachter', 'in het afgelopen uur']);
+  return svg(340, 350, 'Het stationsmodel van een weerkaart: een rondje dat voor zes achtsten zwart is (bewolking), een streep naar het zuidwesten met een lang en een kort streepje (wind uit het zuidwesten, 15 knopen), linksboven 12 (graden) en links een stip (regen). Daaronder de tekens voor regen (stip), motregen (komma), bui (driehoek met de punt naar beneden), onweer, sneeuw (sterretje), hagel (zwart driehoekje), mist (drie streepjes) en heiig (liggende acht). Een teken tussen haakjes: in de buurt, niet op het station. Een teken met een ] erachter: in het afgelopen uur.', uit);
+}
+
 /** Avondrood, in a cut from west to east: clear in the west, so the low sun shines red under the clouds overhead. */
 function avondrood() {
   let uit = '<rect width="340" height="200" rx="12" class="w-lucht"/>';
@@ -491,7 +550,7 @@ function zonkrachtSchaal() {
   }
   for (let k = 1; k <= 10; k++) uit += tekst(x(k) + 15, 143, k === 10 ? '10+' : String(k), { maat: 10, klasse: 'vet w-zk-getal' });
   uit += `<rect x="20" y="128" width="300" height="22" class="lijn dun"/>`;
-  return svg(340, 186, 'De zonkracht: hoe hoger de zon staat, hoe sterker. Daaronder de schaal van het KNMI: 1 en 2 vrijwel geen, 3 en 4 matig, 5 en 6 sterk, 7 en hoger zeer sterk.', uit);
+  return svg(340, 186, 'De zonkracht: hoe hoger de zon staat, hoe sterker. Daaronder de schaal: 1 en 2 vrijwel geen, 3 en 4 matig, 5 en 6 sterk, 7 en hoger zeer sterk.', uit);
 }
 
 // -- sterren ---------------------------------------------------------------------------------------------------------
@@ -734,6 +793,7 @@ function vallendeSterren() {
 export default {
   weerstation,
   weerlogboek,
+  weersymbolen,
   avondrood,
   'knmi-codes': knmiCodes,
   'zonkracht-schaal': zonkrachtSchaal,

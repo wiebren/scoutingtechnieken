@@ -76,6 +76,13 @@ function landschapsschets(detail) {
   return svg(160, 120, wat, uit);
 }
 
+/** A stick figure for sluipen: the near limbs dark, the far ones (`ver`) lighter, a round head; points as [x, y]. */
+function pop({ kop, lijf, voor = [], achter = [] }) {
+  const lijn = (pt, klasse) => `<path d="M${pt.map(([x, y]) => `${r1(x)} ${r1(y)}`).join('L')}" class="${klasse}"/>`;
+  return achter.map((pt) => lijn(pt, 'wn-pop ver')).join('') + lijn(lijf, 'wn-pop') + voor.map((pt) => lijn(pt, 'wn-pop')).join('')
+    + `<circle cx="${kop[0]}" cy="${kop[1]}" r="7" class="wn-kop"/>`;
+}
+
 export default {
   'soort-horizonschets': () => landschapsschets(0),
   'soort-recognografische-schets': () => landschapsschets(1),
@@ -272,5 +279,88 @@ export default {
     d += tekst(230, 30, 'weer gevonden', { maat: 10, anker: 'start', klasse: 'vet wn-op-zand' });
     d += tekst(20, 200, 'zandpad', { maat: 9.5, anker: 'start', klasse: 'wn-op-zand' });
     return svg(380, 220, 'Een spoor in het zand houdt op. Vanaf de laatste afdruk loop je in een boog vooruit, tot je het spoor verderop weer vindt', d);
+  },
+  'plattegrond-op-schaal': () => {
+    // 1: the klad, by hand, with the measurements; 2: the same clubhouse on millimeter paper at 1:200 (1 m = 5 mm = 12)
+    let d = '<rect x="4" y="4" width="172" height="252" rx="6" class="vlak2"/>';
+    d += tekst(90, 22, '1. Klad, met de maten', { maat: 10.5, klasse: 'vet' });
+    d += '<path d="M34 81Q92 77 150 80M150 80Q153 125 149 170M149 170Q130 172 111 171M102 171Q68 172 35 169M35 169Q31 125 34 81M73 80Q75 125 72 170" class="lijn"/>';
+    d += '<path d="M102 171V162A9 9 0 0 1 111 171M49 76v8M63 76v8M92 76v8M121 76v8" class="lijn dun"/>';
+    d += '<circle cx="53" cy="50" r="10" class="lijn"/><path d="M53 60V80" class="lijn dun" stroke-dasharray="3 2"/>';
+    d += tekst(58, 72, '3 m', { maat: 9, anker: 'start' }) + tekst(68, 46, 'boom', { maat: 9, anker: 'start' });
+    d += tekst(53, 128, 'keuken', { maat: 9 }) + tekst(111, 128, 'zaal', { maat: 9 });
+    d += tekst(28, 128, '8 m', { maat: 9.5, anker: 'end' }) + tekst(53, 184, '4 m', { maat: 9.5 }) + tekst(106, 184, 'deur 1 m', { maat: 9.5 });
+    d += '<path d="M34 194H150M34 190v8M150 190v8" class="lijn dun"/>' + tekst(92, 208, '12 m', { maat: 9.5 });
+    d += tekst(92, 236, 'meet alles en schrijf het op', { maat: 9, klasse: 'stil' });
+    // the millimeter paper: a line every 2 mm, a stronger one every cm (24)
+    const [gx, gy, gb, gh] = [196, 30, 168, 216];
+    d += `<rect x="184" y="4" width="192" height="252" rx="6" class="vlak"/>` + tekst(280, 22, '2. Netjes op millimeterpapier', { maat: 10.5, klasse: 'vet' });
+    let mm = ''; let cm = '';
+    for (let i = 0; i <= gb / 4.8; i++) { const x = r1(gx + i * 4.8); if (i % 5) mm += `M${x} ${gy}V${gy + gh}`; else cm += `M${x} ${gy}V${gy + gh}`; }
+    for (let i = 0; i <= gh / 4.8; i++) { const y = r1(gy + i * 4.8); if (i % 5) mm += `M${gx} ${y}H${gx + gb}`; else cm += `M${gx} ${y}H${gx + gb}`; }
+    d += `<path d="${mm}" class="wn-mm"/><path d="${cm}" class="wn-cm"/>`;
+    // the clubhouse, 12 by 8 m: walls, the inner wall at 4 m, a door of 1 m, two windows; the tree 3 m north
+    d += '<rect x="208" y="78" width="144" height="96" class="vlak"/>';
+    d += '<path d="M292 174H208V78H352V174H304M256 78V174" class="wn-muur"/>';
+    d += '<path d="M292 174V162A12 12 0 0 1 304 174" class="lijn dun"/>';
+    d += '<rect x="226" y="75" width="18" height="6" class="vlak"/><rect x="280" y="75" width="36" height="6" class="vlak"/><path d="M226 75h18M226 81h18M280 75h36M280 81h36" class="lijn dun"/>';
+    d += '<circle cx="232" cy="42" r="8" class="wn-boom"/>';
+    d += tekst(232, 130, 'keuken', { maat: 9 }) + tekst(304, 130, 'zaal', { maat: 9 });
+    d += '<path d="M346 60 l6 -18 l6 18 l-6 -4z" class="vol"/>' + tekst(352, 66, 'N', { maat: 10, klasse: 'vet' });
+    // the line scale: 5 m is 2,5 cm, and the legenda
+    d += '<rect x="208" y="192" width="30" height="5" class="vol"/><rect x="238" y="192" width="30" height="5" class="vlak"/><rect x="208" y="192" width="60" height="5" class="lijn dun"/>';
+    d += tekst(208, 208, '0', { maat: 8.5 }) + tekst(268, 208, '5 m', { maat: 8.5 }) + tekst(238, 222, 'schaal 1:200', { maat: 8.5, klasse: 'vet' });
+    d += '<rect x="286" y="182" width="74" height="64" class="vlak"/><rect x="286" y="182" width="74" height="64" class="lijn dun"/>';
+    d += '<path d="M292 193h14" class="wn-muur"/><rect x="292" y="204" width="14" height="5" class="vlak"/><path d="M292 204h14M292 209h14M294 225v-8A8 8 0 0 1 302 225" class="lijn dun"/><circle cx="299" cy="236" r="4" class="wn-boom"/>';
+    d += [['muur', 196], ['raam', 210], ['deur', 225], ['boom', 239]].map(([t, y]) => tekst(312, y, t, { maat: 8.5, anker: 'start' })).join('');
+    return svg(380, 260, 'Een plattegrond op schaal. Links de klad: een clubhuis van 12 bij 8 m met een keuken van 4 m, een deur van 1 m en een boom 3 m ervoor, met alle maten erbij. Rechts hetzelfde netjes op millimeterpapier, op schaal 1:200, met een noordpijl, een lijnschaal en een legenda', d);
+  },
+
+  sluipen: () => {
+    // from far away to close by: each gang lower than the one before
+    let d = '<path d="M20 10H356" class="lijn dun stil"/><path d="M350 6L358 10L350 14" class="lijn dun stil"/>';
+    d += tekst(20, 22, 'ver weg', { maat: 9, anker: 'start', klasse: 'stil' }) + tekst(358, 22, 'dichtbij', { maat: 9, anker: 'end', klasse: 'stil' });
+    const grond = (x0, b, g) => `<path d="M${x0 + 6} ${g}H${x0 + b - 6}" class="lijn dun"/><path d="${[0.15, 0.4, 0.62, 0.88].map((f) => {
+      const x = r1(x0 + b * f); return `M${x} ${g}l-2 -5M${x + 3} ${g}l1 -6M${x + 6} ${g}l3 -4`;
+    }).join('')}" class="wn-spriet"/>`;
+    const onder = (x, g, naam, tip) => tekst(x, g + 16, naam, { maat: 11, klasse: 'vet' }) + tekst(x, g + 28, tip, { maat: 9, klasse: 'stil' });
+    const t = (x0, g, pt) => pt.map(([x, y]) => [x0 + x, g + y]);
+    const G1 = 110; const G2 = 226;
+    // apengang: bent over, hands on the knees
+    d += grond(0, 126, G1) + pop({
+      kop: [76, G1 - 77],
+      lijf: t(0, G1, [[40, -54], [68, -70]]),
+      voor: [t(0, G1, [[40, -54], [48, -28], [42, 0]]), t(0, G1, [[68, -70], [60, -50], [50, -30]])],
+      achter: [t(0, G1, [[40, -54], [54, -28], [54, 0]]), t(0, G1, [[66, -68], [64, -48], [56, -30]])],
+    }) + onder(63, G1, 'Apengang', 'nog ver weg');
+    // ganzengang: crouched, moving forward
+    d += grond(126, 126, G1) + pop({
+      kop: [126 + 64, G1 - 72],
+      lijf: t(126, G1, [[34, -40], [56, -64]]),
+      voor: [t(126, G1, [[34, -40], [58, -42], [54, 0]]), t(126, G1, [[56, -64], [64, -48], [72, -40]])],
+      achter: [t(126, G1, [[34, -40], [50, -30], [36, 0]])],
+    }) + onder(189, G1, 'Ganzengang', 'korte stukjes, snel');
+    // kattengang: on hands and knees, the head highest, the bottom low
+    d += grond(252, 126, G1) + pop({
+      kop: [252 + 82, G1 - 54],
+      lijf: t(252, G1, [[36, -22], [72, -38]]),
+      voor: [t(252, G1, [[36, -22], [40, -3], [14, -3]]), t(252, G1, [[72, -38], [76, -2]])],
+      achter: [t(252, G1, [[36, -22], [46, -3], [22, -3]]), t(252, G1, [[70, -38], [68, -2]])],
+    }) + onder(315, G1, 'Kattengang', 'hoofd hoog, billen laag');
+    // kattensluipgang: flat, a little on one side, one knee pulled up sideways
+    d += grond(0, 190, G2) + pop({
+      kop: [136, G2 - 15],
+      lijf: t(0, G2, [[70, -9], [124, -11]]),
+      voor: [t(0, G2, [[70, -9], [88, -15], [62, -4]]), t(0, G2, [[124, -11], [140, -3], [158, -3]])],
+      achter: [t(0, G2, [[70, -9], [46, -6], [22, -3]]), t(0, G2, [[122, -10], [114, -3], [132, -3]])],
+    }) + onder(95, G2, 'Kattensluipgang', 'plat, knie zijwaarts op');
+    // robbengang: flat, on the forearms and the toes
+    d += grond(190, 190, G2) + pop({
+      kop: [190 + 144, G2 - 17],
+      lijf: t(190, G2, [[80, -8], [132, -10]]),
+      voor: [t(190, G2, [[80, -8], [52, -5], [24, -3]]), t(190, G2, [[132, -10], [128, -2], [154, -2]])],
+      achter: [t(190, G2, [[130, -10], [118, -2], [142, -2]])],
+    }) + onder(285, G2, 'Robbengang', 'helemaal plat, op je onderarmen');
+    return svg(380, 262, 'Vijf manieren van sluipen, van ver weg naar dichtbij. Apengang: voorovergebogen, handen op de knieën. Ganzengang: gehurkt. Kattengang: op handen en knieën, het hoofd hoger dan de billen. Kattensluipgang: plat, een beetje op je zij, met één knie opgetrokken. Robbengang: helemaal plat, op je onderarmen en tenen', d);
   },
 };

@@ -65,6 +65,7 @@
 .plaatje .tw-lint { fill: #e5342b; }
 .plaatje .tw-stam { fill: #8a5a2b; }
 .plaatje .tw-kroon { fill: color-mix(in srgb, var(--fam-natuur) 45%, var(--paneel)); stroke: var(--fam-natuur); stroke-width: 1.2; }
+.plaatje .tw-dak { fill: #b5523b; stroke: #7a3424; stroke-width: 0.8; stroke-linejoin: round; }
 .plaatje .tw-steen { fill: #a7a49c; stroke: #5d5a53; stroke-width: 1.4; }
 .plaatje .tw-metro-a { fill: none; stroke: #d1141b; stroke-width: 6; stroke-linecap: round; stroke-linejoin: round; }
 .plaatje .tw-metro-b { fill: none; stroke: #0066b2; stroke-width: 6; stroke-linecap: round; stroke-linejoin: round; }
