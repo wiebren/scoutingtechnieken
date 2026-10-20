@@ -143,6 +143,15 @@ if (existsSync(referentiesLokaal)) {
   }
 }
 
+// the drawings the site (site/*.html, filled by site/maak.mjs) takes from the app: a removed one breaks the pages build
+const sitePaginas = (dir) => readdirSync(dir, { withFileTypes: true }).flatMap((e) =>
+  e.isDirectory() ? sitePaginas(`${dir}/${e.name}`) : e.name.endsWith('.html') ? [`${dir}/${e.name}`] : []);
+for (const pad of sitePaginas(new URL('../site', import.meta.url).pathname)) {
+  for (const [, naam] of readFileSync(pad, 'utf8').matchAll(/<!-- maak:plaatje ([a-z0-9-]+) -->/g)) {
+    if (!PLAATJES[naam]) fout(pad.slice(pad.indexOf('site/')), `plaatje "${naam}" bestaat niet (meer)`);
+  }
+}
+
 if (fouten.length) {
   console.error(`De data klopt niet (${fouten.length}):\n${fouten.map((f) => `  - ${f}`).join('\n')}`);
   process.exit(1);

@@ -138,18 +138,6 @@
 .plaatje .napje { fill: #7a5a2e; }
 .plaatje .kurk { fill: #c9a26b; stroke: #8b6a3a; stroke-width: 1; }
 .plaatje .cirkel { fill: color-mix(in srgb, var(--rood) 8%, transparent); }
-.plaatje .lucht-land { fill: #eef0d8; }
-.plaatje .lucht-water { fill: #b9dcf0; }
-.plaatje .lucht-stad { fill: #f5d76e; stroke: #c9a227; stroke-width: 0.8; }
-.plaatje .lucht-weg { stroke: #d14b3d; stroke-width: 1.6; fill: none; }
-.plaatje .lucht-ctr { fill: rgb(0 102 178 / 0.07); stroke: #0066b2; stroke-width: 2; stroke-dasharray: 7 4; }
-.plaatje .lucht-veld { fill: #fff; stroke: #0066b2; stroke-width: 2; }
-.plaatje .lucht-baan { stroke: #0066b2; stroke-width: 4; stroke-linecap: round; }
-.plaatje .lucht-obstakel { fill: none; stroke: #1b2a3a; stroke-width: 1.6; }
-.plaatje .lucht-punt { fill: #1b2a3a; }
-.plaatje .lucht-roos { fill: none; stroke: #0066b2; stroke-width: 1; stroke-dasharray: 2 2; }
-.plaatje .lucht-vor { fill: none; stroke: #0066b2; stroke-width: 1.6; }
-.plaatje .lucht-label { fill: #1b2a3a; }
 
 /* src/plaatjes/geheimschrift.css */
 /* Classes for the drawings of geheimschrift (./geheimschrift.js), next to .plaatje in src/style.css. */
@@ -541,10 +529,14 @@
 .plaatje .sj-touw-rand { stroke: var(--sj-touw-rand); }
 .plaatje .sj-touw-lijf { stroke: var(--sj-touw); }
 .plaatje .sj-touw-kern { stroke: var(--sj-touw-kern); }
+.plaatje .sj-touw-lijfvul { fill: var(--sj-touw); }
 .plaatje .sj-touw-vul { fill: var(--sj-touw); stroke: var(--sj-touw-rand); stroke-width: 1.4; }
 /* wood */
 .plaatje .sj-hout { fill: var(--sj-hout); stroke: var(--sj-hout-rand); stroke-width: 1.4; stroke-linejoin: round; }
 .plaatje .sj-hout-licht { fill: var(--sj-hout-licht); stroke: var(--sj-hout-rand); stroke-width: 1.4; stroke-linejoin: round; }
+.plaatje .sj-hout-vul { fill: var(--sj-hout); }
+.plaatje .sj-hout-rand { fill: none; stroke: var(--sj-hout-rand); stroke-width: 1.4; }
+.plaatje .sj-nerf-stuk { fill: none; stroke: var(--sj-hout-rand); stroke-width: 0.8; opacity: 0.45; }
 .plaatje .sj-nerf { fill: none; stroke: var(--sj-hout-rand); stroke-width: 0.8; opacity: 0.45; stroke-dasharray: 18 11; }
 .plaatje .sj-kop { fill: var(--sj-kop); stroke: var(--sj-hout-rand); stroke-width: 1.4; }
 .plaatje .sj-jaar { fill: none; stroke: var(--sj-hout-rand); stroke-width: 0.8; opacity: 0.5; }
@@ -728,6 +720,7 @@
 .plaatje .tw-kern.a { stroke: var(--tw-a-kern); }
 .plaatje .tw-rand-vul.a, .plaatje .tw-takel.a { fill: var(--tw-a-rand); stroke: var(--tw-a-rand); }
 .plaatje .tw-lijf-vul.a { fill: var(--tw-a); }
+.plaatje .tw-naad.a { stroke: var(--tw-a); stroke-width: 0.6; }
 .plaatje .tw-rand.b { stroke: var(--tw-b-rand); }
 .plaatje .tw-lijf.b { stroke: var(--tw-b); }
 .plaatje .tw-kern.b { stroke: var(--tw-b-kern); }
@@ -771,7 +764,6 @@
 .plaatje .tw-bordtekst { fill: var(--tw-paal-rand); font-weight: 600; }
 .plaatje .tw-metaal-lijn { fill: none; stroke: var(--tw-ring-rand); stroke-width: 3; stroke-linecap: round; }
 .plaatje .tw-metaal-licht-lijn { fill: none; stroke: var(--tw-ring-kern); stroke-width: 2.5; stroke-linecap: round; }
-.plaatje .tw-paal-lijn { fill: none; stroke: var(--tw-paal); stroke-width: 10; stroke-linecap: round; }
 .plaatje .tw-zand { fill: color-mix(in srgb, var(--bruin) 22%, var(--paneel)); }
 .plaatje .tw-kruis { fill: none; stroke: var(--rood); stroke-width: 4; stroke-linecap: round; }
 .plaatje .tw-glans { fill: color-mix(in srgb, var(--tw-a-kern) 70%, #ffffff); stroke: var(--tw-a-rand); stroke-width: 1.2; }
