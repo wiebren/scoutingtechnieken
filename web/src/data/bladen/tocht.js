@@ -42,7 +42,7 @@ export default [
     plaatje: 'tocht-lantaarnpaalroute',
     uitleg: 'Lantaarnpalen hebben een nummer. Je krijgt een lijst met nummers en zoekt steeds de volgende paal. Werkt in een dorp of wijk, ook in het donker.',
     naar: [{ blad: 'reflectortocht' }] },
-  { id: 'steenman', naam: 'Steenman', ook: ['inuksuk', 'cairn', 'steenmannetje'], en: 'cairn', groep: 'sporen', bron: 'NAV §2a',
+  { id: 'steenman', naam: 'Steenman', ook: ['inuksuk', 'cairn', 'steenmannetje'], en: 'cairn', groep: 'sporen', bron: 'NAV §2a', ken: true,
     plaatje: 'tocht-steenman',
     uitleg: [
       'Een stapel stenen langs het pad, breed onderaan en smal bovenaan. Zo’n stapel ontstaat niet vanzelf, dus je ziet meteen dat iemand hem heeft neergezet. In de bergen, op heide en in sneeuw lopen wandelaars van steenman naar steenman: vanaf de ene zie je de volgende.',
@@ -57,7 +57,7 @@ export default [
       'In het bos hangen straatnaambordjes, ook bij paden waar je niet heen moet. Volg de goede straat, zoek de huisnummers op de bomen, en bij het juiste nummer ben je er.',
     ],
     naar: [{ blad: 'speurtocht-uitzetten' }] },
-  { id: 'wandelmarkeringen', naam: 'Wandelmarkeringen', ook: ['LAW', 'streekpad', 'wit-rood', 'geel-rood', 'markering'], en: 'waymarks', groep: 'sporen', bron: 'VAK WNET',
+  { id: 'wandelmarkeringen', naam: 'Wandelmarkeringen', ook: ['LAW', 'streekpad', 'wit-rood', 'geel-rood', 'markering'], en: 'waymarks', groep: 'sporen', bron: 'VAK WNET', ken: true,
     plaatje: 'tocht-wandelmarkering',
     doe: 'wandelmarkering-quiz',
     uitleg: [
@@ -81,17 +81,17 @@ export default [
     naar: [{ blad: 'lintjesroute' }, { blad: 'pootafdrukken' }] },
 
   // Spoortekens
-  { id: 'spoortekens', naam: 'Spoortekens', ook: ['padvinderstekens', 'speurtochttekens', 'wegtekens', 'trail signs'], en: 'trail signs', groep: 'spoortekens', bron: 'NAV §3b',
+  { id: 'spoortekens', naam: 'Spoortekens', ook: ['padvinderstekens', 'speurtochttekens', 'wegtekens', 'trail signs'], en: 'trail signs', groep: 'spoortekens', bron: 'NAV §3b', ken: true,
     plaatje: 'tocht-spoortekens',
     doe: 'spoortekens-quiz',
     uitleg: [
-      'Spoortekens zijn tekens op de grond, van krijt of van takken en stenen. Ze laten de groep achter je zien waar je heen ging. De eerste tekens komen van Baden-Powell, de oprichter van scouting (1908). Daarna kwamen er veel bij.',
+      'Spoortekens zijn tekens op de grond, van krijt of van takken en stenen. Ze laten de groep achter je zien waar je heen ging. De eerste tekens komen van Baden-Powell, de oprichter van scouting. Hij beschreef ze in 1908 in zijn boek Scouting for Boys. Daarna kwamen er veel bij.',
       'Hier zie je de grote set van Scoutpedia, een website over scouting. Deze tekens moet je zeker kennen: deze weg, linksaf, rechtsaf, niet doorgaan (een kruis) en einde van het spoor (een cirkel in een cirkel).',
       'Een teken met een pijl erbij (kamp, water) zegt ook welke kant het op is. Bij een teken met een getal tel je passen of meters.',
     ],
     letOp: 'Spoortekens verschillen per land, per boek en per groep. In Polen is „niet doorgaan” bijvoorbeeld een lijn met dwarsstreepjes in plaats van een kruis. Spreek vooraf af welke tekens je gebruikt.',
     naar: [{ blad: 'spoortekens-bp' }, { blad: 'spoortekens-natuur' }, { blad: 'spoor-leggen' }, { blad: 'spoorzoeken-spel' }] },
-  { id: 'spoortekens-bp', naam: 'De tekens van Baden-Powell', ook: ['patrol signs', 'Scouting for Boys', '1908'], en: 'patrol signs', groep: 'spoortekens', bron: 'NAV §3a',
+  { id: 'spoortekens-bp', naam: 'De tekens van Baden-Powell', ook: ['patrol signs', 'Scouting for Boys', '1908'], en: 'patrol signs', groep: 'spoortekens', bron: 'NAV §3a', ken: true,
     plaatje: 'tocht-spoortekens-bp',
     doe: 'spoortekens-bp-quiz',
     uitleg: [
@@ -105,7 +105,7 @@ export default [
     ],
     letOp: 'Baden-Powell noemt ook „blazes”: een spaan uit de schors van een boom hakken. Dat doen we niet meer; levende bomen beschadig je niet.',
     naar: [{ blad: 'spoortekens' }, { blad: 'zwerverstekens' }] },
-  { id: 'spoortekens-natuur', naam: 'Natuurlijke spoortekens', ook: ['grasdot', 'stenen', 'takken', 'tekens met takken'], groep: 'spoortekens', bron: 'NAV §3b',
+  { id: 'spoortekens-natuur', naam: 'Natuurlijke spoortekens', ook: ['grasdot', 'stenen', 'takken', 'tekens met takken'], groep: 'spoortekens', bron: 'NAV §3b', ken: true,
     plaatje: 'tocht-spoortekens-natuur',
     doe: 'spoortekens-natuur-quiz',
     uitleg: [
@@ -119,7 +119,7 @@ export default [
     ],
     letOp: 'Deze tekens komen van Scoutpedia. Andere landen en groepen leggen ze soms anders. Spreek vooraf af wat drie stenen of een grasdot betekenen.',
     naar: [{ blad: 'spoortekens' }, { blad: 'spoor-leggen' }, { blad: 'natuurspoor' }, { blad: 'steenman' }] },
-  { id: 'zwerverstekens', naam: 'Zwerverstekens', ook: ['tramp signs', 'bedelaarstekens'], groep: 'spoortekens', bron: 'NAV §3a',
+  { id: 'zwerverstekens', naam: 'Zwerverstekens', ook: ['tramp signs', 'bedelaarstekens'], groep: 'spoortekens', bron: 'NAV §3a', ken: true,
     uitleg: [
       'Baden-Powell vertelt in 1908 dat niet alleen verkenners tekens zetten. Ook zwervers krijtten tekens op muren en hekken bij huizen waar ze hadden gebedeld, als waarschuwing voor de volgende: „heel slecht, ze geven je hier aan”, „hier zijn al te veel zwervers geweest”, „niets te halen” en „slechte mensen”.',
       'Een verkenner moest die tekens leren lezen, net als de tekens van andere patrouilles. Een weetje uit de geschiedenis: je gebruikt ze niet meer.',
@@ -131,7 +131,7 @@ export default [
       'Een goed spoor is goed te vinden, blijft liggen en laat niets achter.',
       '- Gebruik wat je vindt: dode takken, stenen, gras. Breek geen levende takken af en hak niet in bomen.',
       '- Krijt op de rijbaan wordt stukgereden. Takken op een druk pad worden weggeschopt. Leg je tekens daarom aan de kant.',
-      '- Een geknoopte grasdot draait na een tijdje. Leg hem niet te lang van tevoren neer.',
+      '- Tekens van gras, takjes of losse stenen blijven niet lang goed liggen. Leg ze niet te lang van tevoren neer.',
       '- Zet een teken op elke plek waar je kunt twijfelen. Zet er af en toe ook een teken tussen dat zegt: goed zo.',
       '- Ruim alles op als de laatste groep langs is: lintjes, tekens en krijt (dat was je weg met water).',
     ],
@@ -214,7 +214,7 @@ export default [
     uitleg: [
       'Op elk kruispunt krijg je een breuk. Onder de streep staat hoeveel wegen er zijn, de weg waar je vandaan komt meegeteld. Boven de streep staat welke weg je neemt.',
       'Tel met de klok mee, te beginnen na de weg waar je vandaan komt. Op een gewone kruising is 1/4 linksaf, 2/4 rechtdoor, 3/4 rechtsaf en 4/4 terug.',
-      'Op een T-splitsing waar je rechtdoor of rechtsaf kunt, is 1/3 rechtdoor en 2/3 rechtsaf.',
+      'Bij een zijweg naar rechts, waar je rechtdoor of rechtsaf kunt, is 1/3 rechtdoor en 2/3 rechtsaf.',
     ],
     naar: [{ blad: 'kruispunten-quizroute' }, { blad: 'routetechnieken' }] },
   { id: 'ogenroute', naam: 'Ogenroute', ook: ['smileyroute', 'smileytocht'], groep: 'kruispunt', bron: 'NAV §2b',
@@ -516,7 +516,7 @@ export default [
     naar: [{ blad: 'rally-pijlen-en-punten' }] },
 
   // Spelregels
-  { id: 'routetechnieken', naam: 'Routetechnieken', ook: ['tochttechnieken', 'hiketechnieken', 'routetechniek'], en: 'route techniques', groep: 'spelregels', bron: 'NAV §2',
+  { id: 'routetechnieken', naam: 'Routetechnieken', ook: ['tochttechnieken', 'hiketechnieken', 'routetechniek'], en: 'route techniques', groep: 'spelregels', bron: 'NAV §2', ken: true,
     plaatje: 'tocht-overzicht',
     doe: 'route-vertaler',
     uitleg: [
@@ -525,14 +525,14 @@ export default [
       'Ze verschillen wel in wat je ervan ziet: bij een kruispuntenroute zie je hoe het kruispunt eruitziet, bij een kralentocht alleen welke kant je op moet. En sommige gebruiken het kompas of de kaart in plaats van links en rechts.',
     ],
     naar: [{ blad: 'kruispuntenroute' }, { blad: 'bolletje-pijltje' }, { blad: 'stripkaart' }, { blad: 'wat-telt-als-pad' }, { blad: 'vijf-maal-twintig' }] },
-  { id: 'wat-telt-als-pad', naam: 'Wat telt als pad?', ook: ['pad of geen pad', 'welke wegen tellen'], groep: 'spelregels', bron: 'REG §2',
+  { id: 'wat-telt-als-pad', naam: 'Wat telt als pad?', ook: ['pad of geen pad', 'welke wegen tellen'], groep: 'spelregels', bron: 'REG §2', ken: true,
     plaatje: 'tocht-wat-telt-als-pad',
     uitleg: [
       'De lastigste vraag bij elke route: is dat ruiterpad, die brandgang, dat olifantenpaadje een weg? Een vuistregel uit hikeboekjes: een pad telt als twee volwassenen met een rugzak er gewoon naast elkaar kunnen lopen.',
       'Vaak zegt je routeboekje het zelf („zandpaden tellen mee”, „de brandgang telt niet”). Dat gaat altijd voor. Twijfel je, kijk dan of de volgende aanwijzing klopt.',
     ],
     naar: [{ blad: 'stripkaart-regels' }, { blad: 'routetechnieken' }] },
-  { id: 'stripkaart-regels', naam: 'Regels van de stripkaart', ook: ['nooit twee wegen', 'eindstreep'], groep: 'spelregels', bron: 'REG §2',
+  { id: 'stripkaart-regels', naam: 'Regels van de stripkaart', ook: ['nooit twee wegen', 'eindstreep'], groep: 'spelregels', bron: 'REG §2', ken: true,
     plaatje: 'tocht-stripkaart-regels',
     uitleg: [
       '- Je begint onderaan bij het bolletje en leest naar boven.',
@@ -543,7 +543,7 @@ export default [
       '- De lange dwarsstreep bovenaan is het einde.',
     ],
     naar: [{ blad: 'stripkaart' }, { blad: 'wat-telt-als-pad' }] },
-  { id: 'rally-kaartleesregels', naam: 'Kaartleesregels uit de rally', ook: ['niet keren', 'kortste route', 'rallyregels'], groep: 'spelregels', bron: 'VAK TULP25',
+  { id: 'rally-kaartleesregels', naam: 'Kaartleesregels uit de rally', ook: ['niet keren', 'kortste route', 'rallyregels'], groep: 'spelregels', bron: 'VAK TULP25', ken: true,
     plaatje: 'tocht-rally-kaartleesregels',
     uitleg: [
       'Rally’s hebben precies opgeschreven regels, en een paar zijn handig voor elke route:',
@@ -555,7 +555,7 @@ export default [
       '- Een bordje „doodlopende weg” sluit een weg niet af; „bestemmingsverkeer” wel.',
     ],
     naar: [{ blad: 'herstelcodes' }, { blad: 'rally-pijlen-en-punten' }, { blad: 'rally-bol-pijl' }, { blad: 'rally-grensbenadering' }] },
-  { id: 'herstelcodes', naam: 'Herstelcodes', ook: ['HK', 'routecontrole'], groep: 'spelregels', bron: 'VAK TULP25',
+  { id: 'herstelcodes', naam: 'Herstelcodes', ook: ['HK', 'routecontrole'], groep: 'spelregels', bron: 'VAK TULP25', ken: true,
     plaatje: 'tocht-herstelcodes',
     uitleg: 'Ben je bij een rally fout gereden, dan staat bij een controle soms een code die zegt hoe je weer op de route komt. Bij een hike kun je ze ook gebruiken, op een kaartje bij een post.',
     tabel: { kop: ['Code', 'Betekenis'], rijen: [['HK', 'Hier keren'], ['DMP 7', 'Doorgaan met punt of pijl 7'], ['DMIL', 'Doorgaan met de ingetekende lijn'], ['DMG', 'Doorgaan met de grensbenadering'], ['NVO', 'Niet verder omrijden'], ['1R, 2R', 'Eerste, tweede weg rechts'], ['ER', 'Einde weg rechts'], ['VR', 'Voorrangsweg rechts'], ['VO', 'Voorrangsweg oversteken']] },
@@ -599,7 +599,7 @@ export default [
     ],
     letOp: 'Leiding: kies een gebied waar het veilig lopen is, zorg dat je bereikbaar bent, en laat nooit jonge kinderen zonder begeleiding los.',
     naar: [{ blad: 'noodenvelop' }, { blad: 'positie-bepalen' }, { blad: 'verdwaald' }] },
-  { id: 'noodenvelop', naam: 'Noodenvelop', ook: ['noodenveloppe', 'noodkaart'], groep: 'vormen', bron: 'PT',
+  { id: 'noodenvelop', naam: 'Noodenvelop', ook: ['noodenveloppe', 'noodkaart'], groep: 'vormen', bron: 'PT', ken: true,
     uitleg: [
       'Een dichte envelop die je meekrijgt op een hike of dropping, met daarin een kaart met de route en het telefoonnummer van de leiding. Je maakt hem alleen open als je echt de weg kwijt bent.',
       'Bij sommige hike-wedstrijden krijg je punten voor een envelop die aan het eind nog dicht is.',
@@ -691,7 +691,7 @@ export default [
     ],
     verwijs: [{ naam: 'VERON: Vossenjachten (ARDF)', url: 'https://veron.nl/activiteiten/vossenjachten-ardf/' }, { naam: 'Scoutpedia: Radio vossenjacht', url: 'https://nl.scoutwiki.org/Radio_vossenjacht' }],
     naar: [{ blad: 'kruispeiling-route' }, { blad: 'morse' }, { blad: 'jota-joti' }] },
-  { id: 'tochtafstanden', naam: 'Hoe ver loop je?', ook: ['tochtafstanden', 'afstand per niveau'], groep: 'vormen', bron: 'EIS §1.3 (SN-NAV); VAK WNET',
+  { id: 'tochtafstanden', naam: 'Hoe ver loop je?', ook: ['tochtafstanden', 'afstand per niveau'], groep: 'vormen', bron: 'EIS §1.3 (SN-NAV); VAK WNET', ken: true,
     plaatje: 'tocht-tochtafstanden',
     uitleg: [
       'Bij het insigne Navigeren hoort een tocht. Bij elk niveau wordt die langer:',

@@ -1,0 +1,30 @@
+/* The compass of cork and a needle in 3D (kurkkompas3d.js). Cork, wood and water keep their colours in both themes. */
+.kc-beeld { display: flex; flex-direction: column; gap: 6px; min-width: 0; }
+.kc-svg { background: var(--zacht); border: 1px solid var(--lijn); cursor: grab; touch-action: none; user-select: none; -webkit-user-select: none; }
+.kc-svg text { pointer-events: none; }   /* dragging turns the view; it must not select the names */
+.kc-svg.sleept { cursor: grabbing; }
+.kc-hint { font-size: 0.8125rem; }
+
+.kc-tafel { fill: #d9b98a; stroke: #a07a48; stroke-width: 1; }
+.kc-nerf { stroke: #c9a676; stroke-width: 0.8; fill: none; }
+.kc-noord { fill: none; stroke: var(--rood); stroke-width: 2.4; stroke-linecap: round; stroke-linejoin: round; }
+.kc-label { fill: #1b2a3a; font-size: 13px; paint-order: stroke; stroke: #f4ead9; stroke-width: 3px; stroke-linejoin: round; }
+.kc-wijs { stroke: #1b2a3a; stroke-width: 0.9; fill: none; }
+.kc-label.kc-n { fill: var(--rood); font-weight: 700; font-size: 15px; }
+
+.kc-bak { fill: #b8c4cc; stroke: #6f7f8a; stroke-width: 1; }
+.kc-bak-binnen { fill: #8d9ba5; }
+.kc-water { fill: #6fb0dc; fill-opacity: 0.85; stroke: #4c8fbd; stroke-width: 0.8; }
+.kc-bak-voor { fill: #c9d3da; fill-opacity: 0.92; stroke: none; }
+.kc-bak-lip { fill: none; stroke: #6f7f8a; stroke-width: 1.4; stroke-linecap: round; }
+
+.kc-kurk { fill: #d9b07a; stroke: #8b6a3a; stroke-width: 0.8; }
+.kc-kurk-zij { fill: #b88a52; stroke: #8b6a3a; stroke-width: 0.8; }
+.kc-naald { stroke: #3a4048; stroke-width: 2; stroke-linecap: round; fill: none; }
+.kc-oog { fill: none; stroke: #3a4048; stroke-width: 1.2; }
+.kc-merk { fill: var(--rood); stroke: #fff; stroke-width: 0.8; }
+
+.kc-magneet { fill: #8e98a3; stroke: #4a525b; stroke-width: 0.8; stroke-linejoin: round; }
+.kc-magneet.donker { fill: #6e7782; }
+.kc-magneet-rood { fill: #d0453a; stroke: #7d241d; stroke-width: 0.8; stroke-linejoin: round; }
+.kc-magneet-rood.donker { fill: #a8352c; }

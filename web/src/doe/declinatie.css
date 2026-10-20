@@ -31,7 +31,7 @@
 .dn-tekst { display: flex; flex-direction: column; gap: 10px; min-width: 0; }
 .dn-tekst p { margin: 0; }
 .dn-jaar { display: flex; align-items: center; gap: 10px; }
-.dn-label { color: var(--stil); font-size: 14px; }
+.dn-label { color: var(--stil); font-size: 0.875rem; }
 .dn-schuif { flex: 1; min-width: 0; min-height: 36px; margin: 0; accent-color: var(--accent); }
 .dn-jaartal { min-width: 3.2em; font-weight: 700; font-variant-numeric: tabular-nums; text-align: right; }
 
@@ -45,4 +45,4 @@
 .dn-regel { padding: 8px 12px; border-radius: 10px; background: var(--zacht); }
 .dn-voorbeeld { color: var(--stil); }
 .dn-nul { color: var(--accent); font-weight: 600; }
-.dn-noot { color: var(--stil); font-size: 13px; }
+.dn-noot { color: var(--stil); font-size: 0.8125rem; }

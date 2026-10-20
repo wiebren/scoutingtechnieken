@@ -7,20 +7,20 @@
 .gs-strook { display: grid; grid-template-columns: 54px repeat(26, minmax(18px, 1fr)); gap: 2px; min-width: 560px; }
 .gs-strook > span {
   display: grid; place-items: center; min-height: 28px; border-radius: 5px; background: var(--zacht);
-  font-size: 14px; font-weight: 700; font-variant-numeric: tabular-nums;
+  font-size: 0.875rem; font-weight: 700; font-variant-numeric: tabular-nums;
 }
 .gs-strook.geheim > span { background: color-mix(in srgb, var(--blauw) 12%, var(--paneel)); color: var(--blauw); }
-.gs-strook > span.gs-kop { justify-items: start; padding-left: 2px; background: none; color: var(--stil); font-size: 12px; font-weight: 600; }
+.gs-strook > span.gs-kop { justify-items: start; padding-left: 2px; background: none; color: var(--stil); font-size: 0.75rem; font-weight: 600; }
 .gs-strook > span.nu { background: var(--accent); color: var(--op-accent); }
 
 .gs-velden { display: grid; gap: 10px; }
 @container (min-width: 560px) { .gs-velden { grid-template-columns: 1fr 1fr; } }
 
 .gs-boodschap {
-  padding: 10px 12px; border-radius: 10px; background: var(--zacht); font-size: 19px; font-weight: 700; letter-spacing: 0.05em;
+  padding: 10px 12px; border-radius: 10px; background: var(--zacht); font-size: 1.1875rem; font-weight: 700; letter-spacing: 0.05em;
   overflow-wrap: anywhere; font-variant-numeric: tabular-nums;
 }
-.gs-uitkomst { min-height: 1.5em; font-size: 17px; overflow-wrap: anywhere; color: var(--stil); }
+.gs-uitkomst { min-height: 1.5em; font-size: 1.0625rem; overflow-wrap: anywhere; color: var(--stil); }
 .gs-uitkomst.goed { color: var(--inkt); font-weight: 600; }
 .gs-antwoord { display: flex; flex-wrap: wrap; gap: 8px; }
 .gs-antwoord .doe-veld { flex: 1 1 200px; width: auto; }

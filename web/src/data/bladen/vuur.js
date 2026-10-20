@@ -5,7 +5,7 @@
 
 export default [
   // Vuurdriehoek
-  { id: 'vuurdriehoek', naam: 'Vuurdriehoek', ook: ['branddriehoek'], en: 'fire triangle', groep: 'driehoek', bron: 'TKN §4.1, VKG SW-KA',
+  { id: 'vuurdriehoek', naam: 'Vuurdriehoek', ook: ['branddriehoek'], en: 'fire triangle', groep: 'driehoek', bron: 'TKN §4.1, VKG SW-KA', ken: true,
     doe: 'vuurdriehoek',
     uitleg: [
       'Vuur heeft drie dingen nodig: brandstof, zuurstof en warmte. Haal er één weg en het vuur gaat uit.',
@@ -17,7 +17,7 @@ export default [
       ['Warmte', 'Water erover.', 'De kolen uit elkaar halen, zodat ze afkoelen.'],
     ] },
     naar: [{ blad: 'vuur-doven' }, { blad: 'hoe-hout-brandt' }, { blad: 'vuurvijfhoek' }] },
-  { id: 'hoe-hout-brandt', naam: 'Hoe hout brandt', ook: ['houtgas', 'gloeibrand', 'vlammen'], groep: 'driehoek', bron: 'VKG SW-LS, SW-SB',
+  { id: 'hoe-hout-brandt', naam: 'Hoe hout brandt', ook: ['houtgas', 'gloeibrand', 'vlammen'], groep: 'driehoek', bron: 'VKG SW-LS, SW-SB', ken: true,
     plaatje: 'hout-brandt',
     uitleg: [
       'Hout brandt in twee stappen. Eerst wordt het zo heet dat er gas uit komt: de vlammen die je ziet, zijn brandend houtgas. Wat overblijft is houtskool, en dat gloeit verder zonder vlammen.',
@@ -52,7 +52,7 @@ export default [
     ],
     letOp: 'Hout van de grond is vaak vochtig. Leg het om het vuur heen om te drogen, voor het erop gaat.',
     naar: [{ blad: 'tondel' }, { blad: 'piramidevuur' }, { blad: 'droog-hout' }, { blad: 'soorten-vuren' }] },
-  { id: 'tondel', naam: 'Tondel', ook: ['tonder', 'tinder', 'aanmaakmateriaal'], en: 'tinder', groep: 'aanmaken', bron: 'VKG SW-TO, SW-KA, SN-V',
+  { id: 'tondel', naam: 'Tondel', ook: ['tonder', 'tinder', 'aanmaakmateriaal'], en: 'tinder', groep: 'aanmaken', bron: 'VKG SW-TO, SW-KA, SN-V', ken: true,
     plaatje: 'tondel-soorten',
     uitleg: [
       'Tondel is wat in je vuur als eerste brandt. Het is droog en luchtig, en het vat snel vlam. Het moet vlam vatten van een vonk of een lucifer. En het moet lang genoeg branden om het aanmaakhout aan te steken.',
@@ -65,7 +65,7 @@ export default [
       'Van huis: aanmaakblokjes, een eierdoos, watten of pluisjes van katoen, of charcloth (verkoold katoen). Neem altijd een beetje droge tondel mee in een zakje.',
     ],
     naar: [{ blad: 'vuur-opbouwen' }, { blad: 'charcloth' }, { blad: 'veerstok' }] },
-  { id: 'aanmaakblokjes', naam: 'Aanmaakblokjes en wat niet mag', ook: ['brandgel', 'spiritus', 'aanmaakmiddelen', 'lampolie'], groep: 'aanmaken', bron: 'VKG SN-VVS, SN-DS',
+  { id: 'aanmaakblokjes', naam: 'Aanmaakblokjes en wat niet mag', ook: ['brandgel', 'spiritus', 'aanmaakmiddelen', 'lampolie'], groep: 'aanmaken', bron: 'VKG SN-VVS, SN-DS', ken: true,
     uitleg: [
       'Aanmaakblokjes mag je gebruiken. Bruine blokjes zijn het schoonst.', 'Gebruik nooit brandgel, lampolie, spiritus, petroleum of benzine om een vuur aan te maken. De damp ervan vat in één keer vlam. Dan schiet er een grote vlam uit (een steekvlam), en daar kun je je aan verbranden. En het is slecht voor het milieu.',
       'Papier en karton liever niet: ze geven veel rook en zwevende as.',
@@ -150,7 +150,7 @@ export default [
     naar: [{ blad: 'kampvuur-op-afstand' }, { blad: 'zweedse-fakkel' }, { blad: 'vlam-in-de-pan' }] },
 
   // Vuursoorten
-  { id: 'soorten-vuren', naam: 'Soorten vuren', ook: ['vuursoorten', 'welk vuur', 'kookvuur', 'kampvuur bouwen', 'vuur opbouwen'], en: 'fire lays', groep: 'soorten',
+  { id: 'soorten-vuren', naam: 'Soorten vuren', ook: ['vuursoorten', 'welk vuur', 'kookvuur', 'kampvuur bouwen', 'vuur opbouwen'], en: 'fire lays', groep: 'soorten', ken: true,
     bron: 'VKG SW-SV, MPSE-VS, SN-V, SN-DS',
     doe: 'vuur-kiezen',
     uitleg: [
@@ -285,7 +285,7 @@ export default [
     naar: [{ blad: 'natuurbrandrisico' }, { blad: 'soorten-vuren' }] },
 
   // Hout
-  { id: 'welk-hout', naam: 'Welk hout brandt goed?', ook: ['houtsoorten', 'brandwaarde', 'eik', 'beuk', 'berk', 'den'], groep: 'hout', bron: 'VKG SW-SB, SN-DS, SN-V, TKN §4.3',
+  { id: 'welk-hout', naam: 'Welk hout brandt goed?', ook: ['houtsoorten', 'brandwaarde', 'eik', 'beuk', 'berk', 'den'], groep: 'hout', bron: 'VKG SW-SB, SN-DS, SN-V, TKN §4.3', ken: true,
     doe: 'hout-kiezen',
     uitleg: 'Is het hout goed droog, dan scheelt het niet veel welke boom het was: per kilo geven ze ongeveer evenveel warmte. Maar ze branden wel anders.',
     tabel: { kop: ['Hout', 'Hoe het brandt'], rijen: [
@@ -299,7 +299,7 @@ export default [
     ] },
     letOp: 'Nooit taxus stoken: die is giftig, ook de rook. Nooit geverfd, gebeitst, gelijmd of geïmpregneerd hout, mdf, spaanplaat of pallets.',
     naar: [{ blad: 'droog-hout' }, { blad: 'schoon-stoken' }] },
-  { id: 'droog-hout', naam: 'Droog hout', ook: ['nat hout', 'vochtig hout', 'hout drogen'], groep: 'hout', bron: 'VKG SN-DS, SW-SB, SW-LS, SN-V',
+  { id: 'droog-hout', naam: 'Droog hout', ook: ['nat hout', 'vochtig hout', 'hout drogen'], groep: 'hout', bron: 'VKG SN-DS, SW-SB, SW-LS, SN-V', ken: true,
     plaatje: 'droog-nat-hout',
     uitleg: [
       'Alleen droog hout brandt goed. Nat hout geeft weinig warmte: de warmte gaat op aan het verdampen van het water. En nat hout geeft veel rook.',
@@ -325,7 +325,7 @@ export default [
     ],
     verwijs: [{ naam: 'Stookwijzer (Atlas Leefomgeving)', url: 'https://www.atlasleefomgeving.nl/stookwijzer' }],
     naar: [{ blad: 'zwitserse-methode' }, { blad: 'brandstoffen' }] },
-  { id: 'brandstoffen', naam: 'Brandstoffen', ook: ['vaste brandstoffen', 'brandbare vloeistoffen', 'houtskool', 'briketten', 'brandtabletten'], zoekOok: ['Esbit'], groep: 'hout', bron: 'VKG SN-VVS, SN-DS, SW-BR, BW-V, SN-V',
+  { id: 'brandstoffen', naam: 'Brandstoffen', ook: ['vaste brandstoffen', 'brandbare vloeistoffen', 'houtskool', 'briketten', 'brandtabletten'], zoekOok: ['Esbit'], groep: 'hout', bron: 'VKG SN-VVS, SN-DS, SW-BR, BW-V, SN-V', ken: true,
     uitleg: [
       'Vaste brandstoffen die je veilig kunt gebruiken: droog hout, houtskool, briketten en aanmaakblokjes. Briketten geven geen vonken. Brandtabletten zijn voor kleine branders.',
       'Vervuilend en verboden om te stoken: afval, plastic, geverfd of behandeld hout, mdf en spaanplaat.',
@@ -374,7 +374,7 @@ export default [
     naar: [{ blad: 'kolen-bewaren' }, { blad: 'vuur-doven' }, { blad: 'tondel' }] },
 
   // Regels
-  { id: 'natuurbrandrisico', naam: 'Natuurbrandrisico', ook: ['natuurbrand', 'stookverbod', 'fase 1', 'fase 2'], groep: 'regels', letterlijk: true,
+  { id: 'natuurbrandrisico', naam: 'Natuurbrandrisico', ook: ['natuurbrand', 'stookverbod', 'fase 1', 'fase 2'], groep: 'regels', letterlijk: true, ken: true,
     bron: 'brandweer.nl/natuurbrandrisico', bronDatum: 'geraadpleegd 16-10-2026',
     plaatje: 'natuurbrand-vluchten',
     waarvoor: 'Weten of het vandaag te droog is om te stoken, en wat je doet als je een natuurbrand ziet.',
@@ -396,7 +396,7 @@ export default [
     letOp: 'Het oude schema met vier fasen bestaat niet meer: er zijn nu alleen fase 1 en fase 2.',
     verwijs: [{ naam: 'Natuurbrandrisico op brandweer.nl', url: 'https://www.brandweer.nl/natuurbrandrisico/' }],
     naar: [{ blad: 'stookverbod' }, { blad: 'kampvuur-zonder-vuur' }] },
-  { id: 'stookverbod', naam: 'Mag je hier stoken?', ook: ['stookverbod', 'ontheffing', 'stookvergunning', 'APV'], groep: 'regels', letterlijk: true,
+  { id: 'stookverbod', naam: 'Mag je hier stoken?', ook: ['stookverbod', 'ontheffing', 'stookvergunning', 'APV'], groep: 'regels', letterlijk: true, ken: true,
     bron: 'Scouting Nederland, infoblad Veilig en verantwoord stoken', bronDatum: '2026',
     doe: 'mag-ik-stoken',
     waarvoor: 'Uitzoeken of je op deze plek en vandaag een vuur mag maken: van de gemeente, van de eigenaar en van het weer.',

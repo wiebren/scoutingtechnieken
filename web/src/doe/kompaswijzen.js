@@ -1,6 +1,6 @@
-// Point at the parts of the baseplate compass: the piece names a part, you tap it in the compass of kompas.js (or
-// pick it with the keyboard). The parts are the ones the blad kompas-onderdelen names. "Draai het kompas" swaps in
-// the compass to turn, so the blad keeps that too.
+// The parts of the baseplate compass. First the compass with each part named beside it; then the piece names a part
+// and you tap it (or pick it with the keyboard). The parts are the ones the blad kompas-onderdelen names. "Draai het
+// kompas" swaps in the compass to turn, so the blad keeps that too.
 import { h } from '../dom.js';
 import { kompasDelen, s } from './kompasdelen.js';
 import { keuze } from './knoppen.js';
@@ -51,6 +51,32 @@ function kompasMetDelen() {
   return s('svg', { viewBox: '-72 -152 144 306', class: 'kd-svg', role: 'group', 'aria-label': 'Een plaatkompas met zijn delen' }, plaat, nld);
 }
 
+/** Where each part is named: the point on the part (housing turned +60, needle north) and the line of its name. */
+const NAMEN = [
+  ['richtingspijl', [0, -110]],
+  ['naald', [3, -26], 'naald (rood is noord)'],
+  ['gradenring', [51.3, -43]],
+  ['orientatiepijl', [38.1, -22]],
+  ['noordlijnen', [41, 11]],
+  ['huis', [32.5, 32.5], 'huis (draait)'],
+  ['liniaal', [-58, 100]],
+  ['plaat', [50, 122]],
+];
+
+/** The compass with its parts named, as in a drawing: the housing turned a bit, so the needle is not in the huisje. */
+function kompasMetNamen() {
+  const { plaat, huis, naald } = kompasDelen();
+  huis.setAttribute('transform', 'rotate(60)');
+  const namen = NAMEN.map(([deel, [x, y], tekst], i) => {
+    const ty = -133 + i * 38;
+    return s('g', { class: 'kd-naam' },
+      s('path', { d: `M${x} ${y}L100 ${ty}H106`, class: 'kd-naamlijn' }), s('circle', { cx: x, cy: y, r: 2.2, class: 'kd-naampunt' }),
+      s('text', { x: 110, y: ty, 'dominant-baseline': 'central' }, tekst ?? DELEN[deel][0].replace(/^de |^het /, '')));
+  });
+  return s('svg', { viewBox: '-72 -152 316 306', class: 'kd-svg', role: 'img',
+    'aria-label': `Een plaatkompas met zijn delen: ${NAMEN.map(([d]) => DELEN[d][0]).join(', ')}` }, plaat, naald, ...namen);
+}
+
 export default function kompaswijzen() {
   let rij = []; let vraag = null; let goed = 0; let gehad = 0; let wacht = false; let draaien = null;
 
@@ -79,10 +105,11 @@ export default function kompaswijzen() {
     });
   }
 
-  const oefen = h('div.kd-oefen', h('div.kd-beeld', svg), h('div.kd-tekst', vraagTekst, melding, score));
+  const oefen = h('div.kd-oefen', { hidden: true }, h('div.kd-beeld', svg), h('div.kd-tekst', vraagTekst, melding, score));
+  const bekijk = h('div.kd-namen', kompasMetNamen());
   const plek = h('div.kd-draai', { hidden: true }, h('p.leeg', 'Even laden…'));
-  const chips = keuze([['wijs', 'Wijs de delen aan'], ['draai', 'Draai het kompas']], 'wijs', (w) => {
-    oefen.hidden = w !== 'wijs'; plek.hidden = w === 'wijs';
+  const chips = keuze([['bekijk', 'Bekijk de delen'], ['wijs', 'Wijs de delen aan'], ['draai', 'Draai het kompas']], 'bekijk', (w) => {
+    bekijk.hidden = w !== 'bekijk'; oefen.hidden = w !== 'wijs'; plek.hidden = w !== 'draai';
     if (w === 'draai' && !draaien) {
       draaien = import('./kompas.js').then(({ default: kompas }) => plek.replaceChildren(kompas()));
     }
@@ -117,5 +144,5 @@ export default function kompaswijzen() {
   }
 
   volgende();
-  return h('div.doe-kompaswijzen', h('div.chips', chips), oefen, plek);
+  return h('div.doe-kompaswijzen', h('div.chips', chips), bekijk, oefen, plek);
 }

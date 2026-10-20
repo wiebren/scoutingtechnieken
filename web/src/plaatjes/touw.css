@@ -26,6 +26,7 @@
 .plaatje .tw-kern.a { stroke: var(--tw-a-kern); }
 .plaatje .tw-rand-vul.a, .plaatje .tw-takel.a { fill: var(--tw-a-rand); stroke: var(--tw-a-rand); }
 .plaatje .tw-lijf-vul.a { fill: var(--tw-a); }
+.plaatje .tw-naad.a { stroke: var(--tw-a); stroke-width: 0.6; }
 .plaatje .tw-rand.b { stroke: var(--tw-b-rand); }
 .plaatje .tw-lijf.b { stroke: var(--tw-b); }
 .plaatje .tw-kern.b { stroke: var(--tw-b-kern); }
@@ -69,7 +70,6 @@
 .plaatje .tw-bordtekst { fill: var(--tw-paal-rand); font-weight: 600; }
 .plaatje .tw-metaal-lijn { fill: none; stroke: var(--tw-ring-rand); stroke-width: 3; stroke-linecap: round; }
 .plaatje .tw-metaal-licht-lijn { fill: none; stroke: var(--tw-ring-kern); stroke-width: 2.5; stroke-linecap: round; }
-.plaatje .tw-paal-lijn { fill: none; stroke: var(--tw-paal); stroke-width: 10; stroke-linecap: round; }
 .plaatje .tw-zand { fill: color-mix(in srgb, var(--bruin) 22%, var(--paneel)); }
 .plaatje .tw-kruis { fill: none; stroke: var(--rood); stroke-width: 4; stroke-linecap: round; }
 .plaatje .tw-glans { fill: color-mix(in srgb, var(--tw-a-kern) 70%, #ffffff); stroke: var(--tw-a-rand); stroke-width: 1.2; }

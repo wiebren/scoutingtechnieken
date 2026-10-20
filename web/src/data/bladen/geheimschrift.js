@@ -3,7 +3,7 @@
 // (doe 'code-<id>', src/doe/seinen/). Names that §5g did not find in a source are not used.
 
 export default [
-  { id: 'geheimschrift-soorten', naam: 'Soorten geheimschrift', ook: ['codes', 'codeermachine', 'geheimtaal'], en: 'ciphers', groep: 'vervangen', bron: 'NAV §5',
+  { id: 'geheimschrift-soorten', naam: 'Soorten geheimschrift', ook: ['codes', 'codeermachine', 'geheimtaal'], en: 'ciphers', groep: 'vervangen', bron: 'NAV §5', ken: true,
     doe: 'codeermachine',
     uitleg: [
       'Er zijn een paar manieren om een bericht geheim te maken. Bijna elke code hoort bij een van deze soorten:',

@@ -9,6 +9,7 @@
   <meta name="theme-color" content="#18201b" media="(prefers-color-scheme: dark)">
   <!-- the theme chosen in Instellingen (src/opslag.js), set before the first paint -->
   <script>try { const t = JSON.parse(localStorage.getItem('scoutingtechnieken.thema.v1')); if (t === 'licht' || t === 'donker') document.documentElement.dataset.theme = t === 'donker' ? 'dark' : 'light'; } catch { /* auto */ }</script>
+  <script>try { const g = { klein: '87.5%', groot: '115%', groter: '130%' }[JSON.parse(localStorage.getItem('scoutingtechnieken.tekst.v1'))]; if (g) document.documentElement.style.fontSize = g; } catch { /* normaal */ }</script>
   <link rel="manifest" href="manifest.webmanifest">
   <link rel="icon" type="image/png" sizes="192x192" href="icons/icon-192.png">
   <link rel="apple-touch-icon" href="icons/apple-touch-icon.png">

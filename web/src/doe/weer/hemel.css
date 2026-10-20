@@ -10,10 +10,10 @@
 .hm-schuif > span { color: var(--stil); }
 .hm-plaatsen { gap: 5px; }
 .hm-uitkomst { font-variant-numeric: tabular-nums; }
-.hm-tabel { width: 100%; border-collapse: collapse; font-size: 14px; font-variant-numeric: tabular-nums; }
+.hm-tabel { width: 100%; border-collapse: collapse; font-size: 0.875rem; font-variant-numeric: tabular-nums; }
 .hm-tabel th { text-align: left; color: var(--stil); font-weight: 600; padding: 3px 8px 3px 0; white-space: nowrap; }
 .hm-tabel td { padding: 3px 0; }
-.hm-noot { color: var(--stil); font-size: 13px; }
+.hm-noot { color: var(--stil); font-size: 0.8125rem; }
 
 /* the ground seen from above, its edge the horizon */
 .hm-grond { fill: var(--zacht); }
@@ -53,7 +53,7 @@
 
 /* what works now (hemel-nu.js) */
 .hn-lucht { transition: fill 0.3s; }
-.hn-lijst { margin: 0; padding: 0; list-style: none; display: flex; flex-direction: column; gap: 4px; font-size: 15px; }
+.hn-lijst { margin: 0; padding: 0; list-style: none; display: flex; flex-direction: column; gap: 4px; font-size: 0.9375rem; }
 .hn-lijst li { padding-left: 24px; position: relative; }
 .hn-lijst li::before { position: absolute; left: 0; font-weight: 800; }
 .hn-lijst li.ja::before { content: '✓'; color: var(--accent); }

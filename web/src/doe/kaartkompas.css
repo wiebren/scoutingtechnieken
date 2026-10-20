@@ -8,8 +8,8 @@
 .kkk-svg.rond { max-width: 360px; margin: 0 auto; border: 0; background: none; }
 .kkk-svg.sleept { cursor: grabbing; }
 .kkk-svg:focus-visible { outline: 3px solid var(--accent); outline-offset: 3px; }
-.doe-kaartkompas .kk-knoppen .knop { min-width: 44px; min-height: 44px; font-size: 18px; }   /* big enough for a finger */
-.kkk-bron { margin: 6px 0 0; color: var(--stil); font-size: 12px; }
+.doe-kaartkompas .kk-knoppen .knop { min-width: 44px; min-height: 44px; font-size: 1.125rem; }   /* big enough for a finger */
+.kkk-bron { margin: 6px 0 0; color: var(--stil); font-size: 0.75rem; }
 
 .kkk-raster { stroke: #0066b2; stroke-width: 2.5; stroke-dasharray: 10 6; opacity: 0.75; }
 .kkk-lijn { stroke: #d1141b; stroke-width: 3.5; stroke-dasharray: 12 7; fill: none; }

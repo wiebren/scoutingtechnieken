@@ -11,7 +11,7 @@
   user-select: none; -webkit-user-select: none; cursor: grab; }
 .kh-svg.sleept { cursor: grabbing; }
 .kh-svg:focus-visible { outline: 3px solid var(--accent); outline-offset: -3px; border-radius: 12px; }
-.kh-bron { margin-top: 4px; color: var(--stil); font-size: 12px; }
+.kh-bron { margin-top: 4px; color: var(--stil); font-size: 0.75rem; }
 
 /* the card: the classes of ../plaatjes/kaarthoekmeter.js */
 .kh-kaartje .vlak { fill: #fff; }
@@ -32,15 +32,15 @@
 
 .kh-onder { display: flex; flex-wrap: wrap; align-items: center; gap: 6px 12px; }
 .kh-pijlen { display: flex; gap: 6px; }
-.kh-pijlen .knop.kh-pijl { min-width: 44px; min-height: 44px; font-size: 18px; }   /* over .knop.klein: a finger needs 44 px */
+.kh-pijlen .knop.kh-pijl { min-width: 44px; min-height: 44px; font-size: 1.125rem; }   /* over .knop.klein: a finger needs 44 px */
 .kh-plek { flex: 1 1 180px; font-variant-numeric: tabular-nums; }
 .kh-velden { display: grid; grid-template-columns: repeat(2, minmax(0, 1fr)); gap: 10px; }
 .kh-getal { font-variant-numeric: tabular-nums; }
 
-.kh-opdracht { font-size: 16px; }
-.kh-uitkomst { min-height: 1.5em; font-size: 17px; }
+.kh-opdracht { font-size: 1rem; }
+.kh-uitkomst { min-height: 1.5em; font-size: 1.0625rem; }
 .kh-uitkomst.goed { color: var(--accent); font-weight: 600; }
 .kh-uitkomst.fout { color: var(--rood); font-weight: 600; }
-.kh-uitleg { color: var(--stil); font-size: 14px; font-variant-numeric: tabular-nums; }
+.kh-uitleg { color: var(--stil); font-size: 0.875rem; font-variant-numeric: tabular-nums; }
 .kh-score { color: var(--stil); font-variant-numeric: tabular-nums; }
 .kh-score:empty { display: none; }

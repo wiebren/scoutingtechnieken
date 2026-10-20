@@ -5,6 +5,7 @@
 // See ../plaatjes.js and ./basis.js.
 import { r1, svg, tekst } from './basis.js';
 import { fout, goed } from './vuur.js';
+import { opgeschotenBos } from './touw.js';
 
 const P = (x, y) => `${r1(x)} ${r1(y)}`;
 /** A path through points [[x, y], ...]. */
@@ -146,6 +147,181 @@ function kruisFamilie(soort) {
   uit += wijs(276, 60, '3 keer woelen', px + r + 6, by - r - 8, 'middle');
   uit += wijs(276, 262, 'eind: mastworp', rechts[2] + 22, by + r + 6, 'middle');
   return svg(w, h, 'Kruissjorring: een staande paal met een dwarsbalk ervoor. Begin met een mastworp om de staande paal onder de balk, drie slagen voor de balk langs en achter de paal om, drie woelslagen tussen de palen in de hoeken, eindig met een mastworp om de balk', uit);
+}
+
+// The kruissjorring as a small 3D model, seen from the front: the standing pole behind, the balk in front of it and
+// touching it. The rope is one path, from the mastworp on the pole through the slagen and the woelslagen to the
+// mastworp on the balk, so the drawing and the piece in ../doe/sjorren/ (kruissjorring.js) show the same lashing.
+// What lies behind the pole is drawn before the pole, what lies between pole and balk before the balk, the rest after
+// it; within each, from back to front.
+const KS_R = 13; const KS_T = 3; const KS_ZB = 2 * KS_R;   // poles 26 thick, rope 6; the balk's axis in front
+const graad = (g) => (g * Math.PI) / 180;
+const meng3 = (a, b, f) => a.map((v, i) => v + (b[i] - v) * f);
+const reeks = (a, b, n, f) => Array.from({ length: n + 1 }, (_, i) => f(a + ((b - a) * i) / n));
+/** A point on a circle round the standing pole (phi 0 = in front, 90 = right), at height y (down is +). */
+const opPaal = (phi, y, rho) => [rho * Math.sin(graad(phi)), y, rho * Math.cos(graad(phi))];
+/** A point on a circle round the balk (psi 0 = in front, 90 = on top), at x. */
+const opBalk = (psi, x, rho) => [x, -rho * Math.sin(graad(psi)), KS_ZB + rho * Math.cos(graad(psi))];
+/** A mastworp: a turn, the crossing over it in front, a second turn whose end goes under the crossing.
+ *  `op(hoek, plek, rho)` puts a point on the pole; a and b are where the two turns lie along it. */
+const mastworp3 = (op, a, b) => [
+  ...reeks(-70, 290, 36, (f) => op(f, a, KS_R + KS_T)),
+  ...reeks(-70, 60, 10, (f) => { const g = (f + 70) / 130; return op(f, a + (b - a) * g, KS_R + KS_T + 1.6 * KS_T * Math.sin(Math.PI * g)); }).slice(1),
+  ...reeks(60, 395, 34, (f) => op(f, b, KS_R + KS_T)).slice(1),
+];
+const KS_MW = [KS_R + 3 * KS_T + 2.4, KS_R + KS_T + 2];               // the mastworp on the pole, just under the balk
+const KS_SLAG_X = [0, 1, 2].map((i) => KS_R + KS_T + 1 + (2 - i) * (2 * KS_T + 0.3));   // on the balk: each inside the one before
+const KS_SLAG_Y = [0, 1, 2].map((i) => KS_R + KS_T + 1 + i * (2 * KS_T + 0.3));         // on the pole: each outside
+const KS_WOEL = 47; const KS_WOEL_STAP = 6.4;                         // the woelslagen: round the corners of the slagen
+/** How far out woelslag k lies (k + 0.5: half way round it). */
+const h3 = (k) => KS_WOEL + KS_WOEL_STAP * k - KS_R - KS_T;
+const KS_EIND = h3(3) + 6;                                            // where the mastworp on the balk starts
+
+/** The rope's path, in parts: mastworp, slagen, woelslagen, mastworp on the balk. */
+function kruisDelen() {
+  const { [0]: onder, [1]: boven } = KS_MW;
+  // the short end lies behind the pole, out of sight
+  const begin = [...reeks(-160, -75, 6, (f) => opPaal(f, onder + 6 * (f + 75) / -85, KS_R + KS_T)), ...mastworp3(opPaal, onder, boven)];
+  const slagen = [];
+  for (let i = 0; i < 3; i++) {
+    const x = KS_SLAG_X[i]; const y = KS_SLAG_Y[i]; const hoek = (KS_R + KS_T + y) / 2 + 2;
+    // up in front of the balk, back over it to the pole, round behind it, over the balk, down in front, under the balk
+    // and round behind the pole below it (outside the mastworp)
+    slagen.push(...reeks(-90, 90, 12, (f) => opBalk(f, x, KS_R + KS_T)), [(x + KS_R + KS_T) / 2 + 2, -hoek, KS_ZB * 0.45],
+      ...reeks(90, 270, 14, (f) => opPaal(f, -y, KS_R + KS_T)), [-(x + KS_R + KS_T) / 2 - 2, -hoek, KS_ZB * 0.45],
+      ...reeks(90, -90, 12, (f) => opBalk(f, -x, KS_R + KS_T)), [-(x + KS_R + 3 * KS_T) / 2 - 1, hoek, KS_ZB * 0.45],
+      ...reeks(270, 90, 14, (f) => opPaal(f, y, KS_R + 3 * KS_T)));
+    if (i < 2) slagen.push([(KS_SLAG_X[i + 1] + KS_R + 3 * KS_T) / 2 + 1, (KS_R + KS_T + KS_SLAG_Y[i + 1]) / 2 + 2, KS_ZB * 0.45]);
+  }
+  // three times round between the poles, each outside the one before: behind the balk at the sides, over the front of
+  // the pole above and below the balk, and round the corners where the slagen go from the balk to the pole
+  const woelen = []; const rb = KS_R + KS_T;
+  const hoek = (k, q, [sx, sy], van, tot) => reeks(van, tot, 8, (b) => {
+    const f = (b - van) / (tot - van); const r = h3(k + q + f / 8) - rb;
+    return [sx * rb + r * Math.cos(graad(b)), sy * rb + r * Math.sin(graad(b)), KS_ZB * (van % 180 === 0 ? 1 - f : f)];
+  }).slice(1, -1);
+  for (let k = 0; k < 3; k++) {
+    woelen.push(...reeks(270, 90, 10, (f) => opBalk(f, h3(k + (270 - f) / 1440), rb)), ...hoek(k, 1 / 8, [1, -1], 0, -90),
+      ...reeks(90, -90, 14, (f) => opPaal(f, -h3(k + 2 / 8 + (90 - f) / 1440), rb)), ...hoek(k, 3 / 8, [-1, -1], -90, -180),
+      ...reeks(90, 270, 10, (f) => opBalk(f, -h3(k + 4 / 8 + (f - 90) / 1440), rb)), ...hoek(k, 5 / 8, [-1, 1], 180, 90),
+      ...reeks(-90, 90, 14, (f) => opPaal(f, h3(k + 6 / 8 + (f + 90) / 1440), rb)), ...hoek(k, 7 / 8, [1, 1], 90, 0));
+  }
+  const af = mastworp3((f, x, rho) => opBalk(f, x, rho), KS_EIND, KS_EIND + 2 * KS_T + 0.4);
+  const e = af.at(-1);
+  af.push([e[0] + 5, e[1] - 6, e[2] + 3], [e[0] + 12, e[1] - 14, e[2] + 4]);
+  return [begin, slagen, woelen, af];
+}
+/** Points every `stap` along a path. */
+function verdeel3(p, stap) {
+  const uit = [p[0]];
+  for (let i = 1; i < p.length; i++) {
+    const n = Math.max(1, Math.ceil(Math.hypot(p[i][0] - p[i - 1][0], p[i][1] - p[i - 1][1], p[i][2] - p[i - 1][2]) / stap));
+    for (let k = 1; k <= n; k++) uit.push(meng3(p[i - 1], p[i], k / n));
+  }
+  return uit;
+}
+const lengte3 = (p) => p.slice(1).reduce((som, q, i) => som + Math.hypot(q[0] - p[i][0], q[1] - p[i][1], q[2] - p[i][2]), 0);
+/** The whole path, its corners rounded off (Chaikin), and where each part ends along it. */
+const KRUIS = (() => {
+  const delen = kruisDelen();
+  let p = delen.flat();
+  for (let k = 0; k < 2; k++) p = [p[0], ...p.slice(0, -1).flatMap((a, i) => [meng3(a, p[i + 1], 0.25), meng3(a, p[i + 1], 0.75)]), p.at(-1)];
+  p = verdeel3(p, 1.5);
+  let tot = 0; const grenzen = delen.map((d) => (tot += lengte3(d)));
+  const schaal = lengte3(p) / tot;                                    // rounding shortens it a little
+  return { p, grenzen: grenzen.map((g) => g * schaal) };
+})();
+
+/** The path cut off after length l. */
+function tot3(p, l) {
+  for (let i = 1; i < p.length; i++) {
+    const d = Math.hypot(p[i][0] - p[i - 1][0], p[i][1] - p[i - 1][1], p[i][2] - p[i - 1][2]);
+    if (d < l) { l -= d; continue; }
+    return [...p.slice(0, i), meng3(p[i - 1], p[i], l / d)];
+  }
+  return p;
+}
+
+// Seen a little from the right and from above, so the gap between pole and balk shows.
+const KS_DRAAI = graad(-24); const KS_KANT = graad(10);
+/** A model point [x, y (down), z (to you)] to the drawing: { x, y, d } (d: larger is nearer). */
+function kijk([x, y, z], cx, cy) {
+  const x1 = x * Math.cos(KS_DRAAI) + z * Math.sin(KS_DRAAI); const z1 = -x * Math.sin(KS_DRAAI) + z * Math.cos(KS_DRAAI);
+  return { x: cx + x1, y: cy + y * Math.cos(KS_KANT) + z1 * Math.sin(KS_KANT), d: z1 * Math.cos(KS_KANT) - y * Math.sin(KS_KANT) };
+}
+const normaal2 = (u, v) => { const dx = v.x - u.x; const dy = v.y - u.y; const k = Math.hypot(dx, dy) || 1; return [-dy / k, dx / k]; };
+/** A pole from a to b (model points), r thick, in short slices to sort among the rope; the end you see shows its cut. */
+function paalStukken(a, b, r, cx, cy) {
+  const n = Math.ceil(Math.hypot(b[0] - a[0], b[1] - a[1], b[2] - a[2]) / 4);
+  const q = reeks(0, n, n, (i) => kijk(meng3(a, b, i / n), cx, cy));
+  const [nx, ny] = normaal2(q[0], q[n]);
+  const stukken = [];
+  for (let i = 0; i < n; i++) {
+    const A = q[i]; const B = q[i + 1];
+    const zij = (f) => `M${P(A.x + nx * f, A.y + ny * f)}L${P(B.x + nx * f, B.y + ny * f)}`;
+    // a little longer than the slice, so no seam shows between two
+    const [ex, ey] = [(B.x - A.x) * 0.15, (B.y - A.y) * 0.15];
+    let svg = `<path d="M${P(A.x + nx * r - ex, A.y + ny * r - ey)}L${P(B.x + nx * r + ex, B.y + ny * r + ey)}L${P(B.x - nx * r + ex, B.y - ny * r + ey)}L${P(A.x - nx * r - ex, A.y - ny * r - ey)}Z" class="sj-hout-vul"/>`
+      + `<path d="M${P(A.x + nx * r - ex, A.y + ny * r - ey)}L${P(B.x + nx * r + ex, B.y + ny * r + ey)}M${P(A.x - nx * r - ex, A.y - ny * r - ey)}L${P(B.x - nx * r + ex, B.y - ny * r + ey)}" class="sj-hout-rand"/>`;
+    if (i % 7 < 4) svg += `<path d="${zij(r * 0.35)}" class="sj-nerf-stuk"/>`;
+    if ((i + 3) % 7 < 4) svg += `<path d="${zij(-r * 0.4)}" class="sj-nerf-stuk"/>`;
+    stukken.push({ d: (A.d + B.d) / 2 - 0.5, svg });
+  }
+  // the ends: an ellipse, the circle of the cut seen at an angle (only where its face turns to you)
+  for (const [p, o, Q] of [[a, b, q[0]], [b, a, q[n]]]) {
+    const l = Math.hypot(p[0] - o[0], p[1] - o[1], p[2] - o[2]); const u = p.map((v, i) => (v - o[i]) / l);
+    const t = kijk(u, 0, 0);
+    if (t.d <= 0.02) continue;
+    const hoek = (Math.atan2(t.y, t.x) * 180) / Math.PI;
+    stukken.push({ d: Q.d + 0.5, svg: `<ellipse cx="${r1(Q.x)}" cy="${r1(Q.y)}" rx="${r1(r * t.d)}" ry="${r1(r)}" transform="rotate(${r1(hoek)} ${P(Q.x, Q.y)})" class="sj-kop"/>` });
+  }
+  return stukken;
+}
+
+/**
+ * The kruissjorring at point w (0 = the mastworp on the pole, 1 = three slagen, 2 = three woelslagen, 3 = the
+ * mastworp on the balk), the crossing at (cx, cy). What is not laid yet hangs from the end you work with.
+ */
+export function kruissjorringStand(w, cx = 170, cy = 150) {
+  const { p, grenzen } = KRUIS;
+  const fase = Math.min(2, Math.max(0, Math.floor(w)));
+  const gelegd = w >= 3 ? p : tot3(p, grenzen[fase] + (grenzen[fase + 1] - grenzen[fase]) * Math.max(0, w - fase));
+  // the free end: on from the last point, away from the poles and towards you, and hanging down
+  const los = Math.min(46, grenzen[3] - lengte3(gelegd));
+  let pad = gelegd;
+  if (los > 0.5) {
+    const a = gelegd.at(-2); const b = gelegd.at(-1);
+    const eenheid = (v) => { const k = Math.hypot(...v) || 1; return v.map((c) => c / k); };
+    const u = eenheid([...eenheid(b.map((c, i) => c - a[i]))].map((c, i) => c * 0.5 + eenheid([b[0], 0, b[2] - KS_ZB / 2 + 24])[i]));
+    pad = [...gelegd, ...reeks(0, los, 14, (s) => [b[0] + u[0] * s * (1 - s / 92), b[1] + u[1] * s * (1 - s / 92) + (s * s) / 92, b[2] + u[2] * s * (1 - s / 92)]).slice(1)];
+  }
+  const stukken = [...paalStukken([0, -136, 0], [0, 140, 0], KS_R, cx, cy), ...paalStukken([-150, 0, KS_ZB], [150, 0, KS_ZB], KS_R, cx, cy)];
+  const q = pad.map((v) => kijk(v, cx, cy)); const n = q.length - 1;
+  const lijf = KS_T - 1.1; const rand = KS_T - 0.6;
+  for (let i = 0; i < n; i++) {
+    const A = q[i]; const B = q[i + 1];
+    const [ax, ay] = normaal2(q[Math.max(0, i - 1)], B); const [bx, by] = normaal2(A, q[Math.min(n, i + 2)]);
+    const zij = (f) => `M${P(A.x + ax * f, A.y + ay * f)}L${P(B.x + bx * f, B.y + by * f)}`;
+    stukken.push({ d: (A.d + B.d) / 2, svg: `<path d="${zij(lijf)}L${P(B.x - bx * lijf, B.y - by * lijf)}L${P(A.x - ax * lijf, A.y - ay * lijf)}Z" class="sj-touw-lijfvul"/>`
+      + `<path d="${zij(rand)}${zij(-rand)}" class="sj-touw-rand" stroke-width="1.2" stroke-linecap="round"/>`
+      + `<path d="M${P(A.x, A.y)}L${P(B.x, B.y)}" class="sj-touw-kern" stroke-width="1.6" stroke-linecap="round"/>` });
+  }
+  const E = q[n]; const F = q[n - 2];
+  stukken.push({ d: E.d + 0.01, svg: eind(E.x, E.y, (Math.atan2(E.y - F.y, E.x - F.x) * 180) / Math.PI) });
+  return stukken.sort((s, t) => s.d - t.d).map((s) => s.svg).join('');
+}
+
+/** The kruissjorring, finished, with what each part is. */
+function kruissjorring() {
+  // bigger than the piece: the lashing is what it is about
+  const S = 1.4;
+  const zie = (pt) => { const { x, y } = kijk(pt, 0, 0); return [170 + x * S, 150 + y * S]; };
+  let uit = `<g transform="translate(170 150) scale(${S}) translate(-170 -150)">${kruissjorringStand(3)}</g>`;
+  uit += wijs(56, 272, 'begin: mastworp,', ...zie(opPaal(-20, KS_MW[0], KS_R + KS_T)), 'middle') + tekst(56, 286, 'binnen de slagen', { maat: 10.5 });
+  uit += wijs(56, 66, '3 slagen', ...zie(opBalk(30, -KS_SLAG_X[1], KS_R + KS_T)), 'middle');
+  uit += wijs(284, 40, '3 keer woelen', ...zie(opPaal(30, -h3(1), KS_R + KS_T)), 'middle');
+  uit += wijs(284, 268, 'eind: mastworp', ...zie(opBalk(-60, KS_EIND + 3, KS_R + KS_T)), 'middle');
+  return svg(340, 300, 'Kruissjorring: een staande paal met een dwarsbalk ervoor. Begin met een mastworp om de staande paal, net onder de balk. Leg drie slagen voor de balk langs en achter de paal om; die liggen om de mastworp heen. Woel drie keer tussen de palen door, om de slagen heen, zodat ze samengetrokken worden. Eindig met een mastworp om de balk', uit);
 }
 
 /** Three poles side by side, lashed with figure-eights: the achtsjorring. A small panel above shows the eights alone,
@@ -617,15 +793,14 @@ function pionierpaal() {
 
 function sjortouw() {
   const w = 320; const h = 200;
-  let uit = '';
-  for (let i = 0; i < 6; i++) uit += touw(`M${P(110, 60 + i * 3)}a46 58 0 1 0 1 0`, 6);
-  uit += touw(`M${P(104, 94)}C${P(70, 100)} ${P(80, 150)} ${P(150, 150)}S${P(240, 120)} ${P(276, 146)}`, 6);
-  uit += touw(lijn([[90, 78], [130, 78]]), 6) + touw(lijn([[90, 86], [130, 86]]), 6);
+  // opgeschoten as in the drawing touw-opschieten, the start of the rope out to the right
+  let uit = `<g transform="translate(-6 12) scale(0.8)">${opgeschotenBos({ begin: false })}</g>`;
+  uit += touw(`M${P(108, 166)}C${P(150, 180)} ${P(200, 154)} ${P(240, 142)}S${P(266, 140)} ${P(276, 146)}`, 6);
   uit += `<path d="M${P(270, 140)}l10 9" class="sj-touw-rand" stroke-width="7.5"/>`;
   uit += eind(282, 150, 40, 6);
-  uit += wijs(312, 30, '5 tot 7 meter, opgeschoten', 160, 64, 'end');
+  uit += wijs(312, 30, '5 tot 7 meter, opgeschoten', 128, 110, 'end');
   uit += wijs(312, 190, 'eind afgewerkt, met een puntje', 280, 152, 'end');
-  uit += wijs(8, 30, '8 tot 12 mm dik', 66, 92, 'start');
+  uit += wijs(8, 30, '8 tot 12 mm dik', 78, 130, 'start');
   return svg(w, h, 'Een sjortouw van 8 tot 12 millimeter dik en 5 tot 7 meter lang, opgeschoten, met een afgewerkt eind met een puntje', uit);
 }
 
@@ -935,7 +1110,7 @@ function bouwplan() {
 }
 
 export default {
-  'sj-kruissjorring': () => kruisFamilie('kruis'),
+  'sj-kruissjorring': kruissjorring,
   'sj-halve-kruissjorring': () => kruisFamilie('half'),
   'sj-japanse-kruissjorring': () => kruisFamilie('japans'),
   'sj-achtsjorring': achtsjorring,

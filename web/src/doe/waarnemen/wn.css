@@ -17,10 +17,10 @@
 .wn-svg:focus-visible { outline: 2px solid var(--accent); outline-offset: 2px; border-radius: 8px; }
 .wn-rand { border: 1px solid var(--lijn); border-radius: 10px; background: var(--wn-lucht); }
 .wn-tekst { display: flex; flex-direction: column; gap: 10px; }
-.wn-groot { font-size: 18px; font-weight: 700; font-variant-numeric: tabular-nums; }
+.wn-groot { font-size: 1.125rem; font-weight: 700; font-variant-numeric: tabular-nums; }
 .wn-rij { display: flex; flex-wrap: wrap; align-items: center; gap: 8px 12px; }
 .wn-rij .doe-veld { width: 7em; text-align: center; font-variant-numeric: tabular-nums; }
-.wn-score { color: var(--stil); font-size: 14px; font-variant-numeric: tabular-nums; }
+.wn-score { color: var(--stil); font-size: 0.875rem; font-variant-numeric: tabular-nums; }
 @container (min-width: 560px) {
   .wn.naast { display: grid; grid-template-columns: minmax(0, 1.2fr) minmax(0, 1fr); align-items: start; gap: 16px; }
 }

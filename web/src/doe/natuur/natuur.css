@@ -22,12 +22,12 @@
 .doe-plek .nt-optie.goed { background: var(--accent); border-color: var(--accent); color: var(--op-accent); opacity: 1; }
 .doe-plek .nt-optie.fout { border-color: var(--rood); color: var(--rood); opacity: 1; }
 .nt-raster { display: grid; grid-template-columns: repeat(auto-fill, minmax(110px, 1fr)); gap: 12px; margin: 0; padding: 0; list-style: none; }
-.nt-raster li { display: flex; flex-direction: column; align-items: center; gap: 4px; text-align: center; font-size: 14px; }
+.nt-raster li { display: flex; flex-direction: column; align-items: center; gap: 4px; text-align: center; font-size: 0.875rem; }
 .nt-raster .nt-beeld { width: 100%; max-width: 120px; }
 .nt-naam { font-weight: 600; }
 
 /* key */
-.nt-spoor { margin: 0; padding: 8px 12px 8px 30px; border-radius: 10px; background: var(--zacht); color: var(--stil); font-size: 14px; }
+.nt-spoor { margin: 0; padding: 8px 12px 8px 30px; border-radius: 10px; background: var(--zacht); color: var(--stil); font-size: 0.875rem; }
 .nt-spoor li + li { margin-top: 2px; }
 .nt-sleutel { display: flex; flex-direction: column; gap: 10px; }
 .nt-antwoorden { display: grid; gap: 8px; }
@@ -39,7 +39,7 @@
 .nt-antwoord:focus-visible { outline: 2px solid var(--accent); outline-offset: 2px; }
 .nt-uitkomst { display: flex; flex-direction: column; gap: 6px; align-items: flex-start; }
 .nt-uitkomst p { margin: 0; }
-.nt-boomnaam { font-size: 22px; font-weight: 700; color: var(--fam-natuur); }
+.nt-boomnaam { font-size: 1.375rem; font-weight: 700; color: var(--fam-natuur); }
 
 /* mushroom parts */
 .pd-plaat { width: min(100%, 300px); align-self: center; }
@@ -51,5 +51,5 @@
 
 /* mag dit hier */
 .md-kaart { display: flex; flex-direction: column; gap: 10px; padding: 14px; border-radius: 12px; background: var(--zacht); }
-.md-situatie { margin: 0; font-size: 17px; font-weight: 600; }
+.md-situatie { margin: 0; font-size: 1.0625rem; font-weight: 600; }
 @container (min-width: 420px) { .md-opties { grid-template-columns: 1fr 1fr 1fr; } }

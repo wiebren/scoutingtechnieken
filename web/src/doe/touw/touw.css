@@ -1,0 +1,3 @@
+/* The pieces of touw (takeling.js, eindsplits.js): the drawing on top, the steps under it. */
+.tg { display: grid; gap: 12px; }
+.tg-svg { max-width: 460px; }

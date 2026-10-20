@@ -26,7 +26,7 @@ export default [
       'Spreek vóór de tocht af wat je doet als je verdwaalt. Jonge kinderen leren vaak: blijf waar je bent, bij een boom of een herkenbaar punt, en wacht tot je gevonden wordt.',
     ],
     naar: [{ blad: 'veiligheidsplan-hike' }, { blad: '112-bellen' }, { blad: 'kaart-orienteren' }] },
-  { id: 'hike-verkeer', naam: 'Lopen langs de weg', ook: ['colonne', 'hike en verkeer', 'RVV', 'groep op de rijbaan'], en: 'walking on roads', groep: 'oppad', bron: 'WU SN-HIKE, SN-DROP',
+  { id: 'hike-verkeer', naam: 'Lopen langs de weg', ook: ['colonne', 'hike en verkeer', 'RVV', 'groep op de rijbaan'], en: 'walking on roads', groep: 'oppad', bron: 'WU SN-HIKE, SN-DROP', ken: true,
     plaatje: 'colonne',
     uitleg: [
       'Op de openbare weg gelden de verkeersregels (het RVV 1990). Voor wandelaars:',
@@ -64,7 +64,7 @@ export default [
       'Scouting Nederland raadt aan: scouts lopen in groepjes, explorers minstens met z’n tweeën; na een tocht door bos of heide controleer je jezelf op teken.',
     ],
     naar: [{ blad: 'ehbo-set' }, { blad: 'verdwaald' }, { blad: 'hike-verkeer' }, { blad: 'hitte' }, { blad: 'kou-en-nat' }] },
-  { id: 'ehbo-set', naam: 'EHBO-set voor onderweg', ook: ['EHBO-trommel', 'verbandtrommel', 'EHBO-doos', 'EHBO-koffer'], en: 'first aid kit', groep: 'oppad', bron: 'TKN §8.2 (RK-SET); WU SN-EHBO, SN-HIKE',
+  { id: 'ehbo-set', naam: 'EHBO-set voor onderweg', ook: ['EHBO-trommel', 'verbandtrommel', 'EHBO-doos', 'EHBO-koffer'], en: 'first aid kit', groep: 'oppad', bron: 'TKN §8.2 (RK-SET); WU SN-EHBO, SN-HIKE', ken: true,
     doe: 'ehbo-set',
     uitleg: [
       'Wat er volgens het Rode Kruis in een complete EHBO-set hoort:',
@@ -80,7 +80,7 @@ export default [
     ],
     verwijs: [{ naam: 'Een complete EHBO-set (Rode Kruis)', url: 'https://www.rodekruis.nl/ehbo/een-complete-ehbo-set/' }, EHBO_APP],
     naar: [{ blad: 'tekencheck' }, { blad: 'veiligheidsplan-hike' }] },
-  { id: 'regel-van-drie', naam: 'Regel van drie', ook: ['regel van 3', 'overleven'], en: 'rule of threes', groep: 'oppad', bron: 'TKN §9 (WP-R3)',
+  { id: 'regel-van-drie', naam: 'Regel van drie', ook: ['regel van 3', 'overleven'], en: 'rule of threes', groep: 'oppad', bron: 'TKN §9 (WP-R3)', ken: true,
     plaatje: 'regel-van-drie',
     uitleg: [
       'Een vuistregel uit het overleven, om te onthouden wat het eerst komt:',
@@ -121,7 +121,7 @@ export default [
       '- Is er geen schuilplaats, maak jezelf dan klein: op je hurken, en wacht tot het ergste voorbij is.',
     ],
     naar: [{ blad: 'flits-donder' }, { blad: 'onweer-schuilplek' }, { blad: 'storm' }] },
-  { id: 'storm', naam: 'Storm', ook: ['harde wind', 'windkracht 9'], en: 'storm', groep: 'oppad', bron: 'TKN §8.3 (SN-VK)',
+  { id: 'storm', naam: 'Storm', ook: ['harde wind', 'windkracht 9'], en: 'storm', groep: 'oppad', bron: 'TKN §8.3 (SN-VK)', ken: true,
     uitleg: [
       'Bij harde wind vallen er takken en soms hele bomen. Scouting Nederland raadt aan om vanaf windkracht 9 helemaal niet het bos in te gaan, en een kamp af te breken.',
       'Ook bij minder wind: zet een tent niet onder een boom met dode takken, en blijf bij stormweer uit het bos.',
@@ -155,7 +155,7 @@ export default [
       'Zie je iemand in problemen: roep de lifeguards. Zijn die er niet, bel 112.',
     ],
     naar: [{ blad: 'strandvlaggen' }, { blad: 'veilig-bij-water' }] },
-  { id: 'strandvlaggen', naam: 'Vlaggen op het strand', ook: ['strandvlag', 'waarschuwingsvlaggen', 'rode vlag', 'gele vlag', 'paarse vlag'], en: 'beach flags', groep: 'oppad', bron: 'Reddingsbrigade Nederland, Vlaggen (2025); WU KNRM-WV',
+  { id: 'strandvlaggen', naam: 'Vlaggen op het strand', ook: ['strandvlag', 'waarschuwingsvlaggen', 'rode vlag', 'gele vlag', 'paarse vlag'], en: 'beach flags', groep: 'oppad', bron: 'Reddingsbrigade Nederland, Vlaggen (2025); WU KNRM-WV', ken: true,
     doe: 'strandvlaggen',
     plaatje: 'strandvlaggen',
     uitleg: [
@@ -174,7 +174,7 @@ export default [
     letOp: 'In 2025 kreeg de reddingsbrigade nieuwe vlaggen. Op sommige stranden zie je nog een oranje windzak in plaats van de oranje vlag. Die betekent hetzelfde.',
     verwijs: [{ naam: 'Waarschuwingsvlaggen (Reddingsbrigade Nederland)', url: 'https://www.reddingsbrigade.nl/wij/wat-wij-doen/voorlichting/vlaggen/vlaggen-voor-vlaggenmast/' }],
     naar: [{ blad: 'zwemmen-in-zee' }] },
-  { id: 'alarmeren-op-het-water', naam: 'Alarmeren op het water', ook: ['kanaal 16', 'Kustwacht', 'Den Helder Rescue', 'marifoon'], en: 'distress at sea', groep: 'oppad', bron: 'VAK KNRM-AL',
+  { id: 'alarmeren-op-het-water', naam: 'Alarmeren op het water', ook: ['kanaal 16', 'Kustwacht', 'Den Helder Rescue', 'marifoon'], en: 'distress at sea', groep: 'oppad', bron: 'VAK KNRM-AL', ken: true,
     uitleg: [
       'In nood op het water roep je de Kustwacht:',
       '- Met de marifoon: kanaal 16, of met DSC kanaal 70. De roepnaam is Den Helder Rescue.',
@@ -241,7 +241,7 @@ export default [
     letOp: 'Blus alleen zelf als de brand klein is en je veilig weg kunt.',
     verwijs: [{ naam: 'Vlucht met je vluchtplan (brandweer.nl)', url: 'https://www.brandweer.nl/onderwerpen/vlucht-met-je-vluchtplan/' }, { naam: 'Blijf uit de rook (brandweer.nl)', url: 'https://www.brandweer.nl/onderwerpen/blijf-uit-de-rook/' }],
     naar: [{ blad: 'vluchtplan' }, { blad: 'deur-bij-brand' }, { blad: 'blusmiddelen' }, { blad: '112-bellen' }] },
-  { id: 'blusmiddelen', naam: 'Blusmiddelen', ook: ['brandblusser', 'blusdeken', 'poederblusser', 'schuimblusser', 'CO2-blusser', 'brandklassen'], en: 'fire extinguishers', groep: 'brand', bron: 'WU BW-BM',
+  { id: 'blusmiddelen', naam: 'Blusmiddelen', ook: ['brandblusser', 'blusdeken', 'poederblusser', 'schuimblusser', 'CO2-blusser', 'brandklassen'], en: 'fire extinguishers', groep: 'brand', bron: 'WU BW-BM', ken: true,
     doe: 'blusmiddel',
     uitleg: [
       'Niet elk blusmiddel past bij elke brand. Op een brandblusser staan letters. Die zeggen voor welke brand hij is: A voor vaste stoffen (hout, papier, textiel), B voor vloeistoffen (benzine), C voor gassen, D voor metalen, F voor frituurvet.',
@@ -303,7 +303,7 @@ export default [
     letOp: 'Ga nooit een ruimte met rook in om iemand te zoeken, en ga nooit terug naar binnen. Mensen uit de rook halen doet de brandweer.',
     verwijs: [{ naam: 'Doe de deur dicht (brandweer.nl)', url: 'https://www.brandweer.nl/onderwerpen/doe-de-deur-dicht/' }, { naam: 'De deurprocedure (BHV.nl)', url: 'https://www.bhv.nl/artikelen/deurprocedure/' }],
     naar: [{ blad: 'bij-brand' }, { blad: 'vluchtplan' }] },
-  { id: 'brand-in-huis', naam: 'Brand in huis voorkomen', ook: ['woningbrand', 'oorzaken van brand', 'brandpreventie', 'rookmelder', 'opladen', 'stekkerdoos'], en: 'preventing house fires', groep: 'brand', bron: 'WU BW-VB, BW-EA, BW-OPL, BW-ST, BW-DEC, BW-RM, NIPV-K',
+  { id: 'brand-in-huis', naam: 'Brand in huis voorkomen', ook: ['woningbrand', 'oorzaken van brand', 'brandpreventie', 'rookmelder', 'opladen', 'stekkerdoos'], en: 'preventing house fires', groep: 'brand', bron: 'WU BW-VB, BW-EA, BW-OPL, BW-ST, BW-DEC, BW-RM, NIPV-K', ken: true,
     doe: 'brandgevaar-thuis',
     uitleg: [
       'De meeste branden in huis ontstaan door wat mensen doen: niet opletten, of iets niet weten. Je kunt ze dus meestal zelf voorkomen. Waar het vaak misgaat, volgens de brandweer:',
@@ -318,7 +318,7 @@ export default [
     verwijs: [{ naam: 'Brandpreventie (brandweer.nl)', url: 'https://www.brandweer.nl/onderwerpen/brandpreventie/' }, { naam: 'Rookmelders (brandweer.nl)', url: 'https://www.brandweer.nl/onderwerpen/rookmelders/' },
       { naam: 'Opladers, batterijen en accu’s (brandweer.nl)', url: 'https://www.brandweer.nl/onderwerpen/opladers-batterijen-en-accus/' }],
     naar: [{ blad: 'vlam-in-de-pan' }, { blad: 'vluchtplan' }, { blad: 'blusmiddelen' }, { blad: 'bij-brand' }] },
-  { id: 'brandbaarheid-stoffen', naam: 'Hoe stoffen branden', ook: ['brandbaarheid', 'brandproef', 'kleding en vuur', 'wol', 'katoen', 'polyester', 'nylon', 'acryl', 'fleece'], en: 'how fabrics burn', groep: 'brand', bron: 'WU BW-KL, BW-FV; SN-VVS',
+  { id: 'brandbaarheid-stoffen', naam: 'Hoe stoffen branden', ook: ['brandbaarheid', 'brandproef', 'kleding en vuur', 'wol', 'katoen', 'polyester', 'nylon', 'acryl', 'fleece'], en: 'how fabrics burn', groep: 'brand', bron: 'WU BW-KL, BW-FV; SN-VVS', ken: true,
     plaatje: 'stoffen-branden',
     uitleg: [
       'Niet elke stof brandt even makkelijk. Volgens de brandweer:',
@@ -333,7 +333,7 @@ export default [
     letOp: 'De bronnen verschillen een beetje: de brandweer zegt dat kunststof moeilijker vlam vat dan katoen, Scouting Nederland dat nylon snel brandt. Over het smelten zijn ze het eens: kunststof plakt brandend aan je huid.',
     verwijs: [{ naam: 'Kleding en brandgevaar (brandweer.nl)', url: 'https://www.brandweer.nl/onderwerpen/kleding-en-brandgevaar/' }, { naam: 'Feestversiering, met de brandproef (brandweer.nl)', url: 'https://www.brandweer.nl/onderwerpen/feestversiering/' }],
     naar: [{ blad: 'brandwond' }, { blad: 'stookplek' }, { blad: 'laagjes' }, { blad: 'blusmiddelen' }] },
-  { id: 'vuurvijfhoek', naam: 'Vuurvijfhoek', ook: ['brandvijfhoek', 'brandvoorwaarden', 'mengverhouding', 'kettingreactie', 'katalysator'], en: 'fire pentagon', groep: 'brand', bron: 'WU BVH-WP, BVH-BPA; TKN §4.1',
+  { id: 'vuurvijfhoek', naam: 'Vuurvijfhoek', ook: ['brandvijfhoek', 'brandvoorwaarden', 'mengverhouding', 'kettingreactie', 'katalysator'], en: 'fire pentagon', groep: 'brand', bron: 'WU BVH-WP, BVH-BPA; TKN §4.1', ken: true,
     plaatje: 'vuurvijfhoek',
     uitleg: [
       'De vuurdriehoek zegt: vuur heeft brandstof, zuurstof en warmte nodig. De vuurvijfhoek, ook brandvijfhoek genoemd, voegt er twee voorwaarden aan toe. Pas als alle vijf kloppen, ontstaat er brand en blijft het branden.',
@@ -365,7 +365,7 @@ export default [
     naar: [{ blad: 'stookplek' }, { blad: 'stookverbod' }, { blad: 'natuurbrandrisico' }, { blad: 'wind-en-vuur' }, { blad: 'blusmiddelen' }, { blad: '112-bellen' }] },
 
   // EHBO
-  { id: '112-bellen', naam: '112 bellen', ook: ['alarmeren', 'alarmnummer', 'noodnummer', 'meldkamer'], en: 'emergency call', groep: 'ehbo', bron: 'TKN §8.1; WU RO-112, NREH26, PT, KNRM-WV',
+  { id: '112-bellen', naam: '112 bellen', ook: ['alarmeren', 'alarmnummer', 'noodnummer', 'meldkamer'], en: 'emergency call', groep: 'ehbo', bron: 'TKN §8.1; WU RO-112, NREH26, PT, KNRM-WV', ken: true,
     doe: '112-melding',
     uitleg: [
       'Bel 112 als er levensgevaar is of elke seconde telt: iemand reageert niet, ademt niet goed of bloedt heel erg, een ernstig ongeluk, meerdere zwaargewonden, brand, of een situatie die voor jou of anderen gevaarlijk is.',
@@ -380,7 +380,7 @@ export default [
     letOp: 'Kun je niet goed bellen, bijvoorbeeld omdat je doof of slechthorend bent? Met de app 112NL kun je chatten met de meldkamer. Die moet je wel van tevoren instellen.',
     verwijs: [EHBO_APP, { naam: 'Wat gebeurt er als ik 112 bel? (Rijksoverheid)', url: 'https://www.rijksoverheid.nl/themas/recht-veiligheid-en-defensie/alarmnummer-112/vraag-en-antwoord/alarmnummer-112/wat-gebeurt-er-als-ik-alarmnummer-112-bel' }],
     naar: [{ blad: 'huisarts-of-112' }, { blad: 'rd-coordinaten' }, { blad: 'eerste-hulp-basis' }, { blad: 'what3words' }] },
-  { id: 'huisarts-of-112', naam: '112 of de huisarts?', ook: ['huisartsenpost', 'spoedcontact', 'HAP'], en: 'when to call', groep: 'ehbo', bron: 'WU NREH26',
+  { id: 'huisarts-of-112', naam: '112 of de huisarts?', ook: ['huisartsenpost', 'spoedcontact', 'HAP'], en: 'when to call', groep: 'ehbo', bron: 'WU NREH26', ken: true,
     doe: '112-of-huisarts',
     uitleg: [
       'Niet alles is voor 112. De richtlijnen voor eerste hulp kennen vier stappen:',

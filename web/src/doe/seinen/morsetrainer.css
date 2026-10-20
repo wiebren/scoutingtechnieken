@@ -2,20 +2,20 @@
 .doe-morsetrainer { display: flex; flex-direction: column; gap: 12px; }
 .doe-morsetrainer p { margin: 0; }
 .mt-kop { display: flex; flex-wrap: wrap; align-items: center; justify-content: space-between; gap: 8px; }
-.mt-nieuw { color: var(--accent); font-size: 18px; }
+.mt-nieuw { color: var(--accent); font-size: 1.125rem; }
 .mt-tekens { display: flex; flex-wrap: wrap; gap: 4px; }
 .mt-tekens span {
   display: inline-flex; flex-direction: column; align-items: center; min-width: 34px; padding: 2px 5px;
   border: 1px solid var(--lijn); border-radius: 7px; background: var(--zacht);
 }
 .mt-tekens span.mt-is-nieuw { border-color: var(--accent); background: color-mix(in srgb, var(--accent) 14%, var(--paneel)); }
-.mt-tekens b { font-size: 14px; }
-.mt-tekens small { font-size: 12px; color: var(--stil); letter-spacing: 0.05em; white-space: nowrap; }
+.mt-tekens b { font-size: 0.875rem; }
+.mt-tekens small { font-size: 0.75rem; color: var(--stil); letter-spacing: 0.05em; white-space: nowrap; }
 
 .mt-speler { display: flex; align-items: center; gap: 16px; padding: 10px 12px; border: 1px solid var(--lijn); border-radius: 12px; }
 .mt-lamp { width: 64px; height: 64px; }
 .mt-midden { flex: 1; min-width: 0; display: flex; flex-direction: column; gap: 8px; }
-.mt-groot { font-size: 40px; font-weight: 800; line-height: 1; min-height: 40px; }
+.mt-groot { font-size: 2.5rem; font-weight: 800; line-height: 1; min-height: 40px; }
 .mt-voortgang { display: grid; grid-template-columns: repeat(20, 1fr); gap: 2px; }
 .mt-voortgang span { height: 8px; border-radius: 2px; background: var(--lijn); }
 .mt-voortgang span.goed { background: var(--accent); }
@@ -23,5 +23,5 @@
 
 .mt-toetsen { display: grid; grid-template-columns: repeat(auto-fill, minmax(48px, 1fr)); gap: 6px; }
 .mt-toetsen.uit { opacity: 0.55; }
-.mt-toets { min-height: 48px; font-size: 20px; font-weight: 700; padding: 0; }
+.mt-toets { min-height: 48px; font-size: 1.25rem; font-weight: 700; padding: 0; }
 .mt-toets.goed { background: var(--accent); border-color: var(--accent); color: var(--op-accent); }

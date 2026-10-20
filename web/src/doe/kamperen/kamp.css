@@ -15,7 +15,7 @@
 .kd-lijst li.goed::marker { color: var(--accent); }
 .kd-lijst li.fout::marker { color: var(--rood); }
 .kd-lijst li.matig::marker { color: var(--oranje); }
-.kd-score { margin: 0; color: var(--stil); font-size: 14px; }
+.kd-score { margin: 0; color: var(--stil); font-size: 0.875rem; }
 .kd-keuzes { display: flex; flex-direction: column; gap: 8px; }
 .kd-keuzes .knop { justify-content: flex-start; text-align: left; white-space: normal; height: auto; }
 .knop.kd-goed { border-color: var(--accent); background: color-mix(in srgb, var(--accent) 14%, var(--paneel)); }

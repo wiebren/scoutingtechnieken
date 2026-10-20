@@ -4,7 +4,7 @@
 .ls-horizon { stroke: var(--inkt); stroke-width: 1.4; }
 .ls-punt circle { fill: var(--paneel); stroke: var(--rood); stroke-width: 1.5; }
 .ls-punt text { fill: var(--rood); font-size: 10px; font-weight: 700; }
-.ls-tabel { font-size: 14px; }
+.ls-tabel { font-size: 0.875rem; }
 .ls-tabel td, .ls-tabel th { padding: 4px 10px 4px 0; }
 
 /* lines, as drawn with a pencil */

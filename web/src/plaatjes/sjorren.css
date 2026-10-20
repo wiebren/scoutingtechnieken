@@ -30,10 +30,14 @@
 .plaatje .sj-touw-rand { stroke: var(--sj-touw-rand); }
 .plaatje .sj-touw-lijf { stroke: var(--sj-touw); }
 .plaatje .sj-touw-kern { stroke: var(--sj-touw-kern); }
+.plaatje .sj-touw-lijfvul { fill: var(--sj-touw); }
 .plaatje .sj-touw-vul { fill: var(--sj-touw); stroke: var(--sj-touw-rand); stroke-width: 1.4; }
 /* wood */
 .plaatje .sj-hout { fill: var(--sj-hout); stroke: var(--sj-hout-rand); stroke-width: 1.4; stroke-linejoin: round; }
 .plaatje .sj-hout-licht { fill: var(--sj-hout-licht); stroke: var(--sj-hout-rand); stroke-width: 1.4; stroke-linejoin: round; }
+.plaatje .sj-hout-vul { fill: var(--sj-hout); }
+.plaatje .sj-hout-rand { fill: none; stroke: var(--sj-hout-rand); stroke-width: 1.4; }
+.plaatje .sj-nerf-stuk { fill: none; stroke: var(--sj-hout-rand); stroke-width: 0.8; opacity: 0.45; }
 .plaatje .sj-nerf { fill: none; stroke: var(--sj-hout-rand); stroke-width: 0.8; opacity: 0.45; stroke-dasharray: 18 11; }
 .plaatje .sj-kop { fill: var(--sj-kop); stroke: var(--sj-hout-rand); stroke-width: 1.4; }
 .plaatje .sj-jaar { fill: none; stroke: var(--sj-hout-rand); stroke-width: 0.8; opacity: 0.5; }

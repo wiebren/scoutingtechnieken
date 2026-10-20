@@ -52,7 +52,7 @@ export default [
     verwijs: [SW('Apenbrug'), SN_VT],
     naar: [{ blad: 'bouw-apenbrug' }, { blad: 'touw-spannen' }, { blad: 'diagonaalsjorring' }, { blad: 'haringen-in-serie' }, { blad: 'veilig-touwbanen' }] },
 
-  { id: 'bouw-touwbrug-varianten', naam: 'Soorten touwbruggen', ook: ['ladderbrug', 'schommelbrug', 'lussenbrug', 'bandenbrug', 'X-brug', 'gekruiste apenbrug', 'kruipbrug', 'paardenbrug', 'netbrug', 'touwladderbrug', 'rope course', 'touwparcours'], en: 'rope course elements', groep: 'touwbanen',
+  { id: 'bouw-touwbrug-varianten', naam: 'Soorten touwbruggen', ook: ['ladderbrug', 'schommelbrug', 'lussenbrug', 'bandenbrug', 'X-brug', 'gekruiste apenbrug', 'kruipbrug', 'paardenbrug', 'netbrug', 'touwladderbrug', 'rope course', 'touwparcours'], en: 'rope course elements', groep: 'touwbanen', ken: true,
     bron: 'SW Touwbrug, SW Rope course, stormbaantekening sherpaz (labels), scratchpad bouwwerken-extra T6',
     plaatje: 'tb-touwbrug-varianten',
     waarvoor: 'Ideeën voor een touwbaan met afwisseling: na elke boom een andere brug.',
@@ -296,7 +296,7 @@ export default [
     naar: [{ blad: 'vrachtrijdersteek' }, { blad: 'prusikknoop' }, { blad: 'vierlopertakel' }, { blad: 'rondtorn' }, { blad: 'boomanker' }, { blad: 'boombescherming' }, { blad: 'kracht-strak-touw' }, { blad: 'touw-onder-spanning' }] },
 
   // ---- Veilig
-  { id: 'zekeren-touwbanen', naam: 'Zekeren bij touwbanen', ook: ['zekeren', 'klimgordel', 'schroefkarabiner', 'toprope', 'via ferrata', 'klimmateriaal', 'spotten'], en: 'belaying on a ropes course', groep: 'veilig', letterlijk: true,
+  { id: 'zekeren-touwbanen', naam: 'Zekeren bij touwbanen', ook: ['zekeren', 'klimgordel', 'schroefkarabiner', 'toprope', 'via ferrata', 'klimmateriaal', 'spotten'], en: 'belaying on a ropes course', groep: 'veilig', letterlijk: true, ken: true,
     bron: 'Scouting Nederland, Veiligheid bij klimactiviteiten en Veiligheid bij touwbanen; Scoutpedia, Rope course', bronDatum: 'januari 2019; geraadpleegd 16-10-2026',
     waarvoor: 'Weten wanneer iemand op een touwbaan gezekerd moet worden, en wat daarvoor nodig is. Zekeren zelf doet de leiding die het geleerd heeft.',
     uitleg: [

@@ -22,7 +22,7 @@
 .sk-richting.kijk { fill: var(--accent); font-size: 15px; }
 .sk-keuze { fill: none; stroke: #ffd84a; stroke-width: 1.5; }
 .hm-beeldnaam.licht { fill: #ffd84a; }
-.sk-lijst { color: var(--stil); font-size: 14px; }
+.sk-lijst { color: var(--stil); font-size: 0.875rem; }
 @media (prefers-reduced-motion: reduce) { .sk-lucht { transition: none; } }
 
 .pz-beeld { max-width: 600px; }
@@ -38,7 +38,7 @@
 .sb-plek p { margin: 0; }
 .sb-svg { max-width: 600px; border-radius: 14px; }
 .sb-lijn { stroke-width: 1.6; stroke: rgb(170 200 255 / 0.7); }
-.sb-naam { font-size: 18px; font-weight: 700; }
+.sb-naam { font-size: 1.125rem; font-weight: 700; }
 .sb-opties { display: grid; gap: 8px; }
 @container (min-width: 480px) { .sb-opties { grid-template-columns: 1fr 1fr; } }
 .sb-optie { justify-content: flex-start; }

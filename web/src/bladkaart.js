@@ -157,10 +157,10 @@ function bronnen(blad) {
  * @param blad the blad
  * @param linkNaar (id) => the address of another blad in the same view
  */
-/** "Ik kan dit", with the insignes the blad is in: the same tick as there (by the blad's id), so it shows there too. */
+/** "Ik kan dit" ("Ik ken dit" on a blad about knowing, `ken`), with the insignes the blad is in: the same tick as there (by the blad's id), so it shows there too. */
 function kanIk(blad) {
   const box = h('input', { type: 'checkbox', checked: isAfgevinkt(blad.id), onchange: () => zetAfgevinkt(blad.id, box.checked) });
-  const el = h('label.vink.kan-ik', box, h('span.vinkje', icoon('vink')), h('span', 'Ik kan dit'));
+  const el = h('label.vink.kan-ik', box, h('span.vinkje', icoon('vink')), h('span', blad.ken ? 'Ik ken dit' : 'Ik kan dit'));
   const stop = volgAfgevinkt(() => { if (!el.isConnected) { stop(); return; } box.checked = isAfgevinkt(blad.id); });
   return el;
 }
@@ -187,7 +187,7 @@ export function bladKaart(blad, { linkNaar }) {
       h('thead', h('tr', blad.tabel.kop.map((k) => h('th', { scope: 'col' }, k)))),
       h('tbody', blad.tabel.rijen.map((rij) => h('tr', rij.map((cel, i) => (i === 0 ? h('th', { scope: 'row' }, cel) : h('td', cel)))))))),
     leeg && h('p.nognie', categorie.nogNiet ?? 'De uitleg hiervan komt nog.'),
-    blad.letOp && h('aside.letop', h('strong', 'Let op'), h('p', blad.letOp)),
+    blad.letOp && h('aside.letop', h('strong', 'Let op'), h('p', blad.letOp), blad.letOpPlaatje && plaatje(blad.letOpPlaatje)),
     blad.verwijs?.length > 0 && h('aside.verwijs',
       h('strong', blad.categorie === 'veiligheid' && blad.groep === 'ehbo' ? 'Wat je moet doen, stap voor stap' : 'Lees verder'),
       blad.categorie === 'veiligheid' && blad.groep === 'ehbo'

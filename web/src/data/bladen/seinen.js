@@ -136,7 +136,7 @@ export default [
     naar: [{ blad: 'semafoor' }] },
 
   // Seinvlaggen
-  { id: 'seinvlaggen', naam: 'Seinvlaggen', ook: ['Internationaal Seinboek', 'ICS', 'lettervlaggen', 'vlaggenalfabet'], en: 'International Code of Signals', groep: 'vlaggen', bron: 'NAV §4c (ICS-NGA), VLET',
+  { id: 'seinvlaggen', naam: 'Seinvlaggen', ook: ['Internationaal Seinboek', 'ICS', 'lettervlaggen', 'vlaggenalfabet'], en: 'International Code of Signals', groep: 'vlaggen', bron: 'NAV §4c (ICS-NGA), VLET', ken: true,
     plaatje: 'seinvlaggen-alfabet',
     doe: 'seinvlaggen',
     uitleg: [
@@ -161,7 +161,7 @@ export default [
     naar: [{ blad: 'seinvlaggen' }] },
 
   // Seinen van vroeger
-  { id: 'seinstelsel-vreede', naam: 'Seinstelsel Vreede', ook: ['Vreede', 'Vreede-stelsel', 'Arie Eet Ook Uien'], groep: 'historisch', bron: 'BOEK (ABR22, NPV29, NPV30)',
+  { id: 'seinstelsel-vreede', naam: 'Seinstelsel Vreede', ook: ['Vreede', 'Vreede-stelsel', 'Arie Eet Ook Uien'], groep: 'historisch', bron: 'BOEK (ABR22, NPV29, NPV30)', ken: true,
     plaatje: 'vreede-tabel',
     doe: 'vreede',
     uitleg: [
@@ -175,7 +175,7 @@ export default [
     ],
     letOp: 'Een seinboekje uit 1922 geeft ook cijfers, maar andere bronnen zeggen iets anders over de 9, en in 1929 schreef de padvindersvereniging dat Vreede geen cijfers kent. Daarom staan ze hier niet. Hoe de standen precies lopen, hebben we afgeleid uit de getekende tabel in dat seinboekje.',
     naar: [{ blad: 'semafoor' }, { blad: 'seinstelsel-de-lange' }] },
-  { id: 'seinstelsel-de-lange', naam: 'Seinstelsel De Lange', ook: ['De Lange', 'telstelsel', 'ejotij'], groep: 'historisch', bron: 'BOEK (SV15, ABR22)',
+  { id: 'seinstelsel-de-lange', naam: 'Seinstelsel De Lange', ook: ['De Lange', 'telstelsel', 'ejotij'], groep: 'historisch', bron: 'BOEK (SV15, ABR22)', ken: true,
     plaatje: 'de-lange-tellen',
     uitleg: [
       'Het seinstelsel van het Nederlandse leger vanaf 1915, bedacht door luitenant H.H. de Lange. In 1916 stond het ook in de eisen van de padvinders; daarna seinden de verkenners weer morse of Vreede.',
@@ -203,7 +203,7 @@ export default [
       'SOS is geen afkorting. Het is gekozen omdat het makkelijk te seinen en te herkennen is.',
     ],
     naar: [{ blad: 'alpien-noodsein' }, { blad: 'grond-luchtcode' }, { blad: 'morse' }] },
-  { id: 'groepen-van-drie', naam: 'Noodsein van drie', ook: ['drie vuren', 'drie fluitstoten', 'drie flitsen'], groep: 'nood', bron: 'NAV §4d (WP-Dist)',
+  { id: 'groepen-van-drie', naam: 'Noodsein van drie', ook: ['drie vuren', 'drie fluitstoten', 'drie flitsen'], groep: 'nood', bron: 'NAV §4d (WP-Dist)', ken: true,
     plaatje: 'groep-van-drie',
     uitleg: [
       'In Groot-Brittannië en Noord-Amerika is drie het getal van nood: drie vuren in een driehoek, drie steenhopen, drie fluitstoten, drie lichtflitsen. Het antwoord is ook drie.',
@@ -244,7 +244,7 @@ export default [
       'Een seinspiegel met een gaatje in het midden, een vizier, maakt richten makkelijker.',
     ],
     naar: [{ blad: 'sos' }] },
-  { id: 'noodseinen-water', naam: 'Noodseinen op het water', ook: ['Mayday', 'rode fakkel', 'N boven C', 'Den Helder Rescue'], en: 'distress signals at sea', groep: 'nood', bron: 'NAV §4d, VAK (KNRM), VLET',
+  { id: 'noodseinen-water', naam: 'Noodseinen op het water', ook: ['Mayday', 'rode fakkel', 'N boven C', 'Den Helder Rescue'], en: 'distress signals at sea', groep: 'nood', bron: 'NAV §4d, VAK (KNRM), VLET', ken: true,
     plaatje: 'noodseinen-water',
     uitleg: [
       'Op het water gelden eigen noodseinen. Deze herken je:',
@@ -293,7 +293,7 @@ export default [
     naar: [{ blad: 'spelalfabet' }] },
 
   // Gebaren en fluit
-  { id: 'handsignalen', naam: 'Handsignalen', ook: ['handseinen', 'gebaren', 'armseinen'], en: 'hand signals', groep: 'gebaren', bron: 'NAV §4f (GUT)',
+  { id: 'handsignalen', naam: 'Handsignalen', ook: ['handseinen', 'gebaren', 'armseinen'], en: 'hand signals', groep: 'gebaren', bron: 'NAV §4f (GUT)', ken: true,
     plaatje: 'handsignalen',
     uitleg: [
       'Als je elkaar niet kunt horen, of stil moet zijn, praat de leiding met gebaren. Deze gaf Baden-Powell al in 1908. Spreek in je groep af welke jullie gebruiken.',
@@ -308,7 +308,7 @@ export default [
       ['Hand voor je gezicht heen en weer', 'Nee, laat maar.'],
     ] },
     naar: [{ blad: 'fluitsignalen' }, { blad: 'stomme-bevelen' }] },
-  { id: 'stomme-bevelen', naam: 'Stomme bevelen', ook: ['formaties', 'opstellingen', 'in formatie'], groep: 'gebaren', bron: 'NAV §4f (SP-Form)',
+  { id: 'stomme-bevelen', naam: 'Stomme bevelen', ook: ['formaties', 'opstellingen', 'in formatie'], groep: 'gebaren', bron: 'NAV §4f (SP-Form)', ken: true,
     plaatje: 'stomme-bevelen',
     uitleg: 'Met een stom bevel zegt de leiding zonder woorden hoe de groep moet gaan staan. Sta je eenmaal in formatie, dan ben je stil.',
     tabel: { kop: ['Gebaar', 'Ga staan'], rijen: [
@@ -319,7 +319,7 @@ export default [
       ['Handen langs je lichaam', 'Achter elkaar in één rij.'],
     ] },
     naar: [{ blad: 'handsignalen' }] },
-  { id: 'fluitsignalen', naam: 'Fluitsignalen', ook: ['fluit', 'fluitcommando’s', 'scoutingfluit'], en: 'whistle signals', groep: 'gebaren', bron: 'NAV §4f (GUT, SP-Fluit)',
+  { id: 'fluitsignalen', naam: 'Fluitsignalen', ook: ['fluit', 'fluitcommando’s', 'scoutingfluit'], en: 'whistle signals', groep: 'gebaren', bron: 'NAV §4f (GUT, SP-Fluit)', ken: true,
     doe: 'fluitsignalen',
     uitleg: [
       'Een fluit draagt veel verder dan je stem. Baden-Powell gaf in 1908 deze signalen, en iedereen moest ze meteen opvolgen:',
@@ -366,7 +366,7 @@ export default [
       ['RADIOSTILTE', 'Niemand zendt meer, tot EINDE RADIOSTILTE.'],
     ] },
     naar: [{ blad: 'portofoon-procedure' }, { blad: 'cijfers-uitspreken' }] },
-  { id: 'pmr446', naam: 'PMR446-portofoon', ook: ['walkietalkie', 'kanalen', 'privacycode', 'subtoon'], en: 'PMR446', groep: 'portofoon', bron: 'NAV §4g (WET, RDI, WP-PMR)',
+  { id: 'pmr446', naam: 'PMR446-portofoon', ook: ['walkietalkie', 'kanalen', 'privacycode', 'subtoon'], en: 'PMR446', groep: 'portofoon', bron: 'NAV §4g (WET, RDI, WP-PMR)', ken: true,
     plaatje: 'privacycode',
     uitleg: [
       'De portofoons die je in de winkel koopt, zijn PMR446-portofoons. Iedereen mag ze gebruiken, zonder vergunning, op frequenties rond 446 MHz en met hooguit 0,5 watt.',
@@ -376,7 +376,7 @@ export default [
     ],
     verwijs: [{ naam: 'Rijksinspectie Digitale Infrastructuur: portofoons', url: 'https://www.rdi.nl/onderwerpen/vergunningen-en-registraties/portofoons-en-mobilofoons' }],
     naar: [{ blad: 'portofoon-procedure' }] },
-  { id: 'jota-joti', naam: 'JOTA-JOTI', ook: ['Jamboree on the Air', 'Jamboree on the Internet', 'zendamateurs'], groep: 'portofoon', bron: 'VAK (VERON)',
+  { id: 'jota-joti', naam: 'JOTA-JOTI', ook: ['Jamboree on the Air', 'Jamboree on the Internet', 'zendamateurs'], groep: 'portofoon', bron: 'VAK (VERON)', ken: true,
     uitleg: [
       'Elk jaar, in het derde volle weekend van oktober, maken scouts over de hele wereld contact met elkaar. Bij JOTA (Jamboree on the Air) gaat dat over de radio, met zendamateurs; bij JOTI (Jamboree on the Internet) via internet.',
       'Een zendamateur heeft een eigen vergunning en roepnaam. Bij JOTA kijk je mee, en je praat vaak zelf in de microfoon, of je seint morse.',

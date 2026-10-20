@@ -19,7 +19,7 @@ export default [
       'Zet de dichte achterkant van de tent naar de wind. Dan zit de ingang uit de wind.',
     ],
     naar: [{ blad: 'tent-opzetten' }, { blad: 'kampplattegrond' }, { blad: 'scheerlijnen' }] },
-  { id: 'soorten-tenten', naam: 'Soorten tenten', ook: ['tenten', 'tentsoorten', 'welke tent', 'groepstent'], en: 'types of tent', groep: 'tenten',
+  { id: 'soorten-tenten', naam: 'Soorten tenten', ook: ['tenten', 'tentsoorten', 'welke tent', 'groepstent'], en: 'types of tent', groep: 'tenten', ken: true,
     bron: 'TKN §3.1, SN-K, SW Tent',
     uitleg: [
       'Elke tent heeft zijn eigen sterke kant. Groepstenten van katoen zijn groot en zwaar, en je zet ze met een hele groep op. Een eigen tent of een trekkerstent is licht en snel opgezet.',
@@ -36,7 +36,7 @@ export default [
       { naam: 'Dektent op een vlet', plaatje: 'tent-dektent', blad: 'dektent', bij: 'Een tent over een open boot. Zo slapen waterscouts op hun boot.' },
     ],
     naar: [{ blad: 'tent-onderdelen' }, { blad: 'tentplek' }, { blad: 'tent-opzetten' }] },
-  { id: 'patrouilletent', naam: 'Patrouilletent', ook: ['groepstent', 'katoenen tent'], en: 'patrol tent', groep: 'tenten', bron: 'TKN §3.1, SW Patrouilletent, SW Tent',
+  { id: 'patrouilletent', naam: 'Patrouilletent', ook: ['groepstent', 'katoenen tent'], en: 'patrol tent', groep: 'tenten', bron: 'TKN §3.1, SW Patrouilletent, SW Tent', ken: true,
     plaatje: 'tent-patrouille',
     waarvoor: 'Een grote tent waar een hele patrouille in slaapt.',
     uitleg: [
@@ -45,7 +45,7 @@ export default [
       'Je zet een patrouilletent met de hele patrouille op. Oudere scouts slapen vaker in kleine trekkerstentjes.',
     ],
     naar: [{ blad: 'vendeltent' }, { blad: 'tent-afbreken' }, { blad: 'scheerlijnen' }, { blad: 'soorten-tenten' }] },
-  { id: 'vendeltent', naam: 'Vendeltent', ook: ['groepstent', 'grote tent', 'keukentent'], groep: 'tenten', bron: 'SS-VT, SW Vendel',
+  { id: 'vendeltent', naam: 'Vendeltent', ook: ['groepstent', 'grote tent', 'keukentent'], groep: 'tenten', bron: 'SS-VT, SW Vendel', ken: true,
     plaatje: 'tent-vendel',
     waarvoor: 'Een heel grote tent voor een hele groep: om in te slapen, als keuken, of om in te zitten als het regent.',
     uitleg: [
@@ -53,11 +53,11 @@ export default [
       'Een vendeltent zet je met de leiding op, met veel handen tegelijk: eerst de palen en het dak, dan de wanden.',
     ],
     naar: [{ blad: 'patrouilletent' }, { blad: 'tent-opzetten' }, { blad: 'soorten-tenten' }] },
-  { id: 'bell-tent', naam: 'Bell-tent', ook: ['klokkentent', 'ronde tent'], en: 'bell tent', groep: 'tenten', bron: 'TKN §3.1, WP-BT',
+  { id: 'bell-tent', naam: 'Bell-tent', ook: ['klokkentent', 'ronde tent'], en: 'bell tent', groep: 'tenten', bron: 'TKN §3.1, WP-BT', ken: true,
     plaatje: 'tent-bell',
     uitleg: 'Een ronde tent van katoen, met één paal in het midden, lage wanden en scheerlijnen rondom. Hij is zo’n 3 meter breed of meer, en je kunt er in het midden rechtop staan.',
     naar: [{ blad: 'patrouilletent' }, { blad: 'soorten-tenten' }] },
-  { id: 'koepeltent', naam: 'Koepeltent', ook: ['iglotent', 'dome-tent'], en: 'dome tent', groep: 'tenten', bron: 'TKN §3.1',
+  { id: 'koepeltent', naam: 'Koepeltent', ook: ['iglotent', 'dome-tent'], en: 'dome tent', groep: 'tenten', bron: 'TKN §3.1', ken: true,
     plaatje: 'tent-koepel',
     uitleg: [
       'Een tent met twee of meer buigzame stokken die elkaar bovenop kruisen. De tent staat vanzelf, ook voor de haringen erin zitten: je kunt hem nog verplaatsen.',
@@ -65,20 +65,20 @@ export default [
     ],
     letOp: 'Ook een koepeltent zet je vast met haringen en scheerlijnen. Anders waait hij bij een windvlaag zo weg.',
     naar: [{ blad: 'tent-onderdelen' }, { blad: 'tent-opzetten' }, { blad: 'soorten-tenten' }] },
-  { id: 'tunneltent', naam: 'Tunneltent', en: 'tunnel tent', groep: 'tenten', bron: 'TKN §3.1',
+  { id: 'tunneltent', naam: 'Tunneltent', en: 'tunnel tent', groep: 'tenten', bron: 'TKN §3.1', ken: true,
     plaatje: 'tent-tunnel',
     uitleg: 'Een tent met bogen naast elkaar, als een tunnel. Hij is licht en ruim voor zijn gewicht, maar staat niet vanzelf: je moet hem aan beide uiteinden strak afspannen. Zet hem met de smalle kant naar de wind.',
     naar: [{ blad: 'scheerlijnen' }, { blad: 'haringen' }, { blad: 'soorten-tenten' }] },
-  { id: 'trekkerstent', naam: 'Trekkerstent', ook: ['lichtgewichttent', 'trekkerstentje', 'hiketent'], en: 'backpacking tent', groep: 'tenten', bron: 'TKN §3.1, SN-K, SW Tent',
+  { id: 'trekkerstent', naam: 'Trekkerstent', ook: ['lichtgewichttent', 'trekkerstentje', 'hiketent'], en: 'backpacking tent', groep: 'tenten', bron: 'TKN §3.1, SN-K, SW Tent', ken: true,
     plaatje: 'tent-trekker',
     waarvoor: 'Een kleine, lichte tent voor één of twee personen, die je zelf in je rugzak meedraagt op een trektocht.',
     uitleg: 'Elke gram telt: dunne stof, lichte stokken, weinig ruimte. Je zit er vaak niet rechtop in. Voor je rugzak en schoenen is er een apsis. Op een trekkerskamp draag je de tent samen: de een de binnentent, de ander de buitentent en de stokken.',
     naar: [{ blad: 'rugzak-inpakken' }, { blad: 'koepeltent' }, { blad: 'soorten-tenten' }] },
-  { id: 'partytent', naam: 'Partytent', ook: ['schaduwdoek', 'overkapping'], en: 'gazebo', groep: 'tenten', bron: 'SN-K',
+  { id: 'partytent', naam: 'Partytent', ook: ['schaduwdoek', 'overkapping'], en: 'gazebo', groep: 'tenten', bron: 'SN-K', ken: true,
     plaatje: 'tent-party',
     uitleg: 'Een dak op een stalen frame, met of zonder wanden. Op kamp handig als schaduwplek of droge plek om te eten. Een partytent vangt veel wind: zet elke poot goed vast met haringen of gewichten, en haal het dak eraf als er harde wind komt.',
     naar: [{ blad: 'tarp' }, { blad: 'soorten-tenten' }] },
-  { id: 'dektent', naam: 'Dektent op een vlet', ook: ['huik', 'vlethuik', 'dekzeil', 'tent op een boot', 'slapen op een vlet'], en: 'boat tent', groep: 'tenten', bron: 'SW-Vlethuik, SW-Huik, SN-K',
+  { id: 'dektent', naam: 'Dektent op een vlet', ook: ['huik', 'vlethuik', 'dekzeil', 'tent op een boot', 'slapen op een vlet'], en: 'boat tent', groep: 'tenten', bron: 'SW-Vlethuik, SW-Huik, SN-K', ken: true,
     waarvoor: 'Waterscouts kamperen ook op hun boot. Over een open boot zoals de lelievlet past een tent: de dektent, ook huik of vlethuik genoemd. Zo slaap je in de boot.',
     uitleg: [
       'Eigenlijk is een huik een tentje over het voorschip. Een dektent loopt verder door, over de kuip en het achterdek. Staat alleen het voorste deel, dan kun je nog roeien, wrikken en op de fok zeilen.',
@@ -94,7 +94,7 @@ export default [
     letOp: 'Elke vlet en elke huik is een beetje anders. Leer het opzetten van iemand van je eigen groep.',
     verwijs: [{ naam: 'Scoutpedia: Vlethuik', url: 'https://nl.scoutwiki.org/Vlethuik' }],
     naar: [{ blad: 'tent-onderdelen' }, { blad: 'tarp' }, { blad: 'soorten-tenten' }] },
-  { id: 'tent-onderdelen', naam: 'De delen van een tent', ook: ['binnentent', 'buitentent', 'grondzeil', 'apsis', 'tentstok'], en: 'parts of a tent', groep: 'tenten', bron: 'TKN §3.1',
+  { id: 'tent-onderdelen', naam: 'De delen van een tent', ook: ['binnentent', 'buitentent', 'grondzeil', 'apsis', 'tentstok'], en: 'parts of a tent', groep: 'tenten', bron: 'TKN §3.1', ken: true,
     plaatje: 'tent-onderdelen',
     uitleg: [
       '- Binnentent: daar slaap je. Hij laat lucht door, zodat je adem en zweet naar buiten kunnen.',
@@ -251,7 +251,7 @@ export default [
       'Hang je hangmat minstens 60 meter van water. Zo blijft de oever heel.',
     ],
     naar: [{ blad: 'tarp' }, { blad: 'slaapmatje' }] },
-  { id: 'bivakzak', naam: 'Bivakzak', ook: ['bivyzak', 'bivy'], en: 'bivy bag', groep: 'onderkomen', bron: 'TKN §3.1, SN-K',
+  { id: 'bivakzak', naam: 'Bivakzak', ook: ['bivyzak', 'bivy'], en: 'bivy bag', groep: 'onderkomen', bron: 'TKN §3.1, SN-K', ken: true,
     plaatje: 'kamp-bivakzak',
     uitleg: 'Een waterdichte hoes om je slaapzak, voor slapen zonder tent. Hij houdt wind, dauw en een beetje regen tegen. Een goede bivakzak laat ook vocht van binnen naar buiten: anders wordt je slaapzak nat van je eigen zweet. Leg je matje erin of eronder.',
     naar: [{ blad: 'openlucht-slapen' }, { blad: 'tarp' }] },
@@ -266,7 +266,7 @@ export default [
     naar: [{ blad: 'bivakzak' }, { blad: 'slaapzak-temperatuur' }, { blad: 'wildkamperen' }] },
 
   // Slapen
-  { id: 'slaapzak-temperatuur', naam: 'Hoe warm is je slaapzak?', ook: ['comforttemperatuur', 'limiettemperatuur', 'ISO 23537', 'EN 13537'], en: 'sleeping bag temperature rating', groep: 'slapen', bron: 'TKN §3.1, AH-ISO, WP-EN13537',
+  { id: 'slaapzak-temperatuur', naam: 'Hoe warm is je slaapzak?', ook: ['comforttemperatuur', 'limiettemperatuur', 'ISO 23537', 'EN 13537'], en: 'sleeping bag temperature rating', groep: 'slapen', bron: 'TKN §3.1, AH-ISO, WP-EN13537', ken: true,
     plaatje: 'slaapzak-temperatuur', doe: 'warm-genoeg',
     uitleg: [
       'Op een slaapzak staan temperaturen die in een laboratorium gemeten zijn, volgens de norm ISO 23537 (vroeger EN 13537):',
@@ -276,7 +276,7 @@ export default [
       'Gemeten is met lang ondergoed aan, op een goed isolerend matje. Met een dun matje, of als je moe of nat bent, krijg je het eerder koud.',
     ],
     naar: [{ blad: 'slaapmatje' }, { blad: 'warm-slapen' }] },
-  { id: 'slaapmatje', naam: 'Matje en R-waarde', ook: ['slaapmat', 'isomat', 'luchtmatras', 'R-waarde'], en: 'sleeping pad, R-value', groep: 'slapen', bron: 'TKN §3.1, NEMO, CD, REI (KU)',
+  { id: 'slaapmatje', naam: 'Matje en R-waarde', ook: ['slaapmat', 'isomat', 'luchtmatras', 'R-waarde'], en: 'sleeping pad, R-value', groep: 'slapen', bron: 'TKN §3.1, NEMO, CD, REI (KU)', ken: true,
     doe: 'warm-genoeg',
     waarvoor: 'Een matje houdt je van de koude grond. Je slaapzak wordt onder je platgedrukt en isoleert daar bijna niet: daar doet het matje het werk.',
     uitleg: [
@@ -373,7 +373,7 @@ export default [
       'Laat het terrein schoner achter dan je het aantrof.',
     ],
     naar: [{ blad: 'laat-geen-sporen-na' }, { blad: 'afval-op-kamp' }] },
-  { id: 'kampbouw-beoordelen', naam: 'Kampbouw zoals op de LSW', ook: ['LSW', 'RSW', 'kampbouw', 'Landelijke Scoutingwedstrijden'], groep: 'terrein', bron: 'LSW (KU)',
+  { id: 'kampbouw-beoordelen', naam: 'Kampbouw zoals op de LSW', ook: ['LSW', 'RSW', 'kampbouw', 'Landelijke Scoutingwedstrijden'], groep: 'terrein', bron: 'LSW (KU)', ken: true,
     waarvoor: 'Op de Landelijke Scoutingwedstrijden bouwen ploegen van scouts hun eigen kampterrein op. Wat daar telt, is een goede lijst voor elk kamp.',
     uitleg: [
       'De kampbouw wordt beoordeeld op:',
@@ -451,7 +451,7 @@ export default [
     naar: [{ blad: 'handen-wassen-koken' }, { blad: 'vijf-keer-veilig' }, { blad: 'tekencheck' }, { blad: 'tent-luchten' }] },
 
   // Laat geen sporen na
-  { id: 'laat-geen-sporen-na', naam: 'Laat geen sporen na', ook: ['Leave No Trace', 'LNT', 'zeven principes'], en: 'Leave No Trace', groep: 'sporen', bron: 'TKN §3.3, NPS-LNT',
+  { id: 'laat-geen-sporen-na', naam: 'Laat geen sporen na', ook: ['Leave No Trace', 'LNT', 'zeven principes'], en: 'Leave No Trace', groep: 'sporen', bron: 'TKN §3.3, NPS-LNT', ken: true,
     plaatje: 'geen-sporen-zeven', doe: 'geen-sporen-quiz',
     waarvoor: 'Zeven afspraken om de natuur te laten zoals je haar aantrof. Ze komen uit Amerika (Leave No Trace); dit is onze eigen vertaling.',
     uitleg: [
@@ -481,7 +481,7 @@ export default [
     naar: [{ blad: 'hudo' }, { blad: 'laat-geen-sporen-na' }] },
 
   // Regels
-  { id: 'wildkamperen', naam: 'Wildkamperen', ook: ['vrij kamperen', 'kamperen in de natuur', 'mag ik hier kamperen'], en: 'wild camping', groep: 'regels', bron: 'TKN §3.4, SN-KAMP, ANWB-W, APV (KU)',
+  { id: 'wildkamperen', naam: 'Wildkamperen', ook: ['vrij kamperen', 'kamperen in de natuur', 'mag ik hier kamperen'], en: 'wild camping', groep: 'regels', bron: 'TKN §3.4, SN-KAMP, ANWB-W, APV (KU)', ken: true,
     waarvoor: 'Overal je tent opzetten waar je maar wilt: in Nederland mag dat niet.',
     uitleg: [
       'Tot 2008 regelde de Wet op de openluchtrecreatie waar je mocht kamperen. Die wet bestaat niet meer. Nu regelt elke gemeente het zelf, in de APV (de Algemene Plaatselijke Verordening: de regels van de gemeente) en het bestemmingsplan. Bijna overal is kamperen buiten een kampeerterrein verboden.',
@@ -490,7 +490,7 @@ export default [
     ],
     letOp: 'In andere landen gelden andere regels. Zoek het per land op voor je gaat.',
     naar: [{ blad: 'paalkamperen' }, { blad: 'natuurkampeerterreinen' }, { blad: 'scouting-labelterreinen' }, { blad: 'regels-natuurgebied' }] },
-  { id: 'paalkamperen', naam: 'Paalkamperen', ook: ['paalkampeerterrein', 'kampeerpaal'], groep: 'regels', bron: 'TKN §3.4, SBB-PK, KM-PK (KU)',
+  { id: 'paalkamperen', naam: 'Paalkamperen', ook: ['paalkampeerterrein', 'kampeerpaal'], groep: 'regels', bron: 'TKN §3.4, SBB-PK, KM-PK (KU)', ken: true,
     plaatje: 'kamp-paal',
     waarvoor: 'Een paal in het bos waar je één of twee nachten met een klein tentje mag staan, zonder voorzieningen.',
     uitleg: [
@@ -503,14 +503,14 @@ export default [
     ],
     letOp: 'Lees de regels op de paal of de website van de beheerder. Staat er niets, ga dan uit van de strengste.',
     naar: [{ blad: 'wildkamperen' }, { blad: 'kuiltje' }, { blad: 'laat-geen-sporen-na' }] },
-  { id: 'natuurkampeerterreinen', naam: 'Natuurkampeerterreinen', ook: ['natuurkampeerkaart', 'De Groene Koepel'], groep: 'regels', bron: 'TKN §3.4, NKT (KU)',
+  { id: 'natuurkampeerterreinen', naam: 'Natuurkampeerterreinen', ook: ['natuurkampeerkaart', 'De Groene Koepel'], groep: 'regels', bron: 'TKN §3.4, NKT (KU)', ken: true,
     uitleg: [
       'Kleine, rustige kampeerterreinen in de natuur, met weinig voorzieningen. Er zijn er ruim 150, in Nederland en Frankrijk. Ze horen bij de stichting De Groene Koepel.',
       'Je hebt een Natuurkampeerkaart nodig. Die geldt een kalenderjaar, voor een gezin of een groepje van hoogstens vier mensen op één plek. Met een grote groep ga je naar een groepskampeerterrein of een Scouting-labelterrein.',
     ],
     verwijs: [{ naam: 'Natuurkampeerterreinen', url: 'https://www.natuurkampeerterreinen.nl/' }],
     naar: [{ blad: 'wildkamperen' }, { blad: 'scouting-labelterreinen' }] },
-  { id: 'scouting-labelterreinen', naam: 'Scouting-labelterreinen', ook: ['labelterrein', 'Scoutinglandgoed Zeewolde', 'Gilwell Ada’s Hoeve', 'kampeerterrein scouting'], groep: 'regels', bron: 'TKN §3.4, SN-LABEL (KU)',
+  { id: 'scouting-labelterreinen', naam: 'Scouting-labelterreinen', ook: ['labelterrein', 'Scoutinglandgoed Zeewolde', 'Gilwell Ada’s Hoeve', 'kampeerterrein scouting'], groep: 'regels', bron: 'TKN §3.4, SN-LABEL (KU)', ken: true,
     uitleg: [
       'Scouting Nederland heeft meer dan twintig labelterreinen: kampeerterreinen voor scoutinggroepen die aan strenge eisen voldoen en die regelmatig gecontroleerd worden. Ze worden beheerd door vrijwilligers.',
       'Het grootste is Scoutinglandgoed Zeewolde: 40 hectare bos en water in het Horsterwold, sinds 2015 in gebruik, voor scouts uit het hele land. Andere zijn bijvoorbeeld Gilwell Ada’s Hoeve bij Ommen, Buitenzorg, Spelderholt, Dwingeloo en Austerlitz.',
@@ -518,7 +518,7 @@ export default [
     ],
     verwijs: [{ naam: 'Labelterreinen van Scouting Nederland', url: 'https://labelterreinen.scouting.nl/' }],
     naar: [{ blad: 'kampplattegrond' }, { blad: 'natuurkampeerterreinen' }] },
-  { id: 'natuurmonumenten-regels', naam: 'Regels van Natuurmonumenten', ook: ['gebiedsregels', 'huisregels', 'zonsopgang tot zonsondergang', 'gebiedstoestemming'], groep: 'regels', bron: 'Natuurmonumenten, Gebiedsregels, https://www.natuurmonumenten.nl/natuurgebieden/gebiedsregels', bronDatum: 'geraadpleegd 16-10-2026',
+  { id: 'natuurmonumenten-regels', naam: 'Regels van Natuurmonumenten', ook: ['gebiedsregels', 'huisregels', 'zonsopgang tot zonsondergang', 'gebiedstoestemming'], groep: 'regels', bron: 'Natuurmonumenten, Gebiedsregels, https://www.natuurmonumenten.nl/natuurgebieden/gebiedsregels', bronDatum: 'geraadpleegd 16-10-2026', ken: true,
     letterlijk: true,
     uitleg: [
       'In de natuurgebieden van Natuurmonumenten mag je komen tussen zonsopgang en zonsondergang. Je blijft op de paden, zodat je planten en dieren niet stoort.',
@@ -531,7 +531,7 @@ export default [
     waarvoor: 'Natuurmonumenten heeft veel natuurgebieden in Nederland. Voor een hike of een spel met de groep moet je hun regels kennen.',
     verwijs: [{ naam: 'Natuurmonumenten: gebiedsregels', url: 'https://www.natuurmonumenten.nl/natuurgebieden/gebiedsregels' }],
     naar: [{ blad: 'buitencode' }, { blad: 'regels-natuurgebied' }, { blad: 'wildkamperen' }] },
-  { id: 'buitencode', naam: 'De Buitencode', ook: ['Staatsbosbeheer', 'toegangsregels', 'regels in de natuur'], groep: 'regels', bron: 'Staatsbosbeheer, Toegangsregels, https://www.staatsbosbeheer.nl/contact/toegangsregels', bronDatum: 'geraadpleegd 16-10-2026',
+  { id: 'buitencode', naam: 'De Buitencode', ook: ['Staatsbosbeheer', 'toegangsregels', 'regels in de natuur'], groep: 'regels', bron: 'Staatsbosbeheer, Toegangsregels, https://www.staatsbosbeheer.nl/contact/toegangsregels', bronDatum: 'geraadpleegd 16-10-2026', ken: true,
     letterlijk: true,
     waarvoor: 'Vijf regels voor iedereen in de natuur, van Staatsbosbeheer, Natuurmonumenten, de Landschappen en een aantal sportbonden samen.',
     uitleg: [
@@ -574,7 +574,7 @@ export default [
       'Kies wat je meeneemt op gewicht, formaat en of je het echt nodig hebt. Deel groepsspullen eerlijk: de een de tent, de ander de pannen.',
     ],
     naar: [{ blad: 'paklijst' }, { blad: 'trekkerstent' }] },
-  { id: 'laagjes', naam: 'Kleding in laagjes', ook: ['laagjessysteem', 'kleding', 'basislaag', 'fleece', 'regenjas', 'kleding bij vuur'], en: 'layering', groep: 'uitrusting', bron: 'TKN §3.5, STF, SN-VB, VRT (KU)',
+  { id: 'laagjes', naam: 'Kleding in laagjes', ook: ['laagjessysteem', 'kleding', 'basislaag', 'fleece', 'regenjas', 'kleding bij vuur'], en: 'layering', groep: 'uitrusting', bron: 'TKN §3.5, STF, SN-VB, VRT (KU)', ken: true,
     plaatje: 'kleding-laagjes',
     waarvoor: 'Met een paar dunne lagen kun je je kleding aanpassen aan het weer en aan hoe hard je werkt: iets uit als je het warm krijgt, iets aan als je stilstaat.',
     uitleg: [

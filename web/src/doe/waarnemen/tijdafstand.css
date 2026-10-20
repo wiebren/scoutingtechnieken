@@ -1,8 +1,8 @@
 /* Tijd en afstand (tijdafstand.js) */
 .ta-blok { display: flex; flex-direction: column; gap: 8px; }
 .ta-blok + .ta-blok { padding-top: 12px; border-top: 1px solid var(--lijn); }
-.ta-blok h4 { margin: 0; font-size: 15px; }
+.ta-blok h4 { margin: 0; font-size: 0.9375rem; }
 .ta-blok .doe-label { flex: 0 1 8em; }
 .ta-blok .doe-label .doe-veld { width: 100%; }
-.ta-pijl { align-self: flex-end; padding-bottom: 10px; color: var(--stil); font-size: 20px; }
-.ta-klok { font-size: 32px; }
+.ta-pijl { align-self: flex-end; padding-bottom: 10px; color: var(--stil); font-size: 1.25rem; }
+.ta-klok { font-size: 2rem; }

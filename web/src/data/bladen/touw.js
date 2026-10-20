@@ -66,6 +66,7 @@ export default [
     letOp: 'Laat een flink eind over. Een paalsteek waar niets aan trekt en die heen en weer schudt, kan losraken.',
     naar: [{ blad: 'schootsteek' }, { blad: 'dubbele-paalsteek' }, { blad: 'vlinderknoop' }] },
   { id: 'dubbele-paalsteek', naam: 'Dubbele paalsteek', ook: ['paalsteek in de bocht'], en: 'bowline on a bight', abok: '1080', groep: 'lussen', bron: 'TKN §1.1',
+    plaatje: 'touw-dubbele-paalsteek',
     waarvoor: 'Twee vaste lussen, midden in een touw.',
     uitleg: [
       'Neem het touw dubbel en leg daarmee het lusje van de paalsteek. Steek de bocht van onder door het lusje, maar ga er niet mee om het staande part heen: sla de bocht open, haal hem over de twee grote lussen heen naar boven, en trek hem aan tot hij om de staande parten ligt.',
@@ -82,6 +83,7 @@ export default [
     ],
     naar: [{ blad: 'paalsteek' }, { blad: 'vrachtrijdersteek' }] },
   { id: 'bunny-ears', naam: 'Bunny-ears', en: 'double figure-eight loop, bunny ears', groep: 'lussen', bron: 'TU',
+    plaatje: 'touw-bunny-ears',
     waarvoor: 'Twee vaste lussen in één knoop, om een last over twee ankerpunten te verdelen.',
     uitleg: [
       'Hij begint als een achtknoop op de bocht. Trek de bocht aan het eind niet helemaal door: vouw hem dubbel, trek die nieuwe bocht half door de knoop, zodat er twee lussen (de oren) ontstaan, en sla het stukje bocht dat overblijft over de hele knoop heen.',
@@ -165,8 +167,8 @@ export default [
       'Handig om het eind van een touw vast te zetten voor je het doorsnijdt of takelt, of om een bundel stokken bij elkaar te houden.',
       'Krijg je hem niet meer los, snijd dan de schuine slag door. Dan valt de rest vanzelf uit elkaar.',
     ],
-    letOp: 'Gebruik hem niet voor iets dat snel weer los moet, en nooit om een lichaamsdeel.',
-    naar: [{ blad: 'mastworp' }] },
+    letOp: 'Gebruik hem niet voor iets dat snel weer los moet, en nooit om een lichaamsdeel. Moet hij snel weer los, neem dan een mastworp. Moet er een lus om een lichaamsdeel, neem dan een paalsteek: die lus trekt niet strakker.',
+    naar: [{ blad: 'mastworp' }, { blad: 'paalsteek' }] },
   { id: 'marlsteek', naam: 'Marlsteek', ook: ['marlen'], en: 'marling hitch', groep: 'steken', bron: 'TKN §1.1',
     plaatje: 'touw-marlsteek',
     waarvoor: 'Een zeil of een rol langs een balk binden, met een rij steken achter elkaar.',
@@ -185,9 +187,9 @@ export default [
       'Rechts over links en onder door, dan links over rechts en onder door. Elk touw maakt een bocht (een U) om de bocht van het andere.',
       'Zo zie je dat hij goed is: de twee eindjes van één touw liggen aan dezelfde kant van de bocht van het andere touw. En de knoop ligt plat.',
     ],
-    letOp: 'Leg je de tweede helft verkeerd om, dan krijg je een oudewijvenknoop. Die slipt. Gebruik de platte knoop niet voor touwen van verschillende dikte, en niet voor zware lasten. Hij kan dan omslaan en losschieten.',
-    naar: [{ blad: 'oudewijvenknoop' }, { blad: 'chirurgenknoop' }, { blad: 'schootsteek' }] },
-  { id: 'oudewijvenknoop', naam: 'Oudewijvenknoop', ook: ['oud wijf'], en: 'granny knot', abok: '1206', groep: 'verbindingen', bron: 'TKN §1.1',
+    letOp: 'Leg je de tweede helft verkeerd om, dan krijg je een oudewijvenknoop. Die slipt. Gebruik de platte knoop niet voor touwen van verschillende dikte, en niet voor zware lasten. Hij kan dan omslaan en losschieten. Voor touwen van verschillende dikte neem je een schootsteek, of een dubbele schootsteek als het verschil groot is. Voor een zware last neem je een karaaksteek.',
+    naar: [{ blad: 'oudewijvenknoop' }, { blad: 'chirurgenknoop' }, { blad: 'schootsteek' }, { blad: 'dubbele-schootsteek' }, { blad: 'karaaksteek' }] },
+  { id: 'oudewijvenknoop', naam: 'Oudewijvenknoop', ook: ['oud wijf'], en: 'granny knot', abok: '1206', groep: 'verbindingen', bron: 'TKN §1.1', ken: true,
     plaatje: 'touw-oudewijvenknoop',
     uitleg: [
       'Een fout gelegde platte knoop: de tweede helft is dezelfde kant op gelegd als de eerste. Hij slipt, of hij trekt zo vast dat je hem niet meer los krijgt. Leer hem herkennen, niet gebruiken.',
@@ -244,9 +246,10 @@ export default [
     waarvoor: 'Een steek die je met één ruk aan het eind weer los trekt.',
     uitleg: [
       'Een halve steek, maar je steekt het eind niet helemaal door. Je steekt het dubbel door, als een bocht. Trek je aan het staande part, dan klemt de bocht. Trek je aan het korte eind, dan schiet hij los.',
+      'Maak je de bocht lang, dan kun je daarmee nog een halve steek om het staande part leggen. Zo heb je twee halve steken die je makkelijk weer los krijgt, ook als er flink kracht op heeft gestaan.',
       'Zo kun je bijna elke knoop op slip leggen: maak de laatste doorsteek met een bocht. Handig voor een stootwil (het kussen tegen stoten) aan de reling van een boot. Of om iets aan te binden dat je snel weer los wilt hebben.',
     ],
-    naar: [{ blad: 'halve-steek' }, { blad: 'dubbele-schootsteek' }] },
+    naar: [{ blad: 'halve-steek' }, { blad: 'rondtorn' }, { blad: 'dubbele-schootsteek' }] },
   { id: 'derdehandsteek', naam: 'Derdehandsteek', ook: ['draaireepsteek'], en: 'rolling hitch', groep: 'klem', bron: 'TU',
     plaatje: 'touw-derdehandsteek',
     waarvoor: 'Een takel of lijn vastmaken aan een touw waar al kracht op staat, zodat hij niet langs dat touw schuift.',
@@ -302,6 +305,8 @@ export default [
       'Leid de lijn eerst één keer helemaal rond de voet van de kikker. Leg dan een of twee achtjes over de twee hoorns. Maak de laatste slag als halve steek. Draai hem daarvoor om, zodat het eind onder zichzelf door gaat, en leg hem over de hoorn.',
       'Leg niet te veel slagen: een lijn op een kikker moet je snel weer los kunnen gooien.',
     ],
+    letOp: 'Leg de laatste halve steek de goede kant op: dan ligt ook die slag schuin over de kikker, als een acht, en komt het eind eronder uit. Leg je hem verkeerd om, dan ligt hij recht langs de kikker, en houdt hij minder goed.',
+    letOpPlaatje: 'touw-kikker-fout',
     naar: [{ blad: 'opschieten' }] },
   { id: 'opschieten', naam: 'Touw opschieten', ook: ['opschieten', 'oprollen', 'opbossen'], en: 'coiling', groep: 'beleggen', bron: 'TKN §1.2',
     plaatje: 'touw-opschieten',
@@ -316,6 +321,7 @@ export default [
 
   // Sierknopen
   { id: 'vriendschapsknoop', naam: 'Vriendschapsknoop', en: 'friendship knot', groep: 'sier', bron: 'TKN §1.1',
+    plaatje: 'touw-vriendschapsknoop',
     waarvoor: 'Een sierknoop om je das of een koord mee te sluiten.',
     uitleg: [
       'Met deze knoop knoop je de twee punten van je das aan elkaar, in plaats van een dasring. Aan de ene kant zie je een vierkantje, aan de andere kant een kruis. Hij is familie van de kruisknoop, het begin van een scoubidou.',
@@ -330,7 +336,7 @@ export default [
       'Als dasring heb je ongeveer een meter dun touw nodig. Gebruik je de ring om een stok, dan schuif je hem er pas af als hij helemaal strak zit.',
     ],
     naar: [{ blad: 'vriendschapsknoop' }, { blad: 'knopenbord' }] },
-  { id: 'fluitkoord', naam: 'Fluitkoord', groep: 'sier', bron: 'SN Knopen',
+  { id: 'fluitkoord', naam: 'Fluitkoord', groep: 'sier', bron: 'SN Knopen', ken: true,
     plaatje: 'touw-fluitkoord',
     waarvoor: 'Een geknoopt koord om je fluit aan te dragen, als versiering bij het uniform.',
     uitleg: [
@@ -348,7 +354,7 @@ export default [
 
   // Afwerken en splitsen
   { id: 'takeling', naam: 'Takeling', ook: ['gewone takeling', 'betakeling', 'bezetting met takelgaren'], en: 'common whipping', groep: 'afwerken', bron: 'TKN §1.2',
-    plaatje: 'touw-takeling',
+    doe: 'takeling-leggen',
     waarvoor: 'Een touweind strak omwikkelen met dun garen, zodat het niet uitrafelt.',
     uitleg: [
       'Zo maak je hem:',
@@ -377,6 +383,7 @@ export default [
     naar: [{ blad: 'takeling' }, { blad: 'natuur-of-kunststof' }] },
   { id: 'eindsplits', naam: 'Eindsplits', ook: ['Spaanse takeling'], en: 'back splice', groep: 'afwerken', bron: 'TKN §1.2',
     plaatje: 'touw-eindsplits',
+    doe: 'eindsplits-maken',
     waarvoor: 'Een touweind afwerken door de strengen terug in het touw te vlechten. Het eind wordt iets dikker.',
     uitleg: [
       '- Draai aan het eind de strengen een stukje uit elkaar.',
@@ -396,7 +403,7 @@ export default [
       '- Vlecht daarna verder zoals bij de eindsplits: over, onder, drie keer of meer.',
       'Een oogsplits houdt bijna de volle sterkte van het touw. Bij een vlet zit de lijn vaak met een oogsplits aan het oog vast. Wil je het oog sparen? Leg dan een kous in het oog: een metalen ring met een groef.',
     ],
-    naar: [{ blad: 'eindsplits' }, { blad: 'marlpriem' }] },
+    naar: [{ blad: 'eindsplits' }, { blad: 'takeling' }, { blad: 'marlpriem' }] },
   { id: 'touwslaan', naam: 'Touwslaan', ook: ['touw draaien'], en: 'rope making', groep: 'afwerken', bron: 'TKN §1.2',
     plaatje: 'touw-touwslaan',
     uitleg: [
@@ -407,7 +414,7 @@ export default [
       'Vroeger ging dit op een lijnbaan, een lang smal veld zo lang als het touw. Daar komen straatnamen als de Lijnbaan vandaan.',
     ],
     naar: [{ blad: 'opbouw-touw' }, { blad: 'touw-van-brandnetel' }] },
-  { id: 'marlpriem', naam: 'Marlpriem en splitsijzer', en: 'marlinspike, fid', groep: 'afwerken', bron: 'TKN §1.2',
+  { id: 'marlpriem', naam: 'Marlpriem en splitsijzer', en: 'marlinspike, fid', groep: 'afwerken', bron: 'TKN §1.2', ken: true,
     plaatje: 'touw-marlpriem',
     uitleg: [
       'Puntig gereedschap om de strengen van een touw uit elkaar te duwen: bij het splitsen, en om een vastgetrokken knoop los te krijgen.',
@@ -418,15 +425,34 @@ export default [
     naar: [{ blad: 'oogsplits' }, { blad: 'eindsplits' }] },
 
   // Touwkunde
-  { id: 'natuur-of-kunststof', naam: 'Natuurlijk of kunststof touw', ook: ['synthetisch touw', 'natuurvezel'], groep: 'touwkunde', bron: 'TKN §1.3',
+  { id: 'natuur-of-kunststof', naam: 'Natuurlijk of kunststof touw', ook: ['synthetisch touw', 'natuurvezel'], groep: 'touwkunde', bron: 'TKN §1.3', ken: true,
     plaatje: 'touw-natuur-kunststof',
+    waarvoor: 'Weten wat het touw in je handen kan, en welk touw je pakt: om te sjorren, voor de tent, op het water of bij het vuur.',
     uitleg: [
-      'Natuurtouw is van plantenvezels: manilla, sisal, hennep, katoen. Het is ruw en kan tegen warmte. Maar het rot als je het nat wegzet. Nat krimpt het, en dan zit een sjorring muurvast.',
-      'Kunststof touw is van polypropyleen, polyester of nylon. Het rot niet en is vaak sterker. Maar het smelt als het schuurt, en in de zon wordt het broos: het breekt dan makkelijk.',
-      'Het verschil zie je aan het eind: natuurtouw rafelt uit tot pluizige vezels, kunststof kun je dichtsmelten. Bij pionieren gebruik je meestal natuurtouw. Het is ruw, dus sjorringen glijden niet weg.',
+      'Natuurtouw is van plantenvezels: manilla, sisal, hennep, katoen of kokos. Kunststof touw is van aardolie: polypropyleen, polyester, nylon of polyethyleen. Ze zien er soms hetzelfde uit, maar ze doen heel anders.',
+      'Welk touw pak je waarvoor?',
+      '- Sjorren en pionieren: natuurtouw, of geruwd polypropyleen (kunsthennep). Het is ruw, dus een sjorring glijdt niet weg.',
+      '- Scheerlijnen van de tent: kunststof. Natuurtouw krimpt als het regent en trekt dan de haringen uit de grond. Heb je toch natuurtouw, zet de lijnen dan iets losser voor de nacht.',
+      '- Op en bij het water: polypropyleen. Het drijft, dus een werplijn ben je niet kwijt.',
+      '- Bij het vuur: natuurtouw. Kunststof smelt al van een vonk of een heet stuk hout.',
+      '- Klimmen, zekeren en touwbanen: alleen touw dat daarvoor gemaakt en gekeurd is. Dat is altijd kunststof.',
+      'Het verschil zie je aan het eind: natuurtouw rafelt uit tot pluizige vezels, kunststof kun je dichtsmelten. Natuurtouw voelt droog en stug en ruikt naar hooi. Kunststof voelt gladder of plastic-achtig, en vaak heeft het een felle kleur.',
     ],
-    naar: [{ blad: 'touwsoorten' }, { blad: 'afbranden' }, { blad: 'sjortouw' }] },
-  { id: 'touwsoorten', naam: 'Touwsoorten herkennen', ook: ['manilla', 'sisal', 'hennep', 'polypropyleen', 'polyethyleen', 'polyester'],
+    tabel: {
+      kop: ['', 'Natuurtouw', 'Kunststof touw'],
+      rijen: [
+        ['Nat', 'neemt water op, wordt zwaar en krimpt: een sjorring zit dan muurvast', 'blijft licht en krimpt niet; polypropyleen drijft'],
+        ['Warmte en schuren', 'kan tegen warmte; het verschroeit pas in het vuur', 'smelt als het hard schuurt, bijvoorbeeld touw dat over touw loopt'],
+        ['Zon', 'kan er goed tegen', 'wordt broos, vooral polypropyleen: het breekt dan zomaar'],
+        ['Sterkte', 'minder sterk bij dezelfde dikte', 'vaak sterker, en lichter'],
+        ['Knopen', 'houden goed, het touw is ruw', 'kunnen schuiven als het touw glad is: laat een lang eind over'],
+        ['Opbergen', 'rot en schimmelt als je het nat opbergt', 'rot niet, maar laat het ook droog worden'],
+        ['Weggooien', 'vergaat in de natuur', 'vergaat niet: neem elk stukje mee'],
+      ],
+    },
+    letOp: 'Het verschil in de zon zie je niet altijd. Kunststof touw dat lang buiten heeft gehangen, kan er goed uitzien en toch knappen. Twijfel je, gebruik het dan niet om iets te dragen of iemand te zekeren.',
+    naar: [{ blad: 'touwsoorten' }, { blad: 'afbranden' }, { blad: 'sjortouw' }, { blad: 'touw-controleren' }, { blad: 'duurzaam-touw' }] },
+  { id: 'touwsoorten', naam: 'Touwsoorten herkennen', ook: ['manilla', 'sisal', 'hennep', 'polypropyleen', 'polyethyleen', 'polyester'], ken: true,
     groep: 'touwkunde', bron: 'TKN §1.3',
     uitleg: 'Waar je ze aan herkent en wat ze kunnen. De kleuren van kunststof touw verschillen per merk: de kleur zegt niet alles.',
     tabel: {
@@ -442,7 +468,7 @@ export default [
       ],
     },
     naar: [{ blad: 'natuur-of-kunststof' }, { blad: 'opbouw-touw' }] },
-  { id: 'opbouw-touw', naam: 'Hoe touw is opgebouwd', ook: ['geslagen touw', 'gevlochten touw', 'kabelslag', 'wantslag', 'strengen', 'kardeel'], groep: 'touwkunde', bron: 'TKN §1.3',
+  { id: 'opbouw-touw', naam: 'Hoe touw is opgebouwd', ook: ['geslagen touw', 'gevlochten touw', 'kabelslag', 'wantslag', 'strengen', 'kardeel'], groep: 'touwkunde', bron: 'TKN §1.3', ken: true,
     plaatje: 'touw-opbouw',
     uitleg: [
       'Geslagen touw: vezels worden in elkaar gedraaid tot garens, garens tot strengen (ook kardelen), en drie of vier strengen samen zijn het touw. Bij elke stap draai je de andere kant op; daardoor draait het touw zichzelf niet open. De groeven tussen de strengen heten tieren.',
@@ -455,12 +481,12 @@ export default [
   { id: 'touw-onderhoud', naam: 'Touw schoonmaken en bewaren', ook: ['touwonderhoud'], groep: 'touwkunde', bron: 'TKN §1.3',
     plaatje: 'touw-onderhoud',
     uitleg: [
-      'Werk de einden meteen af, met een takeling of door ze af te branden. Leg touw niet op de grond en ga er niet op staan. Zand dringt dan tussen de vezels en slijt het touw van binnenuit.',
+      'Werk de einden meteen af: met een takeling of een eindsplits, of bij kunststof touw door ze af te branden. Leg touw niet op de grond en ga er niet op staan. Zand dringt dan tussen de vezels en slijt het touw van binnenuit.',
       '- Schoonmaken: laat modderig touw eerst drogen, en sla of klop het zand eruit. Erg vies touw spoel je uit met schoon water. Daarna laat je het goed drogen.',
-      '- Bewaren: schiet het op (rol het netjes op) en hang het op. Droog, koel en uit de zon. Niet aan een spijker: die roest en maakt zwakke plekken.',
+      '- Bewaren: schiet het op (rol het netjes op) en hang het aan de bocht door het oog op een houten pen of haak. Droog, koel en uit de zon. Niet aan een spijker: die roest en maakt zwakke plekken.',
       'Berg nat touw nooit op: natuurtouw gaat rotten en in kunststof touw komt schimmel.',
     ],
-    naar: [{ blad: 'opschieten' }, { blad: 'touw-controleren' }] },
+    naar: [{ blad: 'opschieten' }, { blad: 'takeling' }, { blad: 'eindsplits' }, { blad: 'afbranden' }, { blad: 'touw-controleren' }] },
   { id: 'touw-controleren', naam: 'Touw controleren', ook: ['afkeuren'], groep: 'touwkunde', bron: 'TKN §1.3',
     plaatje: 'touw-controleren',
     uitleg: [
@@ -472,7 +498,7 @@ export default [
       'Vertrouw je het niet, keur het dan af. Knip het in korte stukken als oefentouw, zodat het niet per ongeluk weer tussen het goede touw terechtkomt.',
     ],
     naar: [{ blad: 'touw-onderhoud' }, { blad: 'breeksterkte' }] },
-  { id: 'breeksterkte', naam: 'Breeksterkte en werklast', ook: ['veilig belastbare sterkte', 'werklast', 'WLL'], groep: 'touwkunde', bron: 'TKN §1.3',
+  { id: 'breeksterkte', naam: 'Breeksterkte en werklast', ook: ['veilig belastbare sterkte', 'werklast', 'WLL'], groep: 'touwkunde', bron: 'TKN §1.3', ken: true,
     plaatje: 'touw-breeksterkte',
     uitleg: [
       'De breeksterkte is de kracht waarbij een nieuw touw breekt. Wat je het touw veilig laat dragen, de werklast, is maar een klein deel daarvan: bij scouting vaak een tiende.',
@@ -480,7 +506,7 @@ export default [
       'Knopen maken een touw zwakker, oud en nat touw is zwakker, en de hele keten telt: ook de sluitingen, de katrollen en waar het touw aan vastzit.',
     ],
     naar: [{ blad: 'veilige-belasting' }, { blad: 'touw-controleren' }] },
-  { id: 'duurzaam-touw', naam: 'Touw en het milieu', ook: ['duurzaam touw', 'hergebruik'], groep: 'touwkunde', bron: 'TU; WP-NL, PLY-ROPE, SN-VVS',
+  { id: 'duurzaam-touw', naam: 'Touw en het milieu', ook: ['duurzaam touw', 'hergebruik'], groep: 'touwkunde', bron: 'TU; WP-NL, PLY-ROPE, SN-VVS', ken: true,
     waarvoor: 'Kiezen welk touw je koopt, en zo lang mogelijk doen met wat je hebt.',
     uitleg: [
       'Natuurtouw komt van planten en vergaat weer. Raakt er een stuk kwijt in de natuur, dan verdwijnt het vanzelf. Voor touw dat je kort of af en toe gebruikt is dat een voordeel.',
@@ -488,11 +514,11 @@ export default [
       'Wat elk touw duurzamer maakt: goed onderhoud, de einden afwerken, droog opbergen, en touw dat niet meer veilig is hergebruiken als oefentouw, voor een knopenbord of om iets mee vast te binden.',
     ],
     naar: [{ blad: 'natuur-of-kunststof' }, { blad: 'touw-onderhoud' }] },
-  { id: 'touw-onder-spanning', naam: 'Afstand van touw onder spanning', groep: 'touwkunde', bron: 'SN Knopen',
-    plaatje: 'touw-onder-spanning',
+  { id: 'touw-onder-spanning', naam: 'Afstand van touw onder spanning', groep: 'touwkunde', bron: 'SN Knopen', ken: true,
+    doe: 'touw-terugslag',
     uitleg: [
-      'Een touw dat strak staat, zoals bij een kabelbaan of een touwbrug, kan knappen of losschieten. Het zwiept dan met grote kracht terug. Blijf er uit de buurt.',
-      '- Ga nooit in de bocht van een gespannen touw staan: aan de binnenkant van de hoek die het touw maakt.',
+      'Een touw dat strak staat, zoals bij een kabelbaan of een touwbrug, kan knappen of losschieten. Door de spanning is het een stukje uitgerekt, en dat veert in één klap terug: in de lengte van het touw, naar waar het vastzit, en daar ver voorbij. Het zwiept met grote kracht. Blijf uit de lijn van het touw.',
+      '- Sta naast een gespannen touw, niet in het verlengde ervan. Ook niet achter de paal, boom of het anker waar het aan vastzit: daar schiet het touw langs.',
       '- Stap niet over een strak touw, en kruip er niet onder door terwijl iemand het aantrekt.',
       '- Span je zelf? Sta dan naast het touw, niet in de lijn van het touw.',
     ],

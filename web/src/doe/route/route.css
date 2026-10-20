@@ -21,7 +21,7 @@
 .rw-hud { position: absolute; inset: 8px 8px auto 8px; display: flex; justify-content: space-between; align-items: flex-start; pointer-events: none; }
 .rw-hud-nr {
   padding: 3px 9px; border-radius: 8px; background: color-mix(in srgb, var(--paneel) 88%, transparent); color: var(--inkt);
-  font-size: 13px; font-weight: 700; font-variant-numeric: tabular-nums;
+  font-size: 0.8125rem; font-weight: 700; font-variant-numeric: tabular-nums;
 }
 .rw-kompas { width: 46px; height: 46px; }
 .rw-kompas-rond { fill: color-mix(in srgb, var(--paneel) 88%, transparent); stroke: var(--lijn-sterk); stroke-width: 1.5; }
@@ -35,27 +35,26 @@
 .rw-keuze-nr, .rw-keuze svg { flex: none; }
 .rw-knoppen.namen .rw-keuze { flex-basis: 150px; }
 .rw-keuze-tekst { display: flex; flex-direction: column; align-items: flex-start; min-width: 0; line-height: 1.2; text-align: left; }
-.rw-keuze-tekst small { font-size: 12px; font-weight: 500; color: var(--stil); overflow-wrap: anywhere; }
-.rw-keuze-nr { display: grid; place-items: center; width: 22px; height: 22px; border-radius: 50%; background: var(--inkt); color: var(--paneel); font-size: 12px; }
+.rw-keuze-tekst small { font-size: 0.75rem; font-weight: 500; color: var(--stil); overflow-wrap: anywhere; }
+.rw-keuze-nr { display: grid; place-items: center; width: 22px; height: 22px; border-radius: 50%; background: var(--inkt); color: var(--paneel); font-size: 0.75rem; }
 .rw-knop-pijl { fill: none; stroke: currentColor; stroke-width: 2.6; stroke-linecap: round; stroke-linejoin: round; }
-.rw-waar { margin: 0; color: var(--stil); font-size: 14px; }
+.rw-waar { margin: 0; color: var(--stil); font-size: 0.875rem; }
 .rw-waar:empty { display: none; }
 .rw-einde { display: flex; flex-direction: column; gap: 8px; }
-.rw-legenda-regel { display: flex; align-items: center; gap: 6px; margin: 0; color: var(--stil); font-size: 13px; }
+.rw-legenda-regel { display: flex; align-items: center; gap: 6px; margin: 0; color: var(--stil); font-size: 0.8125rem; }
 .rw-lijn-groen, .rw-lijn-blauw { display: inline-block; width: 22px; height: 0; border-top: 5px solid color-mix(in srgb, var(--accent) 55%, transparent); }
 .rw-lijn-blauw { border-top: 2.5px solid var(--blauw); }
 
 /* the notation */
 .rw-notatie-kop { display: flex; flex-wrap: wrap; align-items: baseline; justify-content: space-between; gap: 6px; }
-.rw-routenr { color: var(--stil); font-size: 13px; font-variant-numeric: tabular-nums; }
 .rw-notatie { display: grid; gap: 14px; }
 @container (min-width: 700px) {
   .rw-rechts { max-height: calc(100cqw * 0.58 * 0.75 + 120px); overflow-y: auto; padding-right: 2px; }
 }
 @container (min-width: 560px) and (max-width: 699px) { .rw-notatie.twee { grid-template-columns: 1fr 1fr; } }
 .rw-blok { display: flex; flex-direction: column; gap: 8px; min-width: 0; }
-.rw-blok h4 { margin: 0; font-size: 14px; color: var(--stil); }
-.rw-sleutel { font-size: 14px; }
+.rw-blok h4 { margin: 0; font-size: 0.875rem; color: var(--stil); }
+.rw-sleutel { font-size: 0.875rem; }
 .rw-sleutel summary { cursor: pointer; color: var(--accent); font-weight: 600; min-height: 32px; display: flex; align-items: center; }
 .rw-sleutel ul { margin: 4px 0 8px; padding-left: 18px; }
 .rw-sleutel li { margin: 3px 0; }
@@ -83,7 +82,7 @@
 .rw-streepje { stroke-width: 2.2; }
 .rw-vlag { fill: var(--oranje); }
 .rw-nr { fill: var(--stil); font-size: 12px; font-weight: 700; }
-.rw-nr-tekst { color: var(--stil); font-size: 12px; font-weight: 700; }
+.rw-nr-tekst { color: var(--stil); font-size: 0.75rem; font-weight: 700; }
 .rw-klein { fill: var(--inkt); font-size: 11px; }
 
 /* roads on a junction drawing: double line = paved, solid = cycle path, dashed = sand path, dotted = forest path */
@@ -140,7 +139,7 @@
 /* tijden */
 .rw-tijden { display: grid; grid-template-columns: repeat(auto-fill, minmax(118px, 1fr)); gap: 6px; margin: 0; padding: 0; list-style: none; }
 .rw-tijd { display: flex; align-items: center; gap: 8px; padding: 6px 8px; border: 1px solid var(--lijn); border-radius: 8px; }
-.rw-tijd strong { font-size: 18px; font-variant-numeric: tabular-nums; }
+.rw-tijd strong { font-size: 1.125rem; font-variant-numeric: tabular-nums; }
 .rw-klok { fill: var(--paneel); stroke: var(--inkt); stroke-width: 1.5; }
 .rw-klok-streep { stroke: var(--stil); stroke-width: 1.2; }
 .rw-wijzer-klein { stroke: var(--inkt); stroke-width: 3; stroke-linecap: round; }
@@ -150,6 +149,8 @@
 .rw-rll { margin: 0; padding-left: 26px; font-variant-numeric: tabular-nums; }
 .rw-rll li { padding: 3px 4px; }
 .rw-tekst p { margin: 0; line-height: 1.6; }
+.rw-tekst.gedicht { display: flex; flex-direction: column; gap: 8px; }
+.rw-tekst.gedicht p { white-space: pre-line; font-style: italic; }
 .rw-zin { border-radius: 4px; }
 .rw .rw-zin.hier { outline: none; background: color-mix(in srgb, var(--accent) 18%, transparent); }
 

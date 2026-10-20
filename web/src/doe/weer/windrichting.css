@@ -7,7 +7,7 @@
 .wr-tekst p { margin: 0; }
 .wr-vraag { font-weight: 600; }
 .wr-knoppen { display: grid; grid-template-columns: 1fr 1fr; gap: 6px; }
-.wr-knop { justify-content: flex-start; padding-inline: 10px; font-size: 13.5px; }
+.wr-knop { justify-content: flex-start; padding-inline: 10px; font-size: 0.8438rem; }
 .wr-knop.goed { background: var(--accent); border-color: var(--accent); color: var(--op-accent); opacity: 1; }
 .wr-knop.fout { border-color: var(--rood); color: var(--rood); opacity: 1; }
 

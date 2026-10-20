@@ -39,7 +39,7 @@
 
 .kk-tekst { display: flex; flex-direction: column; gap: 10px; min-width: 0; }
 .kk-tekst p { margin: 0; }
-.kk-opdracht { font-size: 16px; }
+.kk-opdracht { font-size: 1rem; }
 .kk-stappen { margin: 0; padding-left: 22px; color: var(--stil); }
 .kk-stappen li { margin: 2px 0; }
 .kk-stappen li.klaar { color: var(--inkt); }
@@ -48,4 +48,4 @@
 .kk-melding { min-height: 1.5em; color: var(--accent); font-weight: 600; }
 .kk-knoppen { display: flex; flex-wrap: wrap; gap: 8px 16px; }
 .kk-knopgroep { display: inline-flex; align-items: center; gap: 6px; }
-.kk-knoplabel { color: var(--stil); font-size: 14px; min-width: 52px; }
+.kk-knoplabel { color: var(--stil); font-size: 0.875rem; min-width: 52px; }

@@ -9,7 +9,7 @@
 .rk-svg { position: absolute; inset: 0; width: 100%; height: 100%; display: block; overflow: hidden; touch-action: pinch-zoom;
   user-select: none; -webkit-user-select: none; cursor: crosshair; }
 .rk-svg:focus-visible { outline: 3px solid var(--accent); outline-offset: -3px; border-radius: 12px; }
-.rk-bron { margin-top: 4px; color: var(--stil); font-size: 12px; }
+.rk-bron { margin-top: 4px; color: var(--stil); font-size: 0.75rem; }
 
 .rk-randen text { fill: #17211b; font-size: 22px; font-weight: 700; paint-order: stroke; stroke: #fff; stroke-width: 5px; stroke-linejoin: round; }
 .rk-huisje, .rk-trapje { fill: none; stroke-width: 3; vector-effect: non-scaling-stroke; }
@@ -28,10 +28,10 @@
   @keyframes rk-in { from { opacity: 0; } }
 }
 
-.rk-opdracht { font-size: 16px; }
-.rk-uitkomst { min-height: 1.5em; font-size: 17px; font-variant-numeric: tabular-nums; }
+.rk-opdracht { font-size: 1rem; }
+.rk-uitkomst { min-height: 1.5em; font-size: 1.0625rem; font-variant-numeric: tabular-nums; }
 .rk-uitkomst.goed { color: var(--accent); font-weight: 600; }
 .rk-uitkomst.fout { color: var(--rood); font-weight: 600; }
-.rk-uitleg { color: var(--stil); font-size: 14px; font-variant-numeric: tabular-nums; }
+.rk-uitleg { color: var(--stil); font-size: 0.875rem; font-variant-numeric: tabular-nums; }
 .rk-score { color: var(--stil); font-variant-numeric: tabular-nums; }
 .rk-score:empty { display: none; }

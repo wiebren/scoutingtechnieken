@@ -25,19 +25,21 @@ import kamperen from './kamperen/index.js';
 import natuur from './natuur/index.js';
 import sjorren from './sjorren/index.js';
 import kompas3d from './kompas3d/index.js';
+import touw from './touw/index.js';
 
 export const DOE = {
   kompas: { titel: 'Draai het kompas', laad: () => import('./kompas.js'), bekijk: true, binnen: 'kompas-aanwijzen' },
-  'kompas-aanwijzen': { titel: 'Wijs de delen van het kompas aan', laad: () => import('./kompaswijzen.js') },
+  'kurkkompas-3d': { titel: 'Maak een kompas van kurk en naald', laad: () => import('./kurkkompas3d.js'), bekijk: true },
+  'kompas-aanwijzen': { titel: 'De delen van het kompas', laad: () => import('./kompaswijzen.js') },
   'kompas-koers': { titel: 'Loop een koers', laad: () => import('./kompas.js'), opties: { opdracht: 'koers' } },
   'kompas-peilen': { titel: 'Peil een doel', laad: () => import('./kompas.js'), opties: { opdracht: 'peilen' } },
   'kompas-terug': { titel: 'Terug op je spoor', laad: () => import('./kompas.js'), opties: { opdracht: 'terug' } },
   'kompas-telefoon': { titel: 'Je telefoon als kompas', laad: () => import('./kompas.js'), opties: { sensor: true }, bekijk: true },
   'kaart-greep-3': { titel: 'Haal een koers van de kaart', laad: () => import('./kaartkompas.js'), opties: { greep: 3 } },
   'kaart-greep-4': { titel: 'Zet een peiling op de kaart', laad: () => import('./kaartkompas.js'), opties: { greep: 4 } },
-  'windroos-8': { titel: 'Oefen de acht windrichtingen', laad: () => import('./windroos.js'), opties: { n: 8 } },
-  'windroos-16': { titel: 'Oefen de zestien windrichtingen', laad: () => import('./windroos.js'), opties: { n: 16 } },
-  'windroos-32': { titel: 'Oefen de 32 streken', laad: () => import('./windroos.js'), opties: { n: 32 } },
+  'windroos-8': { titel: 'De acht windrichtingen', laad: () => import('./windroos.js'), opties: { n: 8 } },
+  'windroos-16': { titel: 'De zestien windrichtingen', laad: () => import('./windroos.js'), opties: { n: 16 } },
+  'windroos-32': { titel: 'De 32 streken', laad: () => import('./windroos.js'), opties: { n: 32 } },
   schaal: { titel: 'Reken met de schaal', laad: () => import('./schaal.js'), bekijk: true },
   kronkelweg: { titel: 'Meet de kronkelweg', laad: () => import('./kronkelweg.js') },
   rdkaart: { titel: 'Lees coördinaten op de kaart', laad: () => import('./rdkaart.js') },
@@ -72,4 +74,5 @@ export const DOE = {
   ...natuur,
   ...sjorren,
   ...kompas3d,
+  ...touw,
 };

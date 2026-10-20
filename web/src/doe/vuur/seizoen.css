@@ -2,11 +2,11 @@
 .sz-deel[hidden] { display: none; }
 .sz-inhoud { display: grid; gap: 10px; }
 .sz-inhoud > p { margin: 0; }
-.sz-groep .vk-kop { margin: 0 0 6px; font-size: 13px; font-weight: 600; color: var(--stil); }
+.sz-groep .vk-kop { margin: 0 0 6px; font-size: 0.8125rem; font-weight: 600; color: var(--stil); }
 .sz-lijst { display: flex; flex-wrap: wrap; gap: 4px 6px; margin: 0; padding: 0; list-style: none; }
-.sz-lijst li { padding: 2px 7px; border-radius: 4px; background: var(--zacht); font-size: 14px; }
+.sz-lijst li { padding: 2px 7px; border-radius: 4px; background: var(--zacht); font-size: 0.875rem; }
 .sz-jaar { display: grid; grid-template-columns: repeat(6, minmax(0, 1fr)); gap: 4px; margin: 0; padding: 0; list-style: none; }
 @container (min-width: 520px) { .sz-jaar { grid-template-columns: repeat(12, minmax(0, 1fr)); } }
-.sz-jaar li { padding: 8px 0; border: 1px solid var(--lijn); border-radius: 8px; text-align: center; font-size: 13px; color: var(--stil); background: var(--zacht); }
+.sz-jaar li { padding: 8px 0; border: 1px solid var(--lijn); border-radius: 8px; text-align: center; font-size: 0.8125rem; color: var(--stil); background: var(--zacht); }
 .sz-jaar li.aan { background: var(--accent); border-color: var(--accent); color: var(--op-accent); font-weight: 600; }
 .sz-jaar li.nu { outline: 2px solid var(--inkt); outline-offset: 1px; }

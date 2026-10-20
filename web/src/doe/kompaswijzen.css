@@ -2,12 +2,16 @@
 .doe-kompaswijzen { display: flex; flex-direction: column; gap: 12px; }
 .doe-kompaswijzen p { margin: 0; }
 .kd-oefen { display: grid; gap: 12px; }
-.kd-oefen[hidden], .kd-draai[hidden] { display: none; }
+.kd-oefen[hidden], .kd-draai[hidden], .kd-namen[hidden] { display: none; }
+.kd-namen { width: min(100%, 380px); margin: 0 auto; }
+.kd-naamlijn { fill: none; stroke: var(--stil); stroke-width: 0.8; }
+.kd-naampunt { fill: var(--inkt); }
+.kd-naam text { fill: var(--inkt); font-size: 12px; }
 @container (min-width: 520px) { .kd-oefen { grid-template-columns: minmax(0, 230px) minmax(0, 1fr); align-items: start; } }
 .kd-beeld { width: min(100%, 230px); margin: 0 auto; }
 .kd-svg { display: block; width: 100%; height: auto; user-select: none; -webkit-user-select: none; }
 .kd-tekst { display: flex; flex-direction: column; gap: 10px; min-width: 0; }
-.kd-vraag { font-size: 17px; }
+.kd-vraag { font-size: 1.0625rem; }
 
 .kd-raak { fill: transparent; stroke: transparent; pointer-events: all; }
 .kd-deel { cursor: pointer; outline: none; }

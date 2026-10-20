@@ -11,7 +11,7 @@ const WAARNEMING = { naam: 'Waarneming.nl: opzoeken en doorgeven wat je zag', ur
 
 export default [
   // Bomen
-  { id: 'bomen-herkennen', naam: 'Bomen herkennen', ook: ['boom herkennen', 'bomenquiz', 'welke boom'], en: 'tree identification', groep: 'bomen', bron: 'TKN §6.1',
+  { id: 'bomen-herkennen', naam: 'Bomen herkennen', ook: ['boom herkennen', 'bomenquiz', 'welke boom'], en: 'tree identification', groep: 'bomen', bron: 'TKN §6.1', ken: true,
     doe: 'bomenquiz',
     waarvoor: 'Weten welke boom je voor je hebt. Dat is handig bij een speurtocht en om het goede hout te kiezen. En zo weet je welke bomen giftig zijn.',
     uitleg: [
@@ -26,7 +26,7 @@ export default [
     ],
     verwijs: [OBSIDENTIFY],
     naar: [{ blad: 'bomen-determineren' }, { blad: 'bladvormen' }, { blad: 'welk-hout' }] },
-  { id: 'bomen-determineren', naam: 'Determineersleutel voor bomen', ook: ['determineren', 'boomsleutel', 'zoeksleutel', 'op naam brengen', 'bladsleutel'], en: 'identification key', groep: 'bomen', bron: 'TKN §6.1',
+  { id: 'bomen-determineren', naam: 'Determineersleutel voor bomen', ook: ['determineren', 'boomsleutel', 'zoeksleutel', 'op naam brengen', 'bladsleutel'], en: 'identification key', groep: 'bomen', bron: 'TKN §6.1', ken: true,
     doe: 'boomsleutel',
     uitleg: [
       'Een determineersleutel stelt steeds een vraag met een paar antwoorden. Elk antwoord brengt je naar een volgende vraag, tot je bij een naam uitkomt. Onderweg leer je vanzelf waar je op moet letten.',
@@ -34,7 +34,7 @@ export default [
       'In de winter herken je bomen aan hun knoppen, schors en vorm. Daar bestaan aparte winterknoppensleutels voor.',
     ],
     naar: [{ blad: 'bladvormen' }, { blad: 'bomen-herkennen' }] },
-  { id: 'bladvormen', naam: 'Bladvormen', ook: ['enkelvoudig blad', 'samengesteld blad', 'geveerd', 'handvormig', 'gelobd', 'gezaagd', 'bladrand', 'tegenoverstaand'], en: 'leaf shapes', groep: 'bomen', bron: 'TKN §6.1',
+  { id: 'bladvormen', naam: 'Bladvormen', ook: ['enkelvoudig blad', 'samengesteld blad', 'geveerd', 'handvormig', 'gelobd', 'gezaagd', 'bladrand', 'tegenoverstaand'], en: 'leaf shapes', groep: 'bomen', bron: 'TKN §6.1', ken: true,
     plaatje: 'bladvormen',
     uitleg: [
       'Om een blad te beschrijven heb je een paar woorden nodig. De determineersleutel gebruikt ze ook.',
@@ -46,7 +46,7 @@ export default [
       'Twijfel je of iets een heel blad is of een blaadje? Kijk waar het aan de twijg vastzit. Aan de voet van een heel blad zit een knop, bij een blaadje van een samengesteld blad niet.',
     ],
     naar: [{ blad: 'bomen-determineren' }] },
-  { id: 'zomereik', naam: 'Zomereik', ook: ['eik', 'Quercus robur'], en: 'pedunculate oak', groep: 'bomen', bron: 'TKN §6.1',
+  { id: 'zomereik', naam: 'Zomereik', ook: ['eik', 'Quercus robur'], en: 'pedunculate oak', groep: 'bomen', bron: 'TKN §6.1', ken: true,
     plaatje: 'eiken',
     uitleg: [
       'De meest voorkomende eik van Nederland. Het blad is gelobd, met ronde lobben. Het heeft bijna geen steel, en aan de voet zitten twee kleine oortjes.',
@@ -54,21 +54,21 @@ export default [
       'Op eikenbladeren zie je vaak galappels: ronde balletjes die een galwesp op het blad heeft laten groeien.',
     ],
     naar: [{ blad: 'wintereik' }, { blad: 'amerikaanse-eik' }, { blad: 'eikenprocessierups' }] },
-  { id: 'wintereik', naam: 'Wintereik', ook: ['Quercus petraea'], en: 'sessile oak', groep: 'bomen', bron: 'TKN §6.1',
+  { id: 'wintereik', naam: 'Wintereik', ook: ['Quercus petraea'], en: 'sessile oak', groep: 'bomen', bron: 'TKN §6.1', ken: true,
     plaatje: 'eiken',
     uitleg: [
       'Andersom dan de zomereik: de bladeren hebben een duidelijke steel en geen oortjes, de eikels zitten zonder steel op de tak, in groepjes.',
       'De wintereik staat vooral op droge zandgrond. Zomer- en wintereik kunnen samen kruisingen vormen, en die zitten er tussenin.',
     ],
     naar: [{ blad: 'zomereik' }] },
-  { id: 'amerikaanse-eik', naam: 'Amerikaanse eik', ook: ['rode eik', 'Quercus rubra'], en: 'red oak', groep: 'bomen', bron: 'TKN §6.1',
+  { id: 'amerikaanse-eik', naam: 'Amerikaanse eik', ook: ['rode eik', 'Quercus rubra'], en: 'red oak', groep: 'bomen', bron: 'TKN §6.1', ken: true,
     plaatje: 'boom-amerikaanse-eik',
     uitleg: [
       'Een eik uit Noord-Amerika die hier veel is aangeplant. Het blad is groot, tot ruim 20 cm, met lobben die uitlopen in een spitse punt. Bij de zomer- en wintereik zijn de lobben rond.',
       'In de herfst kleurt het blad rood tot roodbruin. De eikels zijn kort en dik, in een plat napje.',
     ],
     naar: [{ blad: 'zomereik' }] },
-  { id: 'beuk', naam: 'Beuk', ook: ['gewone beuk', 'beukennootjes', 'Fagus sylvatica'], en: 'beech', groep: 'bomen', bron: 'TKN §6.1',
+  { id: 'beuk', naam: 'Beuk', ook: ['gewone beuk', 'beukennootjes', 'Fagus sylvatica'], en: 'beech', groep: 'bomen', bron: 'TKN §6.1', ken: true,
     plaatje: 'boom-beuk',
     uitleg: [
       'Een grote boom met een gladde, zilvergrijze stam, ook als hij oud is.',
@@ -76,7 +76,7 @@ export default [
       'De vruchten zijn driekantige nootjes, de beukennootjes. Ze zitten met twee in een houtig napje met zachte stekels.',
     ],
     naar: [{ blad: 'haagbeuk' }] },
-  { id: 'ruwe-berk', naam: 'Ruwe berk', ook: ['berk', 'witte berk', 'Betula pendula'], en: 'silver birch', groep: 'bomen', bron: 'TKN §6.1',
+  { id: 'ruwe-berk', naam: 'Ruwe berk', ook: ['berk', 'witte berk', 'Betula pendula'], en: 'silver birch', groep: 'bomen', bron: 'TKN §6.1', ken: true,
     plaatje: 'boom-ruwe-berk',
     uitleg: [
       'De witte stam herken je van ver. Onderaan wordt de schors ruw en zwart, met diepe barsten.',
@@ -84,14 +84,14 @@ export default [
       'In het voorjaar hangen er lange katjes aan. Berken groeien snel en staan vaak als eerste op heide en open zand.',
     ],
     naar: [{ blad: 'zachte-berk' }] },
-  { id: 'zachte-berk', naam: 'Zachte berk', ook: ['Betula pubescens'], en: 'downy birch', groep: 'bomen', bron: 'TKN §6.1',
+  { id: 'zachte-berk', naam: 'Zachte berk', ook: ['Betula pubescens'], en: 'downy birch', groep: 'bomen', bron: 'TKN §6.1', ken: true,
     plaatje: 'boom-zachte-berk',
     uitleg: [
       'Lijkt veel op de ruwe berk, ook met een witte stam. Het verschil zit in de twijgen: die zijn fijn behaard en voelen zacht, zonder wratjes. Ze hangen niet, maar steken schuin omhoog.',
       'Het blad is eironder en minder spits. De zachte berk staat graag op natte grond, zoals in het veen.',
     ],
     naar: [{ blad: 'ruwe-berk' }] },
-  { id: 'grove-den', naam: 'Grove den', ook: ['den', 'dennenboom', 'dennenappel', 'Pinus sylvestris'], en: 'Scots pine', groep: 'bomen', bron: 'TKN §6.1',
+  { id: 'grove-den', naam: 'Grove den', ook: ['den', 'dennenboom', 'dennenappel', 'Pinus sylvestris'], en: 'Scots pine', groep: 'bomen', bron: 'TKN §6.1', ken: true,
     plaatje: 'boom-grove-den',
     uitleg: [
       'De naalden zitten altijd met twee bij elkaar, in een klein schedetje. Ze zijn 3 tot 7 cm lang, stijf, en vaak een beetje gedraaid.',
@@ -99,7 +99,7 @@ export default [
       'De kegels (dennenappels) zijn klein, 3 tot 7 cm.',
     ],
     naar: [{ blad: 'fijnspar' }, { blad: 'vraatsporen' }] },
-  { id: 'fijnspar', naam: 'Fijnspar', ook: ['spar', 'kerstboom', 'Picea abies'], en: 'Norway spruce', groep: 'bomen', bron: 'TKN §6.1',
+  { id: 'fijnspar', naam: 'Fijnspar', ook: ['spar', 'kerstboom', 'Picea abies'], en: 'Norway spruce', groep: 'bomen', bron: 'TKN §6.1', ken: true,
     plaatje: 'boom-fijnspar',
     uitleg: [
       'De naalden zitten los, één voor één, rondom de twijg. Ze zijn vierkant (rol er een tussen je vingers) en ze prikken.',
@@ -107,14 +107,14 @@ export default [
       'De kegels zijn lang, 10 tot 15 cm, en hangen naar beneden. De fijnspar is de klassieke kerstboom.',
     ],
     naar: [{ blad: 'douglasspar' }, { blad: 'grove-den' }] },
-  { id: 'lariks', naam: 'Lariks', ook: ['lork', 'Larix', 'Japanse lariks', 'Europese lariks'], en: 'larch', groep: 'bomen', bron: 'TKN §6.1',
+  { id: 'lariks', naam: 'Lariks', ook: ['lork', 'Larix', 'Japanse lariks', 'Europese lariks'], en: 'larch', groep: 'bomen', bron: 'TKN §6.1', ken: true,
     plaatje: 'boom-lariks',
     uitleg: [
       'Anders dan bijna alle naaldbomen is de lariks in de winter kaal: in de herfst worden de naalden goudgeel en vallen ze af.',
       'De zachte naalden zitten in bosjes van twintig tot veertig bij elkaar, op korte zijtakjes. Aan jonge twijgen zitten ze los.',
       'De kegels zijn klein en rond, staan rechtop op de takken en blijven lang hangen.',
     ] },
-  { id: 'douglasspar', naam: 'Douglasspar', ook: ['douglas', 'Pseudotsuga menziesii'], en: 'Douglas fir', groep: 'bomen', bron: 'TKN §6.1',
+  { id: 'douglasspar', naam: 'Douglasspar', ook: ['douglas', 'Pseudotsuga menziesii'], en: 'Douglas fir', groep: 'bomen', bron: 'TKN §6.1', ken: true,
     plaatje: 'boom-douglasspar',
     uitleg: [
       'Een hoge naaldboom uit Noord-Amerika, die veel in Nederlandse bossen staat. De naalden zijn zacht en prikken niet. Wrijf je ze fijn, dan ruiken ze naar citroen.',
@@ -122,7 +122,7 @@ export default [
       'Het zekerste kenmerk: de hangende kegels hebben tussen de schubben blaadjes met drie tandjes. Het lijkt alsof er muisjes in zijn gekropen, met alleen hun achterpootjes en staart naar buiten.',
     ],
     naar: [{ blad: 'fijnspar' }, { blad: 'taxus' }] },
-  { id: 'gewone-es', naam: 'Gewone es', ook: ['es', 'essentaksterfte', 'Fraxinus excelsior'], en: 'ash', groep: 'bomen', bron: 'TKN §6.1',
+  { id: 'gewone-es', naam: 'Gewone es', ook: ['es', 'essentaksterfte', 'Fraxinus excelsior'], en: 'ash', groep: 'bomen', bron: 'TKN §6.1', ken: true,
     plaatje: 'boom-gewone-es',
     uitleg: [
       'Het blad is geveerd: 7 tot 13 blaadjes aan één steel, tegenover elkaar, met één blaadje aan het eind.',
@@ -131,7 +131,7 @@ export default [
       'Veel essen zijn ziek door een schimmel, de essentaksterfte: de kroon wordt kaal en takken sterven af.',
     ],
     naar: [{ blad: 'lijsterbes' }, { blad: 'gewone-vlier' }] },
-  { id: 'gewone-esdoorn', naam: 'Gewone esdoorn', ook: ['esdoorn', 'ahorn', 'helikoptertjes', 'Acer pseudoplatanus'], en: 'sycamore', groep: 'bomen', bron: 'TKN §6.1',
+  { id: 'gewone-esdoorn', naam: 'Gewone esdoorn', ook: ['esdoorn', 'ahorn', 'helikoptertjes', 'Acer pseudoplatanus'], en: 'sycamore', groep: 'bomen', bron: 'TKN §6.1', ken: true,
     plaatje: 'boom-gewone-esdoorn',
     uitleg: [
       'Het blad is handvormig met vijf lobben en een grof, onregelmatig gekartelde rand. Het is vrij dik, de onderkant is lichter. De bladeren zitten tegenover elkaar.',
@@ -139,7 +139,7 @@ export default [
       'Hij lijkt op de plataan, maar die heeft bladeren om en om en een stam die afbladdert.',
     ],
     naar: [{ blad: 'noorse-esdoorn' }, { blad: 'plataan' }] },
-  { id: 'noorse-esdoorn', naam: 'Noorse esdoorn', ook: ['Acer platanoides'], en: 'Norway maple', groep: 'bomen', bron: 'TKN §6.1',
+  { id: 'noorse-esdoorn', naam: 'Noorse esdoorn', ook: ['Acer platanoides'], en: 'Norway maple', groep: 'bomen', bron: 'TKN §6.1', ken: true,
     plaatje: 'boom-noorse-esdoorn',
     uitleg: [
       'Lijkt op de gewone esdoorn, maar het blad is dunner en de lobben lopen uit in lange, spitse punten. Tussen de lobben zitten ronde bochten.',
@@ -147,7 +147,7 @@ export default [
       'De vleugels van de zaadjes staan bijna in een rechte lijn uit elkaar.',
     ],
     naar: [{ blad: 'gewone-esdoorn' }] },
-  { id: 'plataan', naam: 'Plataan', ook: ['Londense plataan', 'Platanus × hispanica'], en: 'London plane', groep: 'bomen', bron: 'TKN §6.1',
+  { id: 'plataan', naam: 'Plataan', ook: ['Londense plataan', 'Platanus × hispanica'], en: 'London plane', groep: 'bomen', bron: 'TKN §6.1', ken: true,
     plaatje: 'boom-plataan',
     uitleg: [
       'Een grote boom langs straten en op pleinen. De schors bladdert af in grote stukken, zodat de stam eruitziet als een puzzel of een camouflagepak: grijs, groen en geelwit.',
@@ -155,14 +155,14 @@ export default [
       'De vruchten zijn stekelige bolletjes aan een lange steel. Ze blijven de hele winter hangen.',
     ],
     naar: [{ blad: 'gewone-esdoorn' }] },
-  { id: 'linde', naam: 'Linde', ook: ['lindeboom', 'winterlinde', 'zomerlinde', 'Tilia'], en: 'lime, linden', groep: 'bomen', bron: 'TKN §6.1',
+  { id: 'linde', naam: 'Linde', ook: ['lindeboom', 'winterlinde', 'zomerlinde', 'Tilia'], en: 'lime, linden', groep: 'bomen', bron: 'TKN §6.1', ken: true,
     plaatje: 'boom-linde',
     uitleg: [
       'Het blad is hartvormig met een scheve voet: de ene helft begint lager aan de steel dan de andere. De rand is fijn gezaagd.',
       'De vruchtjes zijn kleine bolletjes aan een lang, smal blaadje dat als een vleugel werkt, het schutblad. In juni of juli bloeit de linde met geurige, lichtgele bloemetjes waar veel bijen op afkomen.',
       'In de zomer drupt er vaak kleverig spul uit lindes. Dat komt van bladluizen.',
     ] },
-  { id: 'schietwilg', naam: 'Schietwilg en knotwilg', ook: ['wilg', 'knotwilg', 'witte wilg', 'Salix alba'], en: 'white willow', groep: 'bomen', bron: 'TKN §6.1',
+  { id: 'schietwilg', naam: 'Schietwilg en knotwilg', ook: ['wilg', 'knotwilg', 'witte wilg', 'Salix alba'], en: 'white willow', groep: 'bomen', bron: 'TKN §6.1', ken: true,
     plaatje: 'boom-schietwilg',
     uitleg: [
       'De schietwilg staat langs sloten, rivieren en natte weilanden. Het blad is lang en smal, fijn gezaagd, en aan de onderkant zilverig door fijne haartjes. Van een afstand ziet de boom er grijsgroen uit.',
@@ -170,21 +170,21 @@ export default [
       'In het voorjaar bloeien wilgen met katjes.',
     ],
     naar: [{ blad: 'mand-vlechten' }, { blad: 'vlechtwerk-met-leem' }] },
-  { id: 'populier', naam: 'Populier', ook: ['Canadese populier', 'ratelpopulier', 'esp', 'Populus'], en: 'poplar', groep: 'bomen', bron: 'TKN §6.1',
+  { id: 'populier', naam: 'Populier', ook: ['Canadese populier', 'ratelpopulier', 'esp', 'Populus'], en: 'poplar', groep: 'bomen', bron: 'TKN §6.1', ken: true,
     plaatje: 'boom-populier',
     uitleg: [
       'Een snelgroeiende, hoge boom, vaak in rijen langs wegen en weilanden. Er zijn veel soorten en kruisingen.',
       'Het blad van de meeste populieren is driehoekig tot ruitvormig, aan een lange, platte steel. Daardoor draait het blad bij het minste briesje en ritselt de hele boom.',
       'In mei en juni laten vrouwelijke bomen zaadjes los met wit pluis, als sneeuw.',
     ] },
-  { id: 'zwarte-els', naam: 'Zwarte els', ook: ['els', 'elzenproppen', 'Alnus glutinosa'], en: 'black alder', groep: 'bomen', bron: 'TKN §6.1',
+  { id: 'zwarte-els', naam: 'Zwarte els', ook: ['els', 'elzenproppen', 'Alnus glutinosa'], en: 'black alder', groep: 'bomen', bron: 'TKN §6.1', ken: true,
     plaatje: 'boom-zwarte-els',
     uitleg: [
       'Een boom van natte plekken: langs beken en sloten, en in moerasbos.',
       'Het blad is bijna rond. De top is niet spits, maar afgeplat of zelfs een beetje ingedeukt. Jonge bladeren zijn kleverig.',
       'De vruchtjes zien eruit als kleine houten dennenappeltjes van 1 tot 2 cm, de elzenproppen. Ze blijven de hele winter aan de boom, samen met de katjes voor het volgende voorjaar.',
     ] },
-  { id: 'haagbeuk', naam: 'Haagbeuk', ook: ['Carpinus betulus'], en: 'hornbeam', groep: 'bomen', bron: 'TKN §6.1',
+  { id: 'haagbeuk', naam: 'Haagbeuk', ook: ['Carpinus betulus'], en: 'hornbeam', groep: 'bomen', bron: 'TKN §6.1', ken: true,
     plaatje: 'boom-haagbeuk',
     uitleg: [
       'Lijkt op de beuk, maar het is een heel andere boom. Het blad is dubbel gezaagd en geplooid langs de nerven, als een harmonica. Bij de beuk is de rand glad.',
@@ -192,7 +192,7 @@ export default [
       'De nootjes hangen in trossen, elk aan een groen blaadje met drie slippen. Haagbeuk wordt veel gebruikt voor hagen.',
     ],
     naar: [{ blad: 'beuk' }] },
-  { id: 'paardenkastanje', naam: 'Paardenkastanje', ook: ['kastanje', 'wilde kastanje', 'Aesculus hippocastanum'], en: 'horse chestnut', groep: 'bomen', bron: 'TKN §6.1',
+  { id: 'paardenkastanje', naam: 'Paardenkastanje', ook: ['kastanje', 'wilde kastanje', 'Aesculus hippocastanum'], en: 'horse chestnut', groep: 'bomen', bron: 'TKN §6.1', ken: true,
     plaatje: 'boom-paardenkastanje',
     uitleg: [
       'Het blad is handvormig samengesteld: vijf tot zeven grote blaadjes uit één punt, aan een lange steel.',
@@ -201,7 +201,7 @@ export default [
     ],
     letOp: 'Paardenkastanjes zijn niet eetbaar. De kastanjes die je poft, komen van de tamme kastanje.',
     naar: [{ blad: 'tamme-kastanje' }] },
-  { id: 'tamme-kastanje', naam: 'Tamme kastanje', ook: ['eetbare kastanje', 'Castanea sativa'], en: 'sweet chestnut', groep: 'bomen', bron: 'TKN §6.1',
+  { id: 'tamme-kastanje', naam: 'Tamme kastanje', ook: ['eetbare kastanje', 'Castanea sativa'], en: 'sweet chestnut', groep: 'bomen', bron: 'TKN §6.1', ken: true,
     plaatje: 'boom-tamme-kastanje',
     uitleg: [
       'Het blad is lang en smal, wel 20 cm, met een rand van scherpe tanden die elk in een puntje uitlopen.',
@@ -210,7 +210,7 @@ export default [
     ],
     letOp: 'Twijfel je of het een tamme of een paardenkastanje is? Dan niet eten. En raap alleen waar dat mag.',
     naar: [{ blad: 'paardenkastanje' }, { blad: 'eetbare-planten' }] },
-  { id: 'lijsterbes', naam: 'Lijsterbes', ook: ['wilde lijsterbes', 'Sorbus aucuparia'], en: 'rowan', groep: 'bomen', bron: 'TKN §6.1',
+  { id: 'lijsterbes', naam: 'Lijsterbes', ook: ['wilde lijsterbes', 'Sorbus aucuparia'], en: 'rowan', groep: 'bomen', bron: 'TKN §6.1', ken: true,
     plaatje: 'boom-lijsterbes',
     uitleg: [
       'Een kleine boom met een geveerd blad van 9 tot 15 smalle, gezaagde blaadjes. Anders dan bij de es en de vlier zitten de bladeren om en om aan de twijg.',
@@ -218,7 +218,7 @@ export default [
     ],
     letOp: 'Eet de bessen niet. Rauw word je er ziek van.',
     naar: [{ blad: 'gewone-es' }] },
-  { id: 'hulst', naam: 'Hulst', ook: ['hulstboom', 'Ilex aquifolium'], en: 'holly', groep: 'bomen', bron: 'TKN §6.1',
+  { id: 'hulst', naam: 'Hulst', ook: ['hulstboom', 'Ilex aquifolium'], en: 'holly', groep: 'bomen', bron: 'TKN §6.1', ken: true,
     plaatje: 'boom-hulst',
     uitleg: [
       'Een struik of kleine boom die de hele winter groen blijft. De bladeren zijn dik, glanzend donkergroen, met stekels aan de rand. Hoog in een oude hulst hebben de bladeren vaak geen stekels.',
@@ -226,7 +226,7 @@ export default [
     ],
     letOp: 'De rode bessen zijn giftig. Niet eten, ook niet een paar.',
     naar: [{ blad: 'giftige-planten' }] },
-  { id: 'taxus', naam: 'Taxus', ook: ['venijnboom', 'Taxus baccata'], en: 'yew', groep: 'bomen', bron: 'TKN §6.1',
+  { id: 'taxus', naam: 'Taxus', ook: ['venijnboom', 'Taxus baccata'], en: 'yew', groep: 'bomen', bron: 'TKN §6.1', ken: true,
     plaatje: 'boom-taxus',
     uitleg: [
       'Een donkergroene naaldboom of struik, vaak als haag in tuinen en parken. De naalden zijn plat en zacht, 1 tot 3 cm, donkergroen aan de bovenkant en lichter groen aan de onderkant, in twee rijen langs de twijg.',
@@ -235,7 +235,7 @@ export default [
     ],
     letOp: 'Bijna alles aan de taxus is giftig: de naalden, de schors, en vooral het zaad in het rode bekertje. Alleen het rode vruchtvlees zelf niet, maar eet het nooit: je slikt het zaad zo mee.',
     naar: [{ blad: 'giftige-planten' }, { blad: 'douglasspar' }] },
-  { id: 'gewone-vlier', naam: 'Gewone vlier', ook: ['vlier', 'vlierbes', 'vlierbloesem', 'Sambucus nigra'], en: 'elder', groep: 'bomen', bron: 'TKN §6.1, §6.2',
+  { id: 'gewone-vlier', naam: 'Gewone vlier', ook: ['vlier', 'vlierbes', 'vlierbloesem', 'Sambucus nigra'], en: 'elder', groep: 'bomen', bron: 'TKN §6.1, §6.2', ken: true,
     plaatje: 'boom-gewone-vlier',
     uitleg: [
       'Een grote struik of kleine boom van bosranden en heggen. Het blad is geveerd, met vijf of zeven blaadjes tegenover elkaar. Gekneusd ruikt het sterk en niet lekker.',
@@ -246,7 +246,7 @@ export default [
     naar: [{ blad: 'eetbare-planten' }, { blad: 'gevlekte-scheerling' }] },
 
   // Planten
-  { id: 'eetbare-planten', naam: 'Eetbare wilde planten', ook: ['wildplukken', 'eetbaar', 'plukken', 'paardenbloem', 'weegbree', 'braam', 'bosbes', 'look-zonder-look', 'veldzuring', 'hondsdraf'], en: 'wild edible plants', groep: 'planten', bron: 'TKN §6.2, SBB',
+  { id: 'eetbare-planten', naam: 'Eetbare wilde planten', ook: ['wildplukken', 'eetbaar', 'plukken', 'paardenbloem', 'weegbree', 'braam', 'bosbes', 'look-zonder-look', 'veldzuring', 'hondsdraf'], en: 'wild edible plants', groep: 'planten', bron: 'TKN §6.2, SBB', ken: true,
     waarvoor: 'Weten welke wilde planten je kunt eten, en vooral wanneer je ze moet laten staan.',
     uitleg: [
       'De regel: eet nooit iets wat je niet honderd procent zeker kent. Veel eetbare planten hebben een giftige dubbelganger die er bijna net zo uitziet. Leer een plant dus van iemand die hem echt kent, en altijd met de dubbelganger ernaast.',
@@ -267,7 +267,7 @@ export default [
     ] },
     letOp: 'Twijfel? Niet eten. Heeft iemand toch iets giftigs gegeten: bel 112 als iemand benauwd of suf wordt of niet meer reageert, en anders meteen de huisarts. Neem de plant of een foto mee.',
     naar: [{ blad: 'brandnetel' }, { blad: 'daslook' }, { blad: 'giftige-planten' }, { blad: 'gewone-vlier' }] },
-  { id: 'brandnetel', naam: 'Grote brandnetel', ook: ['brandnetel', 'netel', 'brandharen', 'Urtica dioica'], en: 'stinging nettle', groep: 'planten', bron: 'TKN §6.2',
+  { id: 'brandnetel', naam: 'Grote brandnetel', ook: ['brandnetel', 'netel', 'brandharen', 'Urtica dioica'], en: 'stinging nettle', groep: 'planten', bron: 'TKN §6.2', ken: true,
     plaatje: 'plant-brandnetel',
     uitleg: [
       'De grote brandnetel wordt een halve tot anderhalve meter hoog. Hij groeit op grond met veel voedsel erin: langs paden, bij boerderijen en op ruige, verwilderde plekken. De bladeren hebben tandjes en een spitse punt. Ze zitten steeds met twee tegenover elkaar.',
@@ -277,7 +277,7 @@ export default [
     ],
     letOp: 'Een prik van een brandnetel is vervelend, maar gaat vanzelf over. Niet krabben.',
     naar: [{ blad: 'touw-van-brandnetel' }, { blad: 'eetbare-planten' }, { blad: 'prikken-en-steken' }] },
-  { id: 'daslook', naam: 'Daslook en zijn dubbelgangers', ook: ['daslook', 'wilde knoflook', 'lelietje-van-dalen', 'herfsttijloos', 'Allium ursinum'], en: 'wild garlic', groep: 'planten', bron: 'TKN §6.2',
+  { id: 'daslook', naam: 'Daslook en zijn dubbelgangers', ook: ['daslook', 'wilde knoflook', 'lelietje-van-dalen', 'herfsttijloos', 'Allium ursinum'], en: 'wild garlic', groep: 'planten', bron: 'TKN §6.2', ken: true,
     plaatje: 'daslook-dubbelgangers',
     uitleg: [
       'Daslook groeit in het voorjaar, van maart tot mei, in vochtige loofbossen, vaak als een groen tapijt. Het ruikt sterk naar knoflook en wordt veel geplukt.',
@@ -289,7 +289,7 @@ export default [
     ],
     letOp: 'Pluk daslook alleen samen met iemand die het zeker kent, en alleen waar plukken mag.',
     naar: [{ blad: 'eetbare-planten' }, { blad: 'giftige-planten' }] },
-  { id: 'giftige-planten', naam: 'Giftige planten', ook: ['giftig', 'vingerhoedskruid', 'gevlekte aronskelk', 'lelietje-van-dalen', 'herfsttijloos', 'wolfsmelk', 'bitterzoet', 'zwarte nachtschade', 'gele lis', 'monnikskap', 'goudenregen'], en: 'poisonous plants', groep: 'planten', bron: 'TKN §6.2, NREH26',
+  { id: 'giftige-planten', naam: 'Giftige planten', ook: ['giftig', 'vingerhoedskruid', 'gevlekte aronskelk', 'lelietje-van-dalen', 'herfsttijloos', 'wolfsmelk', 'bitterzoet', 'zwarte nachtschade', 'gele lis', 'monnikskap', 'goudenregen'], en: 'poisonous plants', groep: 'planten', bron: 'TKN §6.2, NREH26', ken: true,
     plaatje: 'giftige-planten',
     uitleg: 'Sommige planten zijn giftig als je ervan eet, andere al als je ze aanraakt. Deze moet je kennen:',
     tabel: { kop: ['Plant', 'Herken je aan', 'Gevaar'], rijen: [
@@ -310,7 +310,7 @@ export default [
     ] },
     letOp: 'Heeft iemand van een giftige plant gegeten? Bel 112 als iemand benauwd of suf wordt of niet meer reageert. Anders meteen de huisarts. Neem de plant of een foto mee.',
     naar: [{ blad: 'reuzenberenklauw' }, { blad: 'gevlekte-scheerling' }, { blad: 'daslook' }, { blad: 'taxus' }, { blad: 'hulst' }] },
-  { id: 'reuzenberenklauw', naam: 'Reuzenberenklauw', ook: ['berenklauw', 'Heracleum mantegazzianum'], en: 'giant hogweed', groep: 'planten', bron: 'TKN §6.2, FLEV, NREH26',
+  { id: 'reuzenberenklauw', naam: 'Reuzenberenklauw', ook: ['berenklauw', 'Heracleum mantegazzianum'], en: 'giant hogweed', groep: 'planten', bron: 'TKN §6.2, FLEV, NREH26', ken: true,
     plaatje: 'plant-berenklauw',
     uitleg: [
       'Een enorme plant. Zijn witte bloemetjes staan samen in een plat scherm, als een paraplu: een schermbloem. Hij komt uit de Kaukasus, een gebied tussen Europa en Azië. Hier verspreidt hij zich snel langs water, wegen en bosranden.',
@@ -320,7 +320,7 @@ export default [
     ],
     letOp: 'Raak hem niet aan. Hak hem niet door, en loop er niet doorheen. Gebruik de holle stengels niet als toeter of kijker. Toch sap op je huid? Was het zo snel mogelijk af met water en zeep. Houd de plek uit de zon. Krijg je blaren? Bel dan de huisarts.',
     naar: [{ blad: 'prikken-en-steken' }, { blad: 'giftige-planten' }] },
-  { id: 'gevlekte-scheerling', naam: 'Gevlekte scheerling', ook: ['scheerling', 'Conium maculatum'], en: 'poison hemlock', groep: 'planten', bron: 'TKN §6.2, NREH26',
+  { id: 'gevlekte-scheerling', naam: 'Gevlekte scheerling', ook: ['scheerling', 'Conium maculatum'], en: 'poison hemlock', groep: 'planten', bron: 'TKN §6.2, NREH26', ken: true,
     plaatje: 'scheerling-vergelijk',
     uitleg: [
       'Een hoge schermbloem, tot 2 meter, met witte bloemschermen en fijn verdeelde bladeren, een beetje als peterselie of fluitenkruid.',
@@ -344,7 +344,7 @@ export default [
     naar: [{ blad: 'bomen-herkennen' }] },
 
   // Dieren en sporen
-  { id: 'pootafdrukken', naam: 'Pootafdrukken (prenten)', ook: ['prent', 'prenten', 'sporen', 'pootafdruk', 'loopspoor', 'dierensporen', 'spoorzoeken'], en: 'animal tracks', groep: 'dieren', bron: 'TKN §6.3, IVN-DEV, NAT-DWB, NAT-ZV',
+  { id: 'pootafdrukken', naam: 'Pootafdrukken (prenten)', ook: ['prent', 'prenten', 'sporen', 'pootafdruk', 'loopspoor', 'dierensporen', 'spoorzoeken'], en: 'animal tracks', groep: 'dieren', bron: 'TKN §6.3, IVN-DEV, NAT-DWB, NAT-ZV', ken: true,
     plaatje: 'prenten', doe: 'prentenquiz',
     uitleg: [
       'Een pootafdruk heet een prent. Je vindt prenten het best in modder, nat zand en verse sneeuw. Zoek langs plassen, op zandpaden en bij een hek of een gat in de heg.',
@@ -356,7 +356,7 @@ export default [
       '- Het patroon. Hoe liggen de prenten achter elkaar? Daaraan zie je of het dier liep, draafde of sprong.',
     ],
     naar: [{ blad: 'sporen-lezen' }, { blad: 'vos' }, { blad: 'haas-en-konijn' }, { blad: 'ree' }, { blad: 'vraatsporen' }, { blad: 'uitwerpselen' }, { blad: 'gipsafdruk' }] },
-  { id: 'vos', naam: 'Vos', ook: ['vossenspoor', 'vossenprent', 'vossenburcht', 'Vulpes vulpes'], en: 'red fox', groep: 'dieren', bron: 'TKN §6.3, IVN-DEV, NAT-DWB',
+  { id: 'vos', naam: 'Vos', ook: ['vossenspoor', 'vossenprent', 'vossenburcht', 'Vulpes vulpes'], en: 'red fox', groep: 'dieren', bron: 'TKN §6.3, IVN-DEV, NAT-DWB', ken: true,
     plaatje: 'prent-vos',
     uitleg: [
       'De prent is ongeveer 5 cm lang en 4,5 cm breed: vier tenen met scherpe nagels, en een klein voetkussen. De vorm is smal, als een druppel.',
@@ -365,7 +365,7 @@ export default [
       'Andere sporen: een grijze of zwarte drol met een gedraaid puntje, vaak met haren en botjes erin, op een opvallende plek: midden op het pad of op een boomstronk. Een vossenhol heeft weinig ingangen en stinkt, met soms resten van prooien ervoor.',
     ],
     naar: [{ blad: 'wolf' }, { blad: 'pootafdrukken' }] },
-  { id: 'das', naam: 'Das', ook: ['dassenburcht', 'dassenspoor', 'latrine', 'Meles meles'], en: 'badger', groep: 'dieren', bron: 'TKN §6.3, IVN-DEV, NAT-DWB',
+  { id: 'das', naam: 'Das', ook: ['dassenburcht', 'dassenspoor', 'latrine', 'Meles meles'], en: 'badger', groep: 'dieren', bron: 'TKN §6.3, IVN-DEV, NAT-DWB', ken: true,
     plaatje: 'prent-das',
     uitleg: [
       'De prent lijkt op een kleine berenpoot: vijf tenen in een boogje boven een breed voetkussen, met lange, duidelijke nagels. Ongeveer 5 cm lang en 5 tot 5,5 cm breed.',
@@ -375,7 +375,7 @@ export default [
     ],
     letOp: 'Een dassenburcht is beschermd. Verstoor hem niet: niet in graven, niet eromheen spelen.',
     naar: [{ blad: 'wild-zwijn' }, { blad: 'pootafdrukken' }] },
-  { id: 'ree', naam: 'Ree', ook: ['reebok', 'reegeit', 'hoefprent', 'Capreolus capreolus'], en: 'roe deer', groep: 'dieren', bron: 'TKN §6.3, IVN-DEV, NAT-ZV',
+  { id: 'ree', naam: 'Ree', ook: ['reebok', 'reegeit', 'hoefprent', 'Capreolus capreolus'], en: 'roe deer', groep: 'dieren', bron: 'TKN §6.3, IVN-DEV, NAT-ZV', ken: true,
     plaatje: 'prent-hoeven',
     uitleg: [
       'De prent bestaat uit twee smalle, spitse hoefhelften, samen tot ongeveer 4,5 cm lang. Bij rennen spreiden de helften, en soms drukken dan de bijhoeven af als twee puntjes erachter.',
@@ -383,7 +383,7 @@ export default [
       'Andere sporen: donkere keutels van ongeveer 1 cm, met een puntje aan één kant, in groepjes. Een leger: een ondiepe kuil in het blad waar een ree heeft gelegen. In het voorjaar schuurt de bok zijn gewei tegen jonge boompjes, en dan is de schors kapot.',
     ],
     naar: [{ blad: 'edelhert' }, { blad: 'wild-zwijn' }] },
-  { id: 'edelhert', naam: 'Edelhert', ook: ['hert', 'burlen', 'Cervus elaphus'], en: 'red deer', groep: 'dieren', bron: 'TKN §6.3, NAT-ZV',
+  { id: 'edelhert', naam: 'Edelhert', ook: ['hert', 'burlen', 'Cervus elaphus'], en: 'red deer', groep: 'dieren', bron: 'TKN §6.3, NAT-ZV', ken: true,
     plaatje: 'prent-hoeven',
     uitleg: [
       'Een van de grootste wilde dieren van Nederland, vooral op de Veluwe en in de Oostvaardersplassen. Het mannetje heeft een groot gewei.',
@@ -392,7 +392,7 @@ export default [
       'In september en oktober kun je de mannetjes horen burlen: een diep, brullend geluid.',
     ],
     naar: [{ blad: 'ree' }] },
-  { id: 'wild-zwijn', naam: 'Wild zwijn', ook: ['everzwijn', 'zwijn', 'frisling', 'Sus scrofa'], en: 'wild boar', groep: 'dieren', bron: 'TKN §6.3, NAT-ZV',
+  { id: 'wild-zwijn', naam: 'Wild zwijn', ook: ['everzwijn', 'zwijn', 'frisling', 'Sus scrofa'], en: 'wild boar', groep: 'dieren', bron: 'TKN §6.3, NAT-ZV', ken: true,
     plaatje: 'prent-hoeven',
     uitleg: [
       'De prent is breed, tot ongeveer 12 cm lang met de bijhoeven. Die bijhoeven drukken bijna altijd af, als twee puntjes achter de hoef, en staan breder dan de hoef zelf. Bij een ree of hert is dat niet zo.',
@@ -401,7 +401,7 @@ export default [
     ],
     letOp: 'Zie je zwijnen, en zeker een zeug met gestreepte biggen: blijf rustig, ga niet naar de biggen toe, laat de dieren een uitweg en loop rustig terug. Blazen is een waarschuwing. Voer ze nooit.',
     naar: [{ blad: 'wilde-dieren-onderweg' }, { blad: 'ree' }, { blad: 'das' }] },
-  { id: 'haas-en-konijn', naam: 'Haas en konijn', ook: ['haas', 'konijn', 'hazenspoor', 'konijnenkeutels', 'leger', 'Lepus europaeus', 'Oryctolagus cuniculus'], en: 'hare, rabbit', groep: 'dieren', bron: 'TKN §6.3, IVN-DEV',
+  { id: 'haas-en-konijn', naam: 'Haas en konijn', ook: ['haas', 'konijn', 'hazenspoor', 'konijnenkeutels', 'leger', 'Lepus europaeus', 'Oryctolagus cuniculus'], en: 'hare, rabbit', groep: 'dieren', bron: 'TKN §6.3, IVN-DEV', ken: true,
     plaatje: 'prent-haas',
     uitleg: [
       'Hazen en konijnen huppen. Daarbij komen de lange achterpoten vóór de korte voorpoten neer. Je ziet steeds een groepje van vier: twee kleine prenten achter elkaar, en daarvoor twee lange naast elkaar. Het dier ging de kant op van de twee lange.',
@@ -410,7 +410,7 @@ export default [
       'Wonen: konijnen graven holen met meerdere ingangen. Een haas graaft niet: hij ligt in een leger, een ondiepe kuil in het gras of op de akker.',
     ],
     naar: [{ blad: 'pootafdrukken' }, { blad: 'uitwerpselen' }] },
-  { id: 'eekhoorn', naam: 'Eekhoorn', ook: ['rode eekhoorn', 'eekhoornspoor', 'Sciurus vulgaris'], en: 'red squirrel', groep: 'dieren', bron: 'TKN §6.3, IVN-DEV',
+  { id: 'eekhoorn', naam: 'Eekhoorn', ook: ['rode eekhoorn', 'eekhoornspoor', 'Sciurus vulgaris'], en: 'red squirrel', groep: 'dieren', bron: 'TKN §6.3, IVN-DEV', ken: true,
     plaatje: 'prent-eekhoorn',
     uitleg: [
       'Een eekhoorn springt: voor- en achterpoten komen bijna tegelijk neer, zodat je groepjes van vier prenten ziet, met de grote achterpoten voor de kleine voorpoten. Achter vijf lange tenen, voor vier. Het spoor eindigt vaak bij een boom.',
@@ -419,7 +419,7 @@ export default [
       'Hoog in een boom maakt hij een bolvormig nest van takjes, mos en blad.',
     ],
     naar: [{ blad: 'vraatsporen' }] },
-  { id: 'egel', naam: 'Egel', ook: ['Erinaceus europaeus'], en: 'hedgehog', groep: 'dieren', bron: 'TKN §6.3',
+  { id: 'egel', naam: 'Egel', ook: ['Erinaceus europaeus'], en: 'hedgehog', groep: 'dieren', bron: 'TKN §6.3', ken: true,
     plaatje: 'prent-egel',
     uitleg: [
       'Een egel heeft vijf tenen aan elke poot; de prent lijkt op een klein handje.',
@@ -428,7 +428,7 @@ export default [
     ],
     letOp: 'Een stapel takken op het kampterrein kan een egel als slaapplek gebruiken. Bouw het kampvuur daarom pas op als je gaat stoken, of kijk eerst onder de stapel.',
     naar: [{ blad: 'pootafdrukken' }] },
-  { id: 'marter', naam: 'Boommarter en steenmarter', ook: ['marter', 'boommarter', 'steenmarter', 'Martes'], en: 'marten', groep: 'dieren', bron: 'TKN §6.3, IVN-DEV',
+  { id: 'marter', naam: 'Boommarter en steenmarter', ook: ['marter', 'boommarter', 'steenmarter', 'Martes'], en: 'marten', groep: 'dieren', bron: 'TKN §6.3, IVN-DEV', ken: true,
     plaatje: 'prent-marter',
     uitleg: [
       'Slanke roofdiertjes met een lange staart. De prent heeft vijf tenen met nagels; daaraan zie je dat hij niet van een kat is, want een kat trekt zijn nagels in.',
@@ -437,7 +437,7 @@ export default [
       'De boommarter woont in bossen en heeft een gele bef. De steenmarter komt ook bij huizen en schuren, en heeft een witte bef.',
     ],
     naar: [{ blad: 'pootafdrukken' }] },
-  { id: 'wolf', naam: 'Wolf', ook: ['wolvenspoor', 'wolvenprent', 'Canis lupus'], en: 'wolf', groep: 'dieren', bron: 'TKN §6.3, RO-W, NAT-LCF',
+  { id: 'wolf', naam: 'Wolf', ook: ['wolvenspoor', 'wolvenprent', 'Canis lupus'], en: 'wolf', groep: 'dieren', bron: 'TKN §6.3, RO-W, NAT-LCF', ken: true,
     plaatje: 'prent-wolf',
     uitleg: [
       'Er leven weer wolven in Nederland, onder meer op de Veluwe. Ze zijn schuw en gaan mensen meestal uit de weg.',
@@ -446,7 +446,7 @@ export default [
     letOp: 'Zie je een wolf: blijf kalm, houd ongeveer 100 meter afstand en laat hem doorlopen. Loop hem niet achterna en lok hem niet met eten. Komt hij te dichtbij: praat hard en maak gebaren. Ren of fiets niet hard weg, maar stop. Honden aan de lijn. Meld wat je zag bij het Wolvenmeldpunt van BIJ12.',
     verwijs: [{ naam: 'Rijksoverheid: wat moet ik doen als ik een wolf tegenkom?', url: 'https://www.rijksoverheid.nl/vraag-en-antwoord/natuur-en-biodiversiteit/wat-moet-ik-doen-als-ik-een-wolf-tegenkom' }, { naam: 'BIJ12: wolf', url: 'https://www.bij12.nl/onderwerpen/faunazaken/wolf/' }],
     naar: [{ blad: 'wilde-dieren-onderweg' }, { blad: 'vos' }] },
-  { id: 'vraatsporen', naam: 'Vraatsporen', ook: ['afgeknaagde kegel', 'dennenappel', 'smidse', 'hazelnoot', 'wie at deze dennenappel'], en: 'feeding signs', groep: 'dieren', bron: 'TKN §6.3, IVN-DEV',
+  { id: 'vraatsporen', naam: 'Vraatsporen', ook: ['afgeknaagde kegel', 'dennenappel', 'smidse', 'hazelnoot', 'wie at deze dennenappel'], en: 'feeding signs', groep: 'dieren', bron: 'TKN §6.3, IVN-DEV', ken: true,
     plaatje: 'vraatsporen',
     uitleg: [
       'Wat een dier heeft gegeten, blijft vaak langer liggen dan zijn prenten. Vooral dennen- en sparrenkegels en nootjes vertellen wie er was.',
@@ -459,7 +459,7 @@ export default [
     ],
     letOp: 'Het is niet altijd zo duidelijk: ook een eekhoorn knaagt een kegel soms vrij netjes af. Kijk naar meer kegels op dezelfde plek.',
     naar: [{ blad: 'eekhoorn' }, { blad: 'uitwerpselen' }, { blad: 'braakbal' }] },
-  { id: 'uitwerpselen', naam: 'Uitwerpselen', ook: ['keutels', 'drol', 'poep', 'latrine', 'mest'], en: 'droppings, scat', groep: 'dieren', bron: 'TKN §6.3, IVN-DEV, NAT-ZV',
+  { id: 'uitwerpselen', naam: 'Uitwerpselen', ook: ['keutels', 'drol', 'poep', 'latrine', 'mest'], en: 'droppings, scat', groep: 'dieren', bron: 'TKN §6.3, IVN-DEV, NAT-ZV', ken: true,
     plaatje: 'uitwerpselen',
     uitleg: 'Uitwerpselen vertellen welk dier er was en wat het at. Kijk naar de vorm, de maat, wat erin zit en waar ze liggen.',
     tabel: { kop: ['Dier', 'Hoe ziet het eruit', 'Waar'], rijen: [
@@ -475,7 +475,7 @@ export default [
     ] },
     letOp: 'Kijken mag, pakken niet: gebruik een stokje, en was daarna je handen.',
     naar: [{ blad: 'braakbal' }, { blad: 'vraatsporen' }] },
-  { id: 'braakbal', naam: 'Braakbal (uilenbal)', ook: ['uilenbal', 'braakballen pluizen', 'uil'], en: 'owl pellet', groep: 'dieren', bron: 'TKN §6.3',
+  { id: 'braakbal', naam: 'Braakbal (uilenbal)', ook: ['uilenbal', 'braakballen pluizen', 'uil'], en: 'owl pellet', groep: 'dieren', bron: 'TKN §6.3', ken: true,
     plaatje: 'braakbal',
     uitleg: [
       'Uilen slikken muizen en andere kleine dieren in één keer door. Wat ze niet kunnen verteren, haar en botjes, spugen ze later uit als een grijs balletje: een braakbal.',
@@ -498,7 +498,7 @@ export default [
     ],
     letOp: 'Gips wordt warm als het hard wordt. Gooi restjes niet in de gootsteen of in de natuur: laat ze hard worden en doe ze bij het restafval.',
     naar: [{ blad: 'pootafdrukken' }] },
-  { id: 'gedaanteverwisseling', naam: 'Van ei tot kikker of vlinder', ook: ['gedaanteverwisseling', 'metamorfose', 'levenscyclus', 'kikkerdril', 'kikkervisje', 'rups', 'pop'], en: 'metamorphosis',
+  { id: 'gedaanteverwisseling', naam: 'Van ei tot kikker of vlinder', ook: ['gedaanteverwisseling', 'metamorfose', 'levenscyclus', 'kikkerdril', 'kikkervisje', 'rups', 'pop'], en: 'metamorphosis', ken: true,
     groep: 'dieren', bron: 'WP-META, UU-VL, VS-KW', plaatje: 'levenscyclus',
     waarvoor: 'Sommige dieren zien er als jong heel anders uit dan als volwassen dier. Onderweg veranderen ze van gedaante: een gedaanteverwisseling, of metamorfose.',
     uitleg: [
@@ -519,7 +519,7 @@ export default [
     naar: [{ blad: 'biotoop' }, { blad: 'eikenprocessierups' }] },
 
   // Vogels
-  { id: 'vogels-herkennen', naam: 'Vogels herkennen', ook: ['vogels kijken', 'vogelen', 'silhouet', 'snavel'], en: 'birdwatching', groep: 'vogels', bron: 'TKN §6.4',
+  { id: 'vogels-herkennen', naam: 'Vogels herkennen', ook: ['vogels kijken', 'vogelen', 'silhouet', 'snavel'], en: 'birdwatching', groep: 'vogels', bron: 'TKN §6.4', ken: true,
     plaatje: 'vogels-kijken',
     uitleg: [
       'Een vogel is vaak snel weg. Kijk daarom eerst goed, en zoek het pas daarna op. Let op:',
@@ -532,7 +532,7 @@ export default [
     ],
     verwijs: [{ naam: 'Vogelbescherming: vogelgids', url: 'https://www.vogelbescherming.nl/ontdek-vogels/kennis-over-vogels/vogelgids' }, WAARNEMING],
     naar: [{ blad: 'tuinvogels' }, { blad: 'vogelgeluiden' }] },
-  { id: 'tuinvogels', naam: 'Tuinvogels', ook: ['Tuinvogeltelling', 'koolmees', 'huismus', 'pimpelmees', 'merel', 'vink', 'kauw', 'houtduif', 'spreeuw', 'ekster', 'roodborst', 'Turkse tortel', 'zwarte kraai', 'Vlaamse gaai', 'winterkoning', 'grote bonte specht', 'boomklever', 'tjiftjaf', 'zanglijster', 'buizerd', 'heggenmus', 'halsbandparkiet'], en: 'garden birds', groep: 'vogels', bron: 'TKN §6.4, VBN-T',
+  { id: 'tuinvogels', naam: 'Tuinvogels', ook: ['Tuinvogeltelling', 'koolmees', 'huismus', 'pimpelmees', 'merel', 'vink', 'kauw', 'houtduif', 'spreeuw', 'ekster', 'roodborst', 'Turkse tortel', 'zwarte kraai', 'Vlaamse gaai', 'winterkoning', 'grote bonte specht', 'boomklever', 'tjiftjaf', 'zanglijster', 'buizerd', 'heggenmus', 'halsbandparkiet'], en: 'garden birds', groep: 'vogels', bron: 'TKN §6.4, VBN-T', ken: true,
     plaatje: 'tuinvogels', doe: 'vogelquiz',
     uitleg: [
       'Bij de Nationale Tuinvogeltelling tellen mensen een half uur lang de vogels in hun tuin. In 2026 (30 januari tot 1 februari) deden bijna 137.000 mensen mee, en ze telden bijna 1,9 miljoen vogels.',
@@ -564,7 +564,7 @@ export default [
     ] },
     verwijs: [{ naam: 'Vogelbescherming: Tuinvogeltelling', url: 'https://www.vogelbescherming.nl/tuinvogeltelling' }],
     naar: [{ blad: 'vogels-herkennen' }, { blad: 'vogelgeluiden' }] },
-  { id: 'vogelgeluiden', naam: 'Vogelgeluiden', ook: ['vogelzang', 'zang', 'roep', 'xeno-canto'], en: 'birdsong', groep: 'vogels', bron: 'TKN §6.4',
+  { id: 'vogelgeluiden', naam: 'Vogelgeluiden', ook: ['vogelzang', 'zang', 'roep', 'xeno-canto'], en: 'birdsong', groep: 'vogels', bron: 'TKN §6.4', ken: true,
     uitleg: [
       'Veel vogels hoor je eerder dan je ze ziet. Ze zingen vooral in het voorjaar, en het meest vroeg in de ochtend.',
       'Er zijn twee soorten geluid: zang, meestal van het mannetje, om te laten horen dat dit zijn plek is en om een vrouwtje te lokken; en roepjes, korte geluidjes om contact te houden of te waarschuwen.',
@@ -575,7 +575,7 @@ export default [
     naar: [{ blad: 'tuinvogels' }] },
 
   // Insecten en teken
-  { id: 'teek', naam: 'Teken', ook: ['teek', 'schapenteek', 'Ixodes ricinus'], en: 'tick', groep: 'insecten', bron: 'RIVM-T, RIVM-TC, TKN §6.5',
+  { id: 'teek', naam: 'Teken', ook: ['teek', 'schapenteek', 'Ixodes ricinus'], en: 'tick', groep: 'insecten', bron: 'RIVM-T, RIVM-TC, TKN §6.5', ken: true,
     plaatje: 'teek',
     uitleg: [
       'Een teek is geen insect maar een spinachtige, met acht poten. Ze zijn klein: een jonge teek (nimf) is niet groter dan een maanzaadje. Een volwassen teek is een paar millimeter; vol bloed wordt hij dik en grijs.',
@@ -586,7 +586,7 @@ export default [
     ],
     verwijs: [RIVM_TEKEN, RIVM_CONTROLE, TEKENRADAR],
     naar: [{ blad: 'tekencheck' }, { blad: 'tekenbeet' }] },
-  { id: 'eikenprocessierups', naam: 'Eikenprocessierups', ook: ['processierups', 'brandharen', 'rupsennest'], en: 'oak processionary', groep: 'insecten', bron: 'RIVM-EPR, TKN §6.5, NREH26',
+  { id: 'eikenprocessierups', naam: 'Eikenprocessierups', ook: ['processierups', 'brandharen', 'rupsennest'], en: 'oak processionary', groep: 'insecten', bron: 'RIVM-EPR, TKN §6.5, NREH26', ken: true,
     plaatje: 'processierups',
     uitleg: [
       'In mei, juni en juli zitten er op veel eiken behaarde rupsen. Dat is zo in bijna heel Nederland. ’s Nachts gaan ze in groepen op zoek naar eten. Ze lopen dan in een lange rij achter elkaar. Zo’n rij heet een processie.',
@@ -596,7 +596,7 @@ export default [
     letOp: 'Blijf uit de buurt van rupsen en nesten, ook van lege nesten. Raak niets aan. Ga er niet onder zitten, en zet er geen tent onder. Toch jeuk of rode bultjes? Trek de kleren met haartjes uit. Haal losse haartjes van je huid met plakband. Spoel daarna je huid en ogen met veel lauw water. Niet krabben of wrijven. Was je kleren op 60 graden. Word je benauwd, of worden je oogleden, lippen of tong dik? Bel meteen 112. Blijft het erg jeuken, of blijven je ogen rood en dik, ook na het spoelen? Bel de huisarts. Haal een nest nooit zelf weg. Zit het in een boom van de gemeente? Meld het dan bij de gemeente.',
     verwijs: [{ naam: 'RIVM: eikenprocessierups', url: 'https://www.rivm.nl/eikenprocessierups' }, { naam: 'GGD: eikenprocessierupsen en gezondheid', url: 'https://ggdleefomgeving.nl/vervelende-beestjes/eikenprocessierupsen/eikenprocessierupsen-en-gezondheid/' }],
     naar: [{ blad: 'prikken-en-steken' }, { blad: 'zomereik' }] },
-  { id: 'wesp-bij-hommel', naam: 'Wesp, bij en hommel', ook: ['wesp', 'bij', 'honingbij', 'hommel', 'steek', 'angel', 'wespensteek', 'bijensteek'], en: 'wasp, bee, bumblebee', groep: 'insecten', bron: 'TKN §6.5, NREH26',
+  { id: 'wesp-bij-hommel', naam: 'Wesp, bij en hommel', ook: ['wesp', 'bij', 'honingbij', 'hommel', 'steek', 'angel', 'wespensteek', 'bijensteek'], en: 'wasp, bee, bumblebee', groep: 'insecten', bron: 'TKN §6.5, NREH26', ken: true,
     plaatje: 'wesp-bij-hommel',
     uitleg: [
       '- Wesp: geel met scherpe zwarte strepen, glad en slank, met een smal middel. In de nazomer komen wespen graag op zoet eten en limonade af.',
@@ -607,7 +607,7 @@ export default [
     ],
     letOp: 'Bel 112 bij een steek in de mond of keel, of als iemand benauwd wordt, duizelig wordt of opzwelt: dat kan een ernstige allergische reactie zijn.',
     naar: [{ blad: 'prikken-en-steken' }, { blad: 'aziatische-hoornaar' }] },
-  { id: 'aziatische-hoornaar', naam: 'Aziatische hoornaar', ook: ['geelpoothoornaar', 'hoornaar', 'Vespa velutina'], en: 'Asian hornet', groep: 'insecten', bron: 'TKN §6.5, NAT-AH',
+  { id: 'aziatische-hoornaar', naam: 'Aziatische hoornaar', ook: ['geelpoothoornaar', 'hoornaar', 'Vespa velutina'], en: 'Asian hornet', groep: 'insecten', bron: 'TKN §6.5, NAT-AH', ken: true,
     plaatje: 'hoornaars',
     uitleg: [
       'Een grote wesp uit Azië. In 2017 werd het eerste nest in Nederland gevonden, en sindsdien verspreidt hij zich. Hij jaagt onder meer op honingbijen.',
@@ -619,7 +619,7 @@ export default [
     naar: [{ blad: 'wesp-bij-hommel' }] },
 
   // Paddenstoelen
-  { id: 'paddenstoelen-kijken', naam: 'Paddenstoelen: kijken, niet eten', ook: ['paddenstoel', 'paddenstoelen', 'zwam', 'plaatjes', 'hoed', 'zwamvlok'], en: 'mushrooms', groep: 'paddenstoelen', bron: 'TKN §6.5, NREH26',
+  { id: 'paddenstoelen-kijken', naam: 'Paddenstoelen: kijken, niet eten', ook: ['paddenstoel', 'paddenstoelen', 'zwam', 'plaatjes', 'hoed', 'zwamvlok'], en: 'mushrooms', groep: 'paddenstoelen', bron: 'TKN §6.5, NREH26', ken: true,
     plaatje: 'paddenstoel-delen', doe: 'paddenstoel-aanwijzen',
     uitleg: [
       'De regel is simpel: eet nooit een paddenstoel die je zelf hebt gevonden. Een paar soorten zijn dodelijk giftig, en ze lijken op soorten die je in de winkel koopt. Bij de gevaarlijkste merk je pas uren later dat je ziek wordt.',
@@ -633,7 +633,7 @@ export default [
     letOp: 'Heeft iemand toch een wilde paddenstoel gegeten en wordt hij ziek, of weet je het niet zeker? Bel meteen de huisarts, en 112 als iemand benauwd of suf wordt. Neem de rest van de paddenstoel mee.',
     verwijs: [OBSIDENTIFY],
     naar: [{ blad: 'groene-knolamaniet' }, { blad: 'vliegenzwam' }, { blad: 'cantharel' }] },
-  { id: 'vliegenzwam', naam: 'Vliegenzwam', ook: ['rode paddenstoel met witte stippen', 'kabouterpaddenstoel', 'Amanita muscaria'], en: 'fly agaric', groep: 'paddenstoelen', bron: 'TKN §6.5',
+  { id: 'vliegenzwam', naam: 'Vliegenzwam', ook: ['rode paddenstoel met witte stippen', 'kabouterpaddenstoel', 'Amanita muscaria'], en: 'fly agaric', groep: 'paddenstoelen', bron: 'TKN §6.5', ken: true,
     plaatje: 'vliegenzwam',
     uitleg: [
       'De paddenstoel uit de sprookjes: een rode hoed met witte vlokken, witte plaatjes, een witte steel met een ring, en onderaan een knol.',
@@ -642,7 +642,7 @@ export default [
     ],
     letOp: 'Giftig. Niet eten en niet proeven.',
     naar: [{ blad: 'paddenstoelen-kijken' }, { blad: 'groene-knolamaniet' }] },
-  { id: 'groene-knolamaniet', naam: 'Groene knolamaniet', ook: ['knolamaniet', 'Amanita phalloides'], en: 'death cap', groep: 'paddenstoelen', bron: 'TKN §6.5',
+  { id: 'groene-knolamaniet', naam: 'Groene knolamaniet', ook: ['knolamaniet', 'Amanita phalloides'], en: 'death cap', groep: 'paddenstoelen', bron: 'TKN §6.5', ken: true,
     plaatje: 'knolamaniet',
     uitleg: [
       'De giftigste paddenstoel van Nederland. Eén hoed kan al dodelijk zijn.',
@@ -652,7 +652,7 @@ export default [
     ],
     letOp: 'Dodelijk giftig. Eet nooit een wilde paddenstoel. Was je handen als je er een hebt aangeraakt.',
     naar: [{ blad: 'paddenstoelen-kijken' }] },
-  { id: 'cantharel', naam: 'Cantharel', ook: ['hanenkam', 'valse hanenkam', 'Cantharellus cibarius'], en: 'chanterelle', groep: 'paddenstoelen', bron: 'TKN §6.5',
+  { id: 'cantharel', naam: 'Cantharel', ook: ['hanenkam', 'valse hanenkam', 'Cantharellus cibarius'], en: 'chanterelle', groep: 'paddenstoelen', bron: 'TKN §6.5', ken: true,
     plaatje: 'cantharel',
     uitleg: [
       'Een dooiergele paddenstoel in de vorm van een trechter. Onder de hoed zitten geen echte plaatjes, maar lage, gevorkte lijsten die doorlopen tot op de steel.',
@@ -721,7 +721,7 @@ export default [
     naar: [{ blad: 'vlechtwerk-met-leem' }, { blad: 'schietwilg' }] },
 
   // Mens en natuur
-  { id: 'regels-natuurgebied', naam: 'Mag dit hier?', ook: ['regels in de natuur', 'toegangsregels', 'mag dit hier', 'Staatsbosbeheer', 'wildplukken', 'geocache', 'hond aan de lijn'], en: 'access rules', groep: 'mens', bron: 'SBB, NM-GR, TKN §9, SBB-PEEL, SR-461, OW-BAL',
+  { id: 'regels-natuurgebied', naam: 'Mag dit hier?', ook: ['regels in de natuur', 'toegangsregels', 'mag dit hier', 'Staatsbosbeheer', 'wildplukken', 'geocache', 'hond aan de lijn'], en: 'access rules', groep: 'mens', bron: 'SBB, NM-GR, TKN §9, SBB-PEEL, SR-461, OW-BAL', ken: true,
     doe: 'mag-dit-hier',
     waarvoor: 'Weten wat je in een natuurgebied wel en niet mag, voordat je er met je groep een spel, tocht of activiteit doet.',
     uitleg: [
@@ -740,7 +740,7 @@ export default [
     ],
     verwijs: [{ naam: 'Staatsbosbeheer: toegangsregels', url: 'https://www.staatsbosbeheer.nl/Contact/toegangsregels' }, { naam: 'Natuurmonumenten: gebiedsregels', url: 'https://www.natuurmonumenten.nl/natuurgebieden/gebiedsregels' }, { naam: 'Rijksoverheid: wetgeving voor natuurbescherming', url: 'https://www.rijksoverheid.nl/themas/klimaat-milieu-en-natuur/natuur-en-biodiversiteit/wetgeving-voor-natuurbescherming' }],
     naar: [{ blad: 'buitencode' }, { blad: 'natuurmonumenten-regels' }, { blad: 'wildkamperen' }, { blad: 'laat-geen-sporen-na' }, { blad: 'eetbare-planten' }] },
-  { id: 'zwerfafval', naam: 'Zwerfafval en afval scheiden', ook: ['afval', 'afval scheiden', 'recyclen', 'plastic', 'PMD', 'statiegeld', 'opruimen', 'microplastic'], en: 'litter', groep: 'mens', bron: 'EIS N&B; eigen',
+  { id: 'zwerfafval', naam: 'Zwerfafval en afval scheiden', ook: ['afval', 'afval scheiden', 'recyclen', 'plastic', 'PMD', 'statiegeld', 'opruimen', 'microplastic'], en: 'litter', groep: 'mens', bron: 'EIS N&B; eigen', ken: true,
     uitleg: [
       'Zwerfafval is afval dat op straat of in de natuur ligt. Dieren eten het op, of raken erin vast. Plastic valt uit elkaar in steeds kleinere stukjes. Die heten microplastic, en ze gaan nooit meer weg.',
       'Ruim op wat je tegenkomt. Gebruik handschoenen of een grijper. Pak glas, blik en scherpe dingen nooit met je blote handen.',
@@ -754,7 +754,7 @@ export default [
       'Elke gemeente doet het een beetje anders. Kijk in de afvalwijzer of de afvalapp van je gemeente.',
     ],
     naar: [{ blad: 'afval-op-kamp' }, { blad: 'laat-geen-sporen-na' }, { blad: 'ecologische-voetafdruk' }] },
-  { id: 'ecologische-voetafdruk', naam: 'Ecologische voetafdruk', ook: ['voetafdruk', 'footprint', 'voetafdruktest', 'duurzaam'], en: 'ecological footprint', groep: 'mens', bron: 'EIS N&B; WNF-V',
+  { id: 'ecologische-voetafdruk', naam: 'Ecologische voetafdruk', ook: ['voetafdruk', 'footprint', 'voetafdruktest', 'duurzaam'], en: 'ecological footprint', groep: 'mens', bron: 'EIS N&B; WNF-V', ken: true,
     uitleg: [
       'Alles wat je gebruikt, kost ruimte op aarde: land voor je eten, bos voor je papier en hout, en natuur die de CO₂ opneemt van je reizen en je verwarming. Al die ruimte samen is je ecologische voetafdruk, gemeten in hectares.',
       'Als iedereen op aarde zou leven zoals de meeste Nederlanders, zouden we samen meer dan één aarde nodig hebben.',
@@ -763,7 +763,7 @@ export default [
     ],
     verwijs: [{ naam: 'WNF: voetafdruktest', url: 'https://voetafdruktest.wwf.nl/' }],
     naar: [{ blad: 'zwerfafval' }, { blad: 'biotoop' }] },
-  { id: 'lichtvervuiling', naam: 'Lichtvervuiling', ook: ['licht', 'duisternis', 'Nacht van de Nacht', 'donkere hemel', 'dark sky'], en: 'light pollution', groep: 'mens', bron: 'EIS N&B; NAT-LV',
+  { id: 'lichtvervuiling', naam: 'Lichtvervuiling', ook: ['licht', 'duisternis', 'Nacht van de Nacht', 'donkere hemel', 'dark sky'], en: 'light pollution', groep: 'mens', bron: 'EIS N&B; NAT-LV', ken: true,
     plaatje: 'lichtvervuiling',
     uitleg: [
       'Lichtvervuiling is licht dat ’s nachts schijnt waar het niet nodig is: lantaarns die ook de lucht in schijnen, verlichte kassen en reclameborden, lampen die de hele nacht aan blijven.',
@@ -777,7 +777,7 @@ export default [
     ],
     verwijs: [{ naam: 'Nacht van de Nacht', url: 'https://www.nachtvandenacht.nl' }],
     naar: [{ blad: 'melkweg' }, { blad: 'biotoop' }] },
-  { id: 'biotoop', naam: 'Biotoop, ecosysteem en habitat', ook: ['biotoop', 'ecosysteem', 'habitat', 'leefgebied', 'levensgemeenschap', 'biodiversiteit'], en: 'biotope, ecosystem, habitat', groep: 'mens', bron: 'EIS N&B; NAT-BEH',
+  { id: 'biotoop', naam: 'Biotoop, ecosysteem en habitat', ook: ['biotoop', 'ecosysteem', 'habitat', 'leefgebied', 'levensgemeenschap', 'biodiversiteit'], en: 'biotope, ecosystem, habitat', groep: 'mens', bron: 'EIS N&B; NAT-BEH', ken: true,
     uitleg: [
       'Drie woorden die op elkaar lijken:',
       '- Habitat: de plek waar één soort leeft en alles vindt wat hij nodig heeft. De habitat van een ijsvogel is helder water met kleine vis, met steile oevers om in te broeden.',

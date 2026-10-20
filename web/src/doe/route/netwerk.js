@@ -366,16 +366,24 @@ export const bakenBij = (net, knoopId) => net.bakens.find((b) => b.knoop === kno
 
 /** A street name with its article: het Heidepad, de Eikenlaan. */
 export const deNaam = (naam) => `${/pad$/.test(naam) ? 'het' : 'de'} ${naam}`;
-/** A kind of junction with its article: het kruispunt, de T-splitsing; with an adjective: het volgende kruispunt. */
+/** A kind of junction with its article: het kruispunt, de T-splitsing, de zijweg naar links; with an adjective: het volgende kruispunt. */
 export const metLidwoord = (type, bijv = '') => {
   const het = type === 'kruispunt';
   return `${het ? 'het' : 'de'} ${bijv ? `${bijv} ` : ''}${type}`;
 };
 
-/** What kind of junction: T-splitsing, Y-splitsing, kruispunt, vijfsprong, zessprong. */
+/**
+ * What kind of junction: Y-splitsing, zijweg naar links or rechts (a road goes on straight, one branches off),
+ * T-splitsing (no road straight on), kruispunt, vijfsprong, zessprong.
+ */
 export function kruispuntNaam(stap) {
   const n = stap.wegen.length + 1;
-  if (n === 3) return stap.wegen.every((w) => Math.abs(w.draai) < 75) ? 'Y-splitsing' : 'T-splitsing';
+  if (n === 3) {
+    if (stap.wegen.every((w) => Math.abs(w.draai) < 75)) return 'Y-splitsing';
+    const zij = stap.wegen.find((w) => soortDraai(w.draai) !== 'rechtdoor');
+    if (stap.wegen.some((w) => soortDraai(w.draai) === 'rechtdoor')) return `zijweg naar ${zij.draai < 0 ? 'links' : 'rechts'}`;
+    return 'T-splitsing';
+  }
   if (n === 4) return 'kruispunt';
   if (n === 5) return 'vijfsprong';
   return 'zessprong';

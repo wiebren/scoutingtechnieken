@@ -41,4 +41,4 @@
 .hp-tekst { display: flex; flex-direction: column; gap: 10px; min-width: 0; }
 .hp-tekst p { margin: 0; }
 .hp-stand { font-variant-numeric: tabular-nums; }
-.hp-noot { color: var(--stil); font-size: 13px; }
+.hp-noot { color: var(--stil); font-size: 0.8125rem; }

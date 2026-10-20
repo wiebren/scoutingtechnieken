@@ -2,18 +2,18 @@
 .doe-morseboom { display: flex; flex-direction: column; gap: 10px; }
 .doe-morseboom p { margin: 0; }
 .mb-tekening { display: block; width: 100%; max-width: 520px; height: auto; margin: 0 auto; }
-.mb-nu { min-height: 1.5em; font-size: 18px; font-weight: 700; text-align: center; letter-spacing: 0.04em; }
+.mb-nu { min-height: 1.5em; font-size: 1.125rem; font-weight: 700; text-align: center; letter-spacing: 0.04em; }
 .mb-invoer { display: flex; flex-wrap: wrap; align-items: center; justify-content: center; gap: 12px; }
 .mb-knoppen { display: flex; flex-wrap: wrap; gap: 8px; }
 .mb-sleutel {
   width: 96px; height: 96px; flex: none; border-radius: 50%; border: 3px solid var(--fam-sein);
-  background: color-mix(in srgb, var(--fam-sein) 18%, var(--paneel)); color: var(--inkt); font: inherit; font-size: 18px; font-weight: 700;
+  background: color-mix(in srgb, var(--fam-sein) 18%, var(--paneel)); color: var(--inkt); font: inherit; font-size: 1.125rem; font-weight: 700;
   touch-action: none; user-select: none; -webkit-user-select: none; -webkit-touch-callout: none; cursor: pointer;
 }
 .mb-sleutel.neer { background: var(--fam-sein); color: var(--paneel); }
 .mb-sleutel:focus-visible { outline: 3px solid var(--accent); outline-offset: 2px; }
 .mb-zin {
-  min-height: 2.2em; padding: 8px 12px; border-radius: 10px; background: var(--zacht); font-size: 22px; font-weight: 700;
+  min-height: 2.2em; padding: 8px 12px; border-radius: 10px; background: var(--zacht); font-size: 1.375rem; font-weight: 700;
   letter-spacing: 0.08em; overflow-wrap: anywhere;
 }
 @media (prefers-reduced-motion: no-preference) { .mb-sleutel { transition: background 0.05s; } }

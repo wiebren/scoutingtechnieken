@@ -9,6 +9,7 @@ export const BRONNEN = {
   wandel: '© OpenStreetMap-bijdragers (ODbL), routes: Waymarked Trails (CC BY-SA)',
   zeekaart: '© OpenStreetMap-bijdragers (ODbL), tonnen en bakens: OpenSeaMap (CC BY-SA)',
   luchtfoto: 'Luchtfoto 2025: Beeldmateriaal Nederland via PDOK (CC BY 4.0)',
+  lvnl: 'Uitsnede: ICAO-luchtvaartkaart Nederland 1:500.000, © LVNL',
 };
 
 const kaart = (naam, alt, bron, w = 800, h = 560) => ({ src: `kaarten/${naam}.webp`, w, h, alt, bron });
@@ -21,5 +22,6 @@ export const BEELDEN = {
   'osm-soester-duinen': kaart('osm-soester-duinen', 'OpenStreetMap van de Soester Duinen', 'osm'),
   'wandelroutes-soester-duinen': kaart('wandelroutes-soester-duinen', 'Gemarkeerde wandelroutes als gekleurde lijnen over OpenStreetMap, Soester Duinen', 'wandel'),
   'openseamap-eemmeer': kaart('openseamap-eemmeer', 'Vaargeul in het Eemmeer bij Spakenburg met rode en groene tonnen', 'zeekaart'),
+  'icao-waddenzee': kaart('icao-waddenzee', 'Stuk van de ICAO-luchtvaartkaart: Texel, de Waddenzee, Friesland en Noord-Holland, met CTR\'s, verboden gebieden en hoogtes van het luchtruim', 'lvnl', 1124, 1392),
   'luchtfoto-soester-duinen': kaart('luchtfoto-soester-duinen', 'Luchtfoto van de Soester Duinen: zandvlakten, bos, huizen en akkers, van bovenaf', 'luchtfoto'),
 };

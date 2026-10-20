@@ -842,21 +842,37 @@ function bewerkteKaart() {
 // -- the tochtvormen added later: voetjes, dobbelsteen, radiovossenjacht
 
 /** One chalk footprint at (x, y), walking towards `hoek` (degrees from north); `links` mirrors it. */
-function voetje(x, y, hoek, links) {
+function voetje(x, y, hoek, links, schaal = 0.85) {
   const m = links ? -1 : 1;
   const tenen = [[-4, -15, 2.4], [-0.6, -16.2, 2], [2.5, -15.4, 1.8], [5, -13.8, 1.6], [6.6, -11.6, 1.4]]
     .map(([tx, ty, r]) => `<circle cx="${r1(tx * m)}" cy="${ty}" r="${r}" class="tw-voetje"/>`).join('');
   const zool = `<ellipse cx="${r1(1 * m)}" cy="-5" rx="6" ry="7.5" class="tw-voetje"/><ellipse cx="${r1(-0.6 * m)}" cy="3" rx="4" ry="6" class="tw-voetje"/><ellipse cx="0" cy="9" rx="4.6" ry="5" class="tw-voetje"/>`;
-  return `<g transform="translate(${x} ${y}) rotate(${hoek}) scale(0.85)">${zool}${tenen}</g>`;
+  return `<g transform="translate(${x} ${y}) rotate(${hoek}) scale(${schaal})">${zool}${tenen}</g>`;
 }
 
 function voetjes() {
-  let uit = '<rect x="0" y="0" width="300" height="210" rx="8" class="vlak2"/>' + kruispunt(150, 110, 104, [270, 0, 90], 90, { pen: false });
-  // up the road from the south, then right at the crossing
-  [[146, 196, 0, true], [154, 172, 0, false], [146, 148, 0, true], [154, 124, 20, false], [168, 106, 70, true], [190, 114, 90, false],
-    [214, 106, 90, true], [238, 114, 90, false], [262, 106, 90, true]].forEach(([x, y, g, l]) => { uit += voetje(x, y, g, l); });
-  uit += tekst(206, 82, 'de tenen wijzen', { maat: 11, anker: 'start', klasse: 'vet' }) + tekst(206, 96, 'de weg', { maat: 11, anker: 'start', klasse: 'vet' });
-  return svg(300, 210, 'Voetjestocht: gekleurde krijtvoetjes lopen de weg op naar een kruispunt en draaien daar naar rechts. Waar de tenen heen wijzen, ga je heen', uit);
+  // a crossing of two streets, as wide as streets are next to a foot: the footprints are small on it
+  let uit = '<rect x="0" y="0" width="300" height="210" rx="8" class="vlak2"/>';
+  uit += '<path d="M150 210V0M0 92H300" class="tw-weg" style="stroke-width: 52; stroke-linecap: butt"/>';
+  // the trail: up the street from the south, a bend to the right at the crossing, then along the other street
+  const R = 26;
+  const pad = [];
+  for (let y = 204; y > 92 + R; y -= 2) pad.push([150, y, 0]);
+  for (let a = 0; a <= 90; a += 3) { const t = (a * Math.PI) / 180; pad.push([150 + R - R * Math.cos(t), 92 + R - R * Math.sin(t), a]); }
+  for (let x = 150 + R; x < 296; x += 2) pad.push([x, 92, 90]);
+  // one footprint every four steps, as the leiding draws them: enough to follow, not every step
+  let afstand = 0; let links = true; let stap = 0;
+  for (let i = 1; i < pad.length; i++) {
+    afstand += Math.hypot(pad[i][0] - pad[i - 1][0], pad[i][1] - pad[i - 1][1]);
+    if (afstand < 15) continue;
+    afstand = 0;
+    if ((stap++ + 2) % 4) continue;   // counted so that one falls in the bend
+    const [x, y, g] = pad[i]; const t = (g * Math.PI) / 180; const z = links ? -3.5 : 3.5;
+    uit += voetje(r1(x + z * Math.cos(t)), r1(y + z * Math.sin(t)), g, links, 0.4);
+    links = !links;
+  }
+  uit += tekst(186, 40, 'de tenen wijzen', { maat: 11, anker: 'start', klasse: 'vet' }) + tekst(186, 54, 'de weg', { maat: 11, anker: 'start', klasse: 'vet' });
+  return svg(300, 210, 'Voetjestocht: kleine gekleurde krijtvoetjes lopen over de straat naar een kruispunt en gaan daar naar rechts. Waar de tenen heen wijzen, ga je heen', uit);
 }
 
 /** A die face with 1-6 pips, at (x, y), size z. */

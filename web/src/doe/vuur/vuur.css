@@ -18,9 +18,9 @@
 .vk-tekst { display: flex; flex-direction: column; gap: 10px; min-width: 0; }
 .vk-tekst p { margin: 0; }
 .vk-vraag { font-weight: 600; }
-.vk-uitleg { color: var(--stil); font-size: 14px; }
+.vk-uitleg { color: var(--stil); font-size: 0.875rem; }
 .vk-rij { display: flex; flex-wrap: wrap; gap: 6px; align-items: center; }
-.vk-rij > .vk-kop { width: 100%; margin: 0; font-size: 13px; font-weight: 600; color: var(--stil); }
+.vk-rij > .vk-kop { width: 100%; margin: 0; font-size: 0.8125rem; font-weight: 600; color: var(--stil); }
 .vk-stand { font-variant-numeric: tabular-nums; }
 .vk-oordeel { margin: 0; padding: 10px 12px; border-radius: 10px; border: 1px solid var(--lijn); background: var(--zacht); }
 .vk-oordeel.goed { border-color: var(--accent); background: color-mix(in srgb, var(--accent) 12%, var(--paneel)); }

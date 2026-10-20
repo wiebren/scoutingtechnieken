@@ -7,7 +7,7 @@
   border-radius: 10px; background: #fffdf4; border: 1px solid var(--lijn-sterk);
 }
 .rc-rooster span {
-  display: grid; place-items: center; font-family: ui-monospace, Menlo, monospace; font-size: 22px; font-weight: 700; color: #2a2418;
+  display: grid; place-items: center; font-family: ui-monospace, Menlo, monospace; font-size: 1.375rem; font-weight: 700; color: #2a2418;
 }
 .rc-rooster.erop { background: #6b5a3a; }
 .rc-rooster.erop span { background: #8a7550; color: transparent; }

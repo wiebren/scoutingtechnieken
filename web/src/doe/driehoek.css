@@ -1,7 +1,7 @@
 /* The square of poles and the schoor (driehoek.js) */
 .doe-driehoek { display: grid; gap: 12px; }
 @container (min-width: 520px) { .doe-driehoek { grid-template-columns: minmax(0, 300px) minmax(0, 1fr); align-items: center; } }
-.dh-svg { display: block; width: 100%; max-width: 300px; height: auto; margin: 0 auto; touch-action: none; cursor: grab; }
+.dh-svg { display: block; width: 100%; max-width: 300px; height: auto; margin: 0 auto; touch-action: none; cursor: grab; user-select: none; -webkit-user-select: none; }
 .dh-svg:focus-visible { outline: 3px solid var(--accent); outline-offset: 3px; border-radius: 8px; }
 .dh-tekst { display: flex; flex-direction: column; gap: 10px; }
 .dh-melding { margin: 0; min-height: 3em; }

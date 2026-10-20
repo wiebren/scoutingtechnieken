@@ -7,38 +7,41 @@
 
 export default [
   // Sjorringen
-  { id: 'welke-sjorring', naam: 'Welke sjorring kies je?', ook: ['sjorringen', 'sjorring', 'pionieren'], en: 'lashings', groep: 'sjorringen', bron: 'SW Sjorring, VIS34 §65–72',
+  { id: 'welke-sjorring', naam: 'Welke sjorring kies je?', ook: ['sjorringen', 'sjorring', 'pionieren'], en: 'lashings', groep: 'sjorringen', bron: 'SW Sjorring, VIS34 §65–72', ken: true,
     uitleg: [
       'Een sjorring maakt twee of meer palen met touw aan elkaar vast. Bijna elke sjorring gaat zo:',
       '- Je begint met een steek om een paal: een mastworp of een timmersteek.',
       '- Je legt een paar slagen om de palen.',
       '- Je trekt die slagen strak met woelslagen tussen de palen door.',
       '- Je maakt het af met een mastworp, twee halve steken of een platte knoop.',
-      'Welke je neemt, hangt af van hoe de palen liggen:',
+      'Welke je neemt, hangt af van hoe de palen liggen. Tik op een sjorring, dan zie je hoe je hem legt.',
     ],
-    tabel: { kop: ['De palen', 'Sjorring'], rijen: [
-      ['kruisen haaks of bijna haaks', 'kruissjorring'],
-      ['kruisen schuin, of willen uit elkaar veren', 'diagonaalsjorring'],
-      ['vormen een smalle V of een schaar (bok)', 'vorksjorring'],
-      ['drie naast elkaar, voor een driepoot', 'achtsjorring'],
-      ['vier of meer, voor een veelpoot', 'polypedestrasjorring'],
-      ['in elkaars verlengde, met een spalk', 'steigersjorring'],
-      ['naast elkaar, over een stuk lengte', 'rondsjorring'],
-      ['staan een eind uit elkaar (piketten)', 'slingersjorring'],
-      ['een vloer of brugdek op een ligger', 'woelsjorring'],
-      ['licht werk, snel klaar', 'Japanse kruissjorring, Filipijnse diagonaalsjorring'],
-    ] },
+    soorten: [
+      { naam: 'Kruissjorring', plaatje: 'sj-keuze-kruis', blad: 'kruissjorring', bij: 'De palen kruisen haaks of bijna haaks.' },
+      { naam: 'Diagonaalsjorring', plaatje: 'sj-keuze-diagonaal', blad: 'diagonaalsjorring', bij: 'De palen kruisen schuin, of willen uit elkaar veren.' },
+      { naam: 'Vorksjorring', plaatje: 'sj-keuze-vork', blad: 'vorksjorring', bij: 'De palen vormen een smalle V of een schaar (bok).' },
+      { naam: 'Achtsjorring', plaatje: 'sj-keuze-acht', blad: 'achtsjorring', bij: 'Drie palen naast elkaar, voor een driepoot.' },
+      { naam: 'Polypedestrasjorring', plaatje: 'sj-keuze-polypedestra', blad: 'polypedestrasjorring', bij: 'Vier of meer palen, voor een veelpoot.' },
+      { naam: 'Steigersjorring', plaatje: 'sj-keuze-steiger', blad: 'steigersjorring', bij: 'De palen liggen in elkaars verlengde, met een spalk.' },
+      { naam: 'Rondsjorring', plaatje: 'sj-keuze-rond', blad: 'rondsjorring', bij: 'De palen liggen naast elkaar, over een stuk lengte.' },
+      { naam: 'Slingersjorring', plaatje: 'sj-keuze-slinger', blad: 'slingersjorring', bij: 'De palen staan een eind uit elkaar, zoals piketten.' },
+      { naam: 'Woelsjorring', plaatje: 'sj-keuze-woel', blad: 'woelsjorring', bij: 'Een vloer of brugdek op een ligger.' },
+      { naam: 'Halve kruissjorring', plaatje: 'sj-keuze-halve-kruis', blad: 'halve-kruissjorring', bij: 'Haaks, maar je touw is te kort voor een hele kruissjorring.' },
+      { naam: 'Japanse kruissjorring', plaatje: 'sj-keuze-japans', blad: 'japanse-kruissjorring', bij: 'Haaks, voor licht werk en snel klaar.' },
+      { naam: 'Filipijnse diagonaalsjorring', plaatje: 'sj-keuze-filipijns', blad: 'filipijnse-diagonaalsjorring', bij: 'Schuin, voor licht werk en snel klaar.' },
+    ],
     letOp: 'Sjor met droog touw zonder knopen of rafels, en trek elke slag goed aan. Een sjorring die je met de hand kunt verschuiven, is niet goed: leg hem opnieuw.',
-    naar: [{ blad: 'kruissjorring' }, { blad: 'woelen' }, { blad: 'mastworp' }, { blad: 'timmersteek' }] },
+    naar: [{ blad: 'woelen' }, { blad: 'mastworp' }, { blad: 'timmersteek' }] },
 
   { id: 'kruissjorring', naam: 'Kruissjorring', ook: ['vierkante sjorring'], en: 'square lashing', groep: 'sjorringen', bron: 'SW-KS, VIS34 §69, knoopenzo knots71',
     plaatje: 'sj-kruissjorring',
+    doe: 'kruissjorring-leggen',
     waarvoor: 'Twee palen die elkaar haaks kruisen, zoals een dwarsbalk aan een staande paal. De sjorring die je het meest gebruikt: in tafels, keukens, torens en ladders.',
     uitleg: [
-      '- Begin met een mastworp om de staande paal, net onder de dwarsbalk. In Nederland vaak een mastworp met voorslag.',
+      '- Begin met een mastworp om de staande paal, net onder de dwarsbalk. In Nederland vaak een mastworp met voorslag. De slagen komen eromheen: de mastworp zit binnen in de sjorring.',
       '- Sla het touw voor de dwarsbalk langs en achter de staande paal om. Dan weer voor de dwarsbalk langs, en achter de staande paal terug. Het touw loopt recht, nooit schuin.',
       '- Doe dat drie keer. Op de dwarsbalk komt elke slag aan de binnenkant van de vorige, op de staande paal aan de buitenkant.',
-      '- Woel drie keer: sla het touw tussen de palen door, om de slagen heen, en trek elke woelslag hard aan.',
+      '- Woel drie keer: sla het touw tussen de palen door, buiten om de slagen heen, en trek elke woelslag hard aan. Zo trek je de slagen samen.',
       '- Maak het af met een mastworp (twee halve steken) om de dwarsbalk, vlak naast de laatste woelslag.',
       'Volgens een oud legerboek kun je hem ook gebruiken als de palen niet helemaal haaks staan: zolang de hoek meer dan 60 graden is. Is de hoek kleiner, neem dan een diagonaalsjorring.',
     ],
@@ -197,12 +200,11 @@ export default [
       '- Trek elke woelslag hard aan. Houd het touw strak, anders schiet het weer los.',
       '- Leg de woelslagen naast elkaar, niet over elkaar.',
       'Bij de kruissjorring woel je drie keer, bij de achtsjorring tussen elk paar palen.',
-      'Een marlsteek is wat anders: een rij halve steken langs een balk, om er een zeil of rol aan te binden.',
     ],
-    naar: [{ blad: 'kruissjorring' }, { blad: 'achtsjorring' }, { blad: 'marlsteek' }] },
+    naar: [{ blad: 'kruissjorring' }, { blad: 'achtsjorring' }] },
 
   // Takels en katrollen
-  { id: 'blok-onderdelen', naam: 'Onderdelen van een blok', ook: ['katrol', 'blok', 'schijf', 'hondsvot', 'nagel', 'wang'], en: 'block, pulley', groep: 'takels', bron: 'SW Katrol, WP-NL Katrol, zienenweten',
+  { id: 'blok-onderdelen', naam: 'Onderdelen van een blok', ook: ['katrol', 'blok', 'schijf', 'hondsvot', 'nagel', 'wang'], en: 'block, pulley', groep: 'takels', bron: 'SW Katrol, WP-NL Katrol, zienenweten', ken: true,
     plaatje: 'sj-blok',
     uitleg: [
       'Een blok (of katrol) laat een touw om een hoek lopen zonder dat het schuurt. Met twee of meer blokken maak je een takel.',
@@ -391,7 +393,7 @@ export default [
     naar: [{ blad: 'boomanker' }, { blad: 'tuien' }, { blad: 'boombescherming' }] },
 
   // Materiaal
-  { id: 'pionierpalen', naam: 'Pionierpalen', ook: ['pionierhout', 'sjorbalk', 'sjorhout', 'piopalen'], en: 'spars, poles', groep: 'materiaal', bron: 'SW-PAAL, SGV-GS p. 40–41',
+  { id: 'pionierpalen', naam: 'Pionierpalen', ook: ['pionierhout', 'sjorbalk', 'sjorhout', 'piopalen'], en: 'spars, poles', groep: 'materiaal', bron: 'SW-PAAL, SGV-GS p. 40–41', ken: true,
     plaatje: 'sj-pionierpaal',
     uitleg: [
       'Rechte, ronde palen zonder schors, in verschillende lengtes, bijvoorbeeld van 1,5 tot 6 meter. Er bestaan geen vaste maten: elke groep heeft zijn eigen houthok.',
@@ -401,7 +403,7 @@ export default [
     ],
     naar: [{ blad: 'hout-controleren' }, { blad: 'hout-opslag' }, { blad: 'sjortouw' }] },
 
-  { id: 'sjortouw', naam: 'Sjortouw', ook: ['pioniertouw', 'sjorlijn'], en: 'lashing rope', groep: 'materiaal', bron: 'SW-PT, SGV-GS p. 35, 43',
+  { id: 'sjortouw', naam: 'Sjortouw', ook: ['pioniertouw', 'sjorlijn'], en: 'lashing rope', groep: 'materiaal', bron: 'SW-PT, SGV-GS p. 35, 43', ken: true,
     plaatje: 'sj-sjortouw',
     uitleg: [
       '- Meestal natuurtouw (manilla, hennep of sisal) van 8 tot 12 millimeter dik en 5 tot 7 meter lang.',
@@ -410,7 +412,7 @@ export default [
       '- Schiet het touw op na gebruik en hang het op, per tien bij elkaar: zo tel je ze makkelijk.',
     ],
     letOp: 'Er wordt ook met dunner kunststof touw gesjord. Gebruik het touw dat je groep heeft, en sjor nooit met touw dat rafelt, rot ruikt of slap aanvoelt.',
-    naar: [{ blad: 'touw-onderhoud' }, { blad: 'opschieten' }, { blad: 'takeling' }, { blad: 'touw-controleren' }] },
+    naar: [{ blad: 'touw-onderhoud' }, { blad: 'opschieten' }, { blad: 'takeling' }, { blad: 'eindsplits' }, { blad: 'touw-controleren' }] },
 
   { id: 'hout-controleren', naam: 'Pionierhout controleren', ook: ['paal afkeuren', 'houtrot', 'kloptest'], groep: 'materiaal', bron: 'SN-P25, SGV-GS p. 40–41, SW-PAAL',
     plaatje: 'sj-hout-controleren',
@@ -444,7 +446,7 @@ export default [
     letOp: 'Een wig met scherpe randen kan het touw beschadigen of doorsnijden. Schuur de randen rond.',
     naar: [{ blad: 'steigersjorring' }, { blad: 'pioniergereedschap' }] },
 
-  { id: 'pioniergereedschap', naam: 'Pioniergereedschap', ook: ['moker', 'grondboor', 'ladder', 'gereedschap'], groep: 'materiaal', bron: 'SW-P, SW Ladder',
+  { id: 'pioniergereedschap', naam: 'Pioniergereedschap', ook: ['moker', 'grondboor', 'ladder', 'gereedschap'], groep: 'materiaal', bron: 'SW-P, SW Ladder', ken: true,
     plaatje: 'sj-gereedschap',
     uitleg: [
       'Naast palen en touw komt dit vaak van pas:',
@@ -678,7 +680,7 @@ export default [
     naar: [{ blad: 'bouw-veiligheidsplan' }, { blad: 'beweegbare-verbinding' }, { blad: 'bouw-mini' }] },
 
   // Krachten
-  { id: 'driehoek', naam: 'Waarom een driehoek sterk is', ook: ['schoor', 'stijfheid'], groep: 'krachten', bron: 'TKN §2',
+  { id: 'driehoek', naam: 'Waarom een driehoek sterk is', ook: ['schoor', 'stijfheid'], groep: 'krachten', bron: 'TKN §2', ken: true,
     doe: 'driehoek',
     waarvoor: 'Snappen waarom er schuine palen in een bouwwerk horen, en waar je ze zet.',
     uitleg: [
@@ -707,7 +709,7 @@ export default [
     letOp: 'Dit zijn vuistregels; fabrikanten geven andere cijfers. Oud, nat of beschadigd touw houdt veel minder. En een val maakt de kracht vele malen groter dan het gewicht: zeker mensen nooit met pioniertouw.',
     naar: [{ blad: 'breeksterkte' }, { blad: 'hijsmateriaal' }, { blad: 'kracht-strak-touw' }] },
 
-  { id: 'kracht-strak-touw', naam: 'Krachten in een strak touw', ook: ['doorhang', 'spanning', 'tui', 'brug'], groep: 'krachten', bron: 'natuurkunde [I], SN touwbanen',
+  { id: 'kracht-strak-touw', naam: 'Krachten in een strak touw', ook: ['doorhang', 'spanning', 'tui', 'brug'], groep: 'krachten', bron: 'natuurkunde [I], SN touwbanen', ken: true,
     plaatje: 'sj-doorhang',
     doe: 'touwbaan-spannen',
     uitleg: [
@@ -740,7 +742,7 @@ export default [
     ],
     naar: [{ blad: 'veiligheid-pionierobjecten' }, { blad: 'werken-op-hoogte' }, { blad: 'touw-onder-spanning' }] },
 
-  { id: 'veiligheid-pionierobjecten', naam: 'Veiligheidsrichtlijnen van Scouting Nederland', ook: ['veiligheid bij pionieren', 'checklist pionieren', 'zorgplicht'], groep: 'veilig', letterlijk: true,
+  { id: 'veiligheid-pionierobjecten', naam: 'Veiligheidsrichtlijnen van Scouting Nederland', ook: ['veiligheid bij pionieren', 'checklist pionieren', 'zorgplicht'], groep: 'veilig', letterlijk: true, ken: true,
     bron: 'Scouting Nederland, Veiligheid bij pionieren', bronDatum: 'januari 2019',
     doe: 'pionier-check',
     waarvoor: 'Wat Scouting Nederland van je groep vraagt als je een pionierobject bouwt: geen speciale wet, wel zorgplicht, en een checklist van voorbereiden tot gebruiken.',
@@ -762,7 +764,7 @@ export default [
     ],
     naar: [{ blad: 'bouw-veiligheidsplan' }, { blad: 'werken-op-hoogte' }, { blad: 'geen-keuring-3m' }, { blad: 'eigen-veiligheid' }] },
 
-  { id: 'geen-keuring-3m', naam: 'Geen keuring vanaf 3 meter', ook: ['keuring', 'speeltoestellenbesluit', 'WAS', '3 meter'], groep: 'veilig', letterlijk: true,
+  { id: 'geen-keuring-3m', naam: 'Geen keuring vanaf 3 meter', ook: ['keuring', 'speeltoestellenbesluit', 'WAS', '3 meter'], groep: 'veilig', letterlijk: true, ken: true,
     bron: 'Scouting Nederland, infoblad Speeltoestellenbesluit (mrt. 2010) en Veiligheid bij pionieren (jan. 2019)', bronDatum: 'maart 2010',
     plaatje: 'sj-tijdelijk-vast',
     waarvoor: 'Weten wanneer een bouwwerk gekeurd moet worden, en wanneer niet. Over een fabel die vaak rondgaat.',

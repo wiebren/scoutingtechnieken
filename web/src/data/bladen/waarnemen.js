@@ -111,7 +111,7 @@ export default [
     naar: [{ blad: 'passen-tellen' }, { blad: 'tocht-uitzetten' }, { blad: 'flits-donder' }] },
 
   // Meten bij water
-  { id: 'rivierbreedte', naam: 'Breedte van een rivier', ook: ['breedte schatten', 'breedte van een sloot'], en: 'river width', groep: 'water', bron: 'WU AOM, JV, PT; TOP-LEG',
+  { id: 'rivierbreedte', naam: 'Breedte van een rivier', ook: ['breedte schatten', 'breedte van een sloot'], en: 'river width', groep: 'water', bron: 'WU AOM, JV, PT; TOP-LEG', ken: true,
     uitleg: [
       'Er zijn een paar manieren om de breedte te bepalen zonder dat je naar de overkant hoeft:',
       '- De Napoleonmethode: snel en zonder spullen, maar grof.',
@@ -157,7 +157,7 @@ export default [
     naar: [{ blad: 'dwarsprofiel' }, { blad: 'veilig-bij-water' }] },
 
   // Schetsen
-  { id: 'soorten-schetsen', naam: 'Soorten schetsen', ook: ['schetsen', 'schetsenmatrix', 'contourschets', 'aangezichtsschets', 'fotoschets'], en: 'field sketches', groep: 'schetsen', bron: 'WU WH, PT, JV',
+  { id: 'soorten-schetsen', naam: 'Soorten schetsen', ook: ['schetsen', 'schetsenmatrix', 'contourschets', 'aangezichtsschets', 'fotoschets'], en: 'field sketches', groep: 'schetsen', bron: 'WU WH, PT, JV', ken: true,
     plaatje: 'schetsen-rooster',
     uitleg: [
       'Er zijn veel soorten schetsen. De Winterhike zet ze in een rooster: wat teken je (een gebouw, van bovenaf, of een landschap), en hoeveel detail.',

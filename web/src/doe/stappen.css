@@ -18,10 +18,10 @@
 .stb-nr {
   display: grid; place-items: center; width: var(--stb-punt); height: var(--stb-punt); border-radius: 50%;
   border: 2px solid var(--lijn-sterk); background: var(--paneel); color: var(--stil);
-  font-size: 13px; font-weight: 700; font-variant-numeric: tabular-nums;
+  font-size: 0.8125rem; font-weight: 700; font-variant-numeric: tabular-nums;
 }
 .stb-naam {
-  max-width: 100%; padding: 0 2px; color: var(--stil); font-size: 12.5px; font-weight: 500; line-height: 1.25; text-align: center;
+  max-width: 100%; padding: 0 2px; color: var(--stil); font-size: 0.7812rem; font-weight: 500; line-height: 1.25; text-align: center;
   overflow-wrap: anywhere;
 }
 .stb-punt.klaar .stb-nr { border-color: var(--accent); background: var(--accent); color: var(--op-accent); }

@@ -19,68 +19,12 @@ import weer from './plaatjes/weer.js';
 import veiligheid from './plaatjes/veiligheid.js';
 import touw from './plaatjes/touw.js';
 import sjorren from './plaatjes/sjorren.js';
+import sjorkeuze from './plaatjes/sjorkeuze.js';
 import kaart from './plaatjes/kaart.js';
 
 /** The 32 Dutch points of the compass, clockwise from north; "t" is "ten" (NtO: noord ten oosten). */
 export const STREKEN = ['N', 'NtO', 'NNO', 'NOtN', 'NO', 'NOtO', 'ONO', 'OtN', 'O', 'OtZ', 'OZO', 'ZOtO', 'ZO', 'ZOtZ', 'ZZO', 'ZtO',
   'Z', 'ZtW', 'ZZW', 'ZWtZ', 'ZW', 'ZWtW', 'WZW', 'WtZ', 'W', 'WtN', 'WNW', 'NWtW', 'NW', 'NWtN', 'NNW', 'NtW'];
-
-/** A wind rose with 8, 16 or 32 points, each with its name and the main ones with their degrees. */
-function windroos(n) {
-  const c = 175; const stap = 360 / n;
-  let uit = `<circle cx="${c}" cy="${c}" r="112" class="vlak"/><circle cx="${c}" cy="${c}" r="112" class="lijn dun"/>`;
-  for (let i = 0; i < 32; i++) {
-    const g = i * 11.25;
-    if (g % stap) continue;
-    const hoofd = g % 90 === 0; const half = g % 45 === 0;
-    const lengte = hoofd ? 104 : half ? 84 : g % 22.5 === 0 ? 66 : 50;
-    const breed = hoofd ? 11 : half ? 8 : 5;
-    const [px, py] = pol(c, c, lengte, g); const [lx, ly] = pol(c, c, breed, g - 90); const [rx, ry] = pol(c, c, breed, g + 90);
-    uit += `<path d="M${lx} ${ly} L${px} ${py} L${c} ${c}Z" class="${hoofd ? 'accent' : 'vol'}"/><path d="M${rx} ${ry} L${px} ${py} L${c} ${c}Z" class="${hoofd ? 'accent-licht' : 'vol-licht'}"/>`;
-    const naam = STREKEN[i];
-    const [tx, ty] = pol(c, c, n === 32 && !half ? 128 : 134, g);
-    const grootte = hoofd ? 17 : half ? 13 : n === 32 && g % 22.5 ? 8.5 : 10.5;
-    uit += `<text x="${tx}" y="${ty}" class="tekst${hoofd ? ' vet' : ''}" font-size="${grootte}" text-anchor="middle" dominant-baseline="central">${naam}</text>`;
-    if (half && n === 8) {
-      const [gx, gy] = pol(c, c, g % 180 === 90 ? 162 : 152, g);       // beside O and W: clear of the letter
-      uit += `<text x="${gx}" y="${gy}" class="tekst stil" font-size="9" text-anchor="middle" dominant-baseline="central">${g}°</text>`;
-    }
-  }
-  return svg(350, 350, `Windroos met ${n} windrichtingen`, uit);
-}
-
-/** A baseplate compass with its parts named. */
-function kompas() {
-  const labels = [
-    [258, 34, 'richtingspijl', 150, 46],
-    [258, 96, 'roos met gradenring', 198, 136],
-    [258, 146, 'naald (rood is noord)', 152, 150],
-    [258, 196, 'noordlijnen', 174, 192],
-    [258, 240, 'oriëntatiepijl', 150, 208],
-    [258, 284, 'huis (draait)', 183, 233],
-    [258, 330, 'plaat met liniaal', 112, 300],
-  ];
-  let uit = '<rect x="62" y="16" width="176" height="340" rx="22" class="vlak"/><rect x="62" y="16" width="176" height="340" rx="22" class="lijn"/>';
-  for (let i = 0; i <= 10; i++) uit += `<path d="M${74} ${248 + i * 9.6}h${i % 5 ? 6 : 12}" class="lijn dun"/>`;
-  uit += '<path d="M150 30 L162 58 H156 V100 H144 V58 H138Z" class="accent"/>';
-  uit += '<circle cx="150" cy="176" r="66" class="vlak2"/><circle cx="150" cy="176" r="66" class="lijn"/><circle cx="150" cy="176" r="54" class="lijn dun"/>';
-  for (let g = 0; g < 360; g += 10) {
-    const [ax, ay] = pol(150, 176, 66, g); const [bx, by] = pol(150, 176, g % 30 ? 61 : 57, g);
-    uit += `<path d="M${ax} ${ay} L${bx} ${by}" class="lijn dun"/>`;
-  }
-  for (const [g, t] of [[0, 'N'], [90, 'O'], [180, 'Z'], [270, 'W']]) {
-    const [x, y] = pol(150, 176, 47, g);
-    uit += `<text x="${x}" y="${y}" class="tekst vet" font-size="11" text-anchor="middle" dominant-baseline="central">${t}</text>`;
-  }
-  for (const dx of [-24, -12, 12, 24]) uit += `<path d="M${150 + dx} ${132} V${220}" class="lijn dun stil"/>`;
-  uit += '<path d="M150 214 L162 196 H138Z" class="lijn" fill="none"/>';
-  uit += '<path d="M150 128 L158 176 L142 176Z" class="rood"/><path d="M150 224 L158 176 L142 176Z" class="vol"/>';
-  for (const [tx, ty, t, px, py] of labels) {
-    uit += `<path d="M${tx - 6} ${ty} L${px} ${py}" class="lijn dun stil"/><circle cx="${px}" cy="${py}" r="2.5" class="vol"/>`;
-    uit += `<text x="${tx}" y="${ty}" class="tekst" font-size="12" dominant-baseline="central">${t}</text>`;
-  }
-  return svg(400, 372, 'Plaatkompas met de namen van de onderdelen', uit);
-}
 
 /** The three norths, the angles between them drawn much larger than they are. */
 function drieNoorden() {
@@ -181,29 +125,6 @@ function lijnschaal() {
   uit += balk(146, '1:50.000', 2, { per: 2, n: 10, labels: [[0, '0'], [2, '1 km'], [6, '3 km'], [10, '5 km']] }, '2 cm = 1 km');
   uit += balk(196, '1:100.000', 1, { per: 1, n: 10, labels: [[0, '0'], [5, '5 km'], [10, '10 km']] }, '1 cm = 1 km');
   return svg(350, 222, 'Een liniaal met de lijnschaal van 1:25.000, 1:50.000 en 1:100.000', uit);
-}
-
-/** A made-up piece of a luchtvaartkaart: an airfield with its CTR, an obstacle with its height in feet, a radio
- *  beacon, and the ground in a few strokes. Not a real place. */
-function luchtkaart() {
-  let uit = '<rect width="340" height="250" rx="12" class="lucht-land"/>';
-  uit += '<path d="M0 182 C60 170 90 196 150 186 S260 150 340 166 V188 C270 174 220 206 150 208 S50 196 0 204Z" class="lucht-water"/>';
-  uit += '<path d="M222 40 c18 -8 40 -4 46 10 c6 14 -8 30 -28 30 c-18 0 -30 -26 -18 -40Z" class="lucht-stad"/>';
-  uit += '<path d="M0 120 L340 92" class="lucht-weg"/>';
-  // the CTR around the airfield, with its limits
-  uit += '<path d="M70 60 L176 44 L196 140 L88 158Z" class="lucht-ctr"/>';
-  uit += '<text x="82" y="78" class="lucht-label vet" font-size="10">CTR</text><text x="82" y="90" class="lucht-label" font-size="9">SFC – 1500 ft</text>';
-  // the airfield: a circle with its runway
-  uit += '<circle cx="134" cy="102" r="12" class="lucht-veld"/><path d="M126 110 L142 94" class="lucht-baan"/>';
-  uit += '<text x="150" y="122" class="lucht-label vet" font-size="9">vliegveld</text>';
-  // an obstacle: a mast with its height above sea level, in feet
-  uit += '<path d="M268 132 L274 116 L280 132" class="lucht-obstakel"/><circle cx="274" cy="128" r="1.6" class="lucht-punt"/>';
-  uit += '<text x="274" y="146" class="lucht-label" font-size="9" text-anchor="middle">482</text><text x="286" y="122" class="lucht-label" font-size="8.5">mast</text>';
-  // a radio beacon (VOR): a hexagon with a compass rose
-  uit += '<circle cx="60" cy="226" r="16" class="lucht-roos"/><path d="M54 216 h12 l6 10 l-6 10 h-12 l-6 -10Z" class="lucht-vor"/>';
-  uit += '<text x="82" y="230" class="lucht-label" font-size="9">baken (VOR)</text>';
-  uit += '<text x="240" y="66" class="lucht-label" font-size="9">stad</text>';
-  return svg(340, 250, 'Een verzonnen stukje luchtvaartkaart: vliegveld met CTR, een mast met zijn hoogte in voet en een baken', uit);
 }
 
 /** A spiegelkompas (Recta DP, Suunto MB-6) from the side: you look over the top at your goal, and see the housing
@@ -851,16 +772,11 @@ function plekVakjes() {
 }
 
 export const PLAATJES = {
-  'windroos-8': () => windroos(8),
-  'windroos-16': () => windroos(16),
-  'windroos-32': () => windroos(32),
-  kompas,
   'drie-noorden': drieNoorden,
   'rd-rooster': rdRooster,
   hoogtelijnen,
   poolster,
   lijnschaal,
-  luchtkaart,
   spiegelkompas,
   eiken,
   bloedcirkel,
@@ -904,5 +820,6 @@ export const PLAATJES = {
   ...veiligheid,
   ...touw,
   ...sjorren,
+  ...sjorkeuze,
   ...kaart,
 };

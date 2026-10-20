@@ -1,7 +1,7 @@
 /* Measure a winding road with a string (kronkelweg.js). */
 .doe-kronkelweg { display: flex; flex-direction: column; gap: 10px; }
 .doe-kronkelweg p { margin: 0; }
-.kw-opdracht { font-size: 16px; }
+.kw-opdracht { font-size: 1rem; }
 .kw-beeld { width: 100%; max-width: 640px; }
 .kw-svg { display: block; width: 100%; height: auto; touch-action: none; user-select: none; -webkit-user-select: none; cursor: crosshair; }
 .kw-svg:focus-visible { outline: 3px solid var(--accent); outline-offset: 2px; border-radius: 6px; }
@@ -33,7 +33,7 @@
 .kw-velden { display: grid; gap: 10px; }
 @container (min-width: 420px) { .kw-velden { grid-template-columns: repeat(2, minmax(0, 1fr)); } }
 .kw-getal { font-variant-numeric: tabular-nums; }
-.kw-uitleg { color: var(--stil); font-size: 14px; }
+.kw-uitleg { color: var(--stil); font-size: 0.875rem; }
 .kw-uitleg:empty { display: none; }
 .doe-kronkelweg .knop-rij[hidden] { display: none; }
 

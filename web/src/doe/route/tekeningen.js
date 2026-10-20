@@ -182,7 +182,7 @@ const stapKlas = (i, hier, toon) => `${toon && i === hier ? '.hier' : ''}${toon 
  * The notation as an element. `hier`: the index of the current junction (or the route length when done); `toon`:
  * mark it. `variant`: 'smiley' for the ogenroute; `woorden`: write colours and knots in words.
  */
-export function tekenNotatie(techniek, codes, { hier = 0, toon = false, variant = 'ogen', woorden = false } = {}) {
+export function tekenNotatie(techniek, codes, { hier = 0, toon = false, variant = 'ogen', woorden = false, stijl = 'gewoon' } = {}) {
   const items = codes.items;
   const groep = toon ? codes.perStap[Math.min(hier, codes.perStap.length - 1)] : -1;
   const klaar = hier >= codes.perStap.length;
@@ -205,8 +205,14 @@ export function tekenNotatie(techniek, codes, { hier = 0, toon = false, variant 
       return h('ol.rw-tijden', items.map((it, i) => h(`li.rw-tijd${stapKlas(i, hier, toon)}`, h('span.rw-nr-tekst', `${i + 1}`), h('strong', it.tijd), klok(it.h, it.m))));
     case 'rll':
       return h('ol.rw-rll', items.map((it, i) => h(`li${stapKlas(i, hier, toon)}`, it.laten.flatMap((l, j) => [j ? ' · ' : '', `${l.naam} `, h('strong', l.kant)]))));
-    case 'beschrijving':
-      return h('div.rw-tekst', h('p', codes.intro, ' ', items.map((it, i) => [h(`span.rw-zin${stapKlas(i, hier, toon)}`, it.zin), ' ']), codes.slot));
+    case 'beschrijving': {
+      const t = codes.stijlen[stijl] ?? codes.stijlen.gewoon;
+      // a poem goes line by line, a couplet per junction; the others are one running text
+      if (stijl === 'gedicht') {
+        return h('div.rw-tekst.gedicht', h('p', t.intro), t.zinnen.map((z, i) => h(`p.rw-zin${stapKlas(i, hier, toon)}`, z)), h('p', t.slot));
+      }
+      return h('div.rw-tekst', h('p', t.intro, ' ', t.zinnen.map((z, i) => [h(`span.rw-zin${stapKlas(i, hier, toon)}`, z), ' ']), t.slot));
+    }
     default: return h('p', '?');
   }
 }

@@ -3,20 +3,20 @@
 .doe-spelalfabet p { margin: 0; }
 .sa-paneel { display: flex; flex-direction: column; gap: 10px; }
 
-.sa-zin { font-size: 17px; font-weight: 600; overflow-wrap: anywhere; }
+.sa-zin { font-size: 1.0625rem; font-weight: 600; overflow-wrap: anywhere; }
 .sa-zin:empty { display: none; }
 .doe-spelalfabet .sa-lijst { display: grid; grid-template-columns: repeat(auto-fill, minmax(130px, 1fr)); gap: 6px; margin: 0; padding: 0; list-style: none; }
 .sa-lijst:empty { display: none; }
 .sa-lijst li { display: grid; grid-template-columns: 30px 1fr; align-items: baseline; column-gap: 8px; margin: 0; padding: 6px 10px; border: 1px solid var(--lijn); border-radius: 8px; }
-.sa-letter { font-size: 20px; font-weight: 750; color: var(--accent); }
-.sa-woord { font-size: 16px; font-weight: 600; }
-.sa-ook { grid-column: 2; color: var(--stil); font-size: 12px; }
+.sa-letter { font-size: 1.25rem; font-weight: 750; color: var(--accent); }
+.sa-woord { font-size: 1rem; font-weight: 600; }
+.sa-ook { grid-column: 2; color: var(--stil); font-size: 0.75rem; }
 .sa-lijst li.sa-spatie, .sa-lijst li.sa-ander { border-style: dashed; }
 .sa-spatie .sa-letter, .sa-ander .sa-letter, .sa-spatie .sa-woord, .sa-ander .sa-woord { color: var(--stil); font-weight: 500; }
 
-.sa-vraag { font-size: 18px; }
+.sa-vraag { font-size: 1.125rem; }
 .sa-vraag strong { display: inline-grid; place-items: center; min-width: 44px; min-height: 44px; margin: 0 4px; border-radius: 10px;
-  background: color-mix(in srgb, var(--accent) 14%, var(--paneel)); color: var(--accent); font-size: 26px; vertical-align: middle; }
+  background: color-mix(in srgb, var(--accent) 14%, var(--paneel)); color: var(--accent); font-size: 1.625rem; vertical-align: middle; }
 .sa-opties { display: grid; grid-template-columns: 1fr 1fr; gap: 8px; }
 @container (min-width: 520px) { .sa-opties { grid-template-columns: repeat(4, 1fr); } }
 .sa-optie[aria-disabled="true"] { cursor: default; }

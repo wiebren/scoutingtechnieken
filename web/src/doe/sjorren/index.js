@@ -25,6 +25,7 @@ export default {
   'bouwwerk-stormbaan': bouw('Bekijk de stormbaan in 3D', 'stormbaan'),
   'bouwwerk-kabelbaan': bouw('Bekijk de kabelbaan in 3D', 'kabelbaan'),
   'bouwwerk-reuzenrad': bouw('Bekijk het reuzenrad in 3D', 'reuzenrad'),
+  'kruissjorring-leggen': { titel: 'Leg een kruissjorring, stap voor stap', laad: () => import('./kruissjorring.js'), bekijk: true },
   ...touwbanen,
   ...extra,
 };

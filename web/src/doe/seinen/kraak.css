@@ -5,7 +5,7 @@
 
 .kr-boodschap {
   padding: 10px 12px; border-radius: 10px; background: color-mix(in srgb, var(--blauw) 10%, var(--zacht)); color: var(--blauw);
-  font-size: 19px; font-weight: 700; letter-spacing: 0.04em; overflow-wrap: anywhere; font-variant-numeric: tabular-nums; white-space: pre-wrap;
+  font-size: 1.1875rem; font-weight: 700; letter-spacing: 0.04em; overflow-wrap: anywhere; font-variant-numeric: tabular-nums; white-space: pre-wrap;
 }
 .kr-boodschap.gewoon { background: var(--zacht); color: var(--inkt); letter-spacing: 0.02em; }
 .kr-sleutel { font-weight: 700; }
@@ -20,7 +20,7 @@
 .kr-lijst { display: grid; grid-template-columns: repeat(auto-fill, minmax(84px, 1fr)); gap: 4px; }
 .kr-lijst > span {
   display: flex; align-items: baseline; justify-content: center; gap: 6px; padding: 5px 4px; border-radius: 6px; background: var(--zacht);
-  font-size: 14px; font-variant-numeric: tabular-nums;
+  font-size: 0.875rem; font-variant-numeric: tabular-nums;
 }
 .kr-lijst > span > span { color: var(--blauw); font-weight: 600; letter-spacing: 0.02em; }
 
@@ -30,11 +30,11 @@
 .kr-code { font-variant-numeric: tabular-nums; letter-spacing: 0.03em; }
 
 .kr-nagekeken {
-  padding: 8px 12px; border-radius: 10px; border: 1px solid var(--lijn-sterk); font-size: 17px; line-height: 1.6;
+  padding: 8px 12px; border-radius: 10px; border: 1px solid var(--lijn-sterk); font-size: 1.0625rem; line-height: 1.6;
   overflow-wrap: anywhere; white-space: pre-wrap;
 }
 .kr-nagekeken[hidden] { display: none; }
-.kr-kop { color: var(--stil); font-size: 14px; font-weight: 600; }
+.kr-kop { color: var(--stil); font-size: 0.875rem; font-weight: 600; }
 .kr-nagekeken mark { padding: 0 1px; border-radius: 3px; font-weight: 700; }
 .kr-fout { background: color-mix(in srgb, var(--rood) 18%, transparent); color: var(--rood); text-decoration: underline wavy; text-underline-offset: 3px; }
 .kr-mist { background: none; color: var(--rood); }
@@ -42,6 +42,6 @@
 /* the rooster and its sjabloon next to each other, also on a phone */
 .kr-rooster-paar { display: flex; justify-content: center; gap: 12px; }
 .kr-rooster-paar figure { flex: 0 1 260px; min-width: 0; margin: 0; display: flex; flex-direction: column; align-items: center; gap: 4px; }
-.kr-rooster-paar figcaption { font-size: 13px; font-weight: 600; color: var(--stil); }
+.kr-rooster-paar figcaption { font-size: 0.8125rem; font-weight: 600; color: var(--stil); }
 .kr-rooster-paar .rc-rooster { width: 100%; }
 .kr-rooster-paar .rc-rooster span { font-size: clamp(14px, 4.4cqi, 22px); }

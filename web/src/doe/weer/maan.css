@@ -10,19 +10,19 @@
 .mf-groot { display: block; width: 96px; height: 96px; flex: none; border-radius: 50%; background: #0d1626; }
 .mf-zo { display: flex; align-items: center; gap: 14px; }
 .mf-zo p { margin: 0; }
-.mf-naam { font-size: 19px; font-weight: 700; }
+.mf-naam { font-size: 1.1875rem; font-weight: 700; }
 .mf-raad { display: flex; flex-direction: column; align-items: flex-start; gap: 10px; }
 .mf-raad p { margin: 0; }
 .mf-raad .mf-groot { width: 140px; height: 140px; }
 
-.mk-svg { touch-action: none; cursor: grab; border-radius: 50%; }
+.mk-svg { touch-action: none; cursor: grab; border-radius: 50%; user-select: none; -webkit-user-select: none; }
 .mk-schijf { fill: #f4efe2; stroke: #8b7a5a; stroke-width: 1.5; }
 .mk-schijf2 { fill: #d8c9a6; stroke: #8b7a5a; stroke-width: 1.5; }
 .mk-venster { fill: none; stroke: #5a4a2a; stroke-width: 2; }
 .mk-streep { stroke: #6b5a3a; stroke-width: 1.2; }
-.mk-letter { fill: #2a2418; font-size: 16px; font-weight: 800; }
+.mk-letter { fill: #2a2418; font-size: 1rem; font-weight: 800; }
 .mk-letter.noord { fill: #c8141b; }
-.mk-tussen { fill: #6b5a3a; font-size: 10px; font-weight: 700; }
+.mk-tussen { fill: #6b5a3a; font-size: 0.625rem; font-weight: 700; }
 .mk-uur { fill: #2a2418; font-size: 12px; font-weight: 650; }
 .mk-uur.twaalf { font-weight: 800; }
 .mk-pen { fill: #5a4a2a; }

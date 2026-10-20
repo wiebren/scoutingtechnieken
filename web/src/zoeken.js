@@ -7,7 +7,7 @@
 import { BLAD, BLADEN } from './data/bladen/index.js';
 import { CATEGORIE, CATEGORIEEN, groepNaam } from './data/categorieen.js';
 import { alles, inKeuze, inWoorden } from './data/niveaus.js';
-import { bladTekens, tegelVoet } from './bladtekens.js';
+import { bladTekens, tegelBalkjes } from './bladtekens.js';
 import { h, vul } from './dom.js';
 import { groepIcoon } from './groepiconen.js';
 import { icoon } from './iconen.js';
@@ -58,10 +58,10 @@ export function zoekenView() {
       h('p.intro', `Zoek op naam, of kies een categorie. Er staan nu ${BLADEN.length} onderwerpen in, en er komen er nog meer bij.`,
         getoond < BLADEN.length && ` ${inWoorden(keuze)}: ${meer(getoond)}.`),
       h('ul.tegels', CATEGORIEEN.map((c) => {
-        const aantal = BLADEN.filter((b) => b.categorie === c.id && zichtbaar(b)).length;
-        return h('li', h('a.tegel', { href: href('zoeken', { c: c.id }), 'data-familie': c.kleur, class: aantal ? null : 'leeg' },
+        const hier = BLADEN.filter((b) => b.categorie === c.id && zichtbaar(b));
+        return h('li', h('a.tegel', { href: href('zoeken', { c: c.id }), 'data-familie': c.kleur, class: hier.length ? null : 'leeg' },
           h('span.tegel-icoon', icoon(c.icoon)), h('span.tegel-naam', c.naam),
-          h('span.tegel-aantal', meer(aantal))));
+          h('span.tegel-aantal', meer(hier.length)), tegelBalkjes(hier, keuze)));
       })),
     ];
   }
@@ -79,14 +79,14 @@ export function zoekenView() {
       const hier = bladen.filter((b) => b.groep === g);
       const sub = hier.length ? hier.slice(0, 4).map((b) => b.naam).join(' · ') + (hier.length > 4 ? ' …' : '')
         : alle.some((b) => b.groep === g) ? 'Niets op je niveau' : 'Nog leeg';
-      // a tile, as the categories on the first page: an icon, the name, a few of its onderwerpen, and at the foot the
-      // niveaus in it and how many you have ticked off
+      // a tile, as the categories on the first page: an icon, the name, a few of its onderwerpen, and at the foot how
+      // far you are
       return h('li', h('a.tegel.groep-tegel', {
         href: href('zoeken', { c: c.id, g, ...(open?.groep === g && open.categorie === c.id ? { blad: open.id } : {}) }),
         class: hier.length ? null : 'leeg', 'aria-current': open?.categorie === c.id && open.groep === g ? 'true' : null,
         'data-familie': c.kleur,
       }, h('span.tegel-icoon', groepIcoon(c.id, g)), h('span.tegel-naam', naam), h('span.tegel-sub', sub),
-        hier.length > 0 && tegelVoet(hier)));
+        hier.length > 0 && tegelBalkjes(hier, niveauKeuze())));
     });
     return [h('p.toon-alles', h('a', { href: href('zoeken', { c: c.id, g: 'alles' }) }, 'Toon alles')),
       h('ul.tegels.groep-tegels', rijen), buiten(alle.length - bladen.length)];

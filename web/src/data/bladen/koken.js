@@ -66,7 +66,7 @@ export default [
     naar: [{ blad: 'foliepakket' }, { blad: 'stokbrood' }] },
 
   // Branders
-  { id: 'branders', naam: 'Branders', ook: ['hikebrander', 'spiritusbrander', 'brandtabletten', 'primus', 'benzinebrander', 'kooktoestel'],
+  { id: 'branders', naam: 'Branders', ook: ['hikebrander', 'spiritusbrander', 'brandtabletten', 'primus', 'benzinebrander', 'kooktoestel'], ken: true,
     zoekOok: ['Trangia', 'Esbit', 'MSR', 'Kelly kettle'], en: 'camping stoves', groep: 'branders',
     bron: 'VKG SW-BR, SN-K, SN-Ko',
     plaatje: 'branders',
@@ -218,7 +218,7 @@ export default [
     letOp: 'Twijfel je bij een allergie, vraag het dan aan de leiding of de ouders, niet aan de scout alleen.',
     naar: [{ blad: 'vijf-keer-veilig' }] },
   // Eten en gezond (insigne Koken)
-  { id: 'schijf-van-vijf', naam: 'De Schijf van Vijf', ook: ['gezond eten', 'Voedingscentrum', 'dagkeuze', 'weekkeuze', 'volkoren'], en: 'Dutch food guide', groep: 'eten',
+  { id: 'schijf-van-vijf', naam: 'De Schijf van Vijf', ook: ['gezond eten', 'Voedingscentrum', 'dagkeuze', 'weekkeuze', 'volkoren'], en: 'Dutch food guide', groep: 'eten', ken: true,
     bron: 'VKG VC-S5, VC-S5P, VC-S5W, VC-S5O',
     doe: 'schijf-quiz',
     uitleg: [
@@ -244,7 +244,7 @@ export default [
       { naam: 'Voedingscentrum: hoeveel en wat kan ik per dag eten?', url: 'https://www.voedingscentrum.nl/nl/gezond-eten-met-de-schijf-van-vijf/hoeveel-en-wat-kan-ik-per-dag-eten-.aspx' },
     ],
     naar: [{ blad: 'seizoen-groente-fruit' }, { blad: 'allergie-en-dieet' }, { blad: 'restjes' }] },
-  { id: 'seizoen-groente-fruit', naam: 'Groente en fruit van het seizoen', ook: ['seizoensgroente', 'seizoensfruit', 'groentekalender', 'fruitkalender', 'oogst'], groep: 'eten',
+  { id: 'seizoen-groente-fruit', naam: 'Groente en fruit van het seizoen', ook: ['seizoensgroente', 'seizoensfruit', 'groentekalender', 'fruitkalender', 'oogst'], groep: 'eten', ken: true,
     bron: 'VKG VC-SZ, VC-DGF, MC-GF, VC-GB',
     doe: 'seizoenkalender',
     uitleg: [
@@ -293,7 +293,7 @@ export default [
     letOp: 'Vlam in de pan? Nooit water erop! Zet het vuur uit en doe er een deksel op. Laat de pan staan tot hij is afgekoeld.',
     verwijs: [{ naam: 'Brandweer: vlam in de pan', url: 'https://www.brandweer.nl/onderwerpen/vlam-in-de-pan/' }],
     naar: [{ blad: 'vlam-in-de-pan' }, { blad: 'brandwond' }, { blad: 'handen-wassen-koken' }] },
-  { id: 'biologisch', naam: 'Biologisch', ook: ['bio', 'EKO', 'Skal', 'groene blaadje', 'keurmerk', 'van boer tot bord'], en: 'organic', groep: 'eten',
+  { id: 'biologisch', naam: 'Biologisch', ook: ['bio', 'EKO', 'Skal', 'groene blaadje', 'keurmerk', 'van boer tot bord'], en: 'organic', groep: 'eten', ken: true,
     bron: 'VKG SKAL, RVO-EU, MC-BIO, VC-BIO',
     uitleg: [
       'Biologisch eten wordt gemaakt zonder kunstmest, zonder chemische middelen tegen ziektes, plagen en onkruid, en zonder genetisch veranderde planten of dieren. De dieren hebben meer ruimte dan op een gewone boerderij. Er mag hooguit 5 procent niet-biologisch in zitten.',
@@ -330,7 +330,7 @@ export default [
       { naam: 'Milieu Centraal: palmolie', url: 'https://www.milieucentraal.nl/eten-en-drinken/tropische-producten/palmolie/' },
     ],
     naar: [{ blad: 'vlam-in-de-pan' }, { blad: 'koken-op-houtvuur' }] },
-  { id: 'houdbaarheid', naam: 'Houdbaar tot, en bedorven eten', ook: ['THT', 'TGT', 'ten minste houdbaar tot', 'te gebruiken tot', 'houdbaarheidsdatum', 'schimmel', 'bedorven'], groep: 'eten',
+  { id: 'houdbaarheid', naam: 'Houdbaar tot, en bedorven eten', ook: ['THT', 'TGT', 'ten minste houdbaar tot', 'te gebruiken tot', 'houdbaarheidsdatum', 'schimmel', 'bedorven'], groep: 'eten', ken: true,
     bron: 'VKG VC-THT, VC-SCH',
     uitleg: 'Op verpakt eten staat een van twee datums. Ze betekenen iets anders. De datum geldt alleen zolang de verpakking nog dicht is.',
     tabel: { kop: ['Datum', 'Gaat over', 'Na de datum'], rijen: [
@@ -340,7 +340,7 @@ export default [
     letOp: 'Beschimmeld eten gooi je weg. Schep geen schimmel van jam of appelmoes: vaak zit de schimmel onzichtbaar ook in de rest, en sommige schimmels maken gif. Alleen bij harde kaas mag je de schimmel er ruim afsnijden, 1 cm eromheen.',
     verwijs: [{ naam: 'Voedingscentrum: twee houdbaarheidsdatums', url: 'https://www.voedingscentrum.nl/encyclopedie/houdbaarheidsdatums-tht-tgt.aspx' }],
     naar: [{ blad: 'e-nummers' }, { blad: 'restjes' }, { blad: 'vijf-keer-veilig' }] },
-  { id: 'e-nummers', naam: 'E-nummers en conserveermiddelen', ook: ['E-nummer', 'conserveermiddel', 'etiket', 'ingrediënten', 'EFSA', 'ADI'], en: 'E numbers, preservatives', groep: 'eten',
+  { id: 'e-nummers', naam: 'E-nummers en conserveermiddelen', ook: ['E-nummer', 'conserveermiddel', 'etiket', 'ingrediënten', 'EFSA', 'ADI'], en: 'E numbers, preservatives', groep: 'eten', ken: true,
     bron: 'VKG VC-E, WP-EN, WP-CM',
     uitleg: [
       'Een E-nummer is een stof die aan eten mag worden toegevoegd. Eerst beoordeelt de Europese voedselveiligheidsautoriteit (EFSA) of de stof veilig is. Is hij goedgekeurd, dan krijgt hij een nummer. De E staat voor Europa. Er zijn meer dan 300 E-nummers goedgekeurd.',

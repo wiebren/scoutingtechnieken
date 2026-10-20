@@ -6,7 +6,7 @@
 @container (min-width: 480px) { .sc-velden { grid-template-columns: repeat(2, minmax(0, 1fr)); } }
 .sc-veld { display: flex; flex-direction: column; gap: 6px; min-width: 0; }
 .sc-invoer { display: flex; align-items: center; gap: 6px; }
-.sc-getal { flex: 0 1 12ch; font-size: 17px; font-variant-numeric: tabular-nums; }
+.sc-getal { flex: 0 1 12ch; font-size: 1.0625rem; font-variant-numeric: tabular-nums; }
 .sc-getal[aria-invalid="true"] { border-color: var(--rood); }
 .sc-eenheid { width: auto; flex: none; }
 
@@ -22,6 +22,6 @@
 .sc-blok { fill: var(--inkt); }
 .sc-blok.licht { fill: var(--paneel); stroke: var(--inkt); stroke-width: 0.8; }
 
-.sc-uitkomst { font-size: 18px; font-variant-numeric: tabular-nums; }
-.sc-som, .sc-noot { color: var(--stil); font-size: 14px; }
+.sc-uitkomst { font-size: 1.125rem; font-variant-numeric: tabular-nums; }
+.sc-som, .sc-noot { color: var(--stil); font-size: 0.875rem; }
 .sc-lopen { padding: 8px 12px; border-radius: 10px; background: var(--zacht); }

@@ -19,7 +19,7 @@
   .za-persoon.loopt .za-been-r { animation: za-stap 0.8s ease-in-out infinite alternate-reverse; }
 }
 @keyframes za-stap { from { transform: rotate(-14deg); } to { transform: rotate(14deg); } }
-.za-lijst { margin: 0; padding-left: 20px; font-size: 14px; }
+.za-lijst { margin: 0; padding-left: 20px; font-size: 0.875rem; }
 .za-lijst li.wel { color: var(--inkt); }
 .za-lijst li.niet { color: var(--stil); text-decoration: line-through; }
 @media (prefers-reduced-motion: reduce) {

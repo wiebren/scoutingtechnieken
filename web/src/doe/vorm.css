@@ -2,20 +2,20 @@
    screen reader only. Each piece imports this next to its own CSS. */
 .doe-veld {
   width: 100%; min-height: 44px; padding: 9px 12px; border: 1px solid var(--lijn-sterk); border-radius: 10px;
-  background: var(--zacht); color: var(--inkt); font: inherit; font-size: 16px;   /* 16px: iOS does not zoom in */
+  background: var(--zacht); color: var(--inkt); font: inherit; font-size: max(16px, 1rem);   /* 16px or more: iOS does not zoom in */
 }
 textarea.doe-veld { min-height: 76px; resize: vertical; line-height: 1.4; }
 .doe-veld:focus { outline: 2px solid var(--accent); outline-offset: 0; background: var(--paneel); }
 .doe-veld::placeholder { color: var(--stil); }
 
-.doe-label { display: flex; flex-direction: column; gap: 4px; min-width: 0; font-size: 14px; font-weight: 600; color: var(--stil); }
+.doe-label { display: flex; flex-direction: column; gap: 4px; min-width: 0; font-size: 0.875rem; font-weight: 600; color: var(--stil); }
 .doe-label > span strong, .doe-label output { color: var(--inkt); font-variant-numeric: tabular-nums; }
 
 .doe-schuif { width: 100%; min-height: 36px; margin: 0; accent-color: var(--accent); cursor: pointer; }
 
 .doe-melding { min-height: 1.5em; margin: 0; color: var(--accent); font-weight: 600; }
 .doe-melding.fout { color: var(--rood); }
-.doe-stil { margin: 0; color: var(--stil); font-size: 14px; }
+.doe-stil { margin: 0; color: var(--stil); font-size: 0.875rem; }
 
 .doe-sr { position: absolute; width: 1px; height: 1px; overflow: hidden; clip-path: inset(50%); white-space: nowrap; }
 

@@ -5,6 +5,7 @@
 .wr-beeld { max-width: 320px; width: 100%; margin: 0 auto; }
 .wr-svg { display: block; width: 100%; height: auto; user-select: none; -webkit-user-select: none; border-radius: 50%; }
 .wr-svg.wijzen { touch-action: none; cursor: pointer; }
+.wr-svg.bekijken { cursor: pointer; }
 .wr-svg:focus-visible { outline: 3px solid var(--accent); outline-offset: 3px; }
 
 .wr-grond { fill: var(--zacht); }
@@ -38,13 +39,13 @@
 
 .wr-tekst { display: flex; flex-direction: column; gap: 10px; min-width: 0; }
 .wr-tekst p { margin: 0; }
-.wr-vraag { font-size: 18px; }
+.wr-vraag { font-size: 1.125rem; }
 .wr-keuzes { display: grid; grid-template-columns: repeat(2, minmax(0, 1fr)); gap: 8px; }
 .wr-keuzes:empty { display: none; }
-.wr-keuze { flex-direction: column; gap: 0; min-height: 52px; font-size: 17px; }
+.wr-keuze { flex-direction: column; gap: 0; min-height: 52px; font-size: 1.0625rem; }
 .wr-keuze:disabled { cursor: default; opacity: 0.6; }
 .wr-keuze.goed { opacity: 1; border-color: var(--accent); background: color-mix(in srgb, var(--accent) 14%, var(--paneel)); }
 .wr-keuze.fout { opacity: 1; border-color: var(--rood); background: color-mix(in srgb, var(--rood) 12%, var(--paneel)); }
-.wr-graden { color: var(--stil); font-size: 13px; font-weight: 500; font-variant-numeric: tabular-nums; }
+.wr-graden { color: var(--stil); font-size: 0.8125rem; font-weight: 500; font-variant-numeric: tabular-nums; }
 .wr-score { color: var(--stil); font-variant-numeric: tabular-nums; }
 .wr-score:empty { display: none; }

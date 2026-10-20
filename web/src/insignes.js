@@ -89,7 +89,7 @@ export function insignesView() {
     // a requirement without a blad is an "opdracht": the label, and once on the page what that means
     const opdrachten = n?.delen.some((d) => d.zonderBlad?.length);
     const vink = (key, label, link) => h('div.vinkrij',
-      h('label.vink', h('input', { type: 'checkbox', checked: isAfgevinkt(key), 'data-key': key, 'aria-label': `${label}: kan ik`,
+      h('label.vink', h('input', { type: 'checkbox', checked: isAfgevinkt(key), 'data-key': key, 'aria-label': `${label}: ${BLAD[key]?.ken ? 'ken ik' : 'kan ik'}`,
         'aria-describedby': link ? null : 'opdracht-uitleg', onchange: (e) => zetAfgevinkt(key, e.target.checked) }),
         h('span.vinkje', icoon('vink'))),
       link ? h('a.rij', { href: linkNaar(key), 'data-blad': key }, h('span.rij-naam', label), icoon('verder', 'icoon rij-pijl'))

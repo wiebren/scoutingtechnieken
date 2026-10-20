@@ -34,8 +34,9 @@ export default function routeLoper({ techniek = 'kruispunten', stil = false } = 
   let tA = vertaler ? 'kruispunten' : (TECHNIEKEN[techniek] ? techniek : 'kruispunten');
   let tB = vertaler ? 'stripkaart' : null;
   let variant = 'ogen'; let woorden = false;   // ogenroute: 'ogen' (eyes that look) or 'smiley' (one eye black, on a whole face)
+  let stijl = 'gewoon';                         // beschrijvende route: gewoon, gedicht, konijn, sprookje (notaties.js, STIJLEN)
   let lengte = 9; let seed = 1 + Math.floor(Math.random() * 99999);
-  let toonHier = !TECHNIEKEN[tA].tellen;
+  let toonHier = false;            // "Waar ben ik?": off, so you find your place in the route yourself
   const beweging = !stil && !matchMedia('(prefers-reduced-motion: reduce)').matches;
   // dark when the theme is dark: the panel colour is dark (works for the media query and for a forced theme)
   const donker = (() => {
@@ -63,11 +64,10 @@ export default function routeLoper({ techniek = 'kruispunten', stil = false } = 
   const acties = h('div.knop-rij');
   const einde = h('div.rw-einde', { hidden: true });
   const notatie = h('div.rw-notatie');
-  const routeNr = h('span.rw-routenr');
 
   const lengteChips = keuze([[6, 'Kort'], [9, 'Middel'], [12, 'Lang']], 9, (n) => { lengte = n; nieuw(); });
   const kop = h('div.rw-kop');
-  const selectA = vertaler ? h('select.doe-veld', { 'aria-label': 'Lopen met', onchange: (e) => { tA = e.target.value; toonHier = !TECHNIEKEN[tA].tellen; hierChip.setAttribute('aria-pressed', String(toonHier)); hercodeer(); } },
+  const selectA = vertaler ? h('select.doe-veld', { 'aria-label': 'Lopen met', onchange: (e) => { tA = e.target.value; hercodeer(); } },
     VOLGORDE.map((t) => h('option', { value: t, selected: t === tA }, KORT[t]))) : null;
   const selectB = vertaler ? h('select.doe-veld', { 'aria-label': 'Vertaal naar', onchange: (e) => { tB = e.target.value || null; hercodeer(); } },
     h('option', { value: '' }, 'Niet vertalen'), VOLGORDE.map((t) => h('option', { value: t, selected: t === tB }, KORT[t]))) : null;
@@ -78,6 +78,7 @@ export default function routeLoper({ techniek = 'kruispunten', stil = false } = 
     extraChips.replaceChildren(hierChip);
     if (tA === 'ogen' || tB === 'ogen') extraChips.append(...keuze([['ogen', 'Ogen die kijken'], ['smiley', 'Eén oog zwart']], variant, (v) => { variant = v; tekenNotaties(); }));
     if (['kralen', 'knopen'].includes(tA) || ['kralen', 'knopen'].includes(tB)) extraChips.append(schakel('In woorden', woorden, (v) => { woorden = v; tekenNotaties(); }));
+    if (tA === 'beschrijving' || tB === 'beschrijving') extraChips.append(...keuze([['gewoon', 'Gewoon'], ['gedicht', 'Gedichtje'], ['konijn', 'Konijn Floep'], ['sprookje', 'Sprookje'], ['kryptisch', 'Kryptisch']], stijl, (v) => { stijl = v; tekenNotaties(); }));
   };
   kop.append(h('div.rw-opties',
     h('div.chips', { role: 'group', 'aria-label': 'Lengte van de route' }, lengteChips),
@@ -88,7 +89,7 @@ export default function routeLoper({ techniek = 'kruispunten', stil = false } = 
     kop,
     h('div.rw-hoofd',
       h('div.rw-links', wereldBox, knoppen, waar, melding, acties, einde),
-      h('div.rw-rechts', h('div.rw-notatie-kop', h('strong', 'De route'), routeNr), extraChips, notatie)));
+      h('div.rw-rechts', h('div.rw-notatie-kop', h('strong', 'De route')), extraChips, notatie)));
   el.addEventListener('keydown', toets);
 
   // -- the view (3D or the map), made again for every network. `beurt` counts views, `ronde` routes: a walk that
@@ -135,7 +136,6 @@ export default function routeLoper({ techniek = 'kruispunten', stil = false } = 
     ({ net, route, seed } = maakAlles(seed, lengte));
     i = 0; pogingen = 0; goed = 0; fout = null;
     gelopen = [{ x: route.start.x, y: route.start.y }, standplek(route.stappen[0])];
-    routeNr.textContent = `Route ${seed} · ${route.stappen.length} kruispunten`;
     einde.hidden = true; einde.replaceChildren();
     hercodeer();
     status = 'laden';
@@ -154,7 +154,7 @@ export default function routeLoper({ techniek = 'kruispunten', stil = false } = 
   function tekenNotaties() {
     const blok = (t, codes, titel) => h('section.rw-blok',
       titel ? h('h4', titel) : null,
-      tekenNotatie(t, codes, { hier: status === 'klaar' ? route.stappen.length : i, toon: toonHier, variant, woorden }),
+      tekenNotatie(t, codes, { hier: status === 'klaar' ? route.stappen.length : i, toon: toonHier, variant, woorden, stijl }),
       sleutel(t, variant));
     notatie.replaceChildren(...[blok(tA, codesA, codesB || vertaler ? KORT[tA] : null), codesB ? blok(tB, codesB, `Vertaald: ${KORT[tB]}`) : null].filter(Boolean));
     notatie.classList.toggle('twee', !!codesB);
@@ -221,7 +221,7 @@ export default function routeLoper({ techniek = 'kruispunten', stil = false } = 
       status = 'fout'; fout = p;
       const t = TECHNIEKEN[tA];
       melding.classList.add('fout');
-      melding.textContent = `Hmm, dit is niet de goede weg${w.doodlopend ? ' (en hij loopt ook nog dood)' : ''}. ${t.uitleg(codesA, i, st, variant)} Loop terug en kies opnieuw.`;
+      melding.textContent = `Hmm, dit is niet de goede weg${w.doodlopend ? ' (en hij loopt ook nog dood)' : ''}. ${t.uitleg(codesA, i, st, variant, stijl)} Loop terug en kies opnieuw.`;
       const terugKnop = h('button.knop.hoofd', { type: 'button', onclick: terug }, 'Loop terug');
       acties.replaceChildren(terugKnop);
       terugKnop.focus({ preventScroll: true });

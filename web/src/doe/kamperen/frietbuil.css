@@ -7,9 +7,9 @@
 :root[data-theme="dark"] .doe-frietbuil { --fb-plastic: #263a63; --fb-licht: #9cb6ea; --fb-flap: #6d89c2; }
 
 .fb-beeld { display: flex; flex-direction: column; gap: 6px; min-width: 0; }
-.fb-svg { background: color-mix(in srgb, var(--blauw) 7%, var(--paneel)); border: 1px solid var(--lijn); cursor: grab; touch-action: none; }
+.fb-svg { background: color-mix(in srgb, var(--blauw) 7%, var(--paneel)); border: 1px solid var(--lijn); cursor: grab; touch-action: none; user-select: none; -webkit-user-select: none; }
 .fb-svg.sleept { cursor: grabbing; }
-.fb-hint { font-size: 13px; }
+.fb-hint { font-size: 0.8125rem; }
 .fb-zicht { min-height: 1.4em; }
 .fb-zichten .chip { white-space: nowrap; }
 

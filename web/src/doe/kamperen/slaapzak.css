@@ -8,9 +8,9 @@
 .sz-zone.koud { border-radius: 0 7px 7px 0; }
 .sz-nacht {
   position: absolute; top: -18px; bottom: -4px; width: 0; border-left: 3px solid var(--inkt);
-  font-size: 12px; font-weight: 700; white-space: nowrap; padding-left: 4px; line-height: 1;
+  font-size: 0.75rem; font-weight: 700; white-space: nowrap; padding-left: 4px; line-height: 1;
 }
-.sz-legenda { display: flex; flex-wrap: wrap; align-items: center; gap: 4px 6px; margin: 0; color: var(--stil); font-size: 12px; }
+.sz-legenda { display: flex; flex-wrap: wrap; align-items: center; gap: 4px 6px; margin: 0; color: var(--stil); font-size: 0.75rem; }
 .sz-l { display: inline-block; width: 12px; height: 12px; border-radius: 3px; vertical-align: middle; }
 .sz-oordeel { margin: 0; padding: 8px 10px; border-left: 4px solid var(--lijn-sterk); border-radius: 0 8px 8px 0; background: var(--zacht); }
 .sz-oordeel.goed { border-left-color: var(--accent); }

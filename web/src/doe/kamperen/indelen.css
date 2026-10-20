@@ -17,7 +17,7 @@
 .ki-cel.goed { box-shadow: inset 0 0 0 3px var(--accent); }
 .ki-cel.matig { box-shadow: inset 0 0 0 3px var(--oranje); }
 .ki-cel.fout { box-shadow: inset 0 0 0 3px var(--rood); }
-.ki-wind { margin: 0 0 4px; color: var(--blauw); font-size: 13px; font-weight: 600; }
-.ki-legenda { display: flex; flex-wrap: wrap; align-items: center; gap: 4px 10px; margin: 6px 0 0; color: var(--stil); font-size: 12px; }
+.ki-wind { margin: 0 0 4px; color: var(--blauw); font-size: 0.8125rem; font-weight: 600; }
+.ki-legenda { display: flex; flex-wrap: wrap; align-items: center; gap: 4px 10px; margin: 6px 0 0; color: var(--stil); font-size: 0.75rem; }
 .ki-l { display: inline-block; width: 12px; height: 12px; border-radius: 3px; border: 1px solid var(--lijn-sterk); vertical-align: middle; }
 .ki-item { display: inline-flex; align-items: center; gap: 4px; white-space: nowrap; }

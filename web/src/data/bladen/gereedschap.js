@@ -5,7 +5,7 @@
 
 export default [
   // Mes
-  { id: 'zakmes', naam: 'Het zakmes', ook: ['zakmes', 'vouwmes', 'Zwitsers zakmes', 'scoutsmes'], zoekOok: ['Opinel', 'Victorinox'], en: 'pocket knife', groep: 'mes', bron: 'VKG SN-H, SN-HS, SW-MES',
+  { id: 'zakmes', naam: 'Het zakmes', ook: ['zakmes', 'vouwmes', 'Zwitsers zakmes', 'scoutsmes'], zoekOok: ['Opinel', 'Victorinox'], en: 'pocket knife', groep: 'mes', bron: 'VKG SN-H, SN-HS, SW-MES', ken: true,
     plaatje: 'zakmes',
     uitleg: [
       'Een zakmes is een mes dat je kunt dichtklappen. Het blad klapt dan in het handvat. Dit zijn de delen:',
@@ -77,7 +77,7 @@ export default [
     plaatje: 'oefenstok',
     uitleg: 'Een stok waarin je alle sneden oefent, de een na de ander: een punt, een inkeping, een groef rondom voor een touw, een vlakke kant, krullen. Zo leer je welke greep je bij welke snede gebruikt. Veel van die inkepingen kom je later weer tegen, bijvoorbeeld bij een tentharing met een inkeping voor de scheerlijn.',
     naar: [{ blad: 'snijgrepen' }] },
-  { id: 'messenlintje', naam: 'Messenlintje', ook: ['mesbewijs', 'rood touwtje'], en: "totin' chip", groep: 'mes', bron: 'VKG SN-BZM',
+  { id: 'messenlintje', naam: 'Messenlintje', ook: ['mesbewijs', 'rood touwtje'], en: "totin' chip", groep: 'mes', bron: 'VKG SN-BZM', ken: true,
     uitleg: 'Heb je laten zien dat je veilig met een zakmes omgaat, dan krijg je bij sommige groepen een lintje: een rood touwtje aan je blouse. Ga je er niet goed mee om, dan wordt het lintje doorgeknipt, en laat je het opnieuw zien.',
     naar: [{ blad: 'scouting-messen' }] },
 
@@ -148,7 +148,7 @@ export default [
     letOp: 'Het mes is scherp, ook als hij niet gebruikt wordt. Berg hem op waar kleine kinderen er niet bij kunnen.',
     verwijs: [{ naam: 'Kindling Cracker (Engels)', url: 'https://kindlingcracker.com/' }],
     naar: [{ blad: 'kloven' }, { blad: 'soorten-bijlen' }] },
-  { id: 'soorten-bijlen', naam: 'Soorten bijlen', ook: ['handbijl', 'keukenbijl', 'aks', 'kloofbijl', 'velbijl', 'driekwart bijl', 'bosbijl', 'kloofhamer', 'dubbelbladige bijl', 'grote bijlen'], en: 'axes', groep: 'bijl', bron: 'VKG SW-BIJL, MPSE-BIJL, SN-BZM, SN-H, HULT-BIJL, GB-BIJL, WP-KB',
+  { id: 'soorten-bijlen', naam: 'Soorten bijlen', ook: ['handbijl', 'keukenbijl', 'aks', 'kloofbijl', 'velbijl', 'driekwart bijl', 'bosbijl', 'kloofhamer', 'dubbelbladige bijl', 'grote bijlen'], en: 'axes', groep: 'bijl', bron: 'VKG SW-BIJL, MPSE-BIJL, SN-BZM, SN-H, HULT-BIJL, GB-BIJL, WP-KB', ken: true,
     plaatje: 'soorten-bijlen',
     tabel: { kop: ['Bijl', 'Waarvoor'], rijen: [
       ['Handbijl (kleine bijl, keukenbijl)', 'Met één hand: aanmaakhout, brandhout op maat, zijtakken van een stammetje.'],
@@ -189,7 +189,7 @@ export default [
     ],
     letOp: 'Leg een zaag nooit op de grond: hang hem op of leg hem over een blok. Ontspan het blad als je hem opbergt, en doe een hoes over de tanden bij vervoer.',
     naar: [{ blad: 'zagen-soorten' }, { blad: 'bloedcirkel' }, { blad: 'steel-en-zaagblad' }] },
-  { id: 'zagen-soorten', naam: 'Soorten zagen', ook: ['figuurzaag', 'klapzaag', 'vouwzaag', 'trekzaag', 'Japanse zaag', 'snoeizaag'], en: 'saws', groep: 'zaag', bron: 'VKG SN-H, SW-ZAAG, SN-HH',
+  { id: 'zagen-soorten', naam: 'Soorten zagen', ook: ['figuurzaag', 'klapzaag', 'vouwzaag', 'trekzaag', 'Japanse zaag', 'snoeizaag'], en: 'saws', groep: 'zaag', bron: 'VKG SN-H, SW-ZAAG, SN-HH', ken: true,
     plaatje: 'soorten-zagen',
     tabel: { kop: ['Zaag', 'Waarvoor'], rijen: [
       ['Figuurzaag', 'Een heel dun zaagje in een beugel, om een figuur uit dun plaathout (triplex) te zagen. Het zaagje breekt makkelijk. Dan vervang je het.'],
@@ -256,7 +256,7 @@ export default [
     naar: [{ blad: 'bijl-onderhoud' }, { blad: 'beugelzaag' }] },
 
   // Sierwerk
-  { id: 'hout-voor-snijwerk', naam: 'Hout om te snijden', ook: ['snijhout', 'houtsoorten', 'wilg', 'linde', 'els', 'hazelaar', 'berk', 'vers hout'], groep: 'sierwerk', bron: 'VKG SN-H, VERSHOUT, RW-SP, SC-FAQ, WP-HOUT, MF-VL',
+  { id: 'hout-voor-snijwerk', naam: 'Hout om te snijden', ook: ['snijhout', 'houtsoorten', 'wilg', 'linde', 'els', 'hazelaar', 'berk', 'vers hout'], groep: 'sierwerk', bron: 'VKG SN-H, VERSHOUT, RW-SP, SC-FAQ, WP-HOUT, MF-VL', ken: true,
     uitleg: [
       'Begin met zacht hout, zoals wilg of linde. Vers hout snijdt makkelijker dan droog hout.',
       '- Snijd of trek geen hout van levende bomen. Gebruik afgewaaide takken, of kijk in de groenbak.',
@@ -288,7 +288,7 @@ export default [
       '- Een lepel of spatel moet je echt kunnen gebruiken: geen splinters, en een vorm die goed in je hand ligt.',
     ],
     naar: [{ blad: 'hout-voor-snijwerk' }, { blad: 'chip-carving' }] },
-  { id: 'chip-carving', naam: 'Chip carving en kohlrosing', ook: ['kerfsnijwerk', 'kohlrosing'], groep: 'sierwerk', bron: 'VKG SN-H',
+  { id: 'chip-carving', naam: 'Chip carving en kohlrosing', ook: ['kerfsnijwerk', 'kohlrosing'], groep: 'sierwerk', bron: 'VKG SN-H', ken: true,
     plaatje: 'chip-carving',
     uitleg: [
       '- Chip carving: met een mes, guts of beitel kleine schilfers in één stuk uit een plat oppervlak halen. Zo ontstaan patronen van driehoekjes en sterren.',
@@ -297,7 +297,7 @@ export default [
     naar: [{ blad: 'snijwerk' }] },
 
   // Regels
-  { id: 'messenwet', naam: 'Messen en de wet', ook: ['wapenwet', 'Wet wapens en munitie', 'Wwm', '28 cm', 'messenverbod'], groep: 'regels', letterlijk: true,
+  { id: 'messenwet', naam: 'Messen en de wet', ook: ['wapenwet', 'Wet wapens en munitie', 'Wwm', '28 cm', 'messenverbod'], groep: 'regels', letterlijk: true, ken: true,
     plaatje: 'mes-wet',
     doe: 'mes-mee',
     bron: 'Wet wapens en munitie, artikel 2, 26 en 27 (wetten.overheid.nl/BWBR0008804)', bronDatum: 'geldend vanaf 01-07-2026, geraadpleegd 16-10-2026',
@@ -320,7 +320,7 @@ export default [
     letOp: 'Je gemeente kan op sommige plekken alle messen verbieden (in de APV). Meestal geldt zo\'n verbod niet voor een mes dat zo is ingepakt dat je het niet meteen kunt gebruiken. In juni 2026 vroeg de Tweede Kamer het kabinet om een landelijk verbod op messen dragen op straat; dat is er nog niet (oktober 2026). Kijk naar de regels van nu, en neem je mes alleen mee als je het nodig hebt.',
     verwijs: [{ naam: 'Wet wapens en munitie (wetten.overheid.nl)', url: 'https://wetten.overheid.nl/BWBR0008804' }, { naam: 'Scouting Nederland: messenverbod in de APV', url: 'https://www.scouting.nl/updates/messenverbod-model-apv-voor-gemeenten' }],
     naar: [{ blad: 'scouting-messen' }] },
-  { id: 'scouting-messen', naam: 'Messen bij Scouting', ook: ['afspraken mes', 'ScoutShop'], groep: 'regels', letterlijk: true,
+  { id: 'scouting-messen', naam: 'Messen bij Scouting', ook: ['afspraken mes', 'ScoutShop'], groep: 'regels', letterlijk: true, ken: true,
     bron: 'Scouting Nederland, infoblad Messen en de wapenwet', bronDatum: '2020',
     doe: 'mes-mee',
     waarvoor: 'Wanneer je je mes meeneemt, waar het blijft, en waarom buiten Scouting andere regels gelden.',
@@ -338,7 +338,7 @@ export default [
       { naam: 'Scouting Nederland: Messen en de wapenwet (pdf)', url: 'https://www.scouting.nl/assets/uploads/doorzoekbareBestanden/06.Ondersteuning/Regelgeving/Messen_en_de_wapenwet-2020.pdf' },
     ],
     naar: [{ blad: 'messenwet' }, { blad: 'messenlintje' }] },
-  { id: 'regels-bijl-zaag', naam: 'Regels voor bijl en zaag', ook: ['kettingzaag', 'veiligheidsblad', 'hakken en zagen'], groep: 'regels', letterlijk: true,
+  { id: 'regels-bijl-zaag', naam: 'Regels voor bijl en zaag', ook: ['kettingzaag', 'veiligheidsblad', 'hakken en zagen'], groep: 'regels', letterlijk: true, ken: true,
     bron: 'Scouting Nederland, veiligheidsblad Veiligheid bij gebruik van bijlen, zagen en messen', bronDatum: 'april 2016',
     doe: 'bloedcirkel',
     waarvoor: 'De afspraken van Scouting Nederland voor hakken en zagen: wat je doet, en waarom.',

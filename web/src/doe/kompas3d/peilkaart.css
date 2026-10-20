@@ -24,8 +24,8 @@
 .pk-echt { fill: none; stroke: var(--accent); stroke-linecap: round; }
 .pk-jij { fill: var(--blauw); stroke: var(--paneel); }
 .pk-tik { fill: none; stroke: var(--inkt); stroke-linecap: round; }
-.pk-huiswaarde { margin: 0; text-align: center; font-size: 14px; color: var(--stil); }
+.pk-huiswaarde { margin: 0; text-align: center; font-size: 0.875rem; color: var(--stil); }
 .pk-huiswaarde strong { color: var(--inkt); font-variant-numeric: tabular-nums; }
 .pk-knoppen { display: grid; gap: 10px; }
-.pk-lijst { margin: 4px 0 0; padding-left: 20px; font-size: 14px; }
+.pk-lijst { margin: 4px 0 0; padding-left: 20px; font-size: 0.875rem; }
 .pk-lijst li + li { margin-top: 4px; }

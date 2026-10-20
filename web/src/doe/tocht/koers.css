@@ -22,9 +22,9 @@
 .ko-been.nu path { stroke: var(--blauw); }
 .ko-been.nu .ko-punt { fill: var(--blauw); }
 .ko-stip { fill: var(--inkt); }
-.ko-nr { fill: var(--inkt); font-size: 12px; font-weight: 700; }
-.ko-label { fill: var(--inkt); font-size: 11px; }
-.ko-klein { fill: var(--stil); font-size: 9px; }
+.ko-nr { fill: var(--inkt); font-size: 0.75rem; font-weight: 700; }
+.ko-label { fill: var(--inkt); font-size: 0.6875rem; }
+.ko-klein { fill: var(--stil); font-size: 0.5625rem; }
 .ko-ruggengraat { fill: none; stroke: var(--inkt); stroke-width: 1.4; }
 .ko-lijn { fill: none; stroke: var(--rood); stroke-width: 2.6; stroke-linejoin: round; stroke-linecap: round; }
 .ko-lijn.nu { stroke: var(--blauw); stroke-width: 3.4; }
@@ -32,7 +32,7 @@
 .ko-meet .ko-gradenboog { fill: color-mix(in srgb, var(--blauw) 8%, transparent); stroke: var(--blauw); stroke-width: 1; }
 .ko-streepje { stroke: var(--blauw); stroke-width: 0.8; }
 .ko-streepje.vet { stroke-width: 1.4; }
-.ko-graad { fill: var(--blauw); font-size: 8px; font-weight: 600; }
+.ko-graad { fill: var(--blauw); font-size: 0.5rem; font-weight: 600; }
 .ko-lat path { fill: none; stroke: var(--blauw); stroke-width: 1.2; }
 
 /* the terrain */
@@ -59,7 +59,7 @@
 .ko-vlieg path { fill: none; stroke: var(--inkt); stroke-width: 3; stroke-linecap: round; }
 .ko-vlieg path.nu { stroke: var(--blauw); }
 .ko-vlieg path.gedaan { stroke: var(--stil); }
-.ko-vlieg-t { fill: var(--inkt); font-size: 14px; font-weight: 600; font-variant-numeric: tabular-nums; }
+.ko-vlieg-t { fill: var(--inkt); font-size: 0.875rem; font-weight: 600; font-variant-numeric: tabular-nums; }
 .ko-vlieg-t.links { text-anchor: end; }
 .ko-vlieg-t.rechts { text-anchor: start; }
 .ko-vlieg-t.nu { fill: var(--blauw); font-weight: 700; }

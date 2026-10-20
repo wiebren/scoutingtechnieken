@@ -10,9 +10,9 @@
 .ns-balk { position: relative; display: grid; grid-template-columns: 1fr 1fr; height: 34px; margin-top: 4px; border: 1px solid var(--lijn-sterk); border-radius: 8px; overflow: hidden; }
 .ns-minuut { position: relative; background: var(--zacht); }
 .ns-minuut.stil { display: grid; place-items: center; border-left: 1px solid var(--lijn-sterk);
-  background: repeating-linear-gradient(-45deg, var(--paneel) 0 6px, var(--zacht) 6px 12px); color: var(--stil); font-size: 12px; }
+  background: repeating-linear-gradient(-45deg, var(--paneel) 0 6px, var(--zacht) 6px 12px); color: var(--stil); font-size: 0.75rem; }
 .ns-tekens { position: absolute; inset: 0; }
 .ns-teken { position: absolute; top: 7px; bottom: 7px; width: calc(100% / 60); min-width: 6px; border-radius: 3px; background: var(--accent); opacity: 0.45; }
 .ns-teken.nu { opacity: 1; box-shadow: 0 0 0 3px color-mix(in srgb, var(--accent) 30%, transparent); }
 .ns-nu { position: absolute; top: 0; bottom: 0; left: 0; width: 2px; margin-left: -1px; background: var(--inkt); }
-.ns-schaal { display: flex; justify-content: space-between; color: var(--stil); font-size: 12px; }
+.ns-schaal { display: flex; justify-content: space-between; color: var(--stil); font-size: 0.75rem; }

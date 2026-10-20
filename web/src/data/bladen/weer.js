@@ -4,13 +4,13 @@
 // Catalogue for the stars). The sky pieces (src/doe/weer/) compute sun, moon and stars themselves.
 
 const wolk = (id, naam, ook, en, uitleg, extra = {}) => ({
-  id: `wolk-${id}`, naam, ook, en, groep: 'wolken', bron: 'TKN §7.1; KNMI, Wolken', plaatje: `wolk-${id}`, uitleg,
+  id: `wolk-${id}`, naam, ook, en, groep: 'wolken', bron: 'TKN §7.1; KNMI, Wolken', plaatje: `wolk-${id}`, uitleg, ken: true,
   naar: [{ blad: 'wolken-herkennen' }, ...(extra.naar ?? [])], ...(extra.letOp && { letOp: extra.letOp }),
 });
 
 export default [
   // Wolken
-  { id: 'wolken-herkennen', naam: 'Wolken herkennen', ook: ['wolkensoorten', 'wolkengeslachten', 'tien wolken', 'hoge wolken', 'lage wolken'], en: 'cloud types',
+  { id: 'wolken-herkennen', naam: 'Wolken herkennen', ook: ['wolkensoorten', 'wolkengeslachten', 'tien wolken', 'hoge wolken', 'lage wolken'], en: 'cloud types', ken: true,
     groep: 'wolken', bron: 'TKN §7.1; KNMI, Wolken', plaatje: 'wolkenlagen', doe: 'wolken',
     uitleg: [
       'Er zijn tien hoofdsoorten wolken; weerkundigen noemen ze de tien geslachten. Je herkent ze aan twee dingen: hoe hoog ze hangen, en hoe ze eruitzien.',
@@ -72,14 +72,14 @@ export default [
     'Een enorme stapelwolk, uitgegroeid tot een toren. De top is van ijs en komt in de zomer vaak boven de 12 km. Daar waaiert hij uit tot een plat aambeeld.',
     'Volgens het KNMI geeft een cumulonimbus altijd onweer, vaak met hagel en harde windstoten. In zo’n bui kan het in een half uur 10 tot 15 graden kouder worden.',
   ], { letOp: 'Zie je een cumulonimbus aankomen, of hoor je donder: stop met wat je doet en zoek een veilige plek.', naar: [{ blad: 'flits-donder' }, { blad: 'onweer-schuilplek' }] }),
-  { id: 'mist', naam: 'Mist en nevel', ook: ['mist', 'nevel', 'zicht'], en: 'fog', groep: 'wolken', bron: 'KNMI, Wolken', plaatje: 'wolk-mist',
+  { id: 'mist', naam: 'Mist en nevel', ook: ['mist', 'nevel', 'zicht'], en: 'fog', groep: 'wolken', bron: 'KNMI, Wolken', plaatje: 'wolk-mist', ken: true,
     uitleg: [
       'Mist is een wolk die op de grond ligt: heel kleine waterdruppeltjes in de lucht. Het KNMI spreekt van mist als je minder dan 1000 meter ver kunt kijken.',
       'Mist ontstaat vaak in heldere, windstille nachten, als de grond afkoelt. In de loop van de ochtend lost hij meestal op, of hij tilt op tot een laag stratus.',
     ],
     letOp: 'In mist raak je snel de weg kwijt en zien auto’s je slecht. Loop op kompas, blijf bij elkaar en draag iets lichts of reflecterends.',
     naar: [{ blad: 'wolk-stratus' }, { blad: 'wolken-ontstaan' }, { blad: 'wolken-herkennen' }] },
-  { id: 'wolken-ontstaan', naam: 'Hoe wolken ontstaan', ook: ['wolkenvorming', 'condensatie', 'condensatieniveau', 'waterdamp', 'opstijgende lucht'], en: 'how clouds form',
+  { id: 'wolken-ontstaan', naam: 'Hoe wolken ontstaan', ook: ['wolkenvorming', 'condensatie', 'condensatieniveau', 'waterdamp', 'opstijgende lucht'], en: 'how clouds form', ken: true,
     groep: 'wolken', bron: 'WP-WOLK; KNMI-FR; KNMI, Wolken', plaatje: 'wolk-ontstaan',
     uitleg: [
       'In lucht zit altijd waterdamp: water als onzichtbaar gas. Hoeveel er in kan, hangt af van de temperatuur. Kan er niet meer bij, dan is de lucht verzadigd.',
@@ -95,7 +95,7 @@ export default [
     naar: [{ blad: 'wolken-herkennen' }, { blad: 'wolk-cumulus' }, { blad: 'wolkenreeks-warmtefront' }, { blad: 'mist' }] },
 
   // Wind
-  { id: 'beaufort', naam: 'Windkracht (Beaufort)', ook: ['Beaufort', 'windschaal', 'bft'], en: 'Beaufort scale', groep: 'wind', letterlijk: true,
+  { id: 'beaufort', naam: 'Windkracht (Beaufort)', ook: ['Beaufort', 'windschaal', 'bft'], en: 'Beaufort scale', groep: 'wind', letterlijk: true, ken: true,
     doe: 'beaufort',
     bron: 'KNMI, Windschaal van Beaufort', bronDatum: 'geraadpleegd 14-10-2026',
     uitleg: 'Met de schaal van Beaufort zeg je hoe hard het waait, in getallen van 0 tot 12. Zo zie je het aan land:',
@@ -119,7 +119,7 @@ export default [
     },
     verwijs: [{ naam: 'Windschaal van Beaufort (KNMI)', url: 'https://www.knmi.nl/kennis-en-datacentrum/uitleg/windschaal-van-beaufort' }],
     naar: [{ blad: 'windrichting' }, { blad: 'storm' }] },
-  { id: 'windrichting', naam: 'Windrichting', ook: ['waar komt de wind vandaan', 'zuidwestenwind', 'windvaan', 'windhaan'], en: 'wind direction', groep: 'wind',
+  { id: 'windrichting', naam: 'Windrichting', ook: ['waar komt de wind vandaan', 'zuidwestenwind', 'windvaan', 'windhaan'], en: 'wind direction', groep: 'wind', ken: true,
     bron: 'KNMI (neerslag en windrichting, De Bilt); NAV §1g', plaatje: 'windrichting', doe: 'windrichting',
     uitleg: [
       'Een wind krijgt de naam van de kant waar hij vandaan komt. Een zuidwestenwind komt uit het zuidwesten. Hij waait naar het noordoosten.',
@@ -130,7 +130,7 @@ export default [
       'Met je kompas zie je welke windrichting het is. In Nederland komt de wind het vaakst uit het zuidwesten (KNMI). Die wind brengt ook de meeste regen.',
     ],
     naar: [{ blad: 'beaufort' }, { blad: 'buys-ballot' }, { blad: 'windrichtingen-8' }, { blad: 'zeewind' }] },
-  { id: 'zeewind', naam: 'Zeewind en landwind', ook: ['zeebries', 'landwind', 'aanlandige wind'], en: 'sea breeze', groep: 'wind',
+  { id: 'zeewind', naam: 'Zeewind en landwind', ook: ['zeebries', 'landwind', 'aanlandige wind'], en: 'sea breeze', groep: 'wind', ken: true,
     bron: 'KNMI (invloed van zee op wind); Wikipedia, Zeewind; AMS Glossary, Land breeze', plaatje: 'zeewind',
     uitleg: [
       'Op een warme, zonnige dag wordt het land veel sneller warm dan de zee. De warme lucht boven het land stijgt op, en aan de grond stroomt koelere lucht van zee naar het land: zeewind. Aan de kust begint hij meestal in de loop van de middag, en ’s avonds valt hij weer weg.',
@@ -138,7 +138,7 @@ export default [
       '’s Nachts kan het andersom gaan: dan koelt het land sneller af dan de zee, en waait er een landwind, van het land naar zee.',
     ],
     naar: [{ blad: 'windrichting' }] },
-  { id: 'buys-ballot', naam: 'Wet van Buys Ballot', ook: ['Buys Ballot', 'lagedrukgebied', 'hogedrukgebied', 'wind en luchtdruk'], en: "Buys Ballot's law", groep: 'wind',
+  { id: 'buys-ballot', naam: 'Wet van Buys Ballot', ook: ['Buys Ballot', 'lagedrukgebied', 'hogedrukgebied', 'wind en luchtdruk'], en: "Buys Ballot's law", groep: 'wind', ken: true,
     bron: 'KNMI, Buys Ballot', plaatje: 'buys-ballot',
     uitleg: [
       'Ga met de wind in je rug staan. Dan ligt het lagedrukgebied links van je, en de hogere luchtdruk rechts. Op het zuidelijk halfrond is het andersom.',
@@ -147,7 +147,7 @@ export default [
     naar: [{ blad: 'luchtdruk' }, { blad: 'weerkaart' }, { blad: 'windrichting' }] },
 
   // Weer voorspellen
-  { id: 'luchtdruk', naam: 'Luchtdruk en barometer', ook: ['barometer', 'hPa', 'hectopascal', 'millibar'], en: 'air pressure', groep: 'voorspellen',
+  { id: 'luchtdruk', naam: 'Luchtdruk en barometer', ook: ['barometer', 'hPa', 'hectopascal', 'millibar'], en: 'air pressure', groep: 'voorspellen', ken: true,
     bron: 'KNMI, Luchtdruk; KNMI, Meteorologische meetinstrumenten', plaatje: 'barometer',
     uitleg: [
       'De lucht boven je drukt op alles: dat is de luchtdruk. Je meet hem met een barometer, in hectopascal (hPa), ook wel millibar.',
@@ -188,7 +188,7 @@ export default [
       'Weerkundigen tellen in achtsten: ze delen de lucht in 8 stukken. 0 is onbewolkt, 8 is helemaal dicht.',
     ],
     naar: [{ blad: 'weerstation' }, { blad: 'wolken-herkennen' }, { blad: 'beaufort' }] },
-  { id: 'wolkenreeks-warmtefront', naam: 'Wolkenreeks bij een warmtefront', ook: ['warmtefront', 'koufront', 'front', 'regen op komst'], en: 'warm front', groep: 'voorspellen',
+  { id: 'wolkenreeks-warmtefront', naam: 'Wolkenreeks bij een warmtefront', ook: ['warmtefront', 'koufront', 'front', 'regen op komst'], en: 'warm front', groep: 'voorspellen', ken: true,
     bron: 'KNMI, Fronten; KNMI, Wolken; TKN §7.3', plaatje: 'warmtefront',
     uitleg: [
       'Een front is de grens tussen warme en koude lucht. Bij een warmtefront schuift warme lucht omhoog over de koude lucht. Vaak al uren voordat het front er is, zie je het hoog in de lucht aan de wolken:',
@@ -198,7 +198,7 @@ export default [
       'Meestal komt er daarna een koufront. Daarbij valt de neerslag harder, in buien, en draait de wind plotseling rechtsom, naar west tot noord. Daarna klaart het meestal op.',
     ],
     naar: [{ blad: 'weerkaart' }, { blad: 'wolk-cirrostratus' }, { blad: 'wolk-nimbostratus' }] },
-  { id: 'weerkaart', naam: 'De weerkaart lezen', ook: ['fronten', 'isobaren', 'hogedrukgebied', 'lagedrukgebied', 'frontensymbolen'], en: 'weather map', groep: 'voorspellen',
+  { id: 'weerkaart', naam: 'De weerkaart lezen', ook: ['fronten', 'isobaren', 'hogedrukgebied', 'lagedrukgebied', 'frontensymbolen'], en: 'weather map', groep: 'voorspellen', ken: true,
     bron: 'KNMI, Symbolen weerkaart (lesmateriaal); KNMI, Fronten', plaatje: 'fronten',
     uitleg: [
       'Op een weerkaart staan lijnen die plekken met dezelfde luchtdruk verbinden: isobaren. Waar ze een kring maken, staat H (hogedrukgebied) of L (lagedrukgebied).',
@@ -209,7 +209,7 @@ export default [
       '- Stilliggend front: om en om rood met bolletjes en blauw met driehoekjes, naar weerskanten.',
     ],
     naar: [{ blad: 'wolkenreeks-warmtefront' }, { blad: 'buys-ballot' }, { blad: 'luchtdruk' }] },
-  { id: 'weerspreuken', naam: 'Avondrood en andere weerspreuken', ook: ['avondrood', 'morgenrood', 'ochtendrood', 'weerspreuk', 'halo'], en: 'weather lore', groep: 'voorspellen',
+  { id: 'weerspreuken', naam: 'Avondrood en andere weerspreuken', ook: ['avondrood', 'morgenrood', 'ochtendrood', 'weerspreuk', 'halo'], en: 'weather lore', groep: 'voorspellen', ken: true,
     bron: 'KNMI, Wolken (cirrus, halo); Weerplaza en Weeronline over avondrood; TKN §7.3', plaatje: 'avondrood',
     uitleg: [
       '„Avondrood, mooi weer aan boord; morgenrood, water in de sloot.” Klopt dat? Ons weer komt meestal uit het westen. Is de lucht ’s avonds in het westen rood, dan schijnt de zon daar nog onder de wolken door: vaak blijft het de volgende dag droog. Volgens weersites klopt het avondrood-deel ongeveer 6 van de 10 keer. Het morgenrood-deel klopt veel minder vaak.',
@@ -219,7 +219,7 @@ export default [
     ],
     letOp: 'Een weerspreuk is een kans, geen zekerheid. Weerkundigen zijn het er niet over eens hoeveel avondrood zegt. Kijk voor een tocht altijd ook naar de weersverwachting.',
     naar: [{ blad: 'wolk-cirrus' }, { blad: 'wolkenreeks-warmtefront' }] },
-  { id: 'knmi-waarschuwingen', naam: 'Code geel, oranje en rood', ook: ['weeralarm', 'weerwaarschuwing', 'code oranje', 'code rood', 'KNMI-waarschuwing'], en: 'weather warnings', groep: 'voorspellen',
+  { id: 'knmi-waarschuwingen', naam: 'Code geel, oranje en rood', ook: ['weeralarm', 'weerwaarschuwing', 'code oranje', 'code rood', 'KNMI-waarschuwing'], en: 'weather warnings', groep: 'voorspellen', ken: true,
     bron: 'KNMI, Kleurcodes waarschuwingen; KNMI, Onweersbuien; KNMI-nieuws 14-10-2026; TKN §7.3', plaatje: 'knmi-codes',
     uitleg: [
       'Het KNMI waarschuwt voor gevaarlijk weer met drie kleuren:',
@@ -231,7 +231,7 @@ export default [
     verwijs: [{ naam: 'Waarschuwingen (KNMI)', url: 'https://www.knmi.nl/nederland-nu/weer/waarschuwingen' },
       { naam: 'Wat betekenen de kleurcodes? (KNMI)', url: 'https://www.knmi.nl/kennis-en-datacentrum/uitleg/kleurcodes-waarschuwingen' }],
     naar: [{ blad: 'onweer-op-pad' }, { blad: 'storm' }, { blad: 'hitte' }] },
-  { id: 'zonkracht', naam: 'Zonkracht', ook: ['UV-index', 'uv', 'zonnebrand'], en: 'UV index', groep: 'voorspellen', letterlijk: true,
+  { id: 'zonkracht', naam: 'Zonkracht', ook: ['UV-index', 'uv', 'zonnebrand'], en: 'UV index', groep: 'voorspellen', letterlijk: true, ken: true,
     bron: 'KNMI, Zonkracht', bronDatum: 'geraadpleegd 16-10-2026', plaatje: 'zonkracht-schaal',
     uitleg: 'De zonkracht zegt hoe sterk de zon je huid verbrandt. Hij hangt af van de stand van de zon en de wolken, niet van hoe warm het is.',
     tabel: {
@@ -255,7 +255,7 @@ export default [
       'Duurt het langer? Wacht dan niet tot het dichtbij is. Hoor je onweer, zoek dan al een veilige schuilplaats (Scouting Nederland).',
     ],
     naar: [{ blad: 'onweer-schuilplek' }, { blad: 'onweer-op-pad' }, { blad: 'wolk-cumulonimbus' }] },
-  { id: 'onweer-schuilplek', naam: 'Waar schuil je bij onweer?', ook: ['schuilen', 'bliksem', 'veilige plek', 'hurken'], en: 'lightning shelter', groep: 'onweer', letterlijk: true,
+  { id: 'onweer-schuilplek', naam: 'Waar schuil je bij onweer?', ook: ['schuilen', 'bliksem', 'veilige plek', 'hurken'], en: 'lightning shelter', groep: 'onweer', letterlijk: true, ken: true,
     doe: 'onweer-plek',
     bron: 'KNMI, Onweersbuien; KMI, Hoe bescherm ik me tegen bliksem?', bronDatum: 'geraadpleegd 16-10-2026',
     uitleg: [
@@ -269,7 +269,7 @@ export default [
     naar: [{ blad: 'flits-donder' }, { blad: 'onweer-op-pad' }] },
 
   // Zon en maan
-  { id: 'zon-door-het-jaar', naam: 'Zon op en onder door het jaar', ook: ['zonsopkomst', 'zonsondergang', 'daglengte', 'langste dag', 'kortste dag', 'zonnebaan'], en: 'sunrise and sunset',
+  { id: 'zon-door-het-jaar', naam: 'Zon op en onder door het jaar', ook: ['zonsopkomst', 'zonsondergang', 'daglengte', 'langste dag', 'kortste dag', 'zonnebaan'], en: 'sunrise and sunset', ken: true,
     groep: 'zonmaan', bron: 'NAV §1g; eigen berekening (hemelrekenaar)', plaatje: 'zonnebaan', doe: 'zon-op-onder',
     uitleg: [
       'De zon komt ongeveer in het oosten op, staat midden op de dag in het zuiden en gaat in het westen onder. Maar hoe precies, dat hangt af van de tijd van het jaar:',
@@ -279,7 +279,7 @@ export default [
       'Het hoogste punt is niet om 12 uur, maar in de wintertijd rond 12:40 en in de zomertijd rond 13:40.',
     ],
     naar: [{ blad: 'zon-op-onder' }, { blad: 'horlogemethode' }, { blad: 'zonnewijzer' }] },
-  { id: 'maanstanden', naam: 'Maanstanden', ook: ['maanfasen', 'wassende maan', 'afnemende maan', 'volle maan', 'nieuwe maan', 'eerste kwartier', 'laatste kwartier'], en: 'phases of the moon',
+  { id: 'maanstanden', naam: 'Maanstanden', ook: ['maanfasen', 'wassende maan', 'afnemende maan', 'volle maan', 'nieuwe maan', 'eerste kwartier', 'laatste kwartier'], en: 'phases of the moon', ken: true,
     groep: 'zonmaan', bron: 'NAV §6; TKN §6.6', plaatje: 'maanstanden', doe: 'maanfase',
     uitleg: [
       'De maan verandert steeds van vorm. In ongeveer 29,5 dagen gaat hij van nieuwe maan naar volle maan, en weer terug naar nieuwe maan.',
@@ -290,7 +290,7 @@ export default [
       'Dit klopt in Nederland, en overal op de noordelijke helft van de aarde. In Australië is het precies andersom.',
     ],
     naar: [{ blad: 'maan-waarom' }, { blad: 'maankompas' }] },
-  { id: 'maan-waarom', naam: 'Waarom de maan van vorm verandert', ook: ['maanfase uitleg', 'schijngestalte'], en: 'why the moon has phases',
+  { id: 'maan-waarom', naam: 'Waarom de maan van vorm verandert', ook: ['maanfase uitleg', 'schijngestalte'], en: 'why the moon has phases', ken: true,
     groep: 'zonmaan', bron: 'NAV §6', plaatje: 'maanfasen',
     uitleg: [
       'De maan geeft zelf geen licht. De zon schijnt op de maan. De helft die naar de zon toe staat, is licht. De andere helft is donker.',
@@ -301,7 +301,7 @@ export default [
       'Bij volle maan staat de maan dus tegenover de zon. Hij komt op als de zon ondergaat. Rond middernacht staat hij in het zuiden.',
     ],
     naar: [{ blad: 'maanstanden' }, { blad: 'maankompas' }, { blad: 'maan-achterkant' }, { blad: 'verduisteringen' }] },
-  { id: 'maan-achterkant', naam: 'Waarom je altijd dezelfde kant van de maan ziet', ook: ['achterkant van de maan', 'donkere kant van de maan', 'gebonden rotatie', 'maan draait om zijn as'],
+  { id: 'maan-achterkant', naam: 'Waarom je altijd dezelfde kant van de maan ziet', ook: ['achterkant van de maan', 'donkere kant van de maan', 'gebonden rotatie', 'maan draait om zijn as'], ken: true,
     en: 'the far side of the moon', groep: 'zonmaan', bron: 'WP-GR; WP-AM; WP-LIB', plaatje: 'maan-achterkant',
     uitleg: [
       'Kijk een paar avonden naar de maan. Je ziet steeds hetzelfde gezicht, met dezelfde donkere vlekken.',
@@ -311,7 +311,7 @@ export default [
       'Omdat de maan een beetje wiebelt, zien we toch iets meer dan de helft. In 1959 maakte een ruimtesonde de eerste foto van de achterkant.',
     ],
     naar: [{ blad: 'maan-waarom' }, { blad: 'getijden' }] },
-  { id: 'getijden', naam: 'Eb en vloed', ook: ['getijden', 'getij', 'tij', 'springtij', 'doodtij', 'springvloed', 'hoogwater', 'laagwater'], en: 'tides',
+  { id: 'getijden', naam: 'Eb en vloed', ook: ['getijden', 'getij', 'tij', 'springtij', 'doodtij', 'springvloed', 'hoogwater', 'laagwater'], en: 'tides', ken: true,
     groep: 'zonmaan', bron: 'WP-GET; WP-ST; WP-DT', plaatje: 'getijden', doe: 'zon-maan-aarde',
     uitleg: [
       'Aan zee stijgt het water ongeveer twee keer per dag, en zakt het weer. Stijgen heet vloed, zakken eb. Het hoogste punt is hoogwater, het laagste laagwater.',
@@ -324,7 +324,7 @@ export default [
     ],
     verwijs: [{ naam: 'Rijkswaterstaat Waterinfo: waterstanden en getij', url: 'https://waterinfo.rws.nl' }],
     naar: [{ blad: 'maanstanden' }, { blad: 'verduisteringen' }, { blad: 'zwemmen-in-zee' }] },
-  { id: 'verduisteringen', naam: 'Zons- en maansverduistering', ook: ['zonsverduistering', 'maansverduistering', 'eclips', 'bloedmaan', 'corona', 'eclipsbril'], en: 'solar and lunar eclipse',
+  { id: 'verduisteringen', naam: 'Zons- en maansverduistering', ook: ['zonsverduistering', 'maansverduistering', 'eclips', 'bloedmaan', 'corona', 'eclipsbril'], en: 'solar and lunar eclipse', ken: true,
     groep: 'zonmaan', bron: 'WP-ZV; WP-MV; ZV-NL; NHN-ZV', plaatje: 'verduistering', doe: 'zon-maan-verduistering',
     uitleg: [
       'Bij een zonsverduistering schuift de maan voor de zon. Dat kan alleen bij nieuwe maan, als zon, maan en aarde op één lijn staan. De schaduw van de maan valt dan op de aarde.',
@@ -336,7 +336,7 @@ export default [
     ],
     letOp: 'Kijk nooit zonder bescherming naar de zon, ook niet als hij voor een groot deel bedekt is. Een zonnebril helpt niet: je ogen kunnen blijvend beschadigd raken. Gebruik een echte eclipsbril (met de norm ISO 12312-2) zonder krassen of gaatjes, of kijk naar een beeld van de zon dat je op papier laat vallen. Naar een maansverduistering kun je gewoon kijken.',
     naar: [{ blad: 'maan-waarom' }, { blad: 'getijden' }] },
-  { id: 'noorderlicht', naam: 'Noorderlicht', ook: ['poollicht', 'aurora', 'zuiderlicht', 'zonnestorm', 'ruimteweer'], en: 'northern lights',
+  { id: 'noorderlicht', naam: 'Noorderlicht', ook: ['poollicht', 'aurora', 'zuiderlicht', 'zonnestorm', 'ruimteweer'], en: 'northern lights', ken: true,
     groep: 'zonmaan', bron: 'WP-PL; KNMI-NL', plaatje: 'noorderlicht',
     uitleg: [
       'Noorderlicht is een gloed aan de hemel, meestal groen, soms rood of roze. Het kan eruitzien als bogen, stralen of golvende gordijnen van licht. Het hoort bij het hoge noorden, maar soms zie je het ook in Nederland. Rond de zuidpool heet het zuiderlicht.',
@@ -350,7 +350,7 @@ export default [
     ],
     verwijs: [{ naam: 'KNMI: ruimteweer', url: 'https://www.knmi.nl/kennis-en-datacentrum/uitleg/ruimteweer' }],
     naar: [{ blad: 'lichtvervuiling' }, { blad: 'zonnestelsel' }] },
-  { id: 'aarde-draait', naam: 'De aarde draait', ook: ['aardrotatie', 'dag en nacht', 'seizoenen', 'aardas', 'siderische dag', 'sterrendag'], en: 'Earth’s rotation',
+  { id: 'aarde-draait', naam: 'De aarde draait', ook: ['aardrotatie', 'dag en nacht', 'seizoenen', 'aardas', 'siderische dag', 'sterrendag'], en: 'Earth’s rotation', ken: true,
     groep: 'zonmaan', bron: 'WP-AARDE; KNMI-BB',
     uitleg: [
       'De aarde draait om haar as, van west naar oost. Daarom lijken de zon, de maan en de sterren van oost naar west over de hemel te gaan. Elke plek op aarde krijgt zo om de beurt dag en nacht.',
@@ -365,7 +365,7 @@ export default [
     naar: [{ blad: 'zon-door-het-jaar' }, { blad: 'sterrenhemel' }, { blad: 'buys-ballot' }, { blad: 'getijden' }] },
 
   // Sterren
-  { id: 'poolster', naam: 'Poolster', ook: ['Noordster', 'Grote Beer', 'Steelpan'], en: 'Polaris', groep: 'sterren', plaatje: 'poolster', doe: 'poolster-zoeken', bron: 'NAV §6, KK §14e',
+  { id: 'poolster', naam: 'Poolster', ook: ['Noordster', 'Grote Beer', 'Steelpan'], en: 'Polaris', groep: 'sterren', plaatje: 'poolster', doe: 'poolster-zoeken', bron: 'NAV §6, KK §14e', ken: true,
     uitleg: [
       'Zoek de Grote Beer, de Steelpan. Kijk naar de twee sterren aan de voorkant van de pan, aan de kant tegenover de steel. Trek een lijn door die twee, naar de open kant van de pan. Verleng hem ongeveer vijf keer de afstand tussen die twee sterren. Daar staat de Poolster: niet heel fel, de laatste ster van de steel van de Kleine Beer.',
       'Staat de Steelpan laag, zoek dan de W van Cassiopeia. Die staat aan de andere kant: de Poolster staat ongeveer halverwege tussen de twee.',
@@ -373,7 +373,7 @@ export default [
       'Hoe hoog hij boven de horizon staat, is ongeveer je breedtegraad: in Nederland 51 tot 53,5°.',
     ],
     naar: [{ blad: 'grote-beer' }, { blad: 'cassiopeia' }, { blad: 'noorden-zonder-kompas' }, { blad: 'maankompas' }] },
-  { id: 'sterrenhemel', naam: 'De draaiende sterrenhemel', ook: ['sterrenkaart', 'draaiende sterrenkaart', 'planisfeer', 'circumpolair', 'wat staat er vanavond'], en: 'planisphere',
+  { id: 'sterrenhemel', naam: 'De draaiende sterrenhemel', ook: ['sterrenkaart', 'draaiende sterrenkaart', 'planisfeer', 'circumpolair', 'wat staat er vanavond'], en: 'planisphere', ken: true,
     groep: 'sterren', bron: 'NAV §6; Yale Bright Star Catalogue; eigen berekening', doe: 'sterrenkaart',
     uitleg: [
       'De hemel draait in een nacht langzaam om de Poolster: ongeveer 15° per uur, de kant van de zon op, van oost naar west. Sterren dicht bij de Poolster gaan in Nederland nooit onder, zoals de Grote Beer en Cassiopeia. Ze heten circumpolair.',
@@ -381,14 +381,14 @@ export default [
       'Een draaiende sterrenkaart laat zien wat er op een datum en tijd boven de horizon staat. Houd hem boven je hoofd, met de kant waar je naar kijkt onderaan.',
     ],
     naar: [{ blad: 'poolster' }, { blad: 'sterrenbeelden-herkennen' }] },
-  { id: 'sterrenbeelden-herkennen', naam: 'Sterrenbeelden herkennen', ook: ['sterrenbeeld', 'sterrenbeelden', 'constellatie'], en: 'constellations',
+  { id: 'sterrenbeelden-herkennen', naam: 'Sterrenbeelden herkennen', ook: ['sterrenbeeld', 'sterrenbeelden', 'constellatie'], en: 'constellations', ken: true,
     groep: 'sterren', bron: 'NAV §6; TKN §6.6; Yale Bright Star Catalogue', doe: 'sterrenbeelden',
     uitleg: [
       'Een sterrenbeeld is een groepje sterren dat mensen lang geleden een naam gaven, naar een dier, een voorwerp of een figuur uit een verhaal. De sterren staan niet echt bij elkaar: ze lijken alleen van hieruit een vorm te maken.',
       'Begin met de makkelijkste: de Grote Beer (de Steelpan) en de W van Cassiopeia, die je het hele jaar ziet. Daarna per seizoen: in de winter Orion, in de zomer de Zomerdriehoek.',
     ],
     naar: [{ blad: 'grote-beer' }, { blad: 'cassiopeia' }, { blad: 'orion' }, { blad: 'zomerdriehoek' }, { blad: 'sterrenhemel' }] },
-  { id: 'grote-beer', naam: 'Grote Beer', ook: ['Steelpan', 'Grote Wagen', 'Ursa Major', 'Big Dipper'], en: 'Big Dipper', groep: 'sterren',
+  { id: 'grote-beer', naam: 'Grote Beer', ook: ['Steelpan', 'Grote Wagen', 'Ursa Major', 'Big Dipper'], en: 'Big Dipper', groep: 'sterren', ken: true,
     bron: 'NAV §6; TKN §6.6', doe: 'sterrenkaart-grote-beer',
     uitleg: [
       'Zeven heldere sterren in de vorm van een steelpan: vier voor de pan, drie voor de steel. Het is maar een deel van het sterrenbeeld Grote Beer, maar wel het bekendste.',
@@ -396,18 +396,18 @@ export default [
       'De twee sterren aan de voorkant van de pan, Dubhe en Merak, wijzen naar de Poolster.',
     ],
     naar: [{ blad: 'poolster' }, { blad: 'kleine-beer' }, { blad: 'cassiopeia' }] },
-  { id: 'kleine-beer', naam: 'Kleine Beer', ook: ['Kleine Wagen', 'Ursa Minor', 'Little Dipper'], en: 'Little Dipper', groep: 'sterren',
+  { id: 'kleine-beer', naam: 'Kleine Beer', ook: ['Kleine Wagen', 'Ursa Minor', 'Little Dipper'], en: 'Little Dipper', groep: 'sterren', ken: true,
     bron: 'NAV §6; TKN §6.6', doe: 'sterrenkaart-kleine-beer',
     uitleg: 'Een kleinere steelpan, met de Poolster aan het eind van de steel. De meeste sterren ervan zijn zwak: alleen de Poolster en de twee sterren aan het eind van de pan zie je goed. In de stad zie je de rest vaak niet. Je vindt hem via de Poolster, en die via de Grote Beer.',
     naar: [{ blad: 'poolster' }, { blad: 'grote-beer' }] },
-  { id: 'cassiopeia', naam: 'Cassiopeia', ook: ['de W', 'de M'], en: 'Cassiopeia', groep: 'sterren',
+  { id: 'cassiopeia', naam: 'Cassiopeia', ook: ['de W', 'de M'], en: 'Cassiopeia', groep: 'sterren', ken: true,
     bron: 'NAV §6; TKN §6.6', doe: 'sterrenkaart-cassiopeia',
     uitleg: [
       'Vijf sterren in de vorm van een W, of een M als hij op zijn kop staat. Cassiopeia staat aan de andere kant van de Poolster dan de Grote Beer, en gaat in Nederland ook nooit onder.',
       'Handig in de herfst: dan staat de Steelpan ’s avonds laag, en Cassiopeia hoog. De Poolster staat ongeveer halverwege tussen de twee.',
     ],
     naar: [{ blad: 'poolster' }, { blad: 'grote-beer' }] },
-  { id: 'orion', naam: 'Orion', ook: ['de Jager', 'gordel van Orion', 'Betelgeuze', 'Rigel'], en: 'Orion', groep: 'sterren',
+  { id: 'orion', naam: 'Orion', ook: ['de Jager', 'gordel van Orion', 'Betelgeuze', 'Rigel'], en: 'Orion', groep: 'sterren', ken: true,
     bron: 'NAV §6; TKN §6.6; Yale Bright Star Catalogue', doe: 'sterrenkaart-orion',
     uitleg: [
       'Het sterrenbeeld van de winteravond, van december tot maart, in het zuiden. Je herkent het aan de gordel: drie sterren op een rij. Daarboven en daaronder twee heldere sterren: Betelgeuze linksboven, oranjerood, en Rigel rechtsonder, blauwwit.',
@@ -415,11 +415,11 @@ export default [
       'Volg de gordel naar linksonder en je komt bij Sirius, naar rechtsboven bij Aldebaran en de Plejaden.',
     ],
     naar: [{ blad: 'grote-hond' }, { blad: 'stier-plejaden' }, { blad: 'tweelingen' }] },
-  { id: 'grote-hond', naam: 'Grote Hond en Sirius', ook: ['Sirius', 'Hondsster', 'Canis Major'], en: 'Sirius', groep: 'sterren',
+  { id: 'grote-hond', naam: 'Grote Hond en Sirius', ook: ['Sirius', 'Hondsster', 'Canis Major'], en: 'Sirius', groep: 'sterren', ken: true,
     bron: 'NAV §6; Yale Bright Star Catalogue', doe: 'sterrenkaart-grote-hond',
     uitleg: 'Sirius is de helderste ster aan de nachthemel. Je vindt hem op winteravonden laag in het zuiden, linksonder Orion, in het verlengde van Orions gordel. In Nederland komt hij niet hoger dan zo’n 20°; laag bij de horizon flonkert hij vaak in allerlei kleuren.',
     naar: [{ blad: 'orion' }] },
-  { id: 'zomerdriehoek', naam: 'Zomerdriehoek', ook: ['Wega', 'Deneb', 'Altaïr', 'Zwaan', 'Noorderkruis', 'Lier', 'Arend'], en: 'Summer Triangle', groep: 'sterren',
+  { id: 'zomerdriehoek', naam: 'Zomerdriehoek', ook: ['Wega', 'Deneb', 'Altaïr', 'Zwaan', 'Noorderkruis', 'Lier', 'Arend'], en: 'Summer Triangle', groep: 'sterren', ken: true,
     bron: 'NAV §6; TKN §6.6', doe: 'sterrenkaart-zomerdriehoek',
     uitleg: [
       'Drie heldere sterren in een grote driehoek, hoog aan de hemel op zomer- en herfstavonden, van juli tot oktober. Handig op zomerkamp.',
@@ -429,49 +429,49 @@ export default [
       'Op een donkere plek loopt de Melkweg dwars door de driehoek.',
     ],
     naar: [{ blad: 'melkweg' }, { blad: 'sterrenhemel' }] },
-  { id: 'leeuw', naam: 'Leeuw', ook: ['Regulus', 'Leo'], en: 'Leo', groep: 'sterren',
+  { id: 'leeuw', naam: 'Leeuw', ook: ['Regulus', 'Leo'], en: 'Leo', groep: 'sterren', ken: true,
     bron: 'TKN §6.6, WPen-Leo', doe: 'sterrenkaart-leeuw',
     uitleg: 'Het sterrenbeeld van de voorjaarsavond, van februari tot juni, in het zuiden. De kop van de leeuw ziet eruit als een achterstevoren vraagteken (een sikkel); de punt eronder is de heldere ster Regulus. Naar links eindigt de leeuw in een driehoekje van sterren.',
     naar: [{ blad: 'grote-beer' }] },
-  { id: 'tweelingen', naam: 'Tweelingen', ook: ['Castor', 'Pollux', 'Gemini'], en: 'Gemini', groep: 'sterren',
+  { id: 'tweelingen', naam: 'Tweelingen', ook: ['Castor', 'Pollux', 'Gemini'], en: 'Gemini', groep: 'sterren', ken: true,
     bron: 'TKN §6.6, WPen-Gemini, WPen-Orion', doe: 'sterrenkaart-tweelingen',
     uitleg: 'Twee heldere sterren naast elkaar, Castor en Pollux, met elk een rij zwakkere sterren eronder: de twee broers. Je ziet ze op winter- en voorjaarsavonden, van december tot mei, linksboven Orion.',
     naar: [{ blad: 'orion' }] },
-  { id: 'stier-plejaden', naam: 'Stier en Plejaden', ook: ['Plejaden', 'Zevengesternte', 'Aldebaran', 'Taurus'], en: 'Taurus and the Pleiades', groep: 'sterren',
+  { id: 'stier-plejaden', naam: 'Stier en Plejaden', ook: ['Plejaden', 'Zevengesternte', 'Aldebaran', 'Taurus'], en: 'Taurus and the Pleiades', groep: 'sterren', ken: true,
     bron: 'TKN §6.6, WPen-Orion, WPen-Taurus, WPen-Pleiades, WP-PLEJ', doe: 'sterrenkaart-stier',
     uitleg: [
       'Volg de gordel van Orion naar rechtsboven. Eerst kom je bij Aldebaran, een oranje ster in een V van sterren: de kop van de Stier. Nog verder staat een klein, dicht groepje sterren: de Plejaden of het Zevengesternte.',
       'Je ziet ze op herfst- en winteravonden, van november tot maart. Hoeveel sterren van de Plejaden zie jij? Met gewone ogen zijn het er meestal zes of zeven.',
     ],
     naar: [{ blad: 'orion' }] },
-  { id: 'zuiderkruis', naam: 'Zuiderkruis', ook: ['Crux', 'Southern Cross'], en: 'Southern Cross', groep: 'sterren', bron: 'NAV §6; KK §14e; Yale Bright Star Catalogue', plaatje: 'zuiderkruis',
+  { id: 'zuiderkruis', naam: 'Zuiderkruis', ook: ['Crux', 'Southern Cross'], en: 'Southern Cross', groep: 'sterren', bron: 'NAV §6; KK §14e; Yale Bright Star Catalogue', plaatje: 'zuiderkruis', ken: true,
     uitleg: [
       'Op het zuidelijk halfrond is er geen poolster. Daar zoek je het Zuiderkruis: vier heldere sterren als een klein kruis. Verleng de lange as ongeveer 4,5 keer; recht daaronder, op de horizon, is het zuiden.',
       'In Nederland zie je het Zuiderkruis nooit: het staat pas helemaal boven de horizon ten zuiden van ongeveer 27° noorderbreedte, zo’n 2800 kilometer zuidelijker. Handig om te weten op een reis of een jamboree ver weg.',
     ],
     letOp: 'Het Zuiderkruis is een eigen sterrenbeeld, naast de Centaur (Centaurus). Het is geen deel van de Centaur.',
     naar: [{ blad: 'poolster' }] },
-  { id: 'melkweg', naam: 'Melkweg', ook: ['Melkwegstelsel', 'donkere hemel', 'Dark Sky Park'], en: 'Milky Way', groep: 'sterren', bron: 'TKN §6.6, WP-MW, WP-DSP', plaatje: 'melkweg',
+  { id: 'melkweg', naam: 'Melkweg', ook: ['Melkwegstelsel', 'donkere hemel', 'Dark Sky Park'], en: 'Milky Way', groep: 'sterren', bron: 'TKN §6.6, WP-MW, WP-DSP', plaatje: 'melkweg', ken: true,
     uitleg: [
       'Een lichte, wazige band over de hemel. Het zijn miljarden sterren van ons eigen sterrenstelsel, zo ver weg dat je ze niet los ziet.',
       'Je ziet hem alleen waar het echt donker is: ver van steden en lantaarnpalen, zonder maan, als je ogen een kwartier aan het donker gewend zijn. In de zomer en herfst loopt hij door de Zwaan en Cassiopeia. Donkere plekken in Nederland zijn bijvoorbeeld het Lauwersmeer en de Boschplaat op Terschelling.',
     ],
     naar: [{ blad: 'zomerdriehoek' }, { blad: 'cassiopeia' }] },
-  { id: 'iss', naam: 'ISS en satellieten', ook: ['ruimtestation', 'satelliet', 'International Space Station'], en: 'International Space Station', groep: 'sterren', bron: 'TKN §6.6, WP-ISS', plaatje: 'iss-baan',
+  { id: 'iss', naam: 'ISS en satellieten', ook: ['ruimtestation', 'satelliet', 'International Space Station'], en: 'International Space Station', groep: 'sterren', bron: 'TKN §6.6, WP-ISS', plaatje: 'iss-baan', ken: true,
     uitleg: [
       'Zie je een licht dat rustig en snel over de hemel schuift, zonder te knipperen? Dan is het een satelliet. De helderste is het ruimtestation ISS: in een paar minuten gaat het over de hele hemel, en het verdwijnt soms ineens als het in de schaduw van de aarde komt.',
       'Een vliegtuig knippert, met rode en groene lichtjes. Een ster beweegt niet. Op de site van NASA zie je wanneer het ISS over Nederland komt.',
     ],
     verwijs: [{ naam: 'Spot the Station (NASA)', url: 'https://spotthestation.nasa.gov/' }],
     naar: [{ blad: 'planeten' }] },
-  { id: 'planeten', naam: 'Planeten aan de hemel', ook: ['Venus', 'avondster', 'morgenster', 'Jupiter', 'Mars'], en: 'planets', groep: 'sterren', bron: 'NAV §6', plaatje: 'planeten-avond',
+  { id: 'planeten', naam: 'Planeten aan de hemel', ook: ['Venus', 'avondster', 'morgenster', 'Jupiter', 'Mars'], en: 'planets', groep: 'sterren', bron: 'NAV §6', plaatje: 'planeten-avond', ken: true,
     uitleg: [
       'Sommige ‘sterren’ zijn planeten. Ze staan op de lijn waar ook de zon en de maan langs gaan. In een paar weken schuiven ze tussen de sterren door. Daarom staan ze niet op de sterrenkaart.',
       'Venus is na de maan het helderste aan de nachthemel. Je ziet hem kort na zonsondergang in het westen (de avondster) of kort voor zonsopkomst in het oosten (de morgenster). Ook Jupiter is fel; Mars is oranjerood.',
       'Planeten twinkelen minder dan sterren.',
     ],
     naar: [{ blad: 'iss' }, { blad: 'sterrenhemel' }, { blad: 'zonnestelsel' }, { blad: 'dierenriem' }] },
-  { id: 'zonnestelsel', naam: 'Het zonnestelsel', ook: ['planeten', 'Copernicus', 'Pluto', 'dwergplaneet', 'Uranus', 'Neptunus', 'Mercurius', 'Saturnus'], en: 'the solar system',
+  { id: 'zonnestelsel', naam: 'Het zonnestelsel', ook: ['planeten', 'Copernicus', 'Pluto', 'dwergplaneet', 'Uranus', 'Neptunus', 'Mercurius', 'Saturnus'], en: 'the solar system', ken: true,
     groep: 'sterren', bron: 'WP-ZS; WP-COP; WP-UR; WP-NE; WP-PLU', plaatje: 'zonnestelsel',
     uitleg: [
       'Het zonnestelsel is de zon met alles wat eromheen draait: acht planeten, dwergplaneten zoals Pluto, manen, planetoïden en kometen. De zon is een ster. Ze heeft bijna alle massa van het zonnestelsel: 99,86 procent.',
@@ -484,7 +484,7 @@ export default [
       'Wat zon en maan doen voor het leven op aarde: de zon geeft licht en warmte. Planten maken met dat licht hun voedsel, en daar leven de dieren weer van. De maan maakt de getijden en houdt de as van de aarde stabiel.',
     ],
     naar: [{ blad: 'planeten' }, { blad: 'aarde-draait' }, { blad: 'lichtjaar' }] },
-  { id: 'dierenriem', naam: 'De dierenriem', ook: ['zodiak', 'ecliptica', 'sterrenbeelden van de dierenriem', 'Slangendrager', 'Ram', 'Kreeft', 'Maagd', 'Weegschaal', 'Schorpioen', 'Boogschutter', 'Steenbok', 'Waterman', 'Vissen'],
+  { id: 'dierenriem', naam: 'De dierenriem', ook: ['zodiak', 'ecliptica', 'sterrenbeelden van de dierenriem', 'Slangendrager', 'Ram', 'Kreeft', 'Maagd', 'Weegschaal', 'Schorpioen', 'Boogschutter', 'Steenbok', 'Waterman', 'Vissen'], ken: true,
     en: 'the zodiac', groep: 'sterren', bron: 'WP-DR; WP-ECL; WP-OPH',
     uitleg: [
       'In een jaar lijkt de zon één keer rond te gaan langs de sterren. Die baan aan de hemel heet de ecliptica. Eigenlijk zie je zo de baan van de aarde om de zon: vanaf de aarde staat de zon steeds voor andere sterren.',
@@ -495,7 +495,7 @@ export default [
       'De aardas draait heel langzaam rond als een tol: één keer in ongeveer 25.800 jaar. Daardoor staat de zon op je verjaardag nu meestal in een ander sterrenbeeld dan je ‘sterrenbeeld’ uit de horoscoop. Horoscopen horen bij de astrologie, niet bij de sterrenkunde.',
     ],
     naar: [{ blad: 'leeuw' }, { blad: 'tweelingen' }, { blad: 'stier-plejaden' }, { blad: 'planeten' }, { blad: 'sterrenhemel' }] },
-  { id: 'lichtjaar', naam: 'Hoe ver weg zijn de sterren?', ook: ['lichtjaar', 'afstand van sterren', 'dichtstbijzijnde ster', 'Proxima Centauri', 'Alpha Centauri'], en: 'light-year',
+  { id: 'lichtjaar', naam: 'Hoe ver weg zijn de sterren?', ook: ['lichtjaar', 'afstand van sterren', 'dichtstbijzijnde ster', 'Proxima Centauri', 'Alpha Centauri'], en: 'light-year', ken: true,
     groep: 'sterren', bron: 'WP-LJ; WP-PROX; WP-STER',
     uitleg: [
       'Sterren staan zo ver weg dat kilometers niet handig zijn. Sterrenkundigen rekenen in lichtjaren: de afstand die licht in een jaar aflegt. Licht gaat bijna 300.000 km per seconde, dus een lichtjaar is ongeveer 9,46 biljoen km.',
@@ -521,7 +521,7 @@ export default [
     },
     letOp: 'Hoe verder een ster weg staat, hoe moeilijker de afstand te meten is. Bronnen geven dan andere getallen, zoals bij Betelgeuze.',
     naar: [{ blad: 'sterrenhemel' }, { blad: 'zomerdriehoek' }, { blad: 'grote-hond' }, { blad: 'poolster' }, { blad: 'zuiderkruis' }] },
-  { id: 'vallende-sterren', naam: 'Vallende sterren', ook: ['meteoor', 'meteoren', 'meteorenzwerm', 'sterrenregen', 'Perseïden', 'Geminiden', 'Quadrantiden', 'meteoriet'], en: 'meteors',
+  { id: 'vallende-sterren', naam: 'Vallende sterren', ook: ['meteoor', 'meteoren', 'meteorenzwerm', 'sterrenregen', 'Perseïden', 'Geminiden', 'Quadrantiden', 'meteoriet'], en: 'meteors', ken: true,
     groep: 'sterren', bron: 'WP-MET; WP-MZ; WP-PER; WP-GEM; WP-QUA', plaatje: 'vallende-sterren',
     uitleg: [
       'Een vallende ster is geen ster. Het is een stofje of steentje uit de ruimte dat met tientallen kilometers per seconde de dampkring in schiet. Op zo’n 80 km hoogte wordt het zo heet dat het oplicht en verbrandt. Een korreltje zo groot als een erwt geeft al een heldere streep. Het officiële woord is meteoor.',

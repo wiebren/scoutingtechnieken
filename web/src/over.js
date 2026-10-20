@@ -4,7 +4,7 @@ import { UPDATES } from './data/updates.js';
 import { h, vul } from './dom.js';
 import { icoon } from './iconen.js';
 import { meld, melderBewaard, vergeetMelder } from './melden.js';
-import { aantalAfgevinkt, thema, volgAfgevinkt, wisAfgevinkt, zetThema, zetUpdatesGezien } from './opslag.js';
+import { aantalAfgevinkt, tekstgrootte, thema, volgAfgevinkt, wisAfgevinkt, zetTekstgrootte, zetThema, zetUpdatesGezien } from './opslag.js';
 
 const datum = (iso) => new Date(`${iso}T12:00:00`).toLocaleDateString('nl-NL', { day: 'numeric', month: 'long', year: 'numeric' });
 const extern = (url, tekst) => h('a', { href: url, target: '_blank', rel: 'noopener' }, tekst, icoon('extern', 'icoon klein'));
@@ -42,6 +42,13 @@ export function overView({ installeer }) {
     onclick: () => { zetThema(waarde); for (const [k, c] of themaChips.entries()) c.setAttribute('aria-pressed', String(themaKeuzes[k][0] === waarde)); },
   }, tekst));
 
+  // the text size, the same way; each chip in its own size, so you see what you get
+  const tekstKeuzes = [['klein', 'Klein', '87.5%'], ['normaal', 'Normaal', '100%'], ['groot', 'Groot', '115%'], ['groter', 'Groter', '130%']];
+  const tekstChips = tekstKeuzes.map(([waarde, tekst, grootte]) => h('button.chip', {
+    type: 'button', 'aria-pressed': String(tekstgrootte() === waarde), style: `font-size: ${(14 * parseFloat(grootte)) / 100}px`,
+    onclick: () => { zetTekstgrootte(waarde); for (const [k, c] of tekstChips.entries()) c.setAttribute('aria-pressed', String(tekstKeuzes[k][0] === waarde)); },
+  }, tekst));
+
   const el = h('div.view.enkel',
     h('section.paneel',
       h('header.balk', h('div.balk-rij', h('h1', 'Instellingen'))),
@@ -50,6 +57,10 @@ export function overView({ installeer }) {
           h('h2', 'Thema'),
           h('div.chips', { role: 'group', 'aria-label': 'Thema' }, themaChips),
           h('p.stil', 'Automatisch doet wat je toestel doet: licht als je toestel licht staat, donker als het donker staat.')),
+        h('section.over-blok',
+          h('h2', 'Tekstgrootte'),
+          h('div.chips', { role: 'group', 'aria-label': 'Tekstgrootte' }, tekstChips),
+          h('p.stil', 'Maakt de tekst in de hele app groter of kleiner. Normaal volgt de lettergrootte van je browser.')),
         h('section.over-blok',
           h('h2', 'Melden'),
           h('p', 'Klopt er iets niet, werkt een oefening niet goed, of mis je iets? Laat het weten. Op elk onderwerp staat onderaan ook een knop om het te melden.'),

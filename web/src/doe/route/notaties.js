@@ -73,9 +73,111 @@ const actieWoord = (d) => {
   return w === 'rechtdoor' ? 'rechtdoor' : `${w}af`;
 };
 
+const groot = (t) => t[0].toUpperCase() + t.slice(1);
+
 /**
- * The techniques. `noorden`: the scout needs to know where north is (a compass in the HUD). `tellen`: counting is
- * the skill, so "waar ben ik" starts off.
+ * The beschrijvende route in other words: a little poem, a story about a rabbit, a fairy tale. Each sentence still
+ * names the junction, the landmark, the way to go and the road, so you can walk it as well as the plain one. `wie`
+ * is who stays on a road ("je blijft op", "hij blijft op"). In the poem the rhyme is at the end of the two lines; the
+ * names go in the middle.
+ */
+export const STIJLEN = {
+  gedicht: {
+    wie: 'je',
+    intro: (s) => `Je start op ${s.naam}, ${s.soort}, hier.\nLoop door tot ${s.eerste}, met veel plezier.`,
+    zinnen: [
+      (z) => `Bij ${z.de}${z.bij} sta je dan:\nga ${z.actie}${z.weg}, zo goed als je kan.`,
+      (z) => `Zie je ${z.een}${z.bij}? Heel fijn:\nga ${z.actie}${z.weg}, daar moet je zijn.`,
+      (z) => `${z.De}${z.bij} komt in zicht:\nga ${z.actie}${z.weg}, dat is je plicht.`,
+      (z) => `Dan ${z.een}${z.bij}, wat een feest:\nga ${z.actie}${z.weg}, en wees niet bevreesd.`,
+      (z) => `Bij ${z.de}${z.bij} is het tijd:\nga ${z.actie}${z.weg}, je raakt de weg niet kwijt.`,
+      (z) => `Kom je bij ${z.een}${z.bij}, wees niet bang:\nga ${z.actie}${z.weg}, het duurt niet lang.`,
+    ],
+    slot: 'Nog een stukje, zie je het staan?\nDaar is de post. Je bent er, goed gedaan!',
+  },
+  konijn: {
+    wie: 'hij',
+    intro: (s) => `Konijn Floep woont aan ${s.naam}, ${s.soort}. Vandaag gaat hij op bezoek bij zijn vriendin, de egel. Hij huppelt door tot ${s.eerste}.`,
+    zinnen: [
+      (z) => `Bij ${z.de}${z.bij} snuffelt Floep even in de lucht. Dan hupt hij ${z.actie}${z.weg}.`,
+      (z) => `Floep komt bij ${z.een}${z.bij}. Hij krabt achter zijn lange oor en weet het weer: ${z.actie}${z.weg}.`,
+      (z) => `Bij ${z.de}${z.bij} ziet Floep een paardenbloem. Hij knabbelt even en gaat dan ${z.actie}${z.weg}.`,
+      (z) => `Bij ${z.de}${z.bij} wipt Floep met zijn witte staartje. Hup, ${z.actie}${z.weg}!`,
+      (z) => `${z.De}${z.bij}! Floep gaat op zijn achterpootjes staan en kijkt rond. Dan springt hij ${z.actie}${z.weg}.`,
+    ],
+    slot: 'Na een stukje ziet Floep de post. Daar wacht de egel al, met een wortel voor Floep. Jij bent er ook!',
+  },
+  sprookje: {
+    wie: 'je',
+    intro: (s) => `Er was eens een dappere scout, die op een dag op ${s.naam} stond, ${s.soort}. „Loop door tot ${s.eerste}”, fluisterde de wind.`,
+    zinnen: [
+      (z) => `Bij ${z.de}${z.bij} zat een oude uil. „Oehoe,” zei hij, „ga ${z.actie}${z.weg}.”`,
+      (z) => `Bij ${z.de}${z.bij} kwaakte een kikker met een gouden kroontje: „Ga ${z.actie}${z.weg}.”`,
+      (z) => `Bij ${z.de}${z.bij} stond een kabouter met een lantaarn. „Ga ${z.actie}${z.weg}”, bromde hij.`,
+      (z) => `Toen kwam de scout bij ${z.een}${z.bij}. Een fee fladderde voorbij en zong: „Ga ${z.actie}${z.weg}!”`,
+      (z) => `Bij ${z.de}${z.bij} krasten drie raven tegelijk: „Ga ${z.actie}${z.weg}!”`,
+    ],
+    slot: 'Na een stukje zag de scout de post, en daar lag de schat. En ze leefden nog lang en gelukkig.',
+  },
+  kryptisch: {
+    wie: 'je',
+    intro: (s) => `Lees elke zin twee keer: niet alles is wat het lijkt. Twaalf uur is recht vooruit, en elke straatnaam staat achterstevoren. Het is niet zo dat je níet op ${achterstevoren(s.ruw)} begint, ${s.soort}. Loop door tot ${raad.type(s.type, s.r)}.`,
+    zinnen: [
+      (z) => `Bij ${raad.type(z.type, z.r)}${raad.bij(z)}: ${raad.actie(z)}${raad.weg(z)}.`,
+      (z) => `Het is niet zo dat je bij ${raad.type(z.type, z.r)}${raad.bij(z)} níet ${z.actie} gaat${raad.weg(z)}.`,
+      (z) => `Kom je bij ${raad.type(z.type, z.r)}${raad.bij(z)}? ${groot(raad.actie(z))}${raad.weg(z)}.`,
+      (z) => `Ik zou bij ${raad.type(z.type, z.r)}${raad.bij(z)} niet níet ${z.actie} gaan${raad.weg(z)}.`,
+      (z) => `Twijfel niet bij ${raad.type(z.type, z.r)}${raad.bij(z)}, of twijfel juist wel, maar ${raad.actie(z)}${raad.weg(z)}.`,
+    ],
+    slot: 'Na een stukje is het niet zo dat je de post níet ziet. Ben je er nu niet? Jawel, je bent er!',
+  },
+};
+
+/**
+ * The riddles of the cryptic route. Each has one answer only: a turn is told by the clock (twaalf uur straight on),
+ * by bakboord and stuurboord, or by its opposite; a road by its name backwards, or by its kind when no other road
+ * there is of that kind. "Niet linksaf en niet rechtsaf" only where every road is plain links, rechts or rechtdoor.
+ */
+const KLOK = { rechtdoor: 'twaalf uur', rechts: 'drie uur', links: 'negen uur', 'schuin rechts': 'half twee', 'schuin links': 'half elf',
+  'scherp rechts': 'half vijf', 'scherp links': 'half acht' };
+const SOORT_RAADSEL = { verhard: 'de weg zonder één zandkorrel', fietspad: 'het pad van de fietsers', zandpad: 'de weg van zand',
+  bospad: 'het smalle pad tussen de bomen' };
+const BAKEN_RAADSEL = { boom: 'waar eikels vallen', huis: 'waar iemand woont', bankje: 'waar je even kunt zitten',
+  wegwijzer: 'waar een paal je de weg wil wijzen (luister liever naar mij)', hek: 'waar iets open en dicht kan dat geen deur is',
+  kerk: 'waar de klokken luiden' };
+const achterstevoren = (naam) => `${deNaam(naam).split(' ')[0]} ${[...naam.toUpperCase()].reverse().join('')}`;
+const raad = {
+  type: (type, r) => {
+    const opties = {
+      kruispunt: ['het plusteken', 'de plek waar vier wegen elkaar een hand geven', 'de plek waar je uit drie wegen kunt kiezen'],
+      'T-splitsing': ['de twintigste letter van het alfabet', 'de letter tussen S en U'],
+      'Y-splitsing': ['de vijfentwintigste letter van het alfabet', 'de letter tussen X en Z'],
+      vijfsprong: ['de plek waar je uit vier wegen kunt kiezen'],
+      zessprong: ['de plek waar je uit vijf wegen kunt kiezen'],
+    }[type] ?? [`de plek waar aan je ${type.endsWith('links') ? 'linker' : 'rechter'}hand een weg bijkomt`];
+    return opties[Math.floor(r() * opties.length)];
+  },
+  bij: (z) => (z.baken ? ` ${BAKEN_RAADSEL[z.baken]}` : ''),
+  actie: (z) => {
+    const opties = [`ga richting ${KLOK[z.richting]}`, `ga niet níet ${z.actie}`];
+    if (z.richting === 'links' || z.richting === 'rechts') {
+      const links = z.richting === 'links';
+      opties.push(`ga naar ${links ? 'bakboord' : 'stuurboord'}`, `doe het tegenovergestelde van ${links ? 'rechtsaf' : 'linksaf'}`,
+        `draai een kwartslag ${links ? 'tegen de klok in' : 'met de klok mee'}`);
+    }
+    if (z.richting === 'rechtdoor') opties.push('volg je neus');
+    return opties[Math.floor(z.r() * opties.length)];
+  },
+  weg: (z) => {
+    if (z.richting === 'rechtdoor' && z.zelfde) return [`, en blijf ${achterstevoren(z.naam)} trouw`, `, zonder ${achterstevoren(z.naam)} te verlaten`][Math.floor(z.r() * 2)];
+    const opWeg = z.richting === 'rechtdoor' ? 'op' : 'in';
+    if (z.soortUniek && z.r() < 0.4) return `, ${SOORT_RAADSEL[z.soort]} ${opWeg}`;
+    return `, ${achterstevoren(z.naam)} ${opWeg}`;
+  },
+};
+
+/**
+ * The techniques. `noorden`: the scout needs to know where north is (a compass in the HUD).
  */
 export const TECHNIEKEN = {
   kruispunten: {
@@ -117,7 +219,7 @@ export const TECHNIEKEN = {
     ],
   },
   windrichting: {
-    titel: 'Bolletje-pijltje met windrichting', noorden: true, tellen: true,
+    titel: 'Bolletje-pijltje met windrichting', noorden: true,
     codeer: (route) => {
       const items = []; const perStap = [];
       const K = route.stappen.length;
@@ -157,7 +259,7 @@ export const TECHNIEKEN = {
     ],
   },
   stripkaart: {
-    titel: 'Stripkaart', tellen: true,
+    titel: 'Stripkaart',
     codeer: (route) => eenPerStap(route, (stap) => ({
       links: stap.wegen.slice(0, stap.gekozen).map((w) => ({ onverhard: SOORTEN[w.soort].onverhard })),
       rechts: stap.wegen.slice(stap.gekozen + 1).map((w) => ({ onverhard: SOORTEN[w.soort].onverhard })),
@@ -199,7 +301,7 @@ export const TECHNIEKEN = {
     ],
   },
   kralen: {
-    titel: 'Kralentocht', tellen: true,
+    titel: 'Kralentocht',
     codeer: (route) => eenPerStap(route, (stap) => ({ kleur: KRAAL_KLEUR[gekozenSoort(stap)] })),
     lees: (codes, stappen) => stappen.map((stap, i) => kiesSoort(stap.wegen, KRAAL_SOORT[codes.items[i].kleur])),
     uitleg: (codes, i) => {
@@ -213,7 +315,7 @@ export const TECHNIEKEN = {
     ],
   },
   knopen: {
-    titel: 'Knopenroute', tellen: true,
+    titel: 'Knopenroute',
     codeer: (route) => eenPerStap(route, (stap) => ({ knoop: { links: 'paalsteek', rechtdoor: 'halve steek', rechts: 'achtknoop' }[gekozenSoort(stap)] })),
     lees: (codes, stappen) => stappen.map((stap, i) => kiesSoort(stap.wegen, { paalsteek: 'links', 'halve steek': 'rechtdoor', achtknoop: 'rechts' }[codes.items[i].knoop])),
     uitleg: (codes, i) => {
@@ -274,6 +376,7 @@ export const TECHNIEKEN = {
       const startWeg = net.wegen[route.start.weg];
       const eerste = route.stappen[0];
       const intro = `Je begint op ${deNaam(startWeg.naam)}, ${lidSoort(startWeg.soort)}. Loop door tot ${metLidwoord(kruispuntNaam(eerste))}.`;
+      const delen = [];
       const res = eenPerStap(route, (stap, i) => {
         const w = stap.wegen[stap.gekozen];
         const b = bakenBij(net, stap.knoop);
@@ -281,20 +384,38 @@ export const TECHNIEKEN = {
         const type = kruispuntNaam(stap);
         const zelfdeStraat = net.wegen[stap.inWeg].straat === net.wegen[w.weg].straat;
         const actie = actieWoord(w.draai);
+        // the road you take, said by `wie` (je, hij): the same words in every style
         let weg;
-        if (soortDraai(w.draai) === 'rechtdoor') weg = zelfdeStraat ? `, je blijft op ${deNaam(w.naam)}` : `, ${deNaam(w.naam)} op`;
-        else weg = r() < 0.5 ? `, ${deNaam(w.naam)} in` : `, ${lidSoort(w.soort)} in`;
+        if (soortDraai(w.draai) === 'rechtdoor') weg = (wie) => (zelfdeStraat ? `, ${wie} blijft op ${deNaam(w.naam)}` : `, ${deNaam(w.naam)} op`);
+        else { const opNaam = r() < 0.5; weg = () => (opNaam ? `, ${deNaam(w.naam)} in` : `, ${lidSoort(w.soort)} in`); }
         const zin = i === 0 || r() < 0.5
-          ? `${i === 0 ? `Bij ${metLidwoord(type)}` : r() < 0.5 ? `Bij ${metLidwoord(type, 'volgende')}` : `Op ${metLidwoord(type)}`}${bij} ga je ${actie}${weg}.`
-          : `Je komt bij een ${type}${bij}. Ga ${actie}${weg}.`;
+          ? `${i === 0 ? `Bij ${metLidwoord(type)}` : r() < 0.5 ? `Bij ${metLidwoord(type, 'volgende')}` : `${type.startsWith('zijweg') ? 'Bij' : 'Op'} ${metLidwoord(type)}`}${bij} ga je ${actie}${weg('je')}.`
+          : `Je komt bij een ${type}${bij}. Ga ${actie}${weg('je')}.`;
+        delen.push({ type, bij, actie, weg, richting: draaiWoord(w.draai), naam: w.naam, zelfde: zelfdeStraat, soort: w.soort, baken: b?.soort,
+          soortUniek: stap.wegen.filter((x) => x.soort === w.soort).length === 1 });
         return { zin, soort: soortDraai(w.draai) };
       });
       res.intro = intro;
       res.slot = 'Na een stukje zie je de post. Je bent er!';
+      res.stijlen = { gewoon: { intro, zinnen: res.items.map((it) => it.zin), slot: res.slot } };
+      for (const [naam, stijl] of Object.entries(STIJLEN)) {
+        const rs = rng(route.seed * 31 + naam.length * 7);
+        const start = { naam: deNaam(startWeg.naam), soort: lidSoort(startWeg.soort), eerste: metLidwoord(kruispuntNaam(eerste)), type: kruispuntNaam(eerste), ruw: startWeg.naam, r: rs };
+        // every sentence once before one comes back, as from a shuffled pile
+        let stapel = [];
+        const zinnen = delen.map((d) => {
+          if (!stapel.length) {
+            stapel = stijl.zinnen.map((_, k) => k);
+            for (let k = stapel.length - 1; k > 0; k--) { const j = Math.floor(rs() * (k + 1)); [stapel[k], stapel[j]] = [stapel[j], stapel[k]]; }
+          }
+          return stijl.zinnen[stapel.pop()]({ ...d, r: rs, de: metLidwoord(d.type), De: groot(metLidwoord(d.type)), een: `een ${d.type}`, bij: d.bij, actie: d.actie, weg: d.weg(stijl.wie) });
+        });
+        res.stijlen[naam] = { intro: stijl.intro(start), zinnen, slot: stijl.slot };
+      }
       return res;
     },
     lees: (codes, stappen) => stappen.map((stap, i) => kiesSoort(stap.wegen, codes.items[i].soort)),
-    uitleg: (codes, i) => `Zin ${i + 1}: "${codes.items[i].zin}"`,
+    uitleg: (codes, i, st, variant, stijl = 'gewoon') => `Zin ${i + 1}: "${codes.stijlen[stijl].zinnen[i].replace(/\n/g, ' ')}"`,
     sleutel: [
       'Lees de tekst zin voor zin. Bij elk kruispunt staat wat je doet.',
       'Controleer onderweg: klopt de soort kruising, zie je het huis of de boom uit de tekst, staat de naam op het bordje?',

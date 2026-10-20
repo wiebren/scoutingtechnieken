@@ -29,9 +29,9 @@
 
 .bf-tekst { display: flex; flex-direction: column; gap: 10px; min-width: 0; }
 .bf-kop { display: flex; align-items: baseline; gap: 12px; }
-.bf-getal { font-size: 34px; font-weight: 750; font-variant-numeric: tabular-nums; color: var(--accent); white-space: nowrap; }
+.bf-getal { font-size: 2.125rem; font-weight: 750; font-variant-numeric: tabular-nums; color: var(--accent); white-space: nowrap; }
 .bf-naamkm { display: flex; flex-direction: column; line-height: 1.25; }
-.bf-naam { font-size: 18px; font-weight: 650; }
+.bf-naam { font-size: 1.125rem; font-weight: 650; }
 .bf-kmu { color: var(--stil); font-variant-numeric: tabular-nums; }
-.bf-ziet { font-size: 17px; min-height: 3em; }
-.bf-schaal { display: flex; justify-content: space-between; padding: 0 6px; color: var(--stil); font-size: 11px; font-variant-numeric: tabular-nums; }
+.bf-ziet { font-size: 1.0625rem; min-height: 3em; }
+.bf-schaal { display: flex; justify-content: space-between; padding: 0 6px; color: var(--stil); font-size: 0.6875rem; font-variant-numeric: tabular-nums; }

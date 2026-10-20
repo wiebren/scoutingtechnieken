@@ -8,7 +8,7 @@ import { BLAD } from './data/bladen/index.js';
 import { CATEGORIE, groepNaam } from './data/categorieen.js';
 import { DOE } from './doe/index.js';
 import { h, vul } from './dom.js';
-import { niveauKeuze, thema } from './opslag.js';
+import { niveauKeuze, tekstgrootte, thema } from './opslag.js';
 import './doe/vorm.css';
 
 /** Where the report is POSTed as JSON; null: it can only be saved as a file. */
@@ -171,6 +171,7 @@ function maakDialoog() {
           browser: navigator.userAgent.slice(0, 200),
           scherm: `${innerWidth}×${innerHeight}`,
           thema: `${donker ? 'donker' : 'licht'} (${thema()})`,
+          tekst: tekstgrootte(),
           app: matchMedia('(display-mode: standalone)').matches || navigator.standalone === true ? 'geïnstalleerd' : 'browser',
         },
         niveaus: [...niveauKeuze()],

@@ -14,4 +14,4 @@
 .cs-venster { fill: color-mix(in srgb, var(--accent) 14%, transparent); stroke: var(--accent); stroke-width: 2; }
 .cs-uitleg { text-align: center; }
 .cs-knoppen { justify-content: center; }
-.cs-geheim { min-height: 1.6em; padding: 8px 12px; border-radius: 10px; background: var(--zacht); font-size: 18px; font-weight: 700; color: var(--blauw); overflow-wrap: anywhere; }
+.cs-geheim { min-height: 1.6em; padding: 8px 12px; border-radius: 10px; background: var(--zacht); font-size: 1.125rem; font-weight: 700; color: var(--blauw); overflow-wrap: anywhere; }

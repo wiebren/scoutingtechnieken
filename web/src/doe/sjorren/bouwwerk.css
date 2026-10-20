@@ -4,7 +4,7 @@
 .bw-beeld { position: relative; }
 .bw-scherm {
   position: relative; width: 100%; aspect-ratio: 4 / 3; max-height: 66vh; overflow: hidden; border-radius: 10px;
-  background: var(--zacht); border: 1px solid var(--lijn); touch-action: none; cursor: grab;
+  background: var(--zacht); border: 1px solid var(--lijn); touch-action: none; cursor: grab; user-select: none; -webkit-user-select: none;
 }
 .bw-scherm:active { cursor: grabbing; }
 .bw-scherm:focus-visible { outline: 3px solid var(--accent); outline-offset: 2px; }
@@ -17,7 +17,7 @@
   position: absolute; left: 0; top: 0; pointer-events: none; white-space: nowrap;
   margin: -38px 0 0; padding: 3px 9px; border-radius: 8px; translate: -50% 0;
   background: color-mix(in srgb, var(--paneel) 92%, transparent); color: var(--inkt); border: 1.5px solid var(--accent);
-  font-size: 13px; font-weight: 700; box-shadow: 0 2px 8px rgb(0 0 0 / 0.15);
+  font-size: 0.8125rem; font-weight: 700; box-shadow: 0 2px 8px rgb(0 0 0 / 0.15);
 }
 .bw-label::after {
   content: ''; position: absolute; left: 50%; bottom: -7px; width: 10px; height: 10px; translate: -50% 0; rotate: 45deg;
@@ -28,16 +28,16 @@
 .bw-rond {
   display: grid; place-items: center; width: 40px; height: 40px; padding: 0; border-radius: 50%;
   border: 1px solid var(--lijn-sterk); background: color-mix(in srgb, var(--paneel) 90%, transparent); color: var(--inkt);
-  font: inherit; font-size: 20px; font-weight: 700; line-height: 1; cursor: pointer;
+  font: inherit; font-size: 1.25rem; font-weight: 700; line-height: 1; cursor: pointer;
 }
 .bw-rond:hover { border-color: var(--accent); }
 .bw-rond:focus-visible { outline: 3px solid var(--accent); outline-offset: 1px; }
 
 .bw-bouw { display: flex; flex-direction: column; gap: 8px; }
-.bw-kop { margin: 0; font-size: 14px; font-weight: 700; color: var(--stil); }
-.bw-stap { margin: 0; font-size: 15px; line-height: 1.45; min-height: 3em; }
+.bw-kop { margin: 0; font-size: 0.875rem; font-weight: 700; color: var(--stil); }
+.bw-stap { margin: 0; font-size: 0.9375rem; line-height: 1.45; min-height: 3em; }
 .bw-hulp { margin-top: -4px; }
-.bw-legenda .chip { font-size: 14px; }
+.bw-legenda .chip { font-size: 0.875rem; }
 .bw-info:empty { display: none; }
 .bw-info { display: flex; flex-direction: column; align-items: flex-start; gap: 8px; padding: 10px 12px; border-radius: 10px; background: var(--zacht); border-left: 4px solid var(--accent); }
 .bw-info p { margin: 0; line-height: 1.45; }

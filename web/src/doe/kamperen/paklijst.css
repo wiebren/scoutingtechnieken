@@ -5,5 +5,5 @@
 .pk-lijst input { flex: none; width: 20px; height: 20px; margin: 1px 0 0; accent-color: var(--accent); }
 .pk-lijst label > span { display: flex; flex-direction: column; gap: 1px; min-width: 0; }
 .pk-naam { font-weight: 600; }
-.pk-waarom { color: var(--stil); font-size: 13px; }
+.pk-waarom { color: var(--stil); font-size: 0.8125rem; }
 .pk-lijst input:checked + span .pk-naam { color: var(--stil); text-decoration: line-through; }

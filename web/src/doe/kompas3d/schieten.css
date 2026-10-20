@@ -3,8 +3,8 @@
    a thing, dark plastic and a mirror, the same in both themes. */
 .k3 { display: grid; gap: 10px; min-width: 0; }
 .k3-kop { display: flex; flex-wrap: wrap; align-items: center; justify-content: space-between; gap: 8px; }
-.k3-opdracht { margin: 0; font-size: 17px; font-weight: 700; }
-.k3-stappen { margin: 0; padding-left: 22px; color: var(--stil); font-size: 14px; }
+.k3-opdracht { margin: 0; font-size: 1.0625rem; font-weight: 700; }
+.k3-stappen { margin: 0; padding-left: 22px; color: var(--stil); font-size: 0.875rem; }
 .k3-stappen li + li { margin-top: 2px; }
 
 .k3-beeld {
@@ -15,12 +15,12 @@
 .k3-zicht { position: absolute; inset: 0; }
 .k3-zicht:focus-visible { outline: 3px solid var(--accent); outline-offset: -3px; }
 .k3-canvas, .k3-plat { position: absolute; inset: 0; display: block; width: 100%; height: 100%; }
-.k3-laden { position: absolute; inset: 0; display: grid; place-items: center; margin: 0; color: var(--stil); font-size: 14px; }
+.k3-laden { position: absolute; inset: 0; display: grid; place-items: center; margin: 0; color: var(--stil); font-size: 0.875rem; }
 
 .k3-namen { position: absolute; inset: 0; z-index: 1; pointer-events: none; }
 .k3-naam {
   position: absolute; left: 0; top: 0; padding: 1px 6px; border-radius: 6px; white-space: nowrap;
-  background: color-mix(in srgb, var(--paneel) 85%, transparent); color: var(--inkt); font-size: 12px; font-weight: 600;
+  background: color-mix(in srgb, var(--paneel) 85%, transparent); color: var(--inkt); font-size: 0.75rem; font-weight: 600;
 }
 
 .k3-kompas { position: absolute; left: 50%; top: 0; z-index: 2; width: 240px; transform: translateX(-50%); pointer-events: none; }
@@ -43,7 +43,7 @@
 .k3-streep { stroke: #1d2125; stroke-width: 1.3; }
 .k3-streep.dun { stroke-width: 0.8; }
 .k3-getal { fill: #1d2125; font-size: 12px; font-weight: 600; }
-.k3-n { font-size: 14px; font-weight: 800; }
+.k3-n { font-size: 0.875rem; font-weight: 800; }
 .k3-vloeistof { fill: #dfe7e6; stroke: #1d2125; stroke-width: 1; }
 .k3-lijn { stroke: #7b8a90; stroke-width: 1; }
 .k3-huisje { stroke: #1d2125; stroke-width: 4.5; stroke-linecap: round; }
@@ -55,15 +55,15 @@
 
 .k3-bediening { display: flex; flex-wrap: wrap; justify-content: center; gap: 8px 22px; }
 .k3-groep { display: flex; align-items: center; gap: 6px; }
-.k3-groep-label { color: var(--stil); font-size: 14px; font-weight: 600; }
-.knop.klein.k3-rond { min-width: 48px; min-height: 44px; padding: 0 10px; font-size: 20px; line-height: 1; touch-action: manipulation; user-select: none; -webkit-user-select: none; }
+.k3-groep-label { color: var(--stil); font-size: 0.875rem; font-weight: 600; }
+.knop.klein.k3-rond { min-width: 48px; min-height: 44px; padding: 0 10px; font-size: 1.25rem; line-height: 1; touch-action: manipulation; user-select: none; -webkit-user-select: none; }
 
 .k3-antwoord { display: flex; flex-wrap: wrap; align-items: flex-end; gap: 8px 10px; }
 .k3-antwoord[hidden] { display: none; }
 .k3-kies { flex-direction: column; align-items: flex-start; }
-.k3-graden { display: inline-flex; align-items: center; gap: 4px; color: var(--inkt); font-size: 18px; }
+.k3-graden { display: inline-flex; align-items: center; gap: 4px; color: var(--inkt); font-size: 1.125rem; }
 .k3-invoer { width: 5.5em; }
-.k3-hulp { font-size: 13px; }
+.k3-hulp { font-size: 0.8125rem; }
 
 /* the plaatkompas held flat */
 .k3-plaatglas { fill: rgb(232 244 248 / 0.5); stroke: rgb(20 30 35 / 0.6); stroke-width: 1.5; }

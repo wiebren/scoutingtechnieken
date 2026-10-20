@@ -37,12 +37,15 @@ for (const b of BLADEN) {
   for (const v of b.verwijs ?? []) if (!/^https:\/\//.test(v.url ?? '') || !v.naam) fout(waar, 'verwijs heeft een naam en een https-adres nodig');
   if (b.letterlijk && (!b.bron || !b.bronDatum)) fout(waar, 'een regel toont zijn bron en datum: geef ze allebei');
   if (b.plaatje && !PLAATJES[b.plaatje]) fout(waar, `plaatje bestaat niet: ${b.plaatje}`);
+  if (b.letOpPlaatje && !PLAATJES[b.letOpPlaatje]) fout(waar, `plaatje bij let op bestaat niet: ${b.letOpPlaatje}`);
+  if (b.letOpPlaatje && !b.letOp) fout(waar, 'een plaatje bij let op, maar geen let op');
   for (const x of b.soorten ?? []) {
     if (!x.naam || !x.plaatje) fout(waar, 'een soort heeft een naam en een plaatje nodig');
     if (x.plaatje && !PLAATJES[x.plaatje]) fout(waar, `soort ${x.naam}: plaatje bestaat niet: ${x.plaatje}`);
     if (x.blad && !BLAD[x.blad]) fout(waar, `soort ${x.naam}: naar een blad dat er niet is: ${x.blad}`);
     if (x.blad === b.id) fout(waar, `soort ${x.naam} verwijst naar zichzelf`);
   }
+  if (b.ken !== undefined && b.ken !== true) fout(waar, 'ken is true (een blad over kennen: "Ik ken dit") of staat er niet');
   if (b.doe && !DOE[b.doe]) fout(waar, `doe bestaat niet: ${b.doe} (src/doe/index.js)`);
   for (const x of b.beelden ?? []) if (!BEELDEN[x.beeld]) fout(waar, `beeld bestaat niet: ${x.beeld}`);
   if (b.beelden?.some((x) => x.titel) && !b.beelden.every((x) => x.titel)) fout(waar, 'geef elk beeld een titel, of geen enkel');
@@ -111,7 +114,7 @@ for (const naam of new Set(doeNamen.filter((n, k) => doeNamen.indexOf(n) !== k))
 
 const gebruikt = (veld) => new Set(BLADEN.map((b) => b[veld]).filter(Boolean));
 const doeGebruikt = gebruikt('doe');
-const plaatjeGebruikt = new Set([...gebruikt('plaatje'), ...BLADEN.flatMap((b) => (b.soorten ?? []).map((x) => x.plaatje))]);
+const plaatjeGebruikt = new Set([...gebruikt('plaatje'), ...gebruikt('letOpPlaatje'), ...BLADEN.flatMap((b) => (b.soorten ?? []).map((x) => x.plaatje))]);
 const beeldGebruikt = new Set(BLADEN.flatMap((b) => (b.beelden ?? []).map((x) => x.beeld)));
 // a piece another piece opens inside itself (`binnen`) is used when that one is
 for (const [naam, x] of Object.entries(DOE)) if (x.binnen && !DOE[x.binnen]) fout(`doe ${naam}`, `binnen een doe dat er niet is: ${x.binnen}`);

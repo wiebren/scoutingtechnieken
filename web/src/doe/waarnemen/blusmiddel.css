@@ -1,8 +1,8 @@
 /* Kies het blusmiddel (blusmiddel.js) */
-.bm-vraag { margin: 0; padding: 12px 14px; border-radius: 10px; background: color-mix(in srgb, #f08a1c 14%, var(--paneel)); font-size: 17px; font-weight: 600; min-height: 3.2em; }
+.bm-vraag { margin: 0; padding: 12px 14px; border-radius: 10px; background: color-mix(in srgb, #f08a1c 14%, var(--paneel)); font-size: 1.0625rem; font-weight: 600; min-height: 3.2em; }
 .bm-keuzes { display: grid; grid-template-columns: 1fr 1fr; gap: 8px; }
 @container (min-width: 560px) { .bm-keuzes { grid-template-columns: repeat(3, 1fr); } }
-.bm-keuze { font-size: 14px; line-height: 1.25; }
+.bm-keuze { font-size: 0.875rem; line-height: 1.25; }
 .bm-keuze[data-k="weg"] { grid-column: 1 / -1; }
 .doe-plek .bm-keuze.juist { opacity: 1; background: var(--accent); border-color: var(--accent); color: var(--op-accent); }
 .doe-plek .bm-keuze.mis { opacity: 1; background: color-mix(in srgb, var(--rood) 16%, var(--paneel)); border-color: var(--rood); color: var(--inkt); }

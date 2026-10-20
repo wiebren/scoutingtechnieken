@@ -10,16 +10,16 @@
 .sv-opties { display: grid; grid-template-columns: repeat(2, minmax(0, 1fr)); gap: 8px; }
 .sv-opties.lang { grid-template-columns: 1fr; }
 .sv-optie { justify-content: flex-start; text-align: left; height: auto; min-height: 44px; white-space: normal; line-height: 1.3; }
-.sv-optie b { font-size: 18px; margin-right: 2px; }
+.sv-optie b { font-size: 1.125rem; margin-right: 2px; }
 .sv-optie.goed { background: var(--accent); border-color: var(--accent); color: var(--op-accent); }
 .sv-optie.fout { border-color: var(--rood); color: var(--rood); }
 
 .sv-hijs { display: flex; flex-direction: column; gap: 4px; margin: 0; padding: 0 0 0 14px; list-style: none; border-left: 3px solid var(--lijn-sterk); }
-.sv-hijs li { display: flex; align-items: center; gap: 10px; font-size: 14px; }
+.sv-hijs li { display: flex; align-items: center; gap: 10px; font-size: 0.875rem; }
 .sv-hijs li svg { flex: none; }
 
 /* Welk cijfer? */
-.sv-groot { font-size: 56px; font-weight: 800; line-height: 1; color: var(--accent); }
-.sv-groot.lang { font-size: 20px; text-align: center; hyphens: manual; }
+.sv-groot { font-size: 3.5rem; font-weight: 800; line-height: 1; color: var(--accent); }
+.sv-groot.lang { font-size: 1.25rem; text-align: center; hyphens: manual; }
 .sv-opties.wimpels .sv-optie { justify-content: center; min-height: 52px; }
 .sv-opties.wimpels .sv-optie svg { display: block; }

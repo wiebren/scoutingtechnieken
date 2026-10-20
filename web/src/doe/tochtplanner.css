@@ -4,7 +4,7 @@
 .tp-beeld { min-width: 0; }
 .tp-svg { display: block; width: 100%; height: auto; touch-action: none; user-select: none; -webkit-user-select: none; cursor: crosshair;
   border: 1px solid var(--lijn); border-radius: 12px; background: #fff; }
-.tp-beeld .doe-stil { margin-top: 6px; font-size: 12px; }
+.tp-beeld .doe-stil { margin-top: 6px; font-size: 0.75rem; }
 .tp-lijn { fill: none; stroke: #d1141b; stroke-width: 4; stroke-linejoin: round; stroke-linecap: round; opacity: 0.85; }
 .tp-svg:focus-visible { outline: 3px solid var(--accent); outline-offset: 3px; }
 .tp-kruis { display: none; stroke: #0066b2; stroke-width: 3; }

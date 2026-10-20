@@ -1,11 +1,11 @@
 // What the app keeps on this device, in localStorage: what you have ticked off in the insignelaag, the niveaus
-// you have chosen in the menu, the theme, and which updates you have seen. Nothing leaves the device. Storage may be missing
+// you have chosen in the menu, the theme, the text size, and which updates you have seen. Nothing leaves the device. Storage may be missing
 // (a private window): the app works without it, it just forgets.
 
 import { ALLE } from './data/niveaus.js';
 import { nuGeldig } from './data/oude-sleutels.js';
 
-const SLEUTEL = { afgevinkt: 'scoutingtechnieken.afgevinkt.v1', updates: 'scoutingtechnieken.updates.v1', niveaus: 'scoutingtechnieken.niveaus.v1', thema: 'scoutingtechnieken.thema.v1', gekregen: 'scoutingtechnieken.gekregen.v1' };
+const SLEUTEL = { afgevinkt: 'scoutingtechnieken.afgevinkt.v1', updates: 'scoutingtechnieken.updates.v1', niveaus: 'scoutingtechnieken.niveaus.v1', thema: 'scoutingtechnieken.thema.v1', tekst: 'scoutingtechnieken.tekst.v1', gekregen: 'scoutingtechnieken.gekregen.v1' };
 
 const lees = (key, standaard) => { try { return JSON.parse(localStorage.getItem(key) ?? 'null') ?? standaard; } catch { return standaard; } };
 const schrijf = (key, value) => { try { localStorage.setItem(key, JSON.stringify(value)); } catch { /* it works without */ } };
@@ -89,3 +89,12 @@ function pasThemaToe(t) {
 export function zetThema(t) { schrijf(SLEUTEL.thema, t); pasThemaToe(t); }
 pasThemaToe(thema());
 addEventListener('storage', (e) => { if (e.key === SLEUTEL.thema) pasThemaToe(thema()); });
+
+// -- the text size: the font-size of <html>, which all text in the app follows (rem in the CSS; the labels in the
+// drawings stay as they are). index.html sets it before the first paint with the same key, like the theme.
+export const TEKSTGROOTTES = { klein: '87.5%', normaal: '100%', groot: '115%', groter: '130%' };
+export const tekstgrootte = () => { const t = lees(SLEUTEL.tekst, 'normaal'); return t in TEKSTGROOTTES ? t : 'normaal'; };
+const pasTekstToe = (t) => { document.documentElement.style.fontSize = t === 'normaal' ? '' : TEKSTGROOTTES[t]; };
+export function zetTekstgrootte(t) { schrijf(SLEUTEL.tekst, t); pasTekstToe(t); }
+pasTekstToe(tekstgrootte());
+addEventListener('storage', (e) => { if (e.key === SLEUTEL.tekst) pasTekstToe(tekstgrootte()); });

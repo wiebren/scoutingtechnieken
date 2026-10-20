@@ -1,5 +1,6 @@
-// A wind rose to learn the points by: 8, 16 or 32 of them, with only N named. "Wijs aan" asks for a name and you
-// tap that point; "Benoem" lights a point up and you choose its name from four. Each answer shows its degrees. With
+// A wind rose to learn the points by: 8, 16 or 32 of them. "Bekijk" names them all, and a tap on one says it in full
+// with its degrees. Then only N is named: "Wijs aan" asks for a name and you tap that point; "Benoem" lights a point
+// up and you choose its name from four. Each answer shows its degrees. With
 // 32 points a point is too small to hit, so a tap counts by its angle: the point nearest to it, and a finger can
 // slide to another before it lets go.
 import { h } from '../dom.js';
@@ -34,7 +35,7 @@ function s(tag, attrs = {}, ...kids) {
 export default function windroos({ n = 16 } = {}) {
   const stap = 360 / n;
   const punten = Array.from({ length: n }, (_, i) => ({ i, g: i * stap, naam: STREKEN[(i * 32) / n] }));
-  let modus = 'wijs';            // 'wijs': a name is asked, point at it; 'benoem': a point lights up, name it
+  let modus = 'bekijk';          // 'bekijk': all named; 'wijs': a name is asked, point at it; 'benoem': a point lights up, name it
   let vraag = null;              // the index of the point asked
   let antwoord = null;           // the index answered, null while asking
   let cursor = 0;                // the point under the finger, the mouse or the arrow keys
@@ -63,7 +64,8 @@ export default function windroos({ n = 16 } = {}) {
 
   // -- the words beside it
   const chip = (wat, tekst) => h('button.chip', { type: 'button', 'aria-pressed': String(modus === wat), onclick: () => zetModus(wat) }, tekst);
-  const chips = [chip('wijs', 'Wijs aan'), chip('benoem', 'Benoem')];
+  const MODI = ['bekijk', 'wijs', 'benoem'];
+  const chips = [chip('bekijk', 'Bekijk'), chip('wijs', 'Wijs aan'), chip('benoem', 'Benoem')];
   const vraagRegel = h('p.wr-vraag', { 'aria-live': 'polite' });
   const keuzeVak = h('div.wr-keuzes');
   const melding = h('p.doe-melding', { 'aria-live': 'polite' });
@@ -82,21 +84,40 @@ export default function windroos({ n = 16 } = {}) {
   function teken() {
     const klaar = antwoord != null;
     groepen.forEach((gr, i) => {
-      gr.classList.toggle('kandidaat', modus === 'wijs' && !klaar && toonCursor && i === cursor);
+      gr.classList.toggle('kandidaat', (modus === 'bekijk' || (modus === 'wijs' && !klaar)) && toonCursor && i === cursor);
       gr.classList.toggle('licht', modus === 'benoem' && !klaar && i === vraag);
       gr.classList.toggle('goed', klaar && i === vraag);
       gr.classList.toggle('fout', klaar && i === antwoord && antwoord !== vraag);
-      gr.classList.toggle('genoemd', i === 0 || (klaar && (i === vraag || i === antwoord)));
+      gr.classList.toggle('genoemd', modus === 'bekijk' || i === 0 || (klaar && (i === vraag || i === antwoord)));
     });
     score.replaceChildren(...(gevraagd ? [h('span', 'Goed: ', h('strong', `${goed} van ${gevraagd}`))] : []));
     svg.classList.toggle('wijzen', modus === 'wijs' && !klaar);
+    svg.classList.toggle('bekijken', modus === 'bekijk');
+  }
+
+  /** In Bekijk: the point tapped or chosen with the arrows, in full and with its degrees. */
+  function toon(i) {
+    cursor = i; toonCursor = true;
+    const v = punten[i];
+    melding.textContent = `${v.naam}: ${voluit(v.naam)}, op ${graden(v.g)}.`;
+    teken();
   }
 
   function zetModus(wat) {
     modus = wat;
-    chips.forEach((c, k) => c.setAttribute('aria-pressed', String(['wijs', 'benoem'][k] === wat)));
+    chips.forEach((c, k) => c.setAttribute('aria-pressed', String(MODI[k] === wat)));
     goed = 0; gevraagd = 0;
-    nieuweVraag();
+    if (wat === 'bekijk') bekijk(); else nieuweVraag();
+  }
+
+  function bekijk() {
+    vraag = null; antwoord = null; toonCursor = false;
+    melding.classList.remove('fout'); melding.textContent = ''; stand.textContent = '';
+    volgende.hidden = true; keuzeVak.replaceChildren();
+    vraagRegel.replaceChildren('Tik op een richting: dan zie je hoe hij voluit heet, en op hoeveel graden hij ligt.');
+    svg.setAttribute('tabindex', '0');
+    svg.setAttribute('aria-label', `Windroos met ${n} richtingen, met hun namen. Kies een richting met de pijltjes.`);
+    teken();
   }
 
   function nieuweVraag() {
@@ -156,6 +177,7 @@ export default function windroos({ n = 16 } = {}) {
   };
   const binnen = ({ afstand }) => afstand >= 14 && afstand <= 178;     // the very middle has no direction
   svg.addEventListener('pointerdown', (e) => {
+    if (modus === 'bekijk') { const plek = puntVan(e); if (binnen(plek)) toon(plek.i); return; }
     if (modus !== 'wijs' || antwoord != null) return;
     const plek = puntVan(e);
     if (!binnen(plek)) return;
@@ -174,8 +196,13 @@ export default function windroos({ n = 16 } = {}) {
   });
   svg.addEventListener('pointerup', () => { if (sleept) { sleept = false; beantwoord(cursor); } });
   svg.addEventListener('pointercancel', () => { sleept = false; toonCursor = false; teken(); });
-  svg.addEventListener('pointerleave', (e) => { if (!sleept && e.pointerType === 'mouse') { toonCursor = false; teken(); } });
+  svg.addEventListener('pointerleave', (e) => { if (!sleept && e.pointerType === 'mouse' && modus !== 'bekijk') { toonCursor = false; teken(); } });
   svg.addEventListener('keydown', (e) => {
+    if (modus === 'bekijk') {
+      const d = { ArrowLeft: -1, ArrowDown: -1, ArrowRight: 1, ArrowUp: 1 }[e.key];
+      if (d) { e.preventDefault(); toon(toonCursor ? (cursor + d + n) % n : 0); }
+      return;
+    }
     if (modus !== 'wijs') return;
     if (e.key === 'Enter' || e.key === ' ') {
       e.preventDefault();
@@ -192,6 +219,6 @@ export default function windroos({ n = 16 } = {}) {
     teken();
   });
 
-  nieuweVraag();
+  bekijk();
   return el;
 }

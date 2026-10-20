@@ -4,7 +4,7 @@
 .es-kruis::before, .es-kruis::after { content: ''; position: absolute; background: #fff; }
 .es-kruis::before { left: 12px; top: 5px; width: 6px; height: 20px; }
 .es-kruis::after { left: 5px; top: 12px; width: 20px; height: 6px; }
-.es-doos .wn-groot { font-size: 16px; }
+.es-doos .wn-groot { font-size: 1rem; }
 .es-ding.goed { background: color-mix(in srgb, var(--accent) 22%, var(--paneel)); border-color: var(--accent); color: var(--inkt); }
 .es-ding.gemist { background: repeating-linear-gradient(45deg, transparent 0 6px, color-mix(in srgb, var(--accent) 22%, transparent) 6px 12px); border: 1px dashed var(--accent); color: var(--inkt); }
 .es-ding.teveel { background: color-mix(in srgb, var(--rood) 16%, var(--paneel)); border-color: var(--rood); color: var(--inkt); }

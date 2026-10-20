@@ -14,18 +14,18 @@
 
 .sf-bediening { display: flex; flex-wrap: wrap; gap: 6px 12px; justify-content: center; align-items: center; }
 .sf-arm { display: flex; align-items: center; gap: 4px; }
-.sf-armnaam { font-size: 13px; color: var(--stil); margin-right: 2px; }
-.sf-arm .knop.klein { min-width: 40px; font-size: 18px; padding: 4px 8px; }
+.sf-armnaam { font-size: 0.8125rem; color: var(--stil); margin-right: 2px; }
+.sf-arm .knop.klein { min-width: 40px; font-size: 1.125rem; padding: 4px 8px; }
 
 .sf-uitkomst { display: flex; align-items: baseline; gap: 6px; flex-wrap: wrap; min-height: 56px; }
-.sf-letter { font-size: 48px; font-weight: 800; line-height: 1; color: var(--accent); }
-.sf-teken { font-size: 24px; font-weight: 700; color: var(--accent); }
-.sf-geen { font-size: 20px; color: var(--stil); }
+.sf-letter { font-size: 3rem; font-weight: 800; line-height: 1; color: var(--accent); }
+.sf-teken { font-size: 1.5rem; font-weight: 700; color: var(--accent); }
+.sf-geen { font-size: 1.25rem; color: var(--stil); }
 
 .sf-woord { display: flex; flex-wrap: wrap; gap: 4px; }
 .sf-woord span {
   display: grid; place-items: center; width: 38px; height: 44px; border: 1px solid var(--lijn-sterk); border-radius: 8px;
-  font-size: 22px; font-weight: 700; color: var(--stil);
+  font-size: 1.375rem; font-weight: 700; color: var(--stil);
 }
 .sf-woord span.nu { border-color: var(--accent); border-width: 2px; color: var(--inkt); }
 .sf-woord span.klaar { background: var(--accent); border-color: var(--accent); color: var(--op-accent); }
@@ -33,21 +33,21 @@
 .sf-eigen { flex: 1; max-width: 220px; text-transform: uppercase; }
 
 .sf-opties { display: grid; grid-template-columns: repeat(4, minmax(0, 1fr)); gap: 8px; max-width: 320px; }
-.sf-optie { font-size: 22px; font-weight: 700; }
+.sf-optie { font-size: 1.375rem; font-weight: 700; }
 .sf-optie.goed { background: var(--accent); border-color: var(--accent); color: var(--op-accent); }
 .sf-optie.fout { border-color: var(--rood); color: var(--rood); }
 .sf-eigen::placeholder { text-transform: none; }
 
 /* Sein een bericht */
-.sf-stappen { margin: 0; padding-left: 1.4em; color: var(--stil); font-size: 14px; }
+.sf-stappen { margin: 0; padding-left: 1.4em; color: var(--stil); font-size: 0.875rem; }
 .sf-stappen li { padding: 1px 0; }
 .sf-stappen li.nu { color: var(--inkt); font-weight: 700; }
 .sf-stappen li.klaar { color: var(--accent); }
 .sf-stappen li.klaar::after { content: ' ✓'; }
 .sf-briefje { display: flex; flex-wrap: wrap; gap: 6px 14px; margin-top: 4px; }
-.sf-briefje .sf-woord span { width: 32px; height: 38px; font-size: 19px; }
-.sf-band { font-size: 18px; font-weight: 700; letter-spacing: 0.08em; overflow-wrap: anywhere; }
-.sf-band .doe-stil { font-size: 14px; font-weight: 400; letter-spacing: 0; }
+.sf-briefje .sf-woord span { width: 32px; height: 38px; font-size: 1.1875rem; }
+.sf-band { font-size: 1.125rem; font-weight: 700; letter-spacing: 0.08em; overflow-wrap: anywhere; }
+.sf-band .doe-stil { font-size: 0.875rem; font-weight: 400; letter-spacing: 0; }
 .sf-mis { color: var(--rood); text-decoration: underline wavy; }
 .sf-ander { display: flex; gap: 12px; align-items: center; padding: 10px; border: 1px solid var(--lijn); border-radius: 12px; }
 .sf-figuur.sf-klein { width: 120px; flex: none; margin: 0; cursor: default; touch-action: auto; }

@@ -9,7 +9,7 @@
 .vg-lijst input { flex: none; width: 20px; height: 20px; margin: 1px 0 0; accent-color: var(--accent); }
 .vg-lijst label > span { display: flex; flex-direction: column; gap: 1px; min-width: 0; }
 .vg-wat { font-weight: 600; }
-.vg-waarom { color: var(--stil); font-size: 13px; }
+.vg-waarom { color: var(--stil); font-size: 0.8125rem; }
 .vg-lijst input:checked + span .vg-wat { color: var(--stil); }
 .vg-stand { margin: 0; padding: 10px 12px; border-radius: 10px; border: 1px solid var(--lijn); background: var(--zacht); }
 .vg-stand.goed { border-color: var(--accent); background: color-mix(in srgb, var(--accent) 12%, var(--paneel)); }

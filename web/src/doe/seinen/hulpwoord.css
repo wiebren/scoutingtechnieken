@@ -4,12 +4,12 @@
 .hw-letters .chip { min-width: 40px; justify-content: center; }
 .hw-toon, .hw-eigen { display: flex; flex-direction: column; gap: 10px; }
 .hw-kop { display: flex; align-items: baseline; gap: 14px; }
-.hw-letter { font-size: 40px; font-weight: 800; line-height: 1; color: var(--accent); }
-.hw-morse { font-size: 26px; letter-spacing: 0.1em; }
+.hw-letter { font-size: 2.5rem; font-weight: 800; line-height: 1; color: var(--accent); }
+.hw-morse { font-size: 1.625rem; letter-spacing: 0.1em; }
 .hw-woord { display: flex; flex-wrap: wrap; gap: 4px; }
 .hw-greep { display: inline-flex; flex-direction: column; align-items: center; gap: 6px; padding: 6px 8px; border-radius: 8px; background: var(--zacht); }
 .hw-greep.streep { background: color-mix(in srgb, var(--fam-sein) 16%, var(--paneel)); }
-.hw-tekst { font-size: 20px; }
+.hw-tekst { font-size: 1.25rem; }
 .hw-tekst b { color: var(--fam-sein); }
 .hw-teken { display: block; height: 8px; border-radius: 4px; background: var(--inkt); }
 .hw-greep.punt .hw-teken { width: 8px; }

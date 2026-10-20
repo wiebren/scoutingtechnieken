@@ -1,7 +1,7 @@
 /* The sun and a stick on the ground (zonnewijzer.js). */
 .doe-zonnewijzer { display: flex; flex-direction: column; gap: 12px; }
 .zw-svg { border-radius: 50%; }
-.zw-svg.draait { touch-action: none; cursor: grab; }
+.zw-svg.draait { touch-action: none; cursor: grab; user-select: none; -webkit-user-select: none; }
 .zw-grond { fill: color-mix(in srgb, var(--fam-natuur) 22%, var(--paneel)); }
 .zw-stok { fill: #8b5a2b; stroke: var(--inkt); stroke-width: 1; }
 .zw-schaduw { stroke: rgb(0 0 0 / 0.45); stroke-width: 6; stroke-linecap: round; }

@@ -63,7 +63,7 @@ export const UITGEBREID = [
   }).join('') + cirkel(50, 50, 8) },
   { id: 'sp-begin', vorm: 'drie cirkels, van groot naar klein', naam: 'Begin van het spoor (naar de kleinste cirkel)', teken: cirkel(24, 50, 16) + cirkel(56, 50, 11) + cirkel(80, 50, 6) },
   { id: 'sp-dwaal', vorm: 'een zigzag die omkeert en terug wijst', naam: 'Dwaalspoor: vals spoor', teken: lijn('M26 92L42 72L26 52L42 32Q50 12 64 20Q72 26 70 40') + pijl(70, 40, 70, 80, { punt: 18 }) },
-  { id: 'sp-splitsen', vorm: 'een pijl die zich splitst, met drie streepjes links en twee rechts', naam: 'We splitsen: drie naar links, twee naar rechts', teken: lijn('M50 92V54L22 22M50 54L78 22') + lijn('M14 38L22 22L36 30M64 30L78 22L86 38') + tkst(24, 68, 'III', 18) + tkst(76, 68, 'II', 18) },
+  { id: 'sp-splitsen', vorm: 'een pijl die zich splitst, met drie streepjes links en twee rechts', naam: 'We splitsen: drie naar links, twee naar rechts', teken: lijn('M50 92V54') + pijl(50, 54, 22, 22, { punt: 16, open: true }) + pijl(50, 54, 78, 22, { punt: 16, open: true }) + tkst(24, 68, 'III', 18) + tkst(76, 68, 'II', 18) },
   { id: 'sp-verstopt', vorm: 'een vierkant met een 3 en een pijl', naam: 'Drie passen verder ligt iets verstopt', teken: lijn('M8 32h36v36h-36z') + tkst(26, 50, '3') + pijl(44, 50, 92, 50, { punt: 16 }) },
   { id: 'sp-verstopt-hoog', vorm: 'een rechthoek met een schuine streep, drie en twee streepjes, en een pijl', naam: 'Drie meter verder en twee meter hoog zit iets verstopt', teken: lijn('M8 26h44v48h-44zM8 74L52 26') + tkst(21, 38, 'III', 13) + tkst(40, 62, 'II', 13) + pijl(52, 50, 94, 50, { punt: 15 }) },
   { id: 'sp-binnen30', vorm: 'een cirkel met 30 erin', naam: 'Binnen 30 meter is iets verstopt', teken: cirkel(50, 50, 36) + tkst(50, 51, '30', 26) },

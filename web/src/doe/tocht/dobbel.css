@@ -5,7 +5,7 @@
 .db-vlak { fill: #ffffff; stroke: #1b211d; stroke-width: 3; }
 .db-oog { fill: #1b211d; }
 .db-rechts { display: flex; flex-direction: column; align-items: flex-start; gap: 8px; min-width: 0; }
-.db-sleutel { display: grid; grid-template-columns: repeat(2, minmax(0, 1fr)); gap: 4px 12px; margin: 0; padding: 0; list-style: none; font-size: 14px; }
+.db-sleutel { display: grid; grid-template-columns: repeat(2, minmax(0, 1fr)); gap: 4px 12px; margin: 0; padding: 0; list-style: none; font-size: 0.875rem; }
 @container (min-width: 480px) { .db-sleutel { grid-template-columns: repeat(3, minmax(0, 1fr)); } }
-.db-lijst { margin: 0; padding: 0; color: var(--stil); font-size: 14px; list-style: none; }
+.db-lijst { margin: 0; padding: 0; color: var(--stil); font-size: 0.875rem; list-style: none; }
 .db-lijst:empty { display: none; }
