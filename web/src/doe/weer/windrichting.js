@@ -2,6 +2,7 @@
 // whose arrow points into the wind. Choose the name of the wind: it is named after where it comes from, so smoke
 // blowing to the north-east means a zuidwestenwind.
 import { h } from '../../dom.js';
+import { actie, acties } from '../knoppen.js';
 import { p, pol, s } from '../kompasdelen.js';
 import '../vorm.css';
 import './windrichting.css';
@@ -39,7 +40,7 @@ export default function windrichting() {
   // -- the answer
   const vraag = h('p.wr-vraag');
   const melding = h('p.doe-melding', { 'aria-live': 'polite' });
-  const verder = h('button.knop.klein.hoofd', { type: 'button', hidden: true, onclick: () => nieuw() }, 'Volgende');
+  const verder = actie('Volgende', 'verder', () => nieuw(), { hoofd: true, klein: true, hidden: true });
   const knoppen = ACHT.map(([g, , naam]) => h('button.knop.klein.wr-knop', { type: 'button', 'data-g': g, onclick: () => kies(g) }, naam));
 
   function nieuw() {
@@ -79,5 +80,5 @@ export default function windrichting() {
   nieuw();
   return h('div.doe-windrichting',
     h('div.wr-beeld', svg),
-    h('div.wr-tekst', vraag, h('div.wr-knoppen', knoppen), melding, h('div.knop-rij', verder)));
+    h('div.wr-tekst', vraag, h('div.wr-knoppen', knoppen), acties(verder), melding));
 }

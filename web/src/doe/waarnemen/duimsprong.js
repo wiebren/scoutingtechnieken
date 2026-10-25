@@ -3,7 +3,7 @@
 // times the distance between the eyes), so: how many house widths is the jump, times the width, times ten.
 // In the picture the jump is a fixed angle; only the size of the house changes with the distance.
 import { h } from '../../dom.js';
-import { keuze, schakel } from '../knoppen.js';
+import { actie, acties, keuze, schakel } from '../knoppen.js';
 import { getal, s, tussen } from './hulp.js';
 import '../vorm.css';
 import './wn.css';
@@ -51,7 +51,7 @@ export default function duimsprong() {
 
   // -- the words
   const oogChips = keuze([['rechts', 'Rechteroog'], ['links', 'Linkeroog']], oog, (o) => { oog = o; teken(); });
-  const beideChip = schakel('Laat beide plekken zien', beide, (aan) => { beide = aan; teken(); });
+  const beideChip = schakel('Beide plekken tegelijk', beide, (aan) => { beide = aan; teken(); });
   const omschrijving = h('p.doe-sr', { 'aria-live': 'polite' });
   const veld = h('input.doe-veld', { type: 'number', min: 1, max: 5000, inputmode: 'numeric', 'aria-label': 'Jouw schatting in meters',
     onkeydown: (e) => { if (e.key === 'Enter') { e.preventDefault(); controleer(); } } });
@@ -62,9 +62,8 @@ export default function duimsprong() {
     h('p', `Het huis is ${BREED} m breed. Kijk met je rechteroog: je duim staat op de linkerkant van het huis. Kijk dan met je linkeroog.`),
     h('div.chips', { role: 'group', 'aria-label': 'Met welk oog kijk je?' }, oogChips, beideChip),
     svg, omschrijving,
-    h('div.wn-rij', h('span', 'Hoe ver is het huis?'), veld, h('span', 'm'),
-      h('button.knop.hoofd.klein', { type: 'button', onclick: controleer }, 'Kijk na'),
-      h('button.knop.klein', { type: 'button', onclick: nieuw }, 'Ander huis')),
+    h('div.wn-rij', h('span', 'Hoe ver is het huis?'), veld, h('span', 'm')),
+    acties(actie('Kijk na', 'vink', controleer, { hoofd: true, klein: true }), actie('Ander huis', 'opnieuw', nieuw, { klein: true })),
     melding, score,
     h('details.ds-hoe', h('summary', 'Hoe werkt het?'), boven,
       h('p.doe-stil', 'De sprong daarginds is ongeveer een tiende van de afstand. Springt je duim 2½ keer een huis van 10 m breed, dan is de sprong 25 m en het huis ongeveer 250 m ver.')));

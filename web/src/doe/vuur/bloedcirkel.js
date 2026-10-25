@@ -4,7 +4,7 @@
 // nothing in front, behind or above you (Scouting Nederland, veiligheidsblad 2016). The axe is a long one, so two axe
 // lengths are more than your reach; with a short hand axe they would not be. The sizes are rough, not metres.
 import { h } from '../../dom.js';
-import { keuze } from '../knoppen.js';
+import { actie, acties, keuze, zetActie } from '../knoppen.js';
 import { s } from '../kompasdelen.js';
 import '../vorm.css';
 import './vuur.css';
@@ -34,13 +34,13 @@ export default function bloedcirkel() {
     takG, mensenG);
 
   const melding = h('div.vk-oordeel', { 'aria-live': 'polite' });
-  const start = h('button.knop.hoofd', { type: 'button', onclick: () => begin() }, 'Begin met werken');
+  const start = actie('Begin met werken', 'start', () => begin(), { hoofd: true });
   const el = h('div.doe-vk.naast', svg,
     h('div.vk-tekst',
       h('div.vk-rij', { role: 'group', 'aria-label': 'Gereedschap' }, h('p.vk-kop', 'Je werkt met'),
         keuze(Object.entries(GEREEDSCHAP).map(([k, g]) => [k, g.naam]), tool, (t) => { tool = t; klaar = false; teken(); zeg(uitleg()); })),
       h('p.vk-uitleg', 'Staat er iemand in je cirkel? Tik hem aan om hem weg te sturen. Hangt er een tak boven je? Tik die aan om een andere plek te zoeken.'),
-      h('div.knop-rij', start, h('button.knop.klein', { type: 'button', onclick: () => nieuw() }, 'Andere plek')),
+      acties(start, actie('Andere plek', 'opnieuw', () => nieuw(), { klein: true })),
       melding));
 
   const straal = () => { const g = GEREEDSCHAP[tool]; return g.bijllengtes ? g.bijllengtes * g.lengte : 16 + ARM + g.lengte; };
@@ -109,7 +109,7 @@ export default function bloedcirkel() {
       return groep;
     }));
     svg.setAttribute('aria-label', `Jij van bovenaf met een ${g.naam}, je bloedcirkel eromheen, en vijf scouts.${tak ? ' Er hangt een tak boven je.' : ''}`);
-    start.textContent = klaar ? 'Nog een keer' : 'Begin met werken';
+    zetActie(start, ...(klaar ? ['Nog een keer', 'opnieuw'] : ['Begin met werken', 'start']));
   }
 
   function begin() {

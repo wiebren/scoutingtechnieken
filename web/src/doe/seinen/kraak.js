@@ -6,7 +6,7 @@
 // roostercode), to look and try with. What goes in which code, and the checking, is in ./lib/kraak.js; the codes are
 // those of the Codeermachine (./lib/geheim.js).
 import { h } from '../../dom.js';
-import { keuze, schakel } from '../knoppen.js';
+import { actie, acties, keuze, schakel } from '../knoppen.js';
 import { ABC, CODES, letters } from './lib/geheim.js';
 import { OPGAVEN, STUKKEN, antwoordLetters, nieuweOpgave, vergelijk, woordwaarde } from './lib/kraak.js';
 import codeermachine, { roosterTabel, teken } from './codeermachine.js';
@@ -138,10 +138,12 @@ export default function kraak({ code: id = 'rot13', hulpmiddel = 'codeermachine'
     zet();
     return h('div.kr-paneel',
       h('p', vraag), codePlek, sleutel, hint, schijf, hulpPlek,
-      h('div.kr-antwoord', antwoord, h('button.knop', { type: 'button', onclick: () => nakijken() }, 'Kijk na'),
-        h('button.knop', { type: 'button', onclick: () => { melding.classList.remove('fout'); nagekeken.hidden = true; melding.textContent = oplossing(opgave); } }, 'Laat zien')),
-      melding, nagekeken,
-      h('div.knop-rij', h('button.knop.klein', { type: 'button', onclick: () => { zet(); antwoord.focus({ preventScroll: true }); } }, nieuwKnop)));
+      h('div.kr-antwoord', antwoord),
+      acties(
+        actie('Kijk na', 'vink', () => nakijken()),
+        actie('Laat zien', 'oog', () => { melding.classList.remove('fout'); nagekeken.hidden = true; melding.textContent = oplossing(opgave); }),
+        actie(nieuwKnop, 'opnieuw', () => { zet(); antwoord.focus({ preventScroll: true }); }, { klein: true })),
+      melding, nagekeken);
   }
 
   // -- Kraak de code, or: reken de woordwaarde uit
@@ -208,13 +210,13 @@ export default function kraak({ code: id = 'rot13', hulpmiddel = 'codeermachine'
   const HULPMIDDEL = {
     codeermachine: ['Codeermachine', () => codeermachine({ code: id })],
     codeschijf: ['Codeschijf', () => codeschijf()],
-    roostercode: ['Maak een rooster', () => roostercode()],
+    roostercode: ['Roostercode', () => roostercode()],
   };
   const [hulpTitel, maakHulp] = HULPMIDDEL[hulpmiddel] ?? HULPMIDDEL.codeermachine;
 
   const panelen = { kraak: kraakPaneel() };
   const plek = h('div.kr-plek', panelen.kraak);
-  const modi = [['kraak', o.som ? 'Reken uit' : 'Kraak de code'], o.terug && ['zet', 'Zet in code'], ['hulp', hulpTitel]].filter(Boolean);
+  const modi = [['kraak', o.som ? 'Uitrekenen' : 'Kraken'], o.terug && ['zet', 'Coderen'], ['hulp', hulpTitel]].filter(Boolean);
 
   return h('div.doe-kraak',
     h('div.chips', { role: 'group', 'aria-label': 'Wat wil je doen?' }, keuze(modi, 'kraak', (m) => {

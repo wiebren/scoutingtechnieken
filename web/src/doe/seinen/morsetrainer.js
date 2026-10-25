@@ -4,6 +4,7 @@
 import { h } from '../../dom.js';
 import { MORSE, morseTijdlijn, naarMorse, symbolen } from '../codes.js';
 import { geluid, speel } from '../klank.js';
+import { actie, acties, zetActie } from '../knoppen.js';
 import '../vorm.css';
 import './morsetrainer.css';
 
@@ -32,8 +33,8 @@ export default function morsetrainer() {
   const melding = h('p.doe-melding', { 'aria-live': 'polite' });
   const voortgang = h('div.mt-voortgang', { 'aria-hidden': 'true' });
   const toetsen = h('div.mt-toetsen', { role: 'group', 'aria-label': 'Welke letter hoorde je?' });
-  const startKnop = h('button.knop.hoofd', { type: 'button', onclick: () => (ronde ? stopRonde('Gestopt.') : start()) });
-  const hoorKnop = h('button.knop', { type: 'button', onclick: () => hoorNieuw() });
+  const startKnop = actie('Start een ronde', 'start', () => (ronde ? stopRonde('Gestopt.') : start()), { hoofd: true });
+  const hoorKnop = actie('Hoor de nieuwe', 'geluid', () => hoorNieuw());
   const terug = h('button.knop.klein', { type: 'button', 'aria-label': 'Een les terug', onclick: () => zetLes(les - 1) }, '−');
   const verder = h('button.knop.klein', { type: 'button', 'aria-label': 'Een les verder', onclick: () => zetLes(les + 1) }, '+');
   const snelheidTekst = h('strong');
@@ -44,8 +45,9 @@ export default function morsetrainer() {
     h('div.mt-kop', lesTekst, h('div.knop-rij', terug, verder)),
     rij,
     h('div.mt-speler', lamp, h('div.mt-midden', groot, voortgang)),
-    toetsen, melding,
-    h('div.knop-rij', startKnop, hoorKnop),
+    toetsen,
+    acties(startKnop, hoorKnop),
+    melding,
     h('label.doe-label', h('span', 'Snelheid van de tekens: ', snelheidTekst), snelheid),
     h('p.doe-stil', 'Tip: tel geen punten en strepen, maar luister naar het ritme van de hele letter. Op een toetsenbord kun je ook de letter typen.'));
 
@@ -55,7 +57,7 @@ export default function morsetrainer() {
     lesTekst.replaceChildren(h('strong', `Les ${les - 1}`), ` · ${les} tekens, nieuw: `, h('b.mt-nieuw', nieuw()), ` ${symbolen(MORSE[nieuw()])}`);
     rij.replaceChildren(...tekens().map((t) => h('span', { class: t === nieuw() ? 'mt-is-nieuw' : '' }, h('b', t), h('small', symbolen(MORSE[t])))));
     toetsen.replaceChildren(...tekens().map((t) => h('button.knop.mt-toets', { type: 'button', 'data-t': t, onclick: () => antwoord(t) }, t)));
-    hoorKnop.textContent = `▶ Hoor de ${nieuw()}`;
+    zetActie(hoorKnop, `Hoor de ${nieuw()}`, 'geluid');
     terug.disabled = les <= 2;
     verder.disabled = les >= KOCH.length;
     zetKnoppen();
@@ -72,7 +74,7 @@ export default function morsetrainer() {
   }
 
   function zetKnoppen() {
-    startKnop.textContent = ronde ? '■ Stop' : '▶ Start een ronde';
+    zetActie(startKnop, ...(ronde ? ['Stop', 'stop'] : ['Start een ronde', 'start']));
     toetsen.classList.toggle('uit', !ronde);
   }
 

@@ -4,6 +4,7 @@
 // at least 60 m from water (Leave No Trace), no fire under branches (SN-VB), no tent in a hollow or under trees,
 // and the smoke and the smell blowing away from the tents.
 import { h } from '../../dom.js';
+import { actie, acties } from '../knoppen.js';
 import '../vorm.css';
 import './kamp.css';
 import './indelen.css';
@@ -118,8 +119,8 @@ export default function indelen() {
   const keuzeRij = h('div.chips', { role: 'group', 'aria-label': 'Wat zet je neer?' });
   const melding = h('p.doe-melding', { 'aria-live': 'polite' });
   const lijst = h('ul.kd-lijst', { 'aria-live': 'polite' });
-  const kijk = h('button.knop.klein.hoofd', { type: 'button', onclick: () => naKijken() }, 'Kijk het na');
-  const leeg = h('button.knop.klein', { type: 'button', onclick: () => { geplaatst = []; nagekeken = false; lijst.replaceChildren(); teken(); } }, 'Alles weg');
+  const kijk = actie('Kijk het na', 'vink', () => naKijken(), { hoofd: true, klein: true });
+  const leeg = actie('Haal alles weg', 'wis', () => { geplaatst = []; nagekeken = false; lijst.replaceChildren(); teken(); }, { klein: true });
 
   const over = (id) => DINGEN.find((d) => d.id === id).aantal - geplaatst.filter((g) => g.id === id).length;
 
@@ -183,5 +184,5 @@ export default function indelen() {
   return h('div.kd.naast.doe-indelen',
     h('div', wind, veld, h('p.ki-legenda', ...[['water', 'beek'], ['boom', 'bomen'], ['laagte', 'laagte'], ['pad', 'pad'], ['kraan', 'kraan']]
       .map(([k, t]) => h('span.ki-item', h(`span.ki-l.ki-${k}`), t)), h('span.ki-item', '· een vak is 10 m'))),
-    h('div.kd-tekst', h('p', 'Kies wat je neerzet en tik op een vak. Tik op iets dat al staat om het weg te halen.'), keuzeRij, h('div.knop-rij', kijk, leeg), melding, lijst));
+    h('div.kd-tekst', h('p', 'Kies wat je neerzet en tik op een vak. Tik op iets dat al staat om het weg te halen.'), keuzeRij, acties(kijk, leeg), melding, lijst));
 }

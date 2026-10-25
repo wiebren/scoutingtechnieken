@@ -4,7 +4,7 @@
 // verschuiving with the slider, or type what the numbers say.
 import { h } from '../dom.js';
 import { ZINNEN, kaal, letterOp, naarGetallen, vanGetallen, verschuif, willekeurig } from './codes.js';
-import { keuze } from './knoppen.js';
+import { actie, acties, keuze } from './knoppen.js';
 import './vorm.css';
 import './geheimschrift.css';
 
@@ -92,10 +92,12 @@ export default function geheimschrift({ soort = 'verschuiving' } = {}) {
       h('label.doe-label', h('span', 'Schuif terug: ', terugTekst), terug),
       uitkomst,
       h('p.doe-stil', 'Tip: kijk naar de korte woorden. Welke woorden van twee of drie letters ken je?'),
-    ] : h('div.gs-antwoord', antwoord, h('button.knop', { type: 'button', onclick: () => kijkNa() }, 'Kijk na'),
-      h('button.knop', { type: 'button', onclick: () => laatZien() }, 'Laat zien')),
-    melding,
-    h('div.knop-rij', h('button.knop.klein', { type: 'button', onclick: () => nieuweBoodschap() }, 'Nieuwe boodschap')));
+    ] : h('div.gs-antwoord', antwoord),
+    acties(
+      !schuift && actie('Kijk na', 'vink', () => kijkNa()),
+      !schuift && actie('Laat zien', 'oog', () => laatZien()),
+      actie('Nieuwe boodschap', 'opnieuw', () => nieuweBoodschap(), { klein: true })),
+    melding);
 
   function nieuweBoodschap() {
     let zin;
@@ -132,7 +134,7 @@ export default function geheimschrift({ soort = 'verschuiving' } = {}) {
   }
 
   const el = h('div.doe-geheimschrift',
-    h('div.chips', { role: 'group', 'aria-label': 'Wat wil je doen?' }, keuze([['coderen', 'Coderen'], ['raden', 'Raad de boodschap']], 'coderen', (m) => {
+    h('div.chips', { role: 'group', 'aria-label': 'Wat wil je doen?' }, keuze([['coderen', 'Coderen'], ['raden', 'Ontcijferen']], 'coderen', (m) => {
       coderen.hidden = m !== 'coderen';
       raden.hidden = m !== 'raden';
       if (m === 'raden' && !raad) nieuweBoodschap();

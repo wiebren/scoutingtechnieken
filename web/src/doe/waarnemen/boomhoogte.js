@@ -6,6 +6,7 @@
 // - schaduw: from the side, with the sun. The shadow of the tree times the stick, divided by the shadow of the stick.
 // Small-angle sums, as the methods themselves use them.
 import { h } from '../../dom.js';
+import { actie, acties, zetActie } from '../knoppen.js';
 import { getal, s, sleep, tussen } from './hulp.js';
 import '../vorm.css';
 import './wn.css';
@@ -45,13 +46,16 @@ function potlood() {
   let stap = 0;                     // 0 pencil up, 1 pencil tipped over
   let vriend = tussen(4, 8);        // metres to the right of the tree
 
+  const L = H * S;
   const pen = s('g', { class: 'bh-pen' },
-    s('rect', { x: -4, y: -H * S, width: 8, height: H * S - 10, class: 'bh-pen-hout' }),
-    s('path', { d: `M-4 ${-10} L0 0 L4 ${-10}Z`, class: 'bh-pen-punt' }),
-    s('rect', { x: -4.5, y: -H * S - 8, width: 9, height: 8, class: 'bh-pen-gum' }),
-    s('ellipse', { cx: 0, cy: 6, rx: 9, ry: 7, class: 'bh-duim' }));
-  // the pencil is drawn point down at the foot of the tree, with the rubber at the top; tipped over it turns
-  // about the thumb at the foot, so the rubber end now lies H to the right along the ground
+    s('rect', { x: -4, y: -L + 10, width: 8, height: L + 4, class: 'bh-pen-hout' }),
+    s('path', { d: `M-4 ${-L + 10} L0 ${-L} L4 ${-L + 10}Z`, class: 'bh-pen-punt' }),
+    s('rect', { x: -4.5, y: 14, width: 9, height: 7, class: 'bh-pen-gum' }),
+    s('ellipse', { cx: 1, cy: 0, rx: 9, ry: 6, class: 'bh-duim' }));
+  // the pencil is drawn point up, the point at the top of the tree and the thumb at its foot; the rest of the pencil
+  // sticks out below the thumb. Tipped over it turns about the thumb, so the point now lies H to the right
+  let hoek = 0;                     // how far it is tipped, 0 to 90 degrees
+  let beweegt = 0;
   const penHouder = s('g', { transform: `translate(${bx} ${gy})` }, pen);
   const pop = s('g', {});
   const greep = s('rect', { y: gy - 60, width: 44, height: 70, rx: 10, class: 'greep' });
@@ -63,30 +67,47 @@ function potlood() {
 
   const melding = h('p.doe-melding', { 'aria-live': 'polite' });
   const uitkomst = h('p', { 'aria-live': 'polite' });
-  const kantel = h('button.knop.hoofd.klein', { type: 'button', onclick: () => zetStap(stap ? 0 : 1) }, 'Kantel het potlood');
-  const meet = h('button.knop.klein', { type: 'button', onclick: meten }, 'Tel de passen');
+  const kantel = actie('Kantel het potlood', 'start', () => zetStap(stap ? 0 : 1), { hoofd: true, klein: true });
+  const meet = actie('Tel de passen', 'vink', meten, { klein: true });
   const el = h('div.wn.doe-boomhoogte',
-    h('p', `Je staat ${D} m van de boom. Het potlood dekt de boom precies af: de gum bij de top, de punt en je duim bij de voet.`),
-    svg, melding, uitkomst, h('div.knop-rij', kantel, meet));
+    h('p', `Je staat ${D} m van de boom. Het potlood dekt de boom precies af: de punt bij de top, je duim bij de voet.`),
+    svg, acties(kantel, meet), melding, uitkomst);
 
   function teken() {
     const x = bx + vriend * S;
     pop.replaceChildren(poppetje(x, gy, 1.7 * S, 'bh-vriend'));
     greep.setAttribute('x', x - 22);
-    pen.setAttribute('transform', stap ? 'rotate(90)' : '');
+    pen.setAttribute('transform', `rotate(${hoek})`);
     svg.setAttribute('aria-valuenow', String(vriend));
     svg.setAttribute('aria-valuetext', `je vriend staat ${vriend} m rechts van de boom`);
     const raak = stap === 1 && Math.abs(vriend - H) < 0.5;
     melding.classList.toggle('fout', stap === 1 && !raak);
     melding.textContent = stap === 0 ? 'Kantel het potlood plat, met je duim bij de voet van de boom als draaipunt.'
-      : raak ? 'Je vriend staat bij het eind van het potlood: daar ligt de top van de gevallen boom.'
-        : `Wijs je vriend de weg: ${vriend < H ? 'verder naar rechts' : 'terug naar links'}. Sleep hem naar het eind van het potlood.`;
+      : raak ? 'Je vriend staat bij de punt van het potlood: daar ligt de top van de gevallen boom.'
+        : `Wijs je vriend de weg: ${vriend < H ? 'verder naar rechts' : 'terug naar links'}. Sleep hem naar de punt van het potlood.`;
   }
-  function zetStap(n) { stap = n; kantel.textContent = n ? 'Zet het potlood rechtop' : 'Kantel het potlood'; uitkomst.textContent = ''; teken(); }
+  function zetStap(n) {
+    stap = n; zetActie(kantel, n ? 'Zet het potlood rechtop' : 'Kantel het potlood', n ? 'terug' : 'start'); uitkomst.textContent = '';
+    kantelNaar(n ? 90 : 0);
+    teken();
+  }
+  // the pencil turns about the thumb, slowly, as your hand does it (at once with reduced motion)
+  function kantelNaar(doel) {
+    cancelAnimationFrame(beweegt);
+    if (matchMedia('(prefers-reduced-motion: reduce)').matches) { hoek = doel; teken(); return; }
+    const van = hoek; const begin = performance.now(); const duur = 900 * (Math.abs(doel - van) / 90);
+    const stapje = (nu) => {
+      const t = Math.min(1, (nu - begin) / duur); const glad = t * t * (3 - 2 * t);
+      hoek = van + (doel - van) * glad;
+      pen.setAttribute('transform', `rotate(${hoek.toFixed(1)})`);
+      if (t < 1) beweegt = requestAnimationFrame(stapje);
+    };
+    beweegt = requestAnimationFrame(stapje);
+  }
   const verst = Math.floor((350 - bx) / S);
   function zetVriend(m) { vriend = Math.max(1, Math.min(verst, Math.round(m))); uitkomst.textContent = ''; teken(); }
   function meten() {
-    if (stap !== 1 || Math.abs(vriend - H) >= 0.5) { uitkomst.textContent = 'Zet eerst je vriend bij het eind van het gekantelde potlood.'; return; }
+    if (stap !== 1 || Math.abs(vriend - H) >= 0.5) { uitkomst.textContent = 'Zet eerst je vriend bij de punt van het gekantelde potlood.'; return; }
     const p = Math.round(H / PAS);
     uitkomst.textContent = `Je vriend loopt ${p} passen terug naar de boom. ${p} × ${getal(PAS * 100)} cm = ${getal(p * PAS, 1)} m: zo hoog is de boom (echt: ${H} m).`;
   }
@@ -128,8 +149,9 @@ function stok() {
   const uitkomst = h('p', { 'aria-live': 'polite' });
   const el = h('div.wn.doe-boomhoogte',
     h('p', 'Je stok is zo lang als je arm tot je vuist. Je houdt hem rechtop, met je arm gestrekt. Je vuist staat op de voet van de boom. Loop naar voren of naar achteren tot de punt van de stok precies bij de top komt.'),
-    h('div.bh-twee', zij, oog), melding, uitkomst,
-    h('div.knop-rij', h('button.knop.klein', { type: 'button', onclick: meten }, 'Tel je passen naar de boom')));
+    h('div.bh-twee', zij, oog),
+    acties(actie('Tel je passen naar de boom', 'vink', meten, { klein: true })),
+    melding, uitkomst);
 
   function teken() {
     const x = tx - afstand * K;
@@ -189,9 +211,8 @@ function schaduw() {
   const el = h('div.wn.doe-boomhoogte',
     svg, metingen,
     h('label.doe-label', h('span', 'Zon: ', zonTekst), schuif),
-    h('div.wn-rij', h('span', 'De boom is'), veld, h('span', 'm hoog'),
-      h('button.knop.hoofd.klein', { type: 'button', onclick: controleer }, 'Kijk na'),
-      h('button.knop.klein', { type: 'button', onclick: nieuw }, 'Andere boom')),
+    h('div.wn-rij', h('span', 'De boom is'), veld, h('span', 'm hoog')),
+    acties(actie('Kijk na', 'vink', controleer, { hoofd: true, klein: true }), actie('Andere boom', 'opnieuw', nieuw, { klein: true })),
     melding);
 
   const lang = (hoog) => hoog / Math.tan((zon * Math.PI) / 180);

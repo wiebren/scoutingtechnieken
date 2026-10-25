@@ -1,6 +1,7 @@
 // A short quiz of eight questions from a set in ./vragen.js: a question, sometimes a drawing, four answers. After each
 // answer it says why; at the end how many were right, and you can go again with other questions.
 import { h } from '../../dom.js';
+import { actie, acties, zetActie } from '../knoppen.js';
 import { PLAATJES } from '../../plaatjes.js';
 import { QUIZ } from './vragen.js';
 import '../vorm.css';
@@ -23,8 +24,8 @@ export default function quiz({ set }) {
   const vraag = h('p.vk-vraag', { 'aria-live': 'polite' });
   const keuzes = h('div.vk-keuzes');
   const melding = h('p.doe-melding', { 'aria-live': 'polite' });
-  const verder = h('button.knop.klein.hoofd', { type: 'button', hidden: true, onclick: () => opVerder() });
-  const el = h('div.doe-vk', teller, plaatje, vraag, keuzes, melding, h('div.knop-rij', verder));
+  const verder = actie('Volgende', 'verder', () => opVerder(), { hoofd: true, klein: true, hidden: true });
+  const el = h('div.doe-vk', teller, plaatje, vraag, keuzes, acties(verder), melding);
 
   function begin() {
     ronde = schud(alle).slice(0, Math.min(RONDE, alle.length)).map((v) => {
@@ -59,7 +60,7 @@ export default function quiz({ set }) {
     if (!juist) knop.classList.add('fout');
     melding.classList.toggle('fout', !juist);
     melding.textContent = `${juist ? 'Goed!' : `Niet goed: het is ${v.antwoord}.`} ${v.uitleg ?? ''}`;
-    verder.textContent = nr + 1 < ronde.length ? 'Volgende' : 'Klaar';
+    zetActie(verder, ...(nr + 1 < ronde.length ? ['Volgende', 'verder'] : ['Bekijk de uitslag', 'vink']));
     verder.hidden = false;
     verder.focus();
   }
@@ -72,7 +73,7 @@ export default function quiz({ set }) {
     keuzes.replaceChildren();
     melding.classList.remove('fout');
     melding.textContent = goed === ronde.length ? 'Alles goed!' : goed >= ronde.length - 2 ? 'Bijna alles goed.' : 'Lees de onderwerpen nog eens na, en probeer het opnieuw.';
-    verder.textContent = 'Nog een keer';
+    zetActie(verder, 'Nog een keer', 'opnieuw');
     opVerder = () => begin();
   }
 

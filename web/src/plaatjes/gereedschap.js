@@ -7,18 +7,35 @@ import { blok, fout, goed, grond, kop, label, pijl } from './vuur.js';
 const hand = (x, y, hoek = 0) =>
   `<g transform="translate(${x} ${y}) rotate(${hoek})"><path d="M-20 -8Q-22 -22 -6 -22H14Q24 -22 24 -12V8Q24 18 12 18H-10Q-22 18 -20 6Z" class="vk-hand"/><path d="M-20 0Q-34 -2 -34 -12Q-30 -18 -18 -12" class="vk-hand"/></g>`;
 
-/** An open pocket knife from the side, with the names of its parts. */
+/** Two open pocket knives from the side: a Swiss knife with the names of its parts, and one with a wooden handle and a
+ * twist ring that locks the blade. */
 function zakmes() {
-  let uit = `<rect x="40" y="104" width="156" height="38" rx="15" fill="#c8302b" stroke="#7a1a16" stroke-width="1.4"/>`;
-  uit += `<rect x="182" y="102" width="14" height="42" rx="3" class="vk-staal"/>`;
-  uit += `<path d="M192 106H318Q346 108 356 116Q334 136 298 140H198Z" class="vk-staal"/>`;
-  uit += `<path d="M200 140H298Q334 136 356 116" class="vk-snede"/>`;
-  uit += `<path d="M214 112q8 6 16 0" fill="none" stroke="#56636b" stroke-width="1.6"/><circle cx="190" cy="123" r="4" class="vk-metaal"/>`;
-  uit += label(330, 82, 'punt', 352, 112, 'start') + label(262, 82, 'rug', 262, 104) + label(258, 172, 'snede', 262, 142);
-  uit += label(214, 82, 'nagelgleuf', 222, 110, 'end') + label(110, 172, 'heft', 110, 142) + label(176, 172, 'slot of ring', 188, 146);
+  // the blade comes out of the end of the handle; the handle is rounded at both ends, with a rivet at each end and
+  // the white cross in the middle
+  let zw = `<path d="M192 106H318Q346 108 356 116Q334 136 298 140H198Z" class="vk-staal"/>`;
+  zw += `<path d="M200 140H298Q334 136 356 116" class="vk-snede"/>`;
+  zw += `<path d="M306 112q8 6 16 0" fill="none" stroke="#56636b" stroke-width="1.6"/>`;
+  zw += `<rect x="38" y="104" width="170" height="38" rx="19" fill="#c8302b" stroke="#7a1a16" stroke-width="1.4"/>`;
+  zw += `<circle cx="58" cy="123" r="3" class="vk-metaal"/><circle cx="188" cy="123" r="3" class="vk-metaal"/>`;
+  zw += `<path d="M120 115h6v5h5v6h-5v5h-6v-5h-5v-6h5Z" fill="#fff"/>`;
+  zw += label(346, 82, 'punt', 352, 112, 'start') + label(222, 82, 'rug', 226, 104, 'start') + label(258, 172, 'snede', 262, 142);
+  zw += label(302, 82, 'nagelgleuf', 313, 110, 'end') + label(150, 172, 'heft', 150, 142);
   // on the light steel the label stays dark in both themes
-  uit += tekst(290, 126, 'lemmet', { maat: 10.5, klasse: 'vet' }).replace('class="tekst vet"', 'class="tekst vet" style="fill: #1c1f21"');
-  return svg(380, 190, 'Een open zakmes van opzij: het heft, het slot of de ring bij het scharnier, en het lemmet met de rug, de snede, de punt en de nagelgleuf', uit);
+  zw += tekst(262, 128, 'lemmet', { maat: 10.5, klasse: 'vet' }).replace('class="tekst vet"', 'class="tekst vet" style="fill: #1c1f21"');
+
+  // the knife with a ring: a beech handle, a steel ring round its end, a slim blade; drawn round y = 0
+  let ri = '<path d="M184 -13L62 -15Q34 -16 32 -1Q32 15 60 15L184 13Z" fill="#d9b27a" stroke="#8a6232" stroke-width="1.4" stroke-linejoin="round"/>';
+  ri += '<path d="M72 -6Q122 -9 172 -5M78 5Q128 8 174 4" fill="none" stroke="#a97f45" stroke-width="0.9" opacity="0.8"/>';
+  ri += '<path d="M196 -10H306Q336 -9 358 0Q330 12 296 11H198Z" class="vk-staal"/><path d="M200 11H296Q330 12 358 0" class="vk-snede"/>';
+  ri += '<path d="M310 -6q6 4 12 0" fill="none" stroke="#56636b" stroke-width="1.6"/>';
+  ri += '<rect x="180" y="-16" width="17" height="32" rx="2.5" class="vk-staal"/><path d="M188.5 -16V-7" stroke="#56636b" stroke-width="1.6"/>';
+  ri += label(110, 42, 'heft van hout', 110, 15) + label(206, 42, 'draairing: het slot', 192, 17, 'start');
+  ri += tekst(258, 4, 'lemmet', { maat: 10.5, klasse: 'vet' }).replace('class="tekst vet"', 'class="tekst vet" style="fill: #1c1f21"');
+
+  const kop = (y, t) => tekst(20, y, t, { maat: 12, anker: 'start', klasse: 'vet' });
+  const uit = kop(24, 'Zwitsers zakmes') + `<g transform="translate(0 -28)">${zw}</g>`
+    + kop(166, 'Zakmes met een draairing') + `<g transform="translate(0 198)">${ri}</g>`;
+  return svg(380, 250, 'Twee open zakmessen van opzij. Boven een Zwitsers zakmes: het heft, aan beide kanten rond, en het lemmet met de rug, de snede, de punt en de nagelgleuf. Onder een zakmes met een houten heft en een draairing bij het scharnier: die ring is het slot', uit);
 }
 
 /** Handing over a knife: hold it by the back of the blade, edge away, handle to the other. */
@@ -52,14 +69,47 @@ function veerstok() {
 const bijlkop = (x, y) => `<path d="M${x - 10} ${y - 12}H${x + 12}V${y + 12}H${x - 10}L${x - 34} ${y + 28}Q${x - 44} ${y + 6} ${x - 34} ${y - 18}Z" class="vk-staal"/>`
   + `<path d="M${x - 34} ${y + 28}Q${x - 44} ${y + 6} ${x - 34} ${y - 18}" class="vk-snede"/>`;
 
-/** Handing over an axe: in its cover if it has one; else hold the head, edge away, and offer the handle. */
+/** An axe lying flat, its eye at (x, y), the edge down; the handle runs `steel` to the right, or to the left when
+ *  `steel` is negative. */
+const bijlPlat = (x, y, steel) => blok(x + Math.sign(steel) * 8, y, x + steel, y, 11)
+  + `<g transform="translate(${x} ${y})${steel < 0 ? ' scale(-1 1)' : ''} rotate(-90)">${bijlkop(0, 0)}</g>`;
+
+/** Handing over and carrying an axe: a hand axe goes head first in your hand, the handle to the other; a long axe the
+ *  other way round; walking, you hold it by the head beside you; on the move it wears its cover. */
 function bijlDoorgeven() {
-  let uit = blok(96, 104, 280, 104, 13) + bijlkop(90, 104);
-  uit += hand(92, 86, 0) + hand(256, 124, 180);
-  uit += pijl(150, 54, 226, 54) + tekst(188, 44, 'geef de steel aan', { maat: 10.5 });
-  uit += tekst(70, 54, 'jij', { maat: 11, klasse: 'vet' }) + tekst(270, 166, 'de ander', { maat: 11, klasse: 'vet' });
-  uit += label(28, 168, 'snede van jullie af', 54, 128, 'start');
-  return svg(320, 180, 'Een bijl doorgeven: jij houdt de kop vast met de snede van jullie af, de ander pakt de steel; heeft de bijl een hoes, dan doe je die eerst om', uit);
+  const kopje = (y, t) => tekst(16, y, t, { maat: 12, anker: 'start', klasse: 'vet' });
+  const wie = (x, y, t) => tekst(x, y, t, { maat: 11, klasse: 'vet' });
+
+  // a hand axe: you hold the head, the other takes the handle
+  let uit = kopje(20, 'Een handbijl doorgeven');
+  uit += bijlPlat(120, 66, 120) + hand(124, 44, 0) + hand(226, 82, 180);
+  uit += wie(50, 70, 'jij') + wie(296, 70, 'de ander');
+  uit += pijl(176, 36, 244, 36) + tekst(210, 26, 'geef de steel aan', { maat: 10.5 });
+  uit += label(156, 122, 'snede omlaag, van jullie af', 126, 104, 'start');
+
+  // a long axe: you hold the handle, the other takes it by the head
+  uit += kopje(158, 'Een grote bijl doorgeven');
+  uit += bijlPlat(262, 214, -196) + hand(84, 198, 0) + hand(200, 230, 180);
+  uit += wie(30, 218, 'jij') + wie(322, 218, 'de ander');
+  uit += pijl(198, 184, 264, 184) + tekst(231, 174, 'geef de kop aan', { maat: 10.5 });
+  uit += label(230, 270, 'snede omlaag, van jullie af', 250, 258, 'end');
+
+  // walking: the head in your hand beside your body, the edge forward, the handle up
+  uit += kopje(296, 'Lopen');
+  uit += `<circle cx="70" cy="320" r="11" class="vol"/><path d="M70 331V376M70 376L56 418M70 376L86 418M70 342L80 370" class="lijn dik stil"/>`;
+  uit += `<path d="M86 364V316" class="vk-hout-rand" stroke-width="9.4"/><path d="M86 364V316" class="vk-hout" stroke-width="7"/>`;
+  uit += `<g transform="translate(86 374) scale(0.7) rotate(180)">${bijlkop(0, 0)}</g>` + `<circle cx="82" cy="372" r="7" class="vk-hand"/>`;
+  uit += label(124, 336, 'steel omhoog', 90, 330, 'start') + label(124, 404, 'snede naar voren', 114, 384, 'start');
+  uit += pijl(40, 432, 104, 432) + tekst(72, 448, 'je loopt zo', { maat: 10, klasse: 'stil' });
+
+  // on the move: always in its cover
+  uit += kopje(296, 'Vervoer').replace('x="16"', 'x="218"');
+  uit += bijlPlat(250, 350, 90);
+  // the cover over the blade, a strap over the back of the head
+  uit += '<path d="M228 362Q228 356 236 356H270Q278 356 278 362L284 396Q266 404 234 400Q224 398 226 390Z" fill="#7a4a26" stroke="#3f2410" stroke-width="1.4" stroke-linejoin="round"/>';
+  uit += '<path d="M244 357V335H256V357" fill="none" stroke="#5a3418" stroke-width="3.4"/>';
+  uit += label(218, 428, 'hoes over de snede', 250, 402, 'start');
+  return svg(360, 456, 'Een bijl doorgeven en dragen, in vier tekeningen. Een handbijl doorgeven: jij houdt de kop vast, met de snede omlaag, van jullie af, en de ander pakt de steel. Een grote bijl doorgeven: jij houdt de steel vast, en de ander pakt hem vlak bij de kop. Lopen: je houdt de bijl naast je bij de kop vast, met de snede naar voren en de steel omhoog. Vervoer: met een hoes over de snede', uit);
 }
 
 /** The right length of an axe: the head in your hand, arm stretched, the handle reaches into your armpit. */
@@ -115,12 +165,13 @@ const mes = (x, y, hoek = 0, greep = 62, lemmet = 74) => `<g transform="translat
 function vanJeAf() {
   let uit = `<ellipse cx="0" cy="110" rx="34" ry="70" class="vol-licht"/>` + tekst(12, 114, 'jij', { anker: 'start', maat: 12, klasse: 'vet' });
   uit += blok(70, 118, 300, 118, 9) + hand(96, 118, 0);
-  uit += mes(206, 110, 0, 52, 70) + hand(176, 106, 0);
-  uit += pijl(196, 70, 286, 70) + tekst(240, 60, 'snijd van je af', { maat: 11, klasse: 'vet' });
-  uit += `<path d="M280 110H330" class="lijn rood-lijn" stroke-width="2" stroke-dasharray="5 4"/>`;
-  uit += label(316, 156, 'niemand in de baan', 306, 114, 'end');
+  // the knife crosswise over the stick, the edge facing away from you; your hand holds the grip beside the stick
+  uit += mes(214, 142, -90, 48, 64) + hand(214, 170, -90);
+  uit += pijl(196, 52, 286, 52) + tekst(240, 42, 'snijd van je af', { maat: 11, klasse: 'vet' });
+  uit += `<path d="M280 110H340" class="lijn rood-lijn" stroke-width="2" stroke-dasharray="5 4"/>`;
+  uit += label(334, 94, 'niemand in de baan', 336, 107, 'end');
   uit += label(40, 186, 'andere hand achter het mes', 96, 136, 'start');
-  return svg(330, 196, 'Van je af snijden, van boven gezien: je houdt het hout met je andere hand achter het mes vast, het mes beweegt van je af, en er staat niemand in de baan van het mes', uit);
+  return svg(340, 210, 'Van je af snijden, van boven gezien: het mes staat dwars op de stok, met de snede van je af. Je houdt het hout met je andere hand achter het mes vast, het mes beweegt van je af, en er staat niemand in de baan van het mes', uit);
 }
 
 /** Batoning: the blade on the end of a block, a stick to tap the spine, the other hand pushes the tip down. */
@@ -160,9 +211,9 @@ function kloven() {
   let uit = `<rect x="60" y="${voet - 22}" width="200" height="26" rx="3" class="vk-hout-vol" opacity="0.6"/>`;
   uit += `<rect x="120" y="122" width="80" height="${voet - 22 - 122}" class="vk-hout-vol"/><ellipse cx="160" cy="122" rx="40" ry="9" class="vk-kop"/><ellipse cx="160" cy="122" rx="18" ry="4" class="vk-jaar"/>`;
   uit += `<path d="M160 126L156 150L161 172" class="vk-hout-rand" stroke-width="1.6" fill="none"/>`;
-  uit += blok(172, 72, 266, 28, 8);
-  uit += `<path d="M148 64H176V80L184 106H140L148 80Z" class="vk-staal"/><path d="M140 106H184" class="vk-snede"/>`;
-  uit += pijl(214, 70, 214, 106, { warm: true });
+  // the axe from the side, just above the block: the head across the handle, the edge down
+  uit += bijlPlat(154, 70, 120);
+  uit += pijl(236, 80, 236, 116, { warm: true });
   uit += tekst(14, 30, 'in het midden,', { anker: 'start', maat: 10.5 }) + tekst(14, 44, 'of langs een scheur', { anker: 'start', maat: 10.5 });
   uit += `<path d="M60 50L156 128" class="vk-wijs"/>`;
   uit += tekst(160, 222, 'op een hakblok, niet op de grond', { maat: 10.5, klasse: 'stil' });
@@ -191,25 +242,130 @@ function soortenBijlen() {
 }
 
 /** Four saws: fret saw, bow saw, folding saw and pull saw. */
-function soortenZagen() {
-  const tanden = (x1, x2, y) => { let d = `M${x1} ${y}`; for (let x = x1; x < x2 - 4; x += 5) d += 'l2.5 4l2.5 -4'; return `<path d="${d}" class="vk-metaal-lijn" stroke-width="0.9"/>`; };
+const zaagTanden = (x1, x2, y, stap = 5, hoog = 4) => {
+  let d = `M${x1} ${y}`;
+  for (let x = x1; x < x2 - stap + 1; x += stap) d += `l${stap / 2} ${hoog}l${stap / 2} ${-hoog}`;
+  return `<path d="${d}" class="vk-metaal-lijn" stroke-width="0.9"/>`;
+};
+const zaagNaam = (x, y, t) => tekst(x, y, t, { maat: 11 });
+/** The closed wooden grip of a hand saw or a back saw, its front edge at x, from y down. */
+const zaagGreep = (x, y) => `<path d="M${x} ${y}H${x + 34}Q${x + 50} ${y} ${x + 50} ${y + 16}V${y + 44}Q${x + 50} ${y + 60} ${x + 34} ${y + 60}H${x + 6}L${x} ${y + 48}Z`
+  + `M${x + 16} ${y + 14}H${x + 34}Q${x + 40} ${y + 14} ${x + 40} ${y + 20}V${y + 40}Q${x + 40} ${y + 46} ${x + 34} ${y + 46}H${x + 18}Z" class="vk-hout-vol" fill-rule="evenodd"/>`
+  + `<circle cx="${x + 7}" cy="${y + 12}" r="2.4" class="vk-metaal"/><circle cx="${x + 7}" cy="${y + 40}" r="2.4" class="vk-metaal"/>`;
+
+/** Saws for branches and trees: a bow saw, a folding saw, a two-man saw, a wire saw and a pocket chain saw. */
+function zagenTakken() {
   let uit = '';
-  // fret saw: a deep frame, a thin blade, a handle in line
-  uit += `<path d="M22 74V32Q22 24 30 24H118Q126 24 126 32V74" fill="none" class="vk-metaal-lijn" stroke-width="3.4"/><path d="M22 74H128" class="vk-metaal-lijn" stroke-width="1"/>` + tanden(22, 126, 75);
-  uit += `<rect x="128" y="68" width="30" height="12" rx="5" class="vk-hout-vol"/>`;
-  uit += tekst(84, 104, 'figuurzaag', { maat: 11 });
-  // bow saw
-  uit += `<path d="M196 74Q200 18 262 18Q324 18 328 74" fill="none" stroke="#1f6fb2" stroke-width="5" stroke-linecap="round"/><path d="M194 74H330" stroke="#c7d0d6" stroke-width="5"/>` + tanden(196, 328, 77);
-  uit += `<rect x="182" y="66" width="20" height="16" rx="6" fill="#2b2b2b"/>` + tekst(262, 104, 'beugelzaag', { maat: 11 });
-  // folding saw: a handle and a curved blade, half folded out
-  uit += `<rect x="20" y="158" width="74" height="16" rx="6" class="vk-hout-vol"/><circle cx="90" cy="166" r="3" class="vk-metaal"/>`;
-  uit += `<path d="M90 162Q130 150 158 128L162 134Q134 160 92 170Z" class="vk-staal"/>`;
-  uit += tekst(84, 196, 'klapzaag', { maat: 11 });
-  // pull saw: a long handle and a thin straight blade; it cuts when you pull
-  uit += `<rect x="194" y="158" width="58" height="14" rx="5" class="vk-hout-vol"/><path d="M252 158H330V170H252Z" class="vk-staal"/>` + tanden(252, 330, 170);
-  uit += pijl(318, 140, 266, 140) + tekst(292, 132, 'trek', { maat: 10.5, klasse: 'stil' });
-  uit += tekst(262, 196, 'trekzaag', { maat: 11 });
-  return svg(350, 204, 'Vier soorten zagen: een figuurzaag met een diepe beugel en een dun zaagje, een beugelzaag, een klapzaag met een gebogen blad dat in het handvat klapt, en een trekzaag die zaagt als je trekt', uit);
+  // bow saw: an orange tube that rises from the far end, runs flat over the top and comes down into a closed grip;
+  // the blade along the bottom
+  uit += '<path d="M16 92V84Q16 40 50 32Q66 28 96 28H124Q146 30 148 54V66" fill="none" stroke="#d9661f" stroke-width="4.4" stroke-linecap="round"/>';
+  uit += '<path d="M14 92H160" stroke="#c7d0d6" stroke-width="4"/>' + zaagTanden(14, 158, 94);
+  uit += '<path d="M142 58L164 70Q172 76 170 88L166 98H146ZM151 72L160 79Q163 83 161 88H153Z" fill="#2f3133" stroke="#77797c" stroke-width="1" fill-rule="evenodd"/>';
+  uit += zaagNaam(88, 118, 'beugelzaag');
+  // folding saw, open: a curved wooden handle, a pivot with a ring, a straight blade with big teeth and a slanted tip
+  let kl = '<path d="M104 150L28 154L14 164L104 168Z" class="vk-staal"/>';
+  let kt = 'M18 164'; for (let x = 18; x < 100; x += 5) kt += 'l2.5 3.4l2.5 -3.4';
+  kl += `<path d="${kt}" class="vk-metaal-lijn" stroke-width="0.9"/>`;
+  kl += '<path d="M100 148Q132 146 160 140Q172 140 172 150L170 160Q140 162 100 170Z" class="vk-hout-vol"/>';
+  kl += '<circle cx="108" cy="159" r="3.4" class="vk-metaal"/><path d="M114 147Q122 152 116 166" fill="none" class="vk-metaal-lijn" stroke-width="2"/>';
+  uit += `<g transform="translate(178 -86)">${kl}</g>` + zaagNaam(272, 118, 'klapzaag');
+  // two-man saw: a long blade with big teeth on a curved edge, an upright wooden handle at each end; the blade and
+  // its teeth as one shape: the top edge, then tooth by tooth back along the curved bottom edge
+  const onder = (t) => { const u = 1 - t; return [u * u * 36 + 2 * u * t * 180 + t * t * 324, u * u * 244 + 2 * u * t * 266 + t * t * 244]; };
+  let blad = 'M36 230Q180 240 324 230V244';
+  for (let k = 40; k >= 0; k--) { const [x, y] = onder(k / 40); blad += `L${x.toFixed(1)} ${(y + (k % 2 ? 6 : 0)).toFixed(1)}`; }
+  let tw = `<path d="${blad}Z" class="vk-staal"/>`;
+  for (const x of [32, 328]) {
+    tw += `<rect x="${x - 5}" y="202" width="10" height="42" rx="4" class="vk-hout-vol"/><rect x="${x - 8}" y="228" width="16" height="16" rx="2" fill="#2f3a36" stroke="#77797c" stroke-width="1"/>`;
+  }
+  uit += `<g transform="translate(0 -56)">${tw}</g>` + zaagNaam(180, 234, 'trekzaag, voor twee');
+  // wire saw: a twisted steel wire with a ring at each end, a short stick through each ring as a handle
+  for (const x of [38, 146]) uit += `<rect x="${x - 20}" y="343" width="40" height="7" rx="3" class="vk-hout-vol"/>`;
+  uit += '<path d="M44 330Q92 262 140 330" fill="none" stroke="#7d858c" stroke-width="3.4"/><path d="M44 330Q92 262 140 330" fill="none" stroke="#d6dbe0" stroke-width="1.6" stroke-dasharray="3 3"/>';
+  for (const x of [38, 146]) uit += `<circle cx="${x}" cy="346" r="12" fill="none" stroke="#9aa2a9" stroke-width="3"/><path d="M${x} 334V328" class="vk-metaal-lijn" stroke-width="2"/>`;
+  uit += zaagNaam(92, 384, 'draadzaag');
+  // pocket chain saw: a length of chain with cutters, an orange strap loop at each end, a stick through each loop
+  uit += '<path d="M218 310Q270 400 322 310" fill="none" stroke="#2f3133" stroke-width="5.6"/><path d="M218 310Q270 400 322 310" fill="none" stroke="#c9ced3" stroke-width="2.2" stroke-dasharray="2 4"/>';
+  for (const [x, r] of [[212, -20], [328, 20]]) {
+    uit += `<g transform="rotate(${r} ${x} 304)"><rect x="${x - 20}" y="267" width="40" height="7" rx="3" class="vk-hout-vol"/><rect x="${x - 8}" y="264" width="16" height="44" rx="8" fill="none" stroke="#f07a1a" stroke-width="5.4"/></g>`;
+  }
+  uit += zaagNaam(270, 384, 'handkettingzaag');
+  // two blades for the bow saw up close: the same small teeth all along (for dry wood), or groups of four teeth
+  // with a round gullet on either side of a short forked tooth that clears the sawdust (for fresh wood); the teeth
+  // that stand a little aside are drawn darker
+  const strook = (x0, groep) => {
+    const y = 404; const b = y + 14; let x = x0; let rand = ''; let opzij = '';
+    const tand = () => { rand += `L${x + 4.5} ${b + 12}L${x + 9} ${b}`; x += 9; };
+    // a round gullet that reaches up into the blade, wider inside than at its mouth
+    const gat = () => { rand += `A5 5 0 1 1 ${(x + 7.1).toFixed(1)} ${b}`; x += 7.1; };
+    if (!groep) while (x < x0 + 144) tand();
+    else {
+      for (let g = 0; g < 3; g++) {
+        for (let k = 0; k < 4; k++) { if (k % 2) opzij += `M${x} ${b}l4.5 12l4.5 -12Z`; tand(); }
+        if (g === 2) break;
+        gat();
+        rand += `L${x + 2.5} ${b + 9}L${x + 5} ${b + 5}L${x + 7.5} ${b + 9}L${x + 10} ${b}`; x += 10;
+        gat();
+      }
+    }
+    return `<path d="M${x0} ${y}V${b}${rand}V${y}Z" class="vk-staal"/>` + (opzij ? `<path d="${opzij}" fill="#7d858c"/>` : '');
+  };
+  uit += strook(16, false) + zaagNaam(92, 450, 'rechte vertanding') + tekst(92, 464, 'droog hout', { maat: 10, klasse: 'stil' });
+  uit += strook(194, true) + zaagNaam(270, 450, 'groepsvertanding') + tekst(270, 464, 'vers en nat hout', { maat: 10, klasse: 'stil' });
+  return svg(360, 474, 'Vijf zagen voor takken en bomen. Een beugelzaag: een gebogen buis met een handvat, en het zaagblad langs de onderkant. Een klapzaag: een houten handvat met een recht blad met grote tanden, dat in het handvat klapt. Een trekzaag voor twee: een lang blad met grote tanden en aan elk eind een handvat. Een draadzaag: een gedraaide draad met een ring aan elk eind. Een handkettingzaag: een stuk ketting met tanden en een lus aan elk eind. Door elke ring en elke lus steekt een stukje tak als handvat. Onderaan twee zaagbladen van dichtbij: een met rechte vertanding, overal dezelfde tandjes, voor droog hout; en een met groepsvertanding, voor vers en nat hout: groepjes van vier tanden, en daartussen een kort tandje met twee puntjes, met aan elke kant een ronde uitsparing', uit);
+}
+
+/** Saws for woodwork: a hand saw, a back saw, a Japanese saw and a fret saw. */
+function zagenHout() {
+  let uit = '';
+  // hand saw: a broad blade that tapers towards its tip, a closed wooden grip
+  uit += '<path d="M120 38L16 60Q12 61 12 66V84H120Z" class="vk-staal"/>' + zaagTanden(12, 120, 84);
+  uit += zaagGreep(116, 32) + zaagNaam(88, 118, 'handzaag');
+  // back saw: a rectangular blade with a stiff metal back along the top, fine teeth, a closed grip
+  uit += '<path d="M196 52H312V84H196Z" class="vk-staal"/>' + zaagTanden(196, 312, 84, 3, 2.6);
+  uit += '<rect x="194" y="44" width="122" height="10" rx="2" fill="#c49a3c" stroke="#7c5d1c" stroke-width="1"/>';
+  uit += zaagGreep(306, 32) + zaagNaam(272, 118, 'toffelzaag');
+  // Japanese saw: a long handle and a thin straight blade; it cuts when you pull
+  uit += '<rect x="14" y="186" width="58" height="14" rx="5" class="vk-hout-vol"/><path d="M72 186H160V198H72Z" class="vk-staal"/>' + zaagTanden(72, 160, 198);
+  uit += pijl(146, 170, 94, 170) + tekst(120, 162, 'trek', { maat: 10.5, klasse: 'stil' });
+  uit += zaagNaam(88, 236, 'Japanse zaag');
+  // fret saw: a deep frame open at the handle side, the thin blade upright between the ends of its arms, the
+  // handle below
+  uit += '<path d="M206 142H334Q346 142 346 154V176Q346 188 334 188H206" fill="none" stroke="#b7bec4" stroke-width="3.4" stroke-linecap="round"/>';
+  uit += '<path d="M206 142V188" class="vk-metaal-lijn" stroke-width="1"/>';
+  uit += '<rect x="200" y="138" width="14" height="7" rx="1.5" class="vk-metaal"/><rect x="200" y="185" width="14" height="7" rx="1.5" class="vk-metaal"/>';
+  uit += '<rect x="202" y="192" width="8" height="5" class="vk-metaal"/><rect x="200" y="197" width="12" height="25" rx="5" fill="#8a3b22" stroke="#5a2412" stroke-width="1"/>';
+  uit += zaagNaam(272, 236, 'figuurzaag');
+  return svg(360, 246, 'Vier zagen voor houtbewerking. Een handzaag: een breed blad dat naar de punt smaller wordt, met een houten handvat. Een toffelzaag: een rechthoekig blad met fijne tanden en een stevige metalen rug erop. Een Japanse zaag, die zaagt als je trekt. Een figuurzaag: een diepe beugel met een heel dun zaagje rechtop en het handvat eronder', uit);
+}
+
+/** Four first carvings from a stick of fresh wood: a bark pattern, a tally stick, a little gnome, a butter spatula. */
+function snijwerk() {
+  const bast = 'fill="#6b5440" stroke="#3f2f22" stroke-width="1.2"';
+  const hout = 'fill="#ecd3a2" stroke="#8a6232" stroke-width="1"';
+  let uit = '';
+  // a bark pattern: a spiral and two rings, where the bark is peeled off between two cuts
+  uit += `<rect x="33" y="20" width="24" height="176" rx="6" ${bast}/>`;
+  for (let k = 0; k < 5; k++) uit += `<path d="M33 ${44 + k * 24}L57 ${32 + k * 24}V${42 + k * 24}L33 ${54 + k * 24}Z" ${hout}/>`;
+  for (const y of [166, 180]) uit += `<rect x="33" y="${y}" width="24" height="7" ${hout}/>`;
+  uit += tekst(45, 216, 'bastpatroon', { maat: 11 });
+  // a tally stick: one side cut flat, a notch for every day
+  uit += `<rect x="113" y="20" width="24" height="176" rx="6" ${bast}/><rect x="117" y="30" width="16" height="156" rx="3" ${hout}/>`;
+  // the notches in groups of five, so you can count them quickly
+  for (let k = 0; k < 14; k++) { const y = 40 + k * 9 + Math.floor(k / 5) * 8; uit += `<path d="M117 ${y}H133L125 ${y + 3.6}Z" fill="#8a6232"/>`; }
+  uit += tekst(125, 216, 'kerfstok', { maat: 11 });
+  // a gnome: a pointed hat, as wide as the stick; under it the stop cut, and the wood below cut away towards it at a
+  // slant, so the rim of the hat stands out over a thinner face; the bark below
+  uit += `<rect x="193" y="110" width="24" height="86" rx="4" ${bast}/>`;
+  uit += `<path d="M205 20L217 72H193Z" ${hout}/><rect x="193" y="72" width="24" height="7" ${hout}/>`;
+  uit += `<path d="M197 79H213L217 112H193Z" ${hout}/><path d="M197 79H213" stroke="#5a3d22" stroke-width="1.6"/>`;
+  uit += '<circle cx="201" cy="90" r="1.8" fill="#3f2f22"/><circle cx="209" cy="90" r="1.8" fill="#3f2f22"/><path d="M205 93L202.5 101H207.5Z" fill="#c9a46c" stroke="#8a6232" stroke-width="0.8"/>';
+  uit += tekst(205, 216, 'kaboutertje', { maat: 11 });
+  // a butter spatula: a thin, flat blade and a round handle
+  uit += `<path d="M284 120Q278 80 280 46Q282 26 290 26Q298 26 300 46Q302 80 296 120V192Q296 198 290 198Q284 198 284 192Z" ${hout}/>`;
+  uit += '<path d="M290 34V112" stroke="#c9a46c" stroke-width="1" opacity="0.8"/>';
+  uit += tekst(290, 216, 'boterspatel', { maat: 11 });
+  return svg(340, 226, 'Vier eerste werkstukken uit een stok: een stok met een bastpatroon, een spiraal en twee ringen waar de bast is weggeschild; een kerfstok met een platte kant vol kerfjes; een kaboutertje met een puntmuts zo breed als de stok, en daaronder een dunner, schuin weggesneden gezichtje, zodat de rand van de muts uitsteekt; en een boterspatel met een dun, plat blad en een rond heft', uit);
 }
 
 /** Sharpening an axe with a file: push from the head towards the edge, lift it on the way back. */
@@ -493,7 +649,9 @@ export default {
   oefenstok,
   kloven,
   'soorten-bijlen': soortenBijlen,
-  'soorten-zagen': soortenZagen,
+  'zagen-takken': zagenTakken,
+  'zagen-hout': zagenHout,
+  snijwerk,
   'bijl-vijlen': bijlVijlen,
   'chip-carving': chipCarving,
   'mes-wet': mesWet,

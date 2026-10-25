@@ -60,7 +60,7 @@ export default [
     plaatje: 'bw-scharnier',
     waarvoor: 'Een bouwwerk maken waarvan een deel mag draaien of zwaaien, zoals een wip, een blijde of een ophaalbrug, zonder dat het losraakt.',
     uitleg: [
-      'Een gewone sjorring zet palen zo vast dat ze niet meer kunnen bewegen. Bij een wip, een blijde of een ophaalbrug wil je juist dat één deel draait. Dat deel moet vast blijven zitten, maar wel vrij kunnen bewegen. Zo doe je dat met touw en hout:',
+      'Een gewone sjorring zet palen zo vast dat ze niet meer kunnen bewegen. Hier wil je juist dat één deel vrij kan draaien. Zo doe je dat met touw en hout:',
       '- Een losse strop: leg het touw een paar keer in een acht om de as en de arm, en woel niet. De strop houdt de arm op de as, maar de arm kan eromheen draaien. Zo zit de werparm van een blijde of de wipbalk van een ophaalbrug.',
       '- Een losse as: een korte, dikke paal ligt op twee dwarsliggers, met klosjes aan weerszijden zodat hij niet wegrolt. De balk erop sjor je vast aan de as, en die rolt mee. Zo werkt een wip.',
       '- Een ring om een staande paal: een strop om een mast, die rust op een kraag van een paar strakke slagen touw eronder. Wat aan de strop hangt, kan rond de mast draaien. Zo hangt een zweefmolen of een draaibrug.',
@@ -91,7 +91,7 @@ export default [
     doe: 'bouwwerk-zandlopertoren',
     waarvoor: 'Een uitkijktoren van maar twee driepoten, die je liggend bouwt en met een takel rechtop zet.',
     uitleg: [
-      'Twee driepoten in elkaar geschoven: de onderste staat op zijn poten, de bovenste op zijn kop. Van opzij lijkt hij op een zandloper. Je bouwt hem helemaal liggend, en hijst hem dan overeind.',
+      'Twee driepoten in elkaar geschoven: de onderste staat op zijn poten, de bovenste op zijn kop. Van opzij lijkt hij op een zandloper.',
       '- Bouw een driepoot van drie palen van 3,5 meter met een achtsjorring, en sjor onderaan een driehoek van palen van 2,5 meter.',
       '- Bouw er nog een, met de driehoek als leuning. Steek één poot door de kop van de eerste en schuif ze in elkaar.',
       '- Sjor de palen vast waar ze elkaar kruisen. De hoek is scherp, maar je gebruikt hier toch een kruissjorring.',
@@ -110,7 +110,7 @@ export default [
     plaatje: 'bw-oprichten',
     waarvoor: 'Een mast, poort of toren die je liggend hebt gebouwd veilig overeind krijgen.',
     uitleg: [
-      'Hoge dingen bouw je op de grond en zet je daarna overeind. Hoe zwaarder en hoger, hoe meer hulp je nodig hebt.',
+      'Hoe zwaarder en hoger het bouwwerk, hoe meer hulp je nodig hebt.',
       '- Met de hand: een bok of een kleine mast. Eén ploeg tilt de top op en loopt eronder door naar de voet, terwijl iemand de voet tegenhoudt met een voet of een haring. Aan de andere kant houdt een tegenhoudtouw hem tegen als hij doorschiet.',
       '- Met een hulpbok: het bouwwerk ligt met zijn voet bij het draaipunt en zijn top van je af. Zet de hulpbok aan de andere kant van de voet, de kant waar je naartoe trekt. Het hijstouw loopt van de top over de kop van de hulpbok omlaag naar de trekkers of een takel daarachter. Zo trek je niet langs de grond, maar schuin omhoog. Dat scheelt veel kracht, vooral aan het begin.',
       '- Met een takel: zet een vierloper tussen het hijstouw en een anker achter de hulpbok. Dan trek je met een kwart van de kracht, maar wel vier keer zo ver. Bij een zware toren hang je een katrol in de kop van een hulpdriepoot, zoals bij de zandlopertoren.',

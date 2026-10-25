@@ -1,6 +1,7 @@
 // Laat geen sporen na: ten situations on camp and on a hike, each with two or three choices. The answer says which
 // of the seven principles it is about, and why. Facts: TKN §3.3 (via NPS-LNT) and kamperen-uitwerking.md.
 import { h } from '../../dom.js';
+import { actie, acties, zetActie } from '../knoppen.js';
 import '../vorm.css';
 import './kamp.css';
 
@@ -9,34 +10,34 @@ const PRINCIPES = ['', 'Bereid je goed voor', 'Loop en kampeer op stevige grond'
 
 const VRAGEN = [
   { p: 3, vraag: 'Na de lunch heb je een klokhuis en een snoeppapiertje over. Wat doe je ermee?',
-    keuzes: ['Het papiertje mee, het klokhuis in de bosjes: dat vergaat toch', 'Allebei mee, in je afvalzak', 'Allebei even begraven'], goed: 1,
+    keuzes: ['Het papiertje mee, het klokhuis in de bosjes', 'Allebei mee, in je afvalzak', 'Allebei begraven'], goed: 1,
     uitleg: 'Ook etensresten neem je mee. Ze vergaan langzamer dan je denkt, en dieren leren zo dat er bij mensen eten te halen is.' },
   { p: 2, vraag: 'Het pad is één grote modderpoel. Hoe loop je verder?',
-    keuzes: ['Door het gras ernaast, dan blijven je schoenen schoon', 'Gewoon over het pad, door de modder'], goed: 1,
+    keuzes: ['Over het gras naast het pad', 'Over het pad, door de modder'], goed: 1,
     uitleg: 'Blijf op het pad, ook als het nat is. Loopt iedereen ernaast, dan wordt het pad steeds breder en gaan de planten in de berm kapot.' },
   { p: 4, vraag: 'Langs het pad staan prachtige wilde bloemen. Je wilt er iets mee voor op de kamptafel.',
-    keuzes: ['Een bosje plukken: er staan er zoveel', 'Ze laten staan en er een foto van maken'], goed: 1,
+    keuzes: ['Een bosje plukken', 'Eén bloem plukken', 'Er een foto van maken'], goed: 2,
     uitleg: 'Laat liggen en staan wat je vindt: bloemen, stenen, veren. Dan kan de volgende ze ook zien, en de bloem kan zaad maken.' },
   { p: 5, vraag: 'Je hebt hout nodig voor een klein kookvuur, op een plek waar dat mag. Waar haal je het?',
-    keuzes: ['Een paar takken van een levende boom zagen', 'Dood hout van de grond rapen, dun genoeg om met je handen te breken', 'Een omgevallen stam in stukken hakken'], goed: 1,
+    keuzes: ['Takken van een levende boom', 'Dunne dode takken van de grond', 'Een omgevallen stam, in stukken gehakt'], goed: 1,
     uitleg: 'Gebruik dood hout dat al op de grond ligt, en niet dikker dan je met je handen breekt. Levende bomen laat je met rust, en dikke stammen zijn een huis voor insecten en paddenstoelen.' },
   { p: 6, vraag: 'Een vos komt ’s avonds vlak bij het kamp kijken. Hij lijkt honger te hebben.',
-    keuzes: ['Hem een stuk brood geven', 'Afstand houden en je eten en afval goed opbergen'], goed: 1,
+    keuzes: ['Wat brood neerleggen, ver van de tenten', 'Je eten en afval opbergen'], goed: 1,
     uitleg: 'Voer wilde dieren nooit. Ze worden er ziek van, en ze leren dat ze bij mensen eten kunnen halen. Berg eten en afval zo op dat ze er niet bij kunnen.' },
   { p: 7, vraag: 'Jullie kampvuur is gezellig, maar op het veld naast jullie kampeert een andere groep. Het is al laat.',
-    keuzes: ['Lekker doorzingen, het is kamp', 'Zachter doen: de anderen willen slapen'], goed: 1,
+    keuzes: ['Doorzingen tot het vuur uit is', 'Zachter doen'], goed: 1,
     uitleg: 'Houd rekening met anderen: met je geluid, en met ruimte op het pad.' },
   { p: 3, vraag: 'Op een hike moet je poepen, en er is nergens een wc. Wat doe je?',
-    keuzes: ['Achter een boom, met een blaadje erover', 'Een kuiltje van 15 tot 20 cm diep graven, ver van water, paden en het kamp, en het daarna dichtgooien', 'Bij de beek: daar spoelt het weg'], goed: 1,
+    keuzes: ['Achter een boom, met een blaadje erover', 'In een kuiltje van 20 cm, 60 meter van water en paden', 'In een kuiltje van 20 cm, vlak bij de beek'], goed: 1,
     uitleg: 'Een kuiltje, minstens 60 meter van water, paden en het kamp, en daarna dicht met de aarde. Nooit bij water: dan komt het in het water terecht. En vraag de leiding of het daar mag.' },
-  { p: 1, vraag: 'Morgen gaan jullie op hike in een natuurgebied. Wat hoort bij je voorbereiding?',
-    keuzes: ['Het weerbericht, de route en de regels van het gebied nakijken', 'Niets: je ziet het onderweg wel'], goed: 0,
+  { p: 1, vraag: 'Morgen gaan jullie op hike in een natuurgebied. Wat kijk je vooraf na?',
+    keuzes: ['De route en het weer', 'De route, het weer en de regels van het gebied', 'De route en waar je onderweg kunt eten'], goed: 1,
     uitleg: 'Wie goed voorbereid is, hoeft onderweg minder te improviseren: geen vuurtje waar het niet mag, geen kortere route dwars door de natuur.' },
   { p: 2, vraag: 'Jullie zoeken een plek voor de tenten. Er is een kale, platgetrapte plek en een stuk vol bloeiende planten.',
-    keuzes: ['De kale plek die al gebruikt is', 'Het stuk met de planten: dat ligt zachter'], goed: 0,
+    keuzes: ['De kale, platgetrapte plek', 'Het stuk met de planten'], goed: 0,
     uitleg: 'Kampeer op een plek die al gebruikt is, of op stevige grond. Dan blijft de schade op één plek, en de rest kan groeien.' },
   { p: 3, vraag: 'Na het eten blijft er een teil afwaswater over, met rijst erin.',
-    keuzes: ['Zo in de beek gooien', 'De resten eruit zeven en het water in het afvoerputje gieten, of ver van het water uitstrooien'], goed: 1,
+    keuzes: ['Door een zeef, dan in de beek', 'Door een zeef, dan in het afvoerputje', 'Zo in het afvoerputje, met rijst en al'], goed: 1,
     uitleg: 'Zeef de etensresten eruit en neem die mee als afval. Het water gaat in het afvoerputje, of verspreid, ver van beken en sloten. Zeep hoort niet in het water.' },
 ];
 
@@ -55,7 +56,7 @@ export default function sporen() {
   const keuzes = h('div.kd-keuzes');
   const melding = h('p.doe-melding', { 'aria-live': 'polite' });
   const principe = h('p.kd-score');
-  const volgende = h('button.knop.klein.hoofd', { type: 'button', hidden: true, onclick: () => verder() }, 'Volgende');
+  const volgende = actie('Volgende', 'verder', () => verder(), { hoofd: true, klein: true, hidden: true });
 
   let volgorde = [];             // the choices of this question in the order shown, as indices into v.keuzes
 
@@ -85,7 +86,7 @@ export default function sporen() {
     melding.classList.toggle('fout', i !== v.goed);
     melding.textContent = `${i === v.goed ? 'Goed!' : 'Niet goed.'} ${v.uitleg}`;
     principe.textContent = `Principe ${v.p}: ${PRINCIPES[v.p]}`;
-    volgende.textContent = nr + 1 < rij.length ? 'Volgende' : 'Klaar';
+    if (nr + 1 < rij.length) zetActie(volgende, 'Volgende', 'verder'); else zetActie(volgende, 'Klaar', 'vink');
     volgende.hidden = false;
     volgende.focus({ preventScroll: true });
   }
@@ -100,9 +101,9 @@ export default function sporen() {
     melding.textContent = goed === rij.length ? 'Alles goed. Jij laat geen sporen na.' : 'Kijk nog eens naar de zeven principes, en probeer het opnieuw.';
     melding.classList.remove('fout');
     principe.textContent = '';
-    volgende.textContent = 'Opnieuw';
+    zetActie(volgende, 'Opnieuw', 'opnieuw');
   }
 
   toon();
-  return h('div.kd-tekst.doe-sporen', teller, vraag, keuzes, melding, principe, h('div.knop-rij', volgende));
+  return h('div.kd-tekst.doe-sporen', teller, vraag, keuzes, acties(volgende), melding, principe);
 }

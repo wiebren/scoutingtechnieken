@@ -79,7 +79,7 @@ export default [
     waarvoor: 'Een vaste lus midden in een touw, die je in elke richting kunt belasten.',
     uitleg: [
       'Zo leg je hem om je hand: wikkel het touw twee keer om je hand, zo dat de middelste slag aan de kant van je vingertoppen ligt. Pak die slag, leg hem over de andere twee heen naar je pols, en steek hem eronder door weer terug. Schuif alles van je hand en trek aan de lus en de twee einden.',
-      'Je kunt aan de lus trekken en ook aan de twee einden: de knoop houdt in alle richtingen en trekt niet scheef. Daarom gebruik je hem midden in een lijn, bijvoorbeeld bij een touwbaan, of om een beschadigd stuk touw buiten spel te zetten: leg dat stuk in de lus.',
+      'Je kunt aan de lus trekken en ook aan de twee einden, en hij trekt niet scheef. Gebruik hem bijvoorbeeld bij een touwbaan, of om een beschadigd stuk touw buiten spel te zetten: leg dat stuk in de lus.',
     ],
     naar: [{ blad: 'paalsteek' }, { blad: 'vrachtrijdersteek' }, { blad: 'gareelsteek' }] },
   { id: 'bunny-ears', naam: 'Bunny-ears', en: 'double figure-eight loop, bunny ears', groep: 'lussen', bron: 'TU',
@@ -169,7 +169,6 @@ export default [
       'Steek het eind twee keer door de ring of om de paal. Breng het om het staande part heen en steek het onder beide slagen door. Zet het af met een halve steek om het staande part.',
       'Hij lijkt op de rondtorn met twee halve steken, maar het eind zit klem onder de slagen. Daardoor houdt hij beter, ook als het touw nat is en heen en weer beweegt. Voor extra zekerheid takel je het eind vast aan het staande part.',
       'Hij heet ook visserssteek of ankerworp. Dat is een andere knoop dan de vissersknoop, waarmee je twee touwen verbindt.',
-      'De rondtorn met twee halve steken lijkt erop, maar is niet hetzelfde. Zit het eind onder de slagen, dan is het de werpankersteek.',
     ],
     naar: [{ blad: 'rondtorn' }, { blad: 'vissersknoop' }, { blad: 'haaksteek' }] },
   { id: 'tonsteek', naam: 'Tonsteek', en: 'barrel hitch', groep: 'steken', bron: 'TU; AK-BH',
@@ -269,7 +268,7 @@ export default [
     plaatje: 'touw-dubbele-schootsteek',
     waarvoor: 'Als de touwen veel in dikte verschillen. Slippend gelegd, met een knevel erdoor, trek je hem in één keer los.',
     uitleg: [
-      'Leg een schootsteek, maar sla het dunne touw twee keer om de bocht heen en steek het beide keren onder zichzelf door. Hij houdt beter bij een groot verschil in dikte, en bij glad of nat touw.',
+      'Leg een schootsteek, maar sla het dunne touw twee keer om de bocht heen en steek het beide keren onder zichzelf door. Hij houdt ook beter bij glad of nat touw.',
       'Slippend: steek het eind de laatste keer niet helemaal door, maar als bocht. Steek je door die bocht een stokje, de knevel, dan kan hij niet vanzelf losschieten. Haal je de knevel eruit en trek je aan het eind, dan is hij in één keer los.',
     ],
     naar: [{ blad: 'schootsteek' }, { blad: 'slipsteek' }, { blad: 'treksteek' }] },
@@ -286,7 +285,7 @@ export default [
     plaatje: 'touw-chirurgenknoop',
     waarvoor: 'Een platte knoop met een extra slag in de eerste helft, zodat die niet terugschiet terwijl je de tweede legt.',
     uitleg: [
-      'Leg de eerste helft van een platte knoop, maar sla de einden twee keer om elkaar in plaats van één keer. Die helft blijft dan uit zichzelf strak zitten. Leg de tweede helft zoals bij de platte knoop.',
+      'Leg de eerste helft van een platte knoop, maar sla de einden twee keer om elkaar in plaats van één keer. Leg de tweede helft zoals bij de platte knoop.',
       'Handig om iets strak dicht te binden, zoals een pakket of een verband.',
     ],
     naar: [{ blad: 'platte-knoop' }] },
@@ -318,7 +317,7 @@ export default [
       '- Leg een bocht uit het midden van het touw achter de tak langs, zodat hij aan de voorkant over de tak hangt.',
       '- Maak een bocht in het eind waar de last aan komt, en steek die voor de tak langs door de eerste bocht. Trek het andere eind aan.',
       '- Maak een bocht in het andere eind, en steek die voor de tak langs door de tweede bocht. Trek het eind met de last aan.',
-      'Aan het eind met de last kun je trekken: dan klemt alles. Een ruk aan het andere eind trekt de derde bocht uit de tweede, en die uit de eerste. Het hele touw valt dan van de tak, en jij staat op de grond.',
+      'Een ruk aan het eind zonder last trekt de derde bocht uit de tweede, en die uit de eerste. Het hele touw valt dan van de tak, en jij staat op de grond.',
       'Hij lijkt op de slipsteek, maar is niet hetzelfde. De slipsteek is een halve steek met het eind als bocht: daar komt alleen het eind los, en het touw blijft om de paal. Bij de treksteek komt het hele touw los.',
     ],
     letOp: 'Klim, hang of zak nooit aan een treksteek. Een ruk aan het verkeerde eind en hij is los, en om een dikke tak kan hij ook vanzelf omslaan. Moet iemand aan een touw vast, dan doe je dat met een dubbele achtknoop in een klimgordel, onder begeleiding.',
@@ -354,7 +353,7 @@ export default [
     waarvoor: 'Een touw extra strak spannen, met een lus die als een katrol werkt. Voor een lading of een zeil.',
     uitleg: [
       'Maak halverwege het touw een vaste lus, bijvoorbeeld met een vlinderknoop of een slippende knoop. Haal het eind om het onderste vaste punt, terug omhoog door de lus, en trek het omlaag. Zet het vast met twee halve steken.',
-      'De lus werkt als een katrol: je trekt ongeveer twee keer zo hard aan het touw als met je handen alleen. Een deel gaat wel verloren aan de wrijving in de lus.',
+      'Door de lus trek je ongeveer twee keer zo hard aan het touw als met je handen alleen. Een deel gaat wel verloren aan de wrijving in de lus.',
     ],
     letOp: 'Waar het touw door de lus loopt, schuurt touw op touw. Dat maakt het warm en het slijt. Trek niet harder dan nodig, en span er geen touwbaan mee waar mensen aan hangen.',
     naar: [{ blad: 'vlinderknoop' }, { blad: 'halve-steek' }, { blad: 'katrol-inscheren' }] },
@@ -401,7 +400,7 @@ export default [
       '- Houd het begin in één hand. Leg met de andere hand steeds een lus erbij, allemaal even groot. Draai het touw een beetje mee, zodat er geen kinken in komen.',
       '- Geslagen touw (van gedraaide strengen) schiet je met de slag mee op, meestal met de klok mee. Gevlochten touw leg je in achtjes.',
       '- Wikkel het laatste stuk een paar keer om de bundel. Steek een bocht door de bovenkant van de bundel, en hang hem daaraan op.',
-      'Wikkel touw niet om je elleboog: dan krijg je kinken. Leg opgeschoten touw niet op de grond, maar hang het op.',
+      'Wikkel touw niet om je elleboog: dan krijg je kinken. En leg opgeschoten touw niet op de grond.',
     ],
     naar: [{ blad: 'touw-onderhoud' }, { blad: 'kikker-beleggen' }] },
 
@@ -443,7 +442,7 @@ export default [
     'kroonplatting', 'kruisplatting', 'spiraalplatting', 'vierkante platting'], en: 'sinnets, plaits', groep: 'sier', bron: 'VIA08 §2.8',
     waarvoor: 'Van losse strengen, of van koord om een kern, een mooi en stevig koord vlechten. Voor een draaghand op je stok of een fluitkoord.',
     uitleg: [
-      'Een platting is een vlecht. Je vlecht losse strengen in elkaar, of je legt koord in knopen om een kern heen. Op het traditionele fluitkoord zie je er een paar achter elkaar.',
+      'Een platting is een vlecht. Op het traditionele fluitkoord zie je er een paar achter elkaar.',
       'Dit zijn de drie families:',
     ],
     soorten: [
@@ -497,7 +496,7 @@ export default [
       '- Vlecht dan elke streng terug in het touw, tegen de slag (de draai van de strengen) in: over een streng, onder de volgende door.',
       '- Doe dat drie keer of meer. Knip de eindjes af en rol de splits tussen je handen.',
       'Wil je dat hij geleidelijk dunner wordt? Snijd na twee of drie keer van elke streng de helft van de garens weg, en steek wat over is nog één keer. Over de plek waar de eindjes in het touw verdwijnen, kun je nog een takeling leggen.',
-      'Een eindsplits rafelt nooit uit, maar het eind wordt dikker. Het past dan misschien niet meer door een blok (een katrol).',
+      'Een eindsplits rafelt nooit uit. Maar door de dikte past het eind misschien niet meer door een blok (een katrol).',
     ],
     naar: [{ blad: 'oogsplits' }, { blad: 'takeling' }, { blad: 'marlpriem' }, { blad: 'korte-splits' }] },
   { id: 'oogsplits', naam: 'Oogsplits', en: 'eye splice', groep: 'afwerken', bron: 'TKN §1.2',
@@ -641,9 +640,8 @@ export default [
     doe: 'touw-terugslag',
     uitleg: [
       'Een touw dat strak staat, zoals bij een kabelbaan of een touwbrug, kan knappen of losschieten. Door de spanning is het een stukje uitgerekt, en dat veert in één klap terug: in de lengte van het touw, naar waar het vastzit, en daar ver voorbij. Het zwiept met grote kracht. Blijf uit de lijn van het touw.',
-      '- Sta naast een gespannen touw, niet in het verlengde ervan. Ook niet achter de paal, boom of het anker waar het aan vastzit: daar schiet het touw langs.',
+      '- Ook niet achter de paal, boom of het anker waar het aan vastzit: daar schiet het touw langs. En ook niet als je zelf spant.',
       '- Stap niet over een strak touw, en kruip er niet onder door terwijl iemand het aantrekt.',
-      '- Span je zelf? Sta dan naast het touw, niet in de lijn van het touw.',
     ],
     naar: [{ blad: 'veilig-touwbanen' }, { blad: 'kracht-strak-touw' }, { blad: 'breeksterkte' }] },
 ];

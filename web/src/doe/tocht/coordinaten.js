@@ -12,7 +12,7 @@
 import { h } from '../../dom.js';
 import { HOEK, kaartje } from '../../plaatjes/kaarthoekmeter.js';
 import { norm, pol, s, verschil } from '../kompasdelen.js';
-import { keuze } from '../knoppen.js';
+import { actie, acties, keuze, zetActie } from '../knoppen.js';
 import '../vorm.css';
 import './coordinaten.css';
 
@@ -119,8 +119,8 @@ export default function coordinaten({ soort = 'coordinaten' } = {}) {
   const draaiKnop = (d, tekst, label) => h('button.knop.klein', { type: 'button', 'aria-label': label, onclick: () => { if (fase === 'koers') { zetDraai(draai + d); meldDraai(); } } }, tekst);
   const draaiers = h('div.co-pijlen', { role: 'group', 'aria-label': 'Draai de lijn' },
     draaiKnop(-10, '↺ 10', '10 graden linksom'), draaiKnop(-1, '↺ 1', '1 graad linksom'), draaiKnop(1, '↻ 1', '1 graad rechtsom'), draaiKnop(10, '↻ 10', '10 graden rechtsom'));
-  const controleer = h('button.knop.hoofd', { type: 'button', onclick: () => check() }, 'Hier is het');
-  const opnieuw = h('button.knop', { type: 'button', onclick: () => begin() }, 'Nieuwe opgave');
+  const controleer = actie('Hier is het', 'vink', () => check(), { hoofd: true });
+  const opnieuw = actie('Nieuwe opgave', 'opnieuw', () => begin());
   const varianten = soort === 'kruispeiling'
     && h('div.chips', keuze([['vier', 'Vier coördinaten'], ['koersen', 'Twee coördinaten en twee koersen']], variant, (v) => { variant = v; begin(); }));
 
@@ -128,8 +128,8 @@ export default function coordinaten({ soort = 'coordinaten' } = {}) {
     varianten,
     h('div.co-boven', lijst, opdracht),
     h('div.co-kaart', svg),
-    h('div.co-bediening', pijlen, draaiers, controleer),
-    melding, stand, h('div.knop-rij', opnieuw));
+    h('div.co-bediening', pijlen, draaiers),
+    acties(controleer, opnieuw), melding, stand);
 
   function tekenKaart() {
     kaart.replaceChildren(s('rect', { x: L, y: T, width: 3 * KM, height: 2 * KM, class: 'co-grond' }),
@@ -254,8 +254,8 @@ export default function coordinaten({ soort = 'coordinaten' } = {}) {
     draaiers.hidden = fase !== 'koers';
     controleer.hidden = fase === 'vak' || fase === 'klaar';
     // a button that hides itself under a keyboard user: keep the focus in the piece, not lost on the page
-    if (focus?.closest('.co-bediening [hidden]')) (fase === 'klaar' ? opnieuw : svg).focus({ preventScroll: true });
-    controleer.textContent = fase === 'koers' ? 'Trek de lijn' : 'Hier is het';
+    if (focus?.closest('.co-bediening [hidden], .acties [hidden]')) (fase === 'klaar' ? opnieuw : svg).focus({ preventScroll: true });
+    zetActie(controleer, fase === 'koers' ? 'Trek de lijn' : 'Hier is het', 'vink');
     const [n, p, g] = og.punten[stap] ?? [];
     if (fase === 'klaar') opdracht.textContent = '';
     else if (soort === 'passer') {

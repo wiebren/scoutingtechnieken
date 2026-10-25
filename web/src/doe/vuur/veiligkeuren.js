@@ -2,6 +2,7 @@
 // say whether you would build with it, and it says why. As in the bladen materiaalkeuring, hout-controleren,
 // touw-controleren and blokken-onderhoud (sources there: SN-P25, SW Treksterkte, SW Katrol, SW-PAAL, SGV-GS).
 import { h } from '../../dom.js';
+import { actie, acties, zetActie } from '../knoppen.js';
 import { eind, paal, touw } from '../../plaatjes/sjorren.js';
 import '../vorm.css';
 import './veilig.css';
@@ -44,24 +45,24 @@ function blok(scheur) {
   return uit;
 }
 
-// [drawing, what it shows, good?, why]
+// [drawing, what you take (the question names no defect: the drawing shows it), what it shows, good?, why]
 export const DINGEN = [
-  [() => recht(), 'een sjortouw', true, 'Heel, droog, gelijkmatig, met een afgewerkt eind: daar kun je mee sjorren.'],
+  [() => recht(), 'een sjortouw', 'een sjortouw', true, 'Heel, droog, gelijkmatig, met een afgewerkt eind: daar kun je mee sjorren.'],
   [() => recht('<rect x="100" y="52" width="34" height="16" class="sj-touw-vul" style="opacity: 0.6"/><path d="M104 52q4 -16 -2 -28M110 52q8 -14 6 -26M118 52q10 -8 18 -20M126 52q14 -4 22 -12M106 68q-4 14 -14 20M114 68q2 16 -4 28M122 68q8 12 6 26M130 68q12 8 20 12" fill="none" style="stroke: var(--sj-touw); stroke-width: 2; stroke-linecap: round"/>'),
-    'een touw met een rafelige, doorgesleten plek', false, 'Op een doorgesleten plek breekt het touw het eerst. Afkeuren, en in korte stukken knippen als oefentouw, zodat het niet terug tussen het goede touw komt.'],
+    'een sjortouw', 'een touw met een rafelige, doorgesleten plek', false, 'Op een doorgesleten plek breekt het touw het eerst. Afkeuren, en in korte stukken knippen als oefentouw, zodat het niet terug tussen het goede touw komt.'],
   [() => recht('<ellipse cx="86" cy="60" rx="16" ry="7" style="fill: #3d3a24; opacity: 0.75"/><ellipse cx="148" cy="59" rx="11" ry="6" style="fill: #3d3a24; opacity: 0.75"/><ellipse cx="178" cy="62" rx="7" ry="5" style="fill: #3d3a24; opacity: 0.6"/>'),
-    'een touw met donkere vlekken, dat muf ruikt', false, 'Donkere vlekken en een muffe geur wijzen op schimmel of rot: dat touw is vanbinnen zwak. Afkeuren.'],
-  [() => balk(), 'een pionierpaal', true, 'Recht, rond, zonder scheuren of zachte plekken: goed.'],
+    'een sjortouw', 'een touw met donkere vlekken, dat muf ruikt', false, 'Donkere vlekken en een muffe geur wijzen op schimmel of rot: dat touw is vanbinnen zwak. Afkeuren.'],
+  [() => balk(), 'een pionierpaal', 'een pionierpaal', true, 'Recht, rond, zonder scheuren of zachte plekken: goed.'],
   [() => balk('<path d="M80 41l12 7 -5 7 14 6 -7 6 12 7 -10 7 7 5 -14 -4 5 -7 -12 -6 6 -7 -13 -6z" class="sj-scheur"/>'),
-    'een paal met een diepe scheur', false, 'Past er een vinger in de scheur, dan is de paal gevaarlijk. Afkeuren, en in stukken zagen, zodat hij niet terug in de stapel komt. Is het hout niet geïmpregneerd, dan mag het op het vuur.'],
-  [() => balk('<ellipse cx="200" cy="62" rx="32" ry="14" class="sj-rot"/>'), 'een paal met een donkere, zachte plek', false, 'Zacht en donker, en hij klinkt dof als je erop klopt: rot. Afkeuren.'],
-  [() => sluiting(false, 'WLL 1 t'), 'een sluiting met de werklast erop', true, 'Recht, de pen draait soepel, en de werklast (WLL) staat erop: goed.'],
-  [() => sluiting(true, ''), 'een kromme sluiting', false, 'Een kromme beugel heeft al eens meer kracht gekregen dan hij aankan. Afkeuren, ook als hij nog dichtgaat.'],
-  [() => band(false), 'een hijsband met een label', true, 'Heel, zonder sneden of rafels, en het label met de werklast (WLL) zit erop en is te lezen: goed.'],
-  [() => band(false, false), 'een hijsband zonder label', false, 'Zonder label weet je niet hoeveel hij mag dragen, ook al is hij heel. De kleur alleen is niet genoeg. Afkeuren.'],
-  [() => band(true), 'een hijsband met een snee', false, 'Een band met een snee of een gescheurde naad scheurt verder onder last. Afkeuren.'],
-  [() => blok(false), 'een blok met een houten schijf', true, 'De schijf is heel en draait soepel, de haak is recht, en de werklast (WLL) staat erop: goed.'],
-  [() => blok(true), 'een blok met een scheur in de schijf', false, 'Een gescheurde schijf kan onder last breken, en vreet je touw op. Afkeuren.'],
+    'een pionierpaal', 'een paal met een diepe scheur', false, 'Past er een vinger in de scheur, dan is de paal gevaarlijk. Afkeuren, en in stukken zagen, zodat hij niet terug in de stapel komt. Is het hout niet geïmpregneerd, dan mag het op het vuur.'],
+  [() => balk('<ellipse cx="200" cy="62" rx="32" ry="14" class="sj-rot"/>'), 'een pionierpaal', 'een paal met een donkere, zachte plek', false, 'Zacht en donker, en hij klinkt dof als je erop klopt: rot. Afkeuren.'],
+  [() => sluiting(false, 'WLL 1 t'), 'een sluiting', 'een sluiting met de werklast erop', true, 'Recht, de pen draait soepel, en de werklast (WLL) staat erop: goed.'],
+  [() => sluiting(true, ''), 'een sluiting', 'een kromme sluiting', false, 'Een kromme beugel heeft al eens meer kracht gekregen dan hij aankan. Afkeuren, ook als hij nog dichtgaat.'],
+  [() => band(false), 'een hijsband', 'een hijsband met een label', true, 'Heel, zonder sneden of rafels, en het label met de werklast (WLL) zit erop en is te lezen: goed.'],
+  [() => band(false, false), 'een hijsband', 'een hijsband zonder label', false, 'Zonder label weet je niet hoeveel hij mag dragen, ook al is hij heel. De kleur alleen is niet genoeg. Afkeuren.'],
+  [() => band(true), 'een hijsband', 'een hijsband met een snee', false, 'Een band met een snee of een gescheurde naad scheurt verder onder last. Afkeuren.'],
+  [() => blok(false), 'een blok', 'een blok met een houten schijf', true, 'De schijf is heel en draait soepel, de haak is recht, en de werklast (WLL) staat erop: goed.'],
+  [() => blok(true), 'een blok', 'een blok met een scheur in de schijf', false, 'Een gescheurde schijf kan onder last breken, en vreet je touw op. Afkeuren.'],
 ];
 const RONDE = 8;
 /** The list in random order (not the one of ./quiz.js: that would load all the drawings with it). */
@@ -81,8 +82,8 @@ export default function materiaalKeuren() {
   const knopGoed = h('button.knop', { type: 'button', onclick: (e) => kies(true, e.currentTarget) }, 'Goed: bouwen');
   const knopAf = h('button.knop', { type: 'button', onclick: (e) => kies(false, e.currentTarget) }, 'Afkeuren');
   const keuzes = h('div.vg-keuzes', knopGoed, knopAf);
-  const verder = h('button.knop.klein.hoofd', { type: 'button', hidden: true, onclick: () => volgende() });
-  const el = h('div.doe-vk', teller, plek, vraag, keuzes, melding, h('div.knop-rij', verder));
+  const verder = actie('Volgende', 'verder', () => volgende(), { hoofd: true, klein: true, hidden: true });
+  const el = h('div.doe-vk', teller, plek, vraag, keuzes, acties(verder), melding);
 
   function begin() {
     ronde = schud(DINGEN).slice(0, RONDE);
@@ -91,16 +92,16 @@ export default function materiaalKeuren() {
     toon();
   }
   function toon() {
-    const [tekenen, wat] = ronde[nr];
+    const [tekenen, naam, wat] = ronde[nr];
     teller.textContent = `${nr + 1} van ${ronde.length}`;
     plek.innerHTML = teken(wat, tekenen());
-    vraag.textContent = `Uit het materiaalhok pak je ${wat}. Bouw je ermee, of keur je het af?`;
+    vraag.textContent = `Uit het materiaalhok pak je ${naam}. Bouw je ermee, of keur je het af?`;
     melding.textContent = ''; melding.classList.remove('fout');
     for (const k of [knopGoed, knopAf]) { k.disabled = false; k.classList.remove('goed', 'fout'); }
     verder.hidden = true;
   }
   function kies(zegtGoed, knop) {
-    const [, , isGoed, waarom] = ronde[nr];
+    const [, , , isGoed, waarom] = ronde[nr];
     const juist = zegtGoed === isGoed;
     if (juist) goed++;
     for (const k of [knopGoed, knopAf]) k.disabled = true;
@@ -108,7 +109,7 @@ export default function materiaalKeuren() {
     if (!juist) knop.classList.add('fout');
     melding.classList.toggle('fout', !juist);
     melding.textContent = `${juist ? 'Goed!' : 'Niet goed.'} ${waarom}`;
-    verder.textContent = nr + 1 < ronde.length ? 'Volgende' : 'Klaar';
+    zetActie(verder, ...(nr + 1 < ronde.length ? ['Volgende', 'verder'] : ['Bekijk de uitslag', 'vink']));
     verder.hidden = false;
     verder.focus();
   }
@@ -121,7 +122,7 @@ export default function materiaalKeuren() {
     vraag.textContent = `${goed} van de ${ronde.length} goed.`;
     melding.classList.remove('fout');
     melding.textContent = goed === ronde.length ? 'Alles goed: jij mag de materiaalkeuring doen.' : 'Twijfel je bij het echte materiaal, dan keur je het af.';
-    verder.textContent = 'Nog een keer';
+    zetActie(verder, 'Nog een keer', 'opnieuw');
   }
 
   begin();

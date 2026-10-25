@@ -2,6 +2,7 @@
 // niet, of eerst melden of toestemming vragen. The answers follow the rules on the card (Buitencode and toegangsregels
 // of Staatsbosbeheer, gebiedsregels of Natuurmonumenten, as read on 16-10-2026).
 import { h } from '../../dom.js';
+import { actie, acties } from '../knoppen.js';
 import { schud } from './gedeeld.js';
 import '../vorm.css';
 import './natuur.css';
@@ -27,7 +28,7 @@ const SITUATIES = [
     uitleg: 'Honden zijn bijna overal welkom, maar aan de lijn. Los mag alleen waar een bord dat zegt.' },
   { tekst: 'Je laat je hond los lopen op een plek waar een bord zegt dat honden daar los mogen.', antwoord: 'mag',
     uitleg: 'Sommige gebieden hebben een losloopgebied. Daar mag je hond los, als hij komt wanneer je hem roept. Kom je andere mensen tegen, houd hem dan bij je.' },
-  { tekst: 'Een stuk heide is afgezet met een bord: broedgebied, geen toegang. Je wilt er even in om een nest te zoeken.', antwoord: 'niet',
+  { tekst: 'Een stuk heide is afgezet met een bord: broedgebied, geen toegang. Je gaat erin om een nest te zoeken.', antwoord: 'niet',
     uitleg: 'Soms is een deel van een gebied afgesloten om de dieren rust te geven, bijvoorbeeld in het broedseizoen. Daar ga je niet in, ook niet even: staat er een bord of hek, dan kun je er een boete voor krijgen.' },
   { tekst: 'Je zoekt met een metaaldetector naar oude munten. (Staatsbosbeheer)', antwoord: 'niet',
     uitleg: 'Metaaldetectors en magneetvissen zijn niet toegestaan.' },
@@ -35,8 +36,8 @@ const SITUATIES = [
     uitleg: 'Vuur stoken mag in een natuurgebied bijna nooit, en zonder toestemming van de eigenaar nooit. Neem een thermosfles mee.' },
   { tekst: 'Je bouwt een hut van takken die op de grond liggen.', antwoord: 'vragen',
     uitleg: 'Bouwen mag in een natuurgebied niet zomaar: daar heb je toestemming van de eigenaar voor nodig. Op je eigen kampterrein of in een speelbos mag het vaak wel.' },
-  { tekst: 'Je wandelt overdag met je ouders over de paden, en neemt je afval weer mee.', antwoord: 'mag',
-    uitleg: 'Precies zoals de Buitencode het vraagt: „Respecteer de natuur: maak geen lawaai en neem je afval mee.”' },
+  { tekst: 'Je wandelt overdag over de paden.', antwoord: 'mag',
+    uitleg: 'Op de paden mag je overdag wandelen. Maak geen lawaai, en neem je afval weer mee: zo vraagt de Buitencode het.' },
   { tekst: 'Je zet een wildcamera aan een boom, om te zien welke dieren er langskomen. (Staatsbosbeheer)', antwoord: 'vragen',
     uitleg: 'Daar heb je toestemming van de eigenaar voor nodig. Een boswachter geeft die niet zo snel: een wildcamera hangt vaak buiten de paden, en daar mag je meestal niet komen. Mensen filmen mag niet.' },
 ];
@@ -50,7 +51,7 @@ export default function magDitHier() {
     const s = stapel.pop();
     const melding = h('p.doe-melding', { 'aria-live': 'polite' });
     const uitleg = h('p.nt-meer', { hidden: true }, s.uitleg);
-    const verder = h('button.knop.klein.hoofd', { type: 'button', hidden: true, onclick: volgende }, 'Volgende');
+    const verder = actie('Volgende', 'verder', volgende, { hoofd: true, klein: true, hidden: true });
     const knoppen = ANTWOORDEN.map(([waarde, tekst]) => h('button.knop.klein.nt-optie', { type: 'button', onclick: () => {
       gehad += 1;
       const raak = waarde === s.antwoord;
@@ -66,7 +67,7 @@ export default function magDitHier() {
       verder.hidden = false;
       verder.focus();
     } }, tekst));
-    plek.replaceChildren(h('div.md-kaart', h('p.md-situatie', s.tekst), h('div.nt-opties.md-opties', knoppen), melding, uitleg, h('div.knop-rij', verder)));
+    plek.replaceChildren(h('div.md-kaart', h('p.md-situatie', s.tekst), h('div.nt-opties.md-opties', knoppen), acties(verder), melding, uitleg));
   }
 
   volgende();

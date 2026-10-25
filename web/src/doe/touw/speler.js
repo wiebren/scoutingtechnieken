@@ -2,6 +2,7 @@
 // between two steps) and "Speel af" to play it. The pieces here (takeling.js, eindsplits.js) give the drawing at each
 // point; this draws it and says the step.
 import { h } from '../../dom.js';
+import { actie, acties, zetActie } from '../knoppen.js';
 import { stappenBalk } from '../stappen.js';
 import { s } from '../kompasdelen.js';
 import '../vorm.css';
@@ -24,7 +25,7 @@ export function speler({ stappen, teksten, tekening, viewBox, label, tempo = 260
   const svg = s('svg', { viewBox, class: 'plaatje tg-svg', role: 'img' });
   const stap = h('p.kd-vraag', { 'aria-live': 'polite' });
   const balk = stappenBalk({ stappen, vloeiend: true, label, zet: (v) => { stop(); zet(v); } });
-  const speelKnop = h('button.knop.klein.hoofd', { type: 'button', onclick: () => (speel ? stop() : speelAf()) }, 'Speel af');
+  const speelKnop = actie('Speel af', 'start', () => (speel ? stop() : speelAf()), { hoofd: true, klein: true });
   const verminder = () => matchMedia('(prefers-reduced-motion: reduce)').matches;
 
   function zet(v) {
@@ -37,14 +38,14 @@ export function speler({ stappen, teksten, tekening, viewBox, label, tempo = 260
 
   function stop() {
     if (speel) cancelAnimationFrame(speel);
-    speel = 0; speelKnop.textContent = 'Speel af';
+    speel = 0; zetActie(speelKnop, 'Speel af', 'start');
   }
 
   function speelAf() {
     if (verminder()) { zet(w >= eind ? 0 : Math.floor(w + 0.001) + 1); return; }   // no movement: the next step
     if (w >= eind) w = 0;
     let vorige = null;
-    speelKnop.textContent = 'Stop';
+    zetActie(speelKnop, 'Stop', 'stop');
     const tik = (nu) => {
       if (!svg.isConnected) { speel = 0; return; }
       if (vorige != null) zet(w + (nu - vorige) / tempo);
@@ -55,5 +56,5 @@ export function speler({ stappen, teksten, tekening, viewBox, label, tempo = 260
   }
 
   zet(0);
-  return h('div.tg', svg, h('div.kd-tekst', stap, h('div.doe-label', h('span', 'Stap voor stap'), balk.el), h('div.knop-rij', speelKnop)));
+  return h('div.tg', svg, h('div.kd-tekst', stap, h('div.doe-label', h('span', 'Stap voor stap'), balk.el), acties(speelKnop)));
 }

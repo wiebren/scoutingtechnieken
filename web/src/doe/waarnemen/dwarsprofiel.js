@@ -2,6 +2,7 @@
 // stone on a string goes down until it lies on the bottom; the depth goes onto the millimetre paper below. With
 // every mark measured the points are joined, and you can lift the water to see how close the drawing is.
 import { h } from '../../dom.js';
+import { actie, acties, zetActie } from '../knoppen.js';
 import { getal, rustig, s, tussen } from './hulp.js';
 import '../vorm.css';
 import './wn.css';
@@ -46,12 +47,13 @@ export default function dwarsprofiel() {
     s('text', { x: X0, y: PAPIER[0] - 8, class: 'klein stil' }, 'op papier: een hokje is 10 cm diep en 50 cm breed'));
 
   const melding = h('p', { 'aria-live': 'polite' });
-  const volgende = h('button.knop.hoofd.klein', { type: 'button', onclick: () => { const i = eerstOpen(); if (i >= 0) meet(i); } }, 'Meet bij het volgende merkteken');
-  const toon = h('button.knop.klein', { type: 'button', onclick: () => { open = !open; teken(); } }, 'Laat de bodem zien');
+  const volgende = actie('Meet bij het volgende merkteken', 'verder', () => { const i = eerstOpen(); if (i >= 0) meet(i); }, { hoofd: true, klein: true });
+  const toon = actie('Laat de bodem zien', 'oog', () => { open = !open; teken(); }, { klein: true });
   const el = h('div.wn.doe-dwarsprofiel',
     h('p', 'Het water is troebel: je ziet de bodem niet. Tik op een merkteken op het touw om daar het steentje te laten zakken.'),
-    svg, melding,
-    h('div.knop-rij', volgende, toon, h('button.knop.klein', { type: 'button', onclick: nieuw }, 'Andere beek')));
+    svg,
+    acties(volgende, toon, actie('Andere beek', 'opnieuw', nieuw, { klein: true })),
+    melding);
 
   const punten = () => Array.from({ length: Math.round(breed / 0.5) - 1 }, (_, i) => (i + 1) * 0.5);
   const eerstOpen = () => punten().findIndex((_, i) => gemeten[i] == null);
@@ -65,7 +67,7 @@ export default function dwarsprofiel() {
     water.classList.toggle('open', open);
     // murky water lies over the bottom; clear water lies behind it, so you see the real bottom
     if (open) bodem.before(water); else bodem.after(water);
-    toon.textContent = open ? 'Water weer troebel' : 'Laat de bodem zien';
+    zetActie(toon, open ? 'Maak het water weer troebel' : 'Laat de bodem zien', open ? null : 'oog');
 
     merken.replaceChildren(...punten().map((m, i) => {
       const x = xVan(m);

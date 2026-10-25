@@ -3,6 +3,7 @@
 // an angle θ to the log can only get as deep as half its width × tan θ: at 45° and a V as wide as the log is thick,
 // that is halfway, and you turn the log over and chop a second V from the other side.
 import { h } from '../../dom.js';
+import { actie, acties } from '../knoppen.js';
 import { s } from '../kompasdelen.js';
 import '../vorm.css';
 import './vuur.css';
@@ -27,14 +28,14 @@ export default function vHakken() {
   const bLabel = h('output'); const hLabel = h('output');
   const melding = h('div.vk-oordeel', { 'aria-live': 'polite' });
   const stand = h('p.vk-uitleg.vk-stand');
-  const links = h('button.knop', { type: 'button', onclick: () => hak('links') }, 'Hak van links');
-  const rechts = h('button.knop', { type: 'button', onclick: () => hak('rechts') }, 'Hak van rechts');
-  const draai = h('button.knop.klein', { type: 'button', hidden: true, onclick: () => draaiOm() }, 'Draai het stammetje om');
+  const links = actie('Hak van links', null, () => hak('links'));
+  const rechts = actie('Hak van rechts', null, () => hak('rechts'));
+  const draai = actie('Draai het stammetje om', null, () => draaiOm(), { klein: true, hidden: true });
   const el = h('div.doe-vk.naast', svg,
     h('div.vk-tekst',
       h('label.doe-label', h('span', 'Breedte van de V: ', bLabel), schuifB),
       h('label.doe-label', h('span', 'Hoek van je slag: ', hLabel), schuifH),
-      h('div.knop-rij', links, rechts), h('div.knop-rij', draai, h('button.knop.klein', { type: 'button', onclick: () => reset() }, 'Nieuw stammetje')),
+      acties(links, rechts), h('div.knop-rij', draai, actie('Nieuw stammetje', 'opnieuw', () => reset(), { klein: true })),
       stand, melding));
 
   schuifB.addEventListener('input', () => { breed = Number(schuifB.value) / 100; teken(); });

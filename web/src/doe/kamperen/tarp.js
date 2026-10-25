@@ -2,6 +2,7 @@
 // put up that way in that weather, with why it does or does not keep you dry. Facts: TKN §9 (tarp-opstellingen) and
 // kamperen-uitwerking.md; the advice is the plain rule "the low side into the wind".
 import { h } from '../../dom.js';
+import { actie, acties } from '../knoppen.js';
 import { s } from '../kompasdelen.js';
 import '../vorm.css';
 import './kamp.css';
@@ -83,7 +84,7 @@ export default function tarp() {
   const vraag = h('p.kd-vraag', { 'aria-live': 'polite' });
   const melding = h('p.doe-melding', { 'aria-live': 'polite' });
   const keuzes = h('div.knop-rij');
-  const volgende = h('button.knop.klein.hoofd', { type: 'button', hidden: true, onclick: () => { i = (i + 1) % WEER.length; nieuw(); } }, 'Ander weer');
+  const volgende = actie('Ander weer', 'opnieuw', () => { i = (i + 1) % WEER.length; nieuw(); }, { hoofd: true, klein: true, hidden: true });
   const score = h('p.kd-score');
 
   function teken() {
@@ -120,5 +121,5 @@ export default function tarp() {
   }
 
   nieuw();
-  return h('div.kd.naast.doe-tarp', svg, h('div.kd-tekst', vraag, keuzes, melding, h('div.knop-rij', volgende), score));
+  return h('div.kd.naast.doe-tarp', svg, h('div.kd-tekst', vraag, keuzes, acties(volgende), melding, score));
 }

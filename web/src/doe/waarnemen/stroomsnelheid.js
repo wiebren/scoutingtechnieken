@@ -2,6 +2,7 @@
 // stick and again at the second. Ten divided by your seconds is the speed in m/s; do it a few times and take the
 // average. The beek keeps its speed until you pick another one, so your measurements can be compared.
 import { h } from '../../dom.js';
+import { actie, acties, zetActie } from '../knoppen.js';
 import { getal, s } from './hulp.js';
 import '../vorm.css';
 import './wn.css';
@@ -32,12 +33,13 @@ export default function stroomsnelheid() {
     drijver);
 
   const klok = h('p.wn-groot', '0,0 s');
-  const knop = h('button.knop.hoofd.ss-knop', { type: 'button', onclick: tik }, 'Gooi de drijver erin');
+  const knop = actie('Gooi de drijver erin', 'start', tik, { hoofd: true, class: 'ss-knop' });
   const melding = h('p', { 'aria-live': 'polite' });
   const lijst = h('ul.ss-lijst');
-  const el = h('div.wn.doe-stroomsnelheid', svg,
-    h('div.wn-rij', knop, klok), melding, lijst,
-    h('div.knop-rij', h('button.knop.klein', { type: 'button', onclick: nieuw }, 'Andere beek')));
+  // the stopwatch reading stays next to the button you tap
+  const rij = acties(knop, klok, actie('Andere beek', 'opnieuw', nieuw, { klein: true }));
+  rij.classList.add('wn-rij');
+  const el = h('div.wn.doe-stroomsnelheid', svg, rij, melding, lijst);
 
   function zetDrijver(x) {
     const y = 96 + Math.sin(x / 23) * 6;
@@ -63,18 +65,18 @@ export default function stroomsnelheid() {
     const nu = performance.now();
     if (start == null) {
       start = nu; bij1 = null;
-      knop.textContent = 'Nu! (stok 1)';
+      zetActie(knop, 'Nu! (stok 1)', null);
       melding.textContent = 'Kijk goed: tik als de drijver langs stok 1 komt.';
       frame = requestAnimationFrame(loop);
     } else if (bij1 == null) {
       bij1 = nu;
-      knop.textContent = 'Nu! (stok 2)';
+      zetActie(knop, 'Nu! (stok 2)', null);
       melding.textContent = 'De klok loopt. Tik als hij langs stok 2 komt.';
     } else {
       const sec = (nu - bij1) / 1000;
       bij1 = null; start = null;
       cancelAnimationFrame(frame);
-      knop.textContent = 'Gooi de drijver er nog eens in';
+      zetActie(knop, 'Gooi de drijver er nog eens in', 'opnieuw');
       const v = 10 / sec;
       metingen.push(v);
       const gem = metingen.reduce((a, b) => a + b, 0) / metingen.length;

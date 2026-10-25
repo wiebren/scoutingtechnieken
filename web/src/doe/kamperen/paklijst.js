@@ -2,7 +2,7 @@
 // along. The ticks stay on this device (localStorage), per list, until you clear them. A starting point: your own
 // group's list goes first. Sources: SN-K niveau 1-2 (paklijst, kamptas, dagtas) and a hike booklet (JMC, notes).
 import { h } from '../../dom.js';
-import { keuze } from '../knoppen.js';
+import { actie, acties, keuze } from '../knoppen.js';
 import '../vorm.css';
 import './kamp.css';
 import './paklijst.css';
@@ -62,7 +62,7 @@ export default function paklijst({ lijst: begin = 'weekend' } = {}) {
 
   const vak = h('ul.pk-lijst');
   const telling = h('p.kd-score', { 'aria-live': 'polite' });
-  const wis = h('button.knop.klein', { type: 'button', onclick: () => { vinkjes[lijst] = []; schrijf(vinkjes); teken(); } }, 'Alle vinkjes weg');
+  const wis = actie('Wis alle vinkjes', 'wis', () => { vinkjes[lijst] = []; schrijf(vinkjes); teken(); }, { klein: true });
   const chips = keuze(Object.entries(LIJSTEN).map(([k, v]) => [k, v.naam]), lijst, (k) => { lijst = k; teken(); });
 
   function teken() {
@@ -90,6 +90,6 @@ export default function paklijst({ lijst: begin = 'weekend' } = {}) {
   teken();
   return h('div.kd-tekst.doe-paklijst',
     h('div.chips', { role: 'group', 'aria-label': 'Kies een lijst' }, chips),
-    vak, telling, h('div.knop-rij', wis),
+    vak, acties(wis), telling,
     h('p.kd-score', 'Een begin: kijk ook op de lijst van je eigen groep. Je vinkjes blijven op dit apparaat staan.'));
 }

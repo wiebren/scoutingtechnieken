@@ -3,6 +3,7 @@
 // one: walk a course (greep 1), take a bearing on something you see (greep 2), or the way back (terugkoers). With
 // `sensor` a phone is the compass: the plate is the phone, and the needle follows the real north.
 import { h } from '../dom.js';
+import { actie, acties } from './knoppen.js';
 import { kompasDelen, norm, p, pol as polVan, R, s, streek16, verschil } from './kompasdelen.js';
 import './kompas.css';
 
@@ -49,15 +50,15 @@ export default function kompas({ opdracht = null, sensor = false } = {}) {
   const knoppen = h('div.kk-knoppen',
     h('span.kk-knopgroep', h('span.kk-knoplabel', 'Huis'), draai('Huis', -1), draai('Huis', 1)),
     !sensor && h('span.kk-knopgroep', h('span.kk-knoplabel', 'Kompas'), draai('Kompas', -1), draai('Kompas', 1)));
-  const nieuw = h('button.knop.klein', { type: 'button', onclick: () => nieuweTaak() }, 'Nieuwe opdracht');
-  const sensorKnop = h('button.knop.klein.hoofd', { type: 'button', onclick: () => startSensor() }, 'Gebruik je telefoon');
+  const nieuw = actie('Nieuwe opdracht', 'opnieuw', () => nieuweTaak(), { klein: true });
+  const sensorKnop = actie('Gebruik je telefoon', 'start', () => startSensor(), { hoofd: true, klein: true });
 
   const el = h('div.doe-kompas',
     h('div.kk-beeld', svg),
     h('div.kk-tekst',
       opdracht && opdrachtRegel, opdracht && stappen, stand, melding,
       knoppen,
-      h('div.knop-rij', opdracht && nieuw, sensor && sensorKnop)));
+      acties(opdracht && nieuw, sensor && sensorKnop)));
 
   // -- drawing
   function teken() {

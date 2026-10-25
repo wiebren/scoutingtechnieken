@@ -3,7 +3,7 @@
 // arrow of Baden-Powell and the arrow of the larger set, a LAW and a streekpad) never compete. For a screen reader
 // the signs are described by their shape (`vorm` in ./tekens.js).
 import { h } from '../../dom.js';
-import { keuze } from '../knoppen.js';
+import { actie, acties, keuze } from '../knoppen.js';
 import { BP, MARKERING, NATUUR, tegel, UITGEBREID } from './tekens.js';
 import '../vorm.css';
 import './tekenquiz.css';
@@ -33,12 +33,12 @@ export default function tekenquiz({ set = 'uitgebreid' } = {}) {
   const keuzes = h('div.tq-keuzes');
   const melding = h('p.doe-melding', { 'aria-live': 'polite' });
   const score = h('p.doe-stil.tq-score');
-  const volgende = h('button.knop.klein.hoofd', { type: 'button', hidden: true, onclick: () => nieuw() }, 'Volgende');
+  const volgende = actie('Volgende', 'verder', () => nieuw(), { hoofd: true, klein: true, hidden: true });
   const chips = keuze([['betekenis', 'Wat betekent het?'], ['teken', 'Welk teken is het?']], modus, (m) => { modus = m; goed = 0; gevraagd = 0; nieuw(); });
 
   const el = h('div.doe-tekenquiz',
     h('div.chips', { role: 'group', 'aria-label': 'Kies hoe je oefent' }, chips),
-    vraagRegel, beeld, keuzes, melding, h('div.tq-voet', score, volgende));
+    vraagRegel, beeld, keuzes, acties(volgende), melding, score);
 
   function nieuw() {
     let v;

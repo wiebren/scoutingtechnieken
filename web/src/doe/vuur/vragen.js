@@ -44,12 +44,12 @@ export const QUIZ = {
     { vraag: 'Welk hout brandt nog redelijk als het een beetje vochtig is?', keuzes: ['Es', 'Populier', 'Wilg', 'Linde'], uitleg: 'Es brandt regelmatig, ook als het wat vochtiger is.' },
     { vraag: 'Welk hout geeft weinig warmte?', keuzes: ['Populier', 'Beuk', 'Eik', 'Es'], uitleg: 'Populier is licht hout: een blok ervan geeft weinig warmte. Ook wilg, linde en kastanje branden slecht.' },
     { vraag: 'Wat mag nooit op het vuur?', keuzes: ['Een oude geverfde plank', 'Een dode beukentak', 'Een droge berkentak', 'Gekloofd eikenhout'], uitleg: 'Geverfd, gebeitst, gelijmd en geïmpregneerd hout is verboden: het geeft giftige stoffen.' },
-    { vraag: 'Er ligt een pallet bij het vuur. Mag die erop?', keuzes: ['Nee: er zitten spijkers in, en het is bewerkt hout', 'Ja, dat is gewoon hout', 'Ja, als je hem eerst zaagt', 'Alleen als het regent'], uitleg: 'Pallets zijn bewerkt hout. Dat stook je niet.' },
+    { vraag: 'Er ligt een pallet bij het vuur. Mag die erop?', keuzes: ['Nee', 'Ja, het is onbehandeld hout', 'Ja, als je de spijkers eruit haalt', 'Ja, als hij droog is'], uitleg: 'Pallets zijn bewerkt hout, en er zitten spijkers in. Dat stook je niet.' },
     { vraag: 'Welke boom is giftig, ook als je hem stookt?', keuzes: ['Taxus', 'Berk', 'Es', 'Beuk'], uitleg: 'Taxus is giftig; stook hem nooit.' },
     { vraag: 'Twee blokken tegen elkaar klinken helder. Wat zegt dat?', keuzes: ['Ze zijn droog', 'Ze zijn nat', 'Ze zijn rot', 'Ze zijn giftig'], uitleg: 'Droog hout klinkt helder, nat hout dof.' },
-    { vraag: 'Een takje buigt als je het wilt breken. Wat betekent dat?', keuzes: ['Het is nat of nog levend', 'Het is heel droog', 'Het is hard hout', 'Het brandt extra goed'], uitleg: 'Een droog takje breekt met een knap.' },
-    { vraag: 'Hoe lang moet vers gekapt hout ongeveer drogen?', keuzes: ['Een tot twee jaar', 'Een week', 'Een dag in de zon', 'Niet: vers brandt het best'], uitleg: 'Vers hout is voor bijna de helft water.' },
-    { vraag: 'Waarom rookt nat hout zo?', keuzes: ['Het water moet er eerst uit, en het wordt niet heet genoeg om te branden', 'Nat hout bevat meer hars', 'Water brandt met rook', 'Het brandt juist te heet'], uitleg: 'Zolang er water in zit, wordt het niet veel heter dan 100 graden.' },
+    { vraag: 'Een takje buigt als je het wilt breken. Wat betekent dat?', keuzes: ['Het is nat of nog levend', 'Het is heel droog', 'Het is hard hout', 'Het is oud hout'], uitleg: 'Een droog takje breekt met een knap.' },
+    { vraag: 'Hoe lang moet vers gekapt hout ongeveer drogen?', keuzes: ['Een tot twee jaar', 'Een week', 'Een maand', 'Vijf jaar'], uitleg: 'Vers hout is voor bijna de helft water.' },
+    { vraag: 'Waarom rookt nat hout zo?', keuzes: ['Het wordt niet heet genoeg om goed te branden', 'Er zit meer hars in', 'Er zit meer schors aan', 'Het brandt te snel'], uitleg: 'Zolang er water in zit, wordt het niet veel heter dan 100 graden.' },
   ],
   branders: [
     { vraag: 'Een brander met een potje en een windscherm eromheen, waarin je een vloeistof giet, brandt op…', keuzes: ['Spiritus', 'Gas', 'Petroleum', 'Brandtabletten'], uitleg: 'Dat is een spiritusbrander. De vlam zie je bij daglicht bijna niet.' },
@@ -58,10 +58,10 @@ export const QUIZ = {
     { vraag: 'Een ouderwetse primus brandt op…', keuzes: ['Petroleum', 'Gas', 'Brandtabletten', 'Spiritus'], uitleg: 'Een primus is een petroleumbrander; hij moet eerst warm worden.' },
     { vraag: 'Welke brander werkt slechter als het koud is?', keuzes: ['Gasbrander', 'Tablettenbrander', 'Houtbrander', 'Blikvuurtje'], uitleg: 'Bij kou komt er minder gas uit de bus.' },
     { vraag: 'Bij welke brander zie je de vlam overdag bijna niet?', keuzes: ['Spiritusbrander', 'Houtbrander', 'Tablettenbrander', 'Kampvuur'], uitleg: 'Een spiritusvlam is bij daglicht bijna onzichtbaar. Pas op dat je je niet brandt.' },
-    { vraag: 'Mag je in je slaaptent koken op een brander?', keuzes: ['Nee, nooit: koolmonoxide', 'Ja, met de rits open', 'Ja, als het regent', 'Alleen met gas'], uitleg: 'Koolmonoxide ruik je niet, en het kan je doden.' },
-    { vraag: 'Je ruikt gas. Hoe vind je het lek?', keuzes: ['Met een kwastje met afwasmiddel: waar het belletjes blaast', 'Met een aansteker', 'Door er met je neus vlakbij te gaan', 'Je hoort het altijd sissen'], uitleg: 'Nooit met een vlam zoeken.' },
-    { vraag: 'Hoe oud mag een wegwerpgasbusje hooguit zijn?', keuzes: ['Drie jaar', 'Tien jaar', 'Maakt niet uit', 'Een maand'], uitleg: 'Gebruik geen wegwerpgasbusjes die ouder zijn dan drie jaar.' },
-    { vraag: 'Wanneer vul je een brander bij?', keuzes: ['Als hij uit en afgekoeld is', 'Terwijl hij nog brandt', 'Als hij nog warm is, dat gaat sneller', 'Boven de vlam van een ander'], uitleg: 'Brandstof bij een vlam of een hete brander kan in één keer vlam vatten.' },
+    { vraag: 'Mag je in je slaaptent koken op een brander?', keuzes: ['Nee', 'Ja, met de rits open', 'Ja, met een spiritusbrander', 'Ja, als je erbij wakker blijft'], uitleg: 'Nooit: een brander maakt koolmonoxide. Dat ruik je niet, en het kan je doden.' },
+    { vraag: 'Je ruikt gas. Hoe vind je het lek?', keuzes: ['Met een kwastje met afwasmiddel', 'Met een aansteker', 'Door eraan te ruiken', 'Door te luisteren of het sist'], uitleg: 'Waar het lekt, blaast het sop belletjes. Zoek nooit met een vlam.' },
+    { vraag: 'Hoe oud mag een wegwerpgasbusje hooguit zijn?', keuzes: ['Drie jaar', 'Tien jaar', 'Vijf jaar', 'Een jaar'], uitleg: 'Gebruik geen wegwerpgasbusjes die ouder zijn dan drie jaar.' },
+    { vraag: 'Wanneer vul je een brander bij?', keuzes: ['Als hij uit en afgekoeld is', 'Als hij net uit is', 'Als de vlam klein staat', 'Als hij nog lauw is'], uitleg: 'Brandstof bij een vlam of een hete brander kan in één keer vlam vatten.' },
   ],
   grepen: [
     { vraag: 'Je schilt een stok voor stokbrood: grof werk, met kracht.', keuzes: ['Kniegreep', 'Versterkte greep', 'Aardappelgreep', 'Veerstokgreep'], uitleg: 'Je pols tegen je knie geeft steun; je trekt het hout langs het mes.' },
@@ -70,8 +70,8 @@ export const QUIZ = {
     { vraag: 'Je snijdt krullen van een stokje dat rechtop op een blok staat.', keuzes: ['Veerstokgreep', 'Borstgreep', 'Aardappelgreep', 'Versterkte greep'], uitleg: 'Van boven naar beneden, van je af.' },
     { vraag: 'Zoals je een aardappel schilt, met het hout boven je duim.', keuzes: ['Aardappelgreep', 'Kniegreep', 'Borstgreep', 'Veerstokgreep'], uitleg: 'Het hout ligt boven je duim, zodat je niet in je vingers snijdt.' },
     { vraag: 'Je splijt een blokje met je mes en een stuk hout als hamer.', keuzes: ['Batonneren', 'Kloven met een bijl', 'Versterkte greep', 'Aardappelgreep'], uitleg: 'Sla op de rug van het lemmet; alleen met een stevig mes met een vast lemmet.' },
-    { vraag: 'Waar houd je je andere hand als je snijdt?', keuzes: ['Achter het mes', 'Voor het mes, om het hout vast te houden', 'Onder het hout, waar het mes uitkomt', 'Maakt niet uit'], uitleg: 'Schiet het mes uit, dan raakt het je hand niet.' },
-    { vraag: 'Je schilt een stok. Wat beweeg je?', keuzes: ['De stok, niet het mes', 'Het mes, niet de stok', 'Allebei zo snel mogelijk', 'Het mes naar je toe'], uitleg: 'Houd het mes stil, met de snede van je af, en trek de stok erlangs. Zo houd je het mes onder controle.' },
+    { vraag: 'Waar houd je je andere hand als je snijdt?', keuzes: ['Achter het mes', 'Voor het mes', 'Onder het hout', 'Naast het mes, tegen het hout'], uitleg: 'Schiet het mes uit, dan raakt het je hand niet.' },
+    { vraag: 'Je schilt een stok. Wat beweeg je?', keuzes: ['De stok; het mes houd je stil', 'Het mes, van je af', 'Allebei, tegen elkaar in', 'Het mes; de stok houd je stil'], uitleg: 'Houd het mes stil, met de snede van je af, en trek de stok erlangs. Zo houd je het mes onder controle.' },
   ],
   // De Schijf van Vijf (blad schijf-van-vijf): the Voedingscentrum, 2026 (VKG VC-S5, VC-S5W).
   schijf: [
@@ -87,7 +87,7 @@ export const QUIZ = {
     { vraag: 'Een zakje chips: is dat iets kleins of iets groters naast de Schijf van Vijf?', keuzes: ['Iets groters', 'Iets kleins'], uitleg: 'Iets groters hooguit 3 keer per week.' },
     { vraag: 'Een stuk taart: is dat iets kleins of iets groters naast de Schijf van Vijf?', keuzes: ['Iets groters', 'Iets kleins'], uitleg: 'Iets groters hooguit 3 keer per week.' },
     { vraag: 'Ketchup bij het eten: is dat iets kleins of iets groters naast de Schijf van Vijf?', keuzes: ['Iets kleins', 'Iets groters'], uitleg: 'Iets kleins kan 3 tot 5 keer per dag.' },
-    { vraag: 'Welke drie dingen staan voorop in de Schijf van Vijf van 2026?', keuzes: ['Veel uit planten, vooral eten uit de schijf, weinig weggooien', 'Veel vlees, veel melk, veel brood', 'Alleen biologisch, alleen vers, alleen zelf koken', 'Elke dag snoep, chips en frisdrank'], uitleg: 'Gezond voor jou, en beter voor de aarde.' },
+    { vraag: 'Welke drie dingen staan voorop in de Schijf van Vijf van 2026?', keuzes: ['Veel uit planten, vooral eten uit de schijf, weinig weggooien', 'Veel vlees, veel melk, veel brood', 'Alleen biologisch, alleen vers, alleen zelf koken', 'Drie maaltijden, weinig tussendoor, veel water'], uitleg: 'Gezond voor jou, en beter voor de aarde.' },
   ],
 };
 
@@ -96,12 +96,11 @@ export const VOLGORDE = {
     vraag: 'Tik de stappen van de afwas in de goede volgorde aan.',
     stappen: [
       'Etensresten van je bord in de afvalzak schrapen',
-      'Afwassen in heet sop (teil 1)',
-      'Het sop eraf spoelen in schoon, heet water (teil 2)',
-      'Naspoelen in schoon water (teil 3)',
+      'Voorspoelen in schoon, koud water',
+      'Afwassen in heet sop',
+      'Het sop eraf spoelen in schoon, heet water',
       'Laten drogen aan de lucht, op een rek of in een net',
-      'Als alles klaar is: het afwaswater door een zeef in het afvoerputje gieten',
     ],
-    klaar: 'Goed! Eerst wassen, dan het sop eraf, dan schoon naspoelen. Het afwaswater gaat pas aan het eind, gezeefd, het putje in.',
+    klaar: 'Goed! Eerst voorspoelen, dan wassen, dan het sop eraf spoelen. Giet het afwaswater daarna door een zeef in het afvoerputje.',
   },
 };

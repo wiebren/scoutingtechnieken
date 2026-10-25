@@ -2,6 +2,7 @@
 // passen to metres and back. Tel mee counts along while you walk; after 100 m that count becomes your own number.
 // The number is kept on this device, like the rest of what the app remembers (src/opslag.js).
 import { h } from '../dom.js';
+import { actie, acties } from './knoppen.js';
 import './vorm.css';
 import './passen.css';
 
@@ -32,8 +33,8 @@ export default function passen() {
   const telTekst = h('p.ps-geteld', { 'aria-live': 'polite' });
   const linksKnop = h('button.knop.hoofd.ps-links', { type: 'button', onclick: () => tel(1) }, h('span', 'Links'), h('small', 'tik bij elke linkervoet'));
   const minKnop = h('button.knop.klein', { type: 'button', onclick: () => tel(-1) }, '−1');
-  const opnieuw = h('button.knop.klein', { type: 'button', onclick: () => { geteld = 0; toonGeteld(); } }, 'Opnieuw');
-  const honderd = h('button.knop.klein', { type: 'button', onclick: () => { if (geteld >= 20) { zetIjking(geteld, true); telTekst.textContent = `Je ${geteld} dubbelpassen op 100 m zijn bewaard.`; } } }, 'Dit was 100 m');
+  const opnieuw = actie('Opnieuw', 'opnieuw', () => { geteld = 0; toonGeteld(); }, { klein: true });
+  const honderd = actie('Bewaar als 100 m', 'vink', () => { if (geteld >= 20) { zetIjking(geteld, true); telTekst.textContent = `Je ${geteld} dubbelpassen op 100 m zijn bewaard.`; } }, { klein: true });
 
   const el = h('div.doe-passen',
     h('section.ps-blok',
@@ -51,7 +52,7 @@ export default function passen() {
       h('h4', 'Tel mee'),
       h('p.doe-stil', 'Loop een stuk waarvan je zeker weet dat het 100 m is, bijvoorbeeld van het ene hectometerpaaltje langs de weg naar het volgende. Tik bij elke linkervoet.'),
       h('div.ps-tel', linksKnop, telTekst),
-      h('div.knop-rij', minKnop, opnieuw, honderd)),
+      acties(minKnop, opnieuw, honderd)),
     h('p.doe-stil', 'Heuvelop, in zand en in het donker worden je passen korter.'));
 
   function zetIjking(n, inVeld) {

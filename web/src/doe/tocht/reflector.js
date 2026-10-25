@@ -2,6 +2,7 @@
 // crossing one reflector hangs on a tree along the path you must take; it only shines when your light falls on it.
 // Find it, then choose that path. Five crossings, then you are home.
 import { h } from '../../dom.js';
+import { actie, acties } from '../knoppen.js';
 import { pol, s } from '../kompasdelen.js';
 import '../vorm.css';
 import './reflector.css';
@@ -51,11 +52,11 @@ export default function reflectortocht() {
   const melding = h('p.doe-melding', { 'aria-live': 'polite' });
   const voortgang = h('p.doe-stil');
   const knoppen = h('div.knop-rij.rt-knoppen');
-  const opnieuw = h('button.knop', { type: 'button', hidden: true, onclick: () => begin() }, 'Nog een keer');
+  const opnieuw = actie('Nog een keer', 'opnieuw', () => begin(), { hidden: true });
 
   const el = h('div.doe-reflector',
     h('p.doe-stil', 'Het is donker. Beweeg je zaklamp over het bos (vinger, muis, of de pijltjes) en zoek de reflector. Hij hangt aan een boom langs het pad dat je moet nemen.'),
-    svg, voortgang, knoppen, melding, opnieuw);
+    svg, voortgang, knoppen, acties(opnieuw), melding);
 
   function tekenScene() {
     scene.replaceChildren(s('rect', { x: 0, y: 0, width: B, height: H, class: 'rt-grond' }));

@@ -3,6 +3,7 @@
 // is good and what is not about that place. The wind comes from a different side each round, so the door has to
 // be thought about every time. Facts: TKN §3.1 and §3.2 (plek kiezen), SN-VK (scheerlijnen en looproutes).
 import { h } from '../../dom.js';
+import { actie, acties } from '../knoppen.js';
 import { s } from '../kompasdelen.js';
 import '../vorm.css';
 import './kamp.css';
@@ -108,10 +109,10 @@ export default function tentplek() {
   const score = h('p.kd-score');
   const draaiL = h('button.knop.klein', { type: 'button', onclick: () => draai(-1), 'aria-label': 'Draai de deur linksom' }, '↺ draai');
   const draaiR = h('button.knop.klein', { type: 'button', onclick: () => draai(1), 'aria-label': 'Draai de deur rechtsom' }, 'draai ↻');
-  const zet = h('button.knop.klein.hoofd', { type: 'button', onclick: () => oordeel() }, 'Zet hem neer');
-  const anders = h('button.knop.klein', { type: 'button', onclick: () => { fase = 'plek'; teken(); } }, 'Andere plek');
-  const opnieuw = h('button.knop.klein.hoofd', { type: 'button', onclick: () => nieuweRonde() }, 'Nog een keer');
-  const knoppen = h('div.knop-rij');
+  const zet = actie('Zet hem neer', 'vink', () => oordeel(), { hoofd: true, klein: true });
+  const anders = actie('Andere plek', 'opnieuw', () => { fase = 'plek'; teken(); }, { klein: true });
+  const opnieuw = actie('Nog een keer', 'opnieuw', () => nieuweRonde(), { hoofd: true, klein: true });
+  const knoppen = acties();
 
   const WINDPLEK = [[180, 18], [342, 92], [180, 242], [18, 92]];
   function zetWind() {
@@ -145,6 +146,7 @@ export default function tentplek() {
     } else if (nieuw) {
       knoppen.replaceChildren(opnieuw);
     }
+    knoppen.hidden = !knoppen.childElementCount;          // no line under the words while you are still choosing a place
     svg.setAttribute('aria-label', `Kampterrein van boven: links boven een helling, links onder een laagte en de vuurplaats, rechts een beek, boven in het midden een boom met dode takken, een pad van links naar rechts onder, en stenen. De wind komt uit het ${RICHTING[wind]}. Kies een plek met de pijltjestoetsen en Enter, of tik.`);
     score.textContent = rondes ? `Goede plekken: ${goed} van ${rondes}` : '';
   }
@@ -216,7 +218,7 @@ export default function tentplek() {
   });
   svg.addEventListener('blur', () => { toonCursor = false; kruis.setAttribute('visibility', 'hidden'); });
 
-  const el = h('div.kd.naast.doe-tentplek', svg, h('div.kd-tekst', vraag, stand, lijst, knoppen, score));
+  const el = h('div.kd.naast.doe-tentplek', svg, h('div.kd-tekst', vraag, stand, knoppen, lijst, score));
   zetWind();
   teken();
   return el;

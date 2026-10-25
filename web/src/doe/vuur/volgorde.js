@@ -1,6 +1,7 @@
 // Put the steps in order: the steps stand shuffled; tap them in the order you would do them. A wrong one shakes
 // its head and says what comes first; the right ones move to your list.
 import { h } from '../../dom.js';
+import { actie, acties } from '../knoppen.js';
 import { schud } from './quiz.js';
 import { VOLGORDE } from './vragen.js';
 import '../vorm.css';
@@ -13,8 +14,8 @@ export default function volgorde({ set }) {
   const lijst = h('ol.vk-volgorde', { 'aria-label': 'Jouw volgorde' });
   const over = h('div.vk-volgorde', { role: 'group', 'aria-label': 'Nog te kiezen' });
   const melding = h('p.doe-melding', { 'aria-live': 'polite' });
-  const opnieuw = h('button.knop.klein', { type: 'button', onclick: () => begin() }, 'Opnieuw');
-  const el = h('div.doe-vk', h('p.vk-vraag', vraag), lijst, h('p.vk-uitleg', 'Kies de volgende stap:'), over, melding, h('div.knop-rij', opnieuw));
+  const opnieuw = actie('Opnieuw', 'opnieuw', () => begin(), { klein: true });
+  const el = h('div.doe-vk', h('p.vk-vraag', vraag), lijst, h('p.vk-uitleg', 'Kies de volgende stap:'), over, acties(opnieuw), melding);
 
   function begin() {
     gedaan = 0; fouten = 0;

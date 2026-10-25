@@ -1,7 +1,7 @@
 // Clouds: "Sleutel" asks how high and what shape, and gives the genus; "Raad" shows a drawing, and you choose its
 // name out of four. The drawings and the heights are those of the cloud cards (src/plaatjes/weer.js, after the KNMI).
 import { h } from '../../dom.js';
-import { keuze } from '../knoppen.js';
+import { actie, acties, keuze } from '../knoppen.js';
 import { WOLKEN, wolkTekening } from '../../plaatjes/weer.js';
 import '../vorm.css';
 import './wolken.css';
@@ -66,7 +66,7 @@ export default function wolken() {
     const rest = schud(WOLKEN.filter((w) => w !== vraag && w.laag !== vraag.laag));
     const opties = schud([vraag, ...[...zelfde, ...rest].slice(0, 3)]);
     const melding = h('p.doe-melding', { 'aria-live': 'polite' });
-    const verder = h('button.knop.klein.hoofd', { type: 'button', hidden: true, onclick: raad }, 'Volgende');
+    const verder = actie('Volgende', 'verder', raad, { hoofd: true, klein: true, hidden: true });
     const knoppen = opties.map((w) => h('button.knop.klein.wk-optie', { type: 'button', onclick: () => {
       gehad += 1; if (w === vraag) goed += 1;
       knoppen.forEach((k, i) => { k.disabled = true; if (opties[i] === vraag) k.classList.add('goed'); else if (opties[i] === w) k.classList.add('fout'); });
@@ -74,11 +74,11 @@ export default function wolken() {
       melding.textContent = `${w === vraag ? 'Goed!' : `Nee, dit is ${vraag.naam}.`} ${vraag.naam}: ${vraag.kenmerk}. ${goed} van de ${gehad} goed.`;
       verder.hidden = false; verder.focus();
     } }, w.naam));
-    plek.replaceChildren(beeld(vraag.id, false), h('p.doe-sr', 'Welke wolk is dit?'), h('div.wk-opties', knoppen), melding, h('div.knop-rij', verder));
+    plek.replaceChildren(beeld(vraag.id, false), h('p.doe-sr', 'Welke wolk is dit?'), h('div.wk-opties', knoppen), acties(verder), melding);
   }
 
   const modi = h('div.chips', { role: 'group', 'aria-label': 'Sleutel of raden' },
-    keuze([['sleutel', 'Welke wolk zie ik?'], ['raad', 'Raad de wolk']], modus, (m) => { modus = m; if (m === 'raad') raad(); else sleutel(); }));
+    keuze([['sleutel', 'Welke wolk zie ik?'], ['raad', 'Raden']], modus, (m) => { modus = m; if (m === 'raad') raad(); else sleutel(); }));
   sleutel();
   return h('div.doe-wolken', modi, plek);
 }

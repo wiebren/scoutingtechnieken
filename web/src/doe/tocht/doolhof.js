@@ -2,6 +2,7 @@
 // out, the way is pulled straight into a stripkaart: every side passage you passed becomes a dash, left or right,
 // and a corner without a side passage disappears. That is exactly what a stripkaart is.
 import { h } from '../../dom.js';
+import { actie, acties } from '../knoppen.js';
 import { s } from '../kompasdelen.js';
 import '../vorm.css';
 import './doolhof.css';
@@ -82,13 +83,13 @@ export default function doolhof() {
   const stripVak = h('div.dh-stripvak', { hidden: true }, h('p.doe-stil', 'Rechtgetrokken: de stripkaart'), strip);
   const melding = h('p.doe-melding', { 'aria-live': 'polite' });
   const stand = h('p.doe-sr', { 'aria-live': 'polite' });
-  const opnieuw = h('button.knop', { type: 'button', onclick: () => begin() }, 'Nieuw doolhof');
-  const toon = h('button.knop', { type: 'button', onclick: () => { pad = [...goed]; teken(); uit(); } }, 'Toon de weg');
+  const opnieuw = actie('Nieuw doolhof', 'opnieuw', () => begin());
+  const toon = actie('Toon de weg', 'oog', () => { pad = [...goed]; teken(); uit(); });
 
   const el = h('div.doe-doolhof',
     h('p.doe-stil', 'Zoek de weg van de ingang onderaan naar de uitgang bovenaan. Tik of sleep van vak naar vak, of gebruik de pijltjes. Terug kan ook.'),
     h('div.dh-vakken', h('div.dh-doolhof', svg), stripVak),
-    melding, stand, h('div.knop-rij', toon, opnieuw));
+    acties(toon, opnieuw), melding, stand);
 
   const midden = ([x, y]) => [RAND + x * CEL + CEL / 2, RAND + y * CEL + CEL / 2];
 

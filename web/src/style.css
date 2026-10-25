@@ -7,6 +7,9 @@
 
 :root {
   color-scheme: light dark;
+  /* words in a sketch drawn by hand: the handwriting fonts that come with the system (no web font, so the app stays
+     small and offline), else the browser's own cursive */
+  --hand: 'Segoe Print', 'Bradley Hand', Noteworthy, 'Chalkboard SE', 'Comic Sans MS', cursive;
   --bg: #f4f6f3;
   --paneel: #ffffff;
   --zacht: #edf1ed;
@@ -209,7 +212,12 @@ p, li { text-wrap: pretty; }
   border-radius: 18px; background: var(--paneel); color: inherit; text-decoration: none; font-size: 0.875rem; font-weight: 500; white-space: nowrap;
 }
 .chip:hover { border-color: var(--lijn-sterk); }
-.chip[aria-pressed="true"] { background: var(--accent); border-color: var(--accent); color: var(--op-accent); }
+/* a chosen option: a light tint, a green edge and a tick, so it does not look like the solid green button that does something */
+.chip[aria-pressed="true"] { background: color-mix(in srgb, var(--accent) 13%, var(--paneel)); border-color: var(--accent); color: var(--inkt); font-weight: 600; }
+.chip[aria-pressed="true"]::before {
+  content: ""; flex: none; width: 10px; height: 6px; margin-right: -1px; border: solid var(--accent); border-width: 0 0 2px 2px;
+  transform: translateY(-2px) rotate(-45deg);
+}
 .chip.leeg { color: var(--stil); }
 .chip-aantal { font-size: 0.75rem; opacity: 0.7; font-variant-numeric: tabular-nums; }
 .chip.klein { min-height: 30px; padding: 3px 11px; font-size: 0.8125rem; color: var(--fam); }
@@ -438,6 +446,11 @@ tbody th { font-variant-numeric: tabular-nums; }
   color: var(--accent); font-size: 0.6875rem; font-weight: 700; letter-spacing: 0.05em; text-transform: uppercase; }
 .doe-plek { container-type: inline-size; }
 .knop-rij { display: flex; flex-wrap: wrap; gap: 8px; }
+/* the actions of a piece (src/doe/knoppen.js): apart from the choices above them */
+.knop-rij.acties { padding-top: 12px; border-top: 1px solid var(--lijn); }
+.knop-rij.acties:first-child { padding-top: 0; border-top: 0; }
+.knop-rij.acties:not(:has(> :not([hidden]))) { display: none; }   /* no line while its only button waits for an answer */
+.knop .icoon.klein { stroke-width: 2.2; }
 .knop.klein { min-height: 36px; padding: 6px 12px; font-size: 0.875rem; }
 
 /* pictures that are not ours (src/data/beelden.js): map samples and the legenda */

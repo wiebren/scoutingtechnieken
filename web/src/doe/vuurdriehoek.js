@@ -1,13 +1,14 @@
 // The fire triangle: a fire with its three sides. Take one away - water, sand, or no more wood - and the fire goes
 // out; light it again and try another.
 import { h } from '../dom.js';
+import { actie, acties } from './knoppen.js';
 import { s } from './kompasdelen.js';
 import './vuurdriehoek.css';
 
 const KANTEN = [
-  { id: 'brandstof', naam: 'brandstof', weg: 'Geen hout meer', uitleg: 'Zonder brandstof brandt het vuur op en gaat het vanzelf uit.' },
-  { id: 'zuurstof', naam: 'zuurstof', weg: 'Zand erop', uitleg: 'Zand sluit de lucht af: zonder zuurstof stikt het vuur.' },
-  { id: 'warmte', naam: 'warmte', weg: 'Water erop', uitleg: 'Water koelt het vuur af. Het wordt te koud om te branden, en het vuur gaat uit.' },
+  { id: 'brandstof', naam: 'brandstof', weg: 'Leg geen hout meer bij', uitleg: 'Zonder brandstof brandt het vuur op en gaat het vanzelf uit.' },
+  { id: 'zuurstof', naam: 'zuurstof', weg: 'Strooi zand erop', uitleg: 'Zand sluit de lucht af: zonder zuurstof stikt het vuur.' },
+  { id: 'warmte', naam: 'warmte', weg: 'Giet water erop', uitleg: 'Water koelt het vuur af. Het wordt te koud om te branden, en het vuur gaat uit.' },
 ];
 
 export default function vuurdriehoek() {
@@ -34,8 +35,8 @@ export default function vuurdriehoek() {
     Object.values(lijnen), labels, hout, rook, vlam);
 
   const melding = h('p.vd-melding', { 'aria-live': 'polite' });
-  const knoppen = KANTEN.map((k) => h('button.knop.klein', { type: 'button', onclick: () => haalWeg(k) }, k.weg));
-  const opnieuw = h('button.knop.klein.hoofd', { type: 'button', hidden: true, onclick: () => haalWeg(null) }, 'Steek opnieuw aan');
+  const knoppen = KANTEN.map((k) => actie(k.weg, null, () => haalWeg(k), { klein: true }));
+  const opnieuw = actie('Steek opnieuw aan', 'vuur', () => haalWeg(null), { hoofd: true, klein: true, hidden: true });
 
   function haalWeg(k) {
     weg = k;
@@ -50,5 +51,5 @@ export default function vuurdriehoek() {
   }
 
   haalWeg(null);
-  return h('div.doe-vuurdriehoek', svg, h('div.vd-tekst', melding, h('div.knop-rij', knoppen, opnieuw)));
+  return h('div.doe-vuurdriehoek', svg, h('div.vd-tekst', acties(knoppen, opnieuw), melding));
 }

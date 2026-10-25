@@ -2,6 +2,7 @@
 // a village or a paved road somewhere. Tap one of eight directions. The brandweer says: run across the fire, not
 // away in front of it; and go to a public road, a large paved area or the built-up area.
 import { h } from '../../dom.js';
+import { actie, acties } from '../knoppen.js';
 import { pol } from '../kompasdelen.js';
 import { s } from './hulp.js';
 import './wn.css';
@@ -26,8 +27,8 @@ export default function natuurbrand() {
 
   const vraag = h('p', { 'aria-live': 'polite' });
   const melding = h('p.doe-melding', { 'aria-live': 'polite' });
-  const verder = h('button.knop.klein', { type: 'button', onclick: nieuw }, 'Andere brand');
-  const el = h('div.wn.naast.doe-natuurbrand', svg, h('div.wn-tekst', vraag, melding, h('div.knop-rij', verder)));
+  const verder = actie('Andere brand', 'opnieuw', nieuw, { klein: true });
+  const el = h('div.wn.naast.doe-natuurbrand', svg, h('div.wn-tekst', vraag, acties(verder), melding));
 
   function teken() {
     // the fire: a band of flames along the side it comes from, and wind arrows towards you

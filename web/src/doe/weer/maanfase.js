@@ -2,7 +2,7 @@
 // Seen from above (left) the lit half and the half that faces us; how much they overlap is what we see (right).
 // Slide the days, or take today. "Raad" shows a moon: is it waxing or waning?
 import { h } from '../../dom.js';
-import { keuze } from '../knoppen.js';
+import { actie, acties, keuze } from '../knoppen.js';
 import { p, s } from '../kompasdelen.js';
 import { faseNaam, MAANMAAND, maanPad, richtingTekst, vorigeNieuweMaan } from './hemel.js';
 import '../vorm.css';
@@ -60,13 +60,13 @@ export default function maanfaseStuk() {
   const schuif = h('input.doe-schuif', { type: 'range', min: 0, max: 29.5, step: 0.25, value: dagen,
     oninput: () => { dagen = Number(schuif.value); vandaag = false; teken(); } });
   const dagUit = h('output');
-  const vandaagKnop = h('button.knop.klein', { type: 'button', onclick: () => {
+  const vandaagKnop = actie('Zet op vandaag', 'klok', () => {
     const nu = Date.now();
     dagen = Math.round(((nu - vorigeNieuweMaan(nu)) / 864e5) * 4) / 4;
     vandaag = true;
     schuif.value = dagen;
     teken();
-  } }, 'Vandaag');
+  }, { klein: true });
 
   function teken() {
     const fase = dagen / MAANMAAND;
@@ -105,7 +105,7 @@ export default function maanfaseStuk() {
     const fase = Math.random() < 0.5 ? 0.06 + Math.random() * 0.38 : 0.56 + Math.random() * 0.38;
     const beeld = s('svg', { viewBox: '0 0 120 120', class: 'mf-groot', role: 'img', 'aria-label': `Een maan, ${fase < 0.5 ? 'rechts' : 'links'} verlicht` }, maanGezien(60, 60, 50, fase));
     const melding = h('p.doe-melding', { 'aria-live': 'polite' });
-    const verder = h('button.knop.klein.hoofd', { type: 'button', hidden: true, onclick: raad }, 'Volgende');
+    const verder = actie('Volgende', 'verder', raad, { hoofd: true, klein: true, hidden: true });
     const knoppen = [['wassend', 'Wassend'], ['afnemend', 'Afnemend']].map(([w, t]) => h('button.knop.klein', { type: 'button', onclick: () => {
       const juist = fase < 0.5 ? 'wassend' : 'afnemend';
       gehad += 1; if (w === juist) goed += 1;
@@ -114,19 +114,19 @@ export default function maanfaseStuk() {
       melding.textContent = `${w === juist ? 'Goed!' : 'Nee.'} ${fase < 0.5 ? 'Rechts licht: wassend, hij wordt voller.' : 'Links licht: afnemend, hij wordt kleiner.'} Het is ${faseNaam(fase)}. ${goed} van de ${gehad} goed.`;
       verder.hidden = false; verder.focus();
     } }, t));
-    plek.replaceChildren(h('div.mf-raad', beeld, h('p', 'Wassend of afnemend?'), h('div.knop-rij', knoppen), melding, h('div.knop-rij', verder)));
+    plek.replaceChildren(h('div.mf-raad', beeld, h('p', 'Wassend of afnemend?'), h('div.knop-rij', knoppen), acties(verder), melding));
   }
 
   const bekijk = h('div.hm',
     h('div.hm-beeld', svg),
     h('div.hm-tekst',
-      h('label.doe-label.hm-schuif', h('span', 'Na nieuwe maan: ', dagUit), schuif), h('div.knop-rij', vandaagKnop),
+      h('label.doe-label.hm-schuif', h('span', 'Na nieuwe maan: ', dagUit), schuif), acties(vandaagKnop),
       h('div.mf-zo', groot, h('div', h('p.doe-stil', 'Zo zie je hem vanuit Nederland:'), naam)),
       uitleg, wanneer,
       h('p.hm-noot', 'Links zie je het van bovenaf. De helft van de maan die naar de zon kijkt, is altijd licht. De boog om de maan is de helft die naar de aarde kijkt. Het stuk dat licht is én naar de aarde kijkt, zie je.')));
   const plek = h('div.mf-plek', bekijk);
   const modi = h('div.chips', { role: 'group', 'aria-label': 'Bekijken of raden' },
-    keuze([['bekijk', 'Bekijk'], ['raad', 'Raad: wassend of afnemend?']], modus, (m) => { modus = m; if (m === 'raad') raad(); else plek.replaceChildren(bekijk); }));
+    keuze([['bekijk', 'Bekijken'], ['raad', 'Wassend of afnemend?']], modus, (m) => { modus = m; if (m === 'raad') raad(); else plek.replaceChildren(bekijk); }));
 
   teken();
   return h('div.doe-maanfase', modi, plek);

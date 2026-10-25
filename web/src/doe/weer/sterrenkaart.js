@@ -3,7 +3,7 @@
 // time and the sky turns round the Pole Star; tap a star to hear its name. Option `beeld` opens on a night when that
 // figure stands high, and shows it in yellow.
 import { h } from '../../dom.js';
-import { keuze, schakel } from '../knoppen.js';
+import { actie, acties, keuze, schakel, zetActie } from '../knoppen.js';
 import { p, pol, s } from '../kompasdelen.js';
 import { beginStaat, datum, datumSchuif, moment, tijdNaam, tijdSchuif, zetNu } from './bediening.js';
 import { maan, maanfase, maanPad, momentNL, PLAATS, uitDagVanJaar } from './hemel.js';
@@ -74,10 +74,10 @@ export default function sterrenkaart({ beeld: gekozen = null } = {}) {
   const opnieuw = () => teken();
   const datumS = datumSchuif(staat, opnieuw);
   const tijdS = tijdSchuif(staat, opnieuw, { van: 18 * 60, tot: 31 * 60, stap: 5 });
-  const nuKnop = h('button.knop.klein', { type: 'button', onclick: () => { stop(); zetNu(staat, { nacht: true }); staat.minuten = Math.min(31 * 60, Math.max(18 * 60, staat.minuten)); datumS.zet(); tijdS.zet(); teken(); } }, 'Nu');
-  const speelKnop = h('button.knop.klein', { type: 'button', 'aria-pressed': 'false', onclick: () => (loopt ? stop() : speel()) }, 'Laat de hemel draaien');
+  const nuKnop = actie('Zet op nu', 'klok', () => { stop(); zetNu(staat, { nacht: true }); staat.minuten = Math.min(31 * 60, Math.max(18 * 60, staat.minuten)); datumS.zet(); tijdS.zet(); teken(); }, { klein: true });
+  const speelKnop = actie('Laat de hemel draaien', 'start', () => (loopt ? stop() : speel()), { klein: true });
   const kijkKeuze = h('div.chips', { role: 'group', 'aria-label': 'Welke kant kijk je op?' },
-    keuze(RICHTINGEN.filter(([g]) => g % 90 === 0).map(([g, t]) => [g, `Kijk ${{ N: 'naar het noorden', O: 'naar het oosten', Z: 'naar het zuiden', W: 'naar het westen' }[t]}`]), kijk, (g) => { kijk = g; teken(); }));
+    keuze(RICHTINGEN.filter(([g]) => g % 90 === 0).map(([g, t]) => [g, { N: 'Naar het noorden', O: 'Naar het oosten', Z: 'Naar het zuiden', W: 'Naar het westen' }[t]]), kijk, (g) => { kijk = g; teken(); }));
   const schakels = h('div.chips', schakel('Lijnen', metLijnen, (a) => { metLijnen = a; teken(); }), schakel('Namen', metNamen, (a) => { metNamen = a; teken(); }));
 
   let pos = [];
@@ -188,7 +188,7 @@ export default function sterrenkaart({ beeld: gekozen = null } = {}) {
   let loopt = false; let frame = 0; let vorige = 0;
   const rustig = matchMedia('(prefers-reduced-motion: reduce)').matches;
   function speel() {
-    loopt = true; speelKnop.setAttribute('aria-pressed', 'true'); speelKnop.textContent = 'Stop';
+    loopt = true; zetActie(speelKnop, 'Stop', 'stop');
     const stap = (nu) => {
       if (!loopt || !el.isConnected) { stop(); return; }
       if (nu - vorige >= (rustig ? 600 : 30)) {
@@ -201,13 +201,13 @@ export default function sterrenkaart({ beeld: gekozen = null } = {}) {
     };
     frame = requestAnimationFrame(stap);
   }
-  function stop() { loopt = false; cancelAnimationFrame(frame); speelKnop.setAttribute('aria-pressed', 'false'); speelKnop.textContent = 'Laat de hemel draaien'; }
+  function stop() { loopt = false; cancelAnimationFrame(frame); zetActie(speelKnop, 'Laat de hemel draaien', 'start'); }
 
   const el = h('div.doe-sterrenkaart',
     kijkKeuze,
     h('div.hm',
       h('div.hm-beeld', svg),
-      h('div.hm-tekst', datumS.el, tijdS.el, h('div.knop-rij', nuKnop, speelKnop), schakels, stand, info, lijst,
+      h('div.hm-tekst', datumS.el, tijdS.el, schakels, acties(nuKnop, speelKnop), stand, info, lijst,
         h('p.hm-noot', `Houd de kaart boven je hoofd, met de kant waar je naar kijkt onderaan. Het midden is recht boven je, de rand is de horizon. Voor Amersfoort; in heel Nederland bijna hetzelfde. ${eerste ? `${[...uitgelicht].map((b) => b.naam).join(', ')} in het geel. ` : ''}Tik op een ster voor zijn naam.`))));
   if (eerste) {
     const m = midden(eerste, moment(staat), plaats.breedte, plaats.lengte);

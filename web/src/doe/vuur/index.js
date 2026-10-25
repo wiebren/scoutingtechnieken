@@ -22,5 +22,7 @@ export default {
   'materiaal-keuren': { titel: 'Goed, of afkeuren?', laad: () => import('./veiligkeuren.js') },
   'mes-mee': { titel: 'Mag je mes mee?', laad: () => import('./veiligquiz.js'), opties: { set: 'mes-mee' } },
   'schijf-quiz': { titel: 'Past het in de Schijf van Vijf?', laad: () => import('./quiz.js'), opties: { set: 'schijf' } },
+  'zwitsers-zakmes-3d': { titel: 'Klap een Zwitsers zakmes open', laad: () => import('./zakgereedschap.js'), opties: { soort: 'zwitsers' }, bekijk: true },
+  'multitool-3d': { titel: 'Klap een multitool open', laad: () => import('./zakgereedschap.js'), opties: { soort: 'multitool' }, bekijk: true },
   seizoenkalender: { titel: 'Wat is er in het seizoen?', laad: () => import('./seizoen.js'), bekijk: true },
 };

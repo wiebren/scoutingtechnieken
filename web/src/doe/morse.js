@@ -4,7 +4,7 @@
 import { h } from '../dom.js';
 import { MORSE, SOS, WOORDEN, kaal, morseTekst, morseTijdlijn, naarMorse, symbolen, willekeurig } from './codes.js';
 import { geluid, speel } from './klank.js';
-import { keuze, schakel } from './knoppen.js';
+import { actie, acties, keuze, schakel, zetActie } from './knoppen.js';
 import './vorm.css';
 import './morse.css';
 
@@ -45,7 +45,7 @@ export default function morse({ modus: beginModus = 'seinen', tekst: beginTekst 
   const regel = h('p.ms-regel', { 'aria-hidden': 'true' });
   const voorlezer = h('p.doe-sr');
   const opmerking = h('p.doe-stil');
-  const speelKnop = h('button.knop.hoofd', { type: 'button', onclick: () => wisselSpelen() });
+  const speelKnop = actie('Speel af', 'start', () => wisselSpelen(), { hoofd: true });
 
   const seinen = h('div.ms-paneel',
     h('label.doe-label', 'Typ een woord of een zin', invoer),
@@ -55,22 +55,23 @@ export default function morse({ modus: beginModus = 'seinen', tekst: beginTekst 
   const antwoord = h('input.doe-veld', { type: 'text', maxlength: 12, autocomplete: 'off', autocapitalize: 'characters', spellcheck: 'false',
     'aria-label': 'Wat hoorde je?', placeholder: 'Wat hoorde je?',
     onkeydown: (e) => { if (e.key === 'Enter') { e.preventDefault(); controleer(); } } });
-  const vraagKnop = h('button.knop.hoofd', { type: 'button', onclick: () => (vraag && !vraag.klaar ? speelVraag() : nieuweVraag()) });
-  const andereKnop = h('button.knop', { type: 'button', onclick: () => nieuweVraag() }, 'Een andere');
+  const vraagKnop = actie('Speel een nieuwe', 'start', () => (vraag && !vraag.klaar ? speelVraag() : nieuweVraag()), { hoofd: true });
+  const andereKnop = actie('Een andere', 'opnieuw', () => nieuweVraag());
   const score = h('p.doe-stil');
   const raden = h('div.ms-paneel',
     h('div.chips', { role: 'group', 'aria-label': 'Wat wil je horen?' }, keuze([['letters', 'Letters'], ['woorden', 'Korte woorden']], soort, (s) => { soort = s; nieuweVraag(); })),
-    h('div.ms-antwoord', antwoord, h('button.knop', { type: 'button', onclick: () => controleer() }, 'Kijk na')),
+    h('div.ms-antwoord', antwoord),
+    acties(actie('Kijk na', 'vink', () => controleer())),
     score);
 
   const speler = h('div.ms-speler', lamp,
     h('div.ms-bediening',
       h('label.doe-label', h('span', 'Snelheid: ', snelheidTekst), snelheid),
-      h('div.knop-rij', speelKnop, vraagKnop, andereKnop)));
+      acties(speelKnop, vraagKnop, andereKnop)));
 
   const el = h('div.doe-morse',
     h('div.ms-kies',
-      h('div.chips', { role: 'group', 'aria-label': 'Wat wil je doen?' }, keuze([['seinen', 'Seinen'], ['raden', 'Luister en raad']], modus, zetModus)),
+      h('div.chips', { role: 'group', 'aria-label': 'Wat wil je doen?' }, keuze([['seinen', 'Seinen'], ['raden', 'Luisteren']], modus, zetModus)),
       h('div.chips', { role: 'group', 'aria-label': 'Hoe seinen?' },
         schakel('Geluid', metGeluid, (aan) => { metGeluid = aan; }),
         schakel('Licht', metLicht, (aan) => { metLicht = aan; lamp.hidden = !aan; lamp.classList.remove('aan'); }))),
@@ -97,8 +98,8 @@ export default function morse({ modus: beginModus = 'seinen', tekst: beginTekst 
 
   // -- playing
   function zetKnoppen() {
-    speelKnop.textContent = stop ? '■ Stop' : '▶ Speel af';
-    vraagKnop.textContent = stop && modus === 'raden' ? '■ Stop' : !vraag || vraag.klaar ? '▶ Speel een nieuwe' : '▶ Nog eens';
+    zetActie(speelKnop, ...(stop ? ['Stop', 'stop'] : ['Speel af', 'start']));
+    zetActie(vraagKnop, ...(stop && modus === 'raden' ? ['Stop', 'stop'] : !vraag || vraag.klaar ? ['Speel een nieuwe', 'start'] : ['Nog eens', 'opnieuw']));
   }
 
   function speelAf(woorden, klaar) {

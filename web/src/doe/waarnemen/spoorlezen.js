@@ -3,6 +3,7 @@
 // sand kicked up, long steps. Backwards: short steps, toes turned in, deep heels - and they went the other way
 // from where the toes point (Baden-Powell, 1908).
 import { h } from '../../dom.js';
+import { actie, acties } from '../knoppen.js';
 import { s, schud } from './hulp.js';
 import './wn.css';
 import './spoorlezen.css';
@@ -42,8 +43,8 @@ export default function spoorLezen() {
   const gangKnoppen = GANG.map(([k, n]) => h('button.chip', { type: 'button', 'aria-pressed': 'false', onclick: () => kies('gang', k) }, n));
   const melding = h('p.doe-melding', { 'aria-live': 'polite' });
   const score = h('p.wn-score');
-  const nakijk = h('button.knop.hoofd.klein', { type: 'button', onclick: kijkNa }, 'Kijk na');
-  const volgende = h('button.knop.klein', { type: 'button', onclick: nieuw }, 'Ander spoor');
+  const nakijk = actie('Kijk na', 'vink', kijkNa, { hoofd: true, klein: true });
+  const volgende = actie('Ander spoor', 'opnieuw', nieuw, { klein: true });
 
   const el = h('div.wn.naast.doe-spoorlezen', svg,
     h('div.wn-tekst',
@@ -51,7 +52,7 @@ export default function spoorLezen() {
       h('div.chips', { role: 'group', 'aria-label': 'Richting' }, richtingKnoppen),
       h('p', 'En hoe?'),
       h('div.chips', { role: 'group', 'aria-label': 'Hoe' }, gangKnoppen),
-      h('div.knop-rij', nakijk, volgende),
+      acties(nakijk, volgende),
       melding, score));
 
   function kies(soort, k) {

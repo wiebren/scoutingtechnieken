@@ -6,7 +6,7 @@
 //  - schaduwstok: two stones a quarter of an hour apart lie west to east.
 // Once you are done, the real north shows, and how far you are out.
 import { h } from '../../dom.js';
-import { keuze } from '../knoppen.js';
+import { actie, acties, keuze } from '../knoppen.js';
 import { norm, p, pol, s, verschil } from '../kompasdelen.js';
 import { beginStaat, datum, datumSchuif, moment, tijdNaam, tijdSchuif } from './bediening.js';
 import { klok, klokNL, PLAATS, zon, zonOpOnder } from './hemel.js';
@@ -68,14 +68,14 @@ export default function zonnewijzerStuk({ soort: begin = 'middag' } = {}) {
   const opnieuw = () => teken();
   const datumS = datumSchuif(staat, opnieuw);
   const tijdS = tijdSchuif(staat, opnieuw, { van: 6 * 60, tot: 21 * 60, stap: 1 });
-  const legKnop = h('button.knop.klein.hoofd', { type: 'button', onclick: () => leg() }, 'Leg een steentje');
-  const wachtKnop = h('button.knop.klein', { type: 'button', onclick: () => { staat.minuten = Math.min(21 * 60, staat.minuten + 15); tijdS.zet(); teken(); } }, 'Wacht een kwartier');
-  const klaarKnop = h('button.knop.klein', { type: 'button', onclick: () => { klaar = true; teken(); } }, 'Klaar: waar is het noorden?');
-  const nieuwKnop = h('button.knop.klein', { type: 'button', onclick: () => nieuw() }, 'Opnieuw');
+  const legKnop = actie('Leg een steentje', null, () => leg(), { hoofd: true, klein: true });
+  const wachtKnop = actie('Wacht een kwartier', 'verder', () => { staat.minuten = Math.min(21 * 60, staat.minuten + 15); tijdS.zet(); teken(); }, { klein: true });
+  const klaarKnop = actie('Bepaal het noorden', 'vink', () => { klaar = true; teken(); }, { klein: true });
+  const nieuwKnop = actie('Opnieuw', 'opnieuw', () => nieuw(), { klein: true });
   const draaiKnop = (d) => h('button.knop.klein', { type: 'button', 'aria-label': `Zonnewijzer ${d < 0 ? 'linksom' : 'rechtsom'} draaien`,
     onclick: (e) => { wijzer = norm(wijzer + d * (e.shiftKey ? 10 : 1)); vastklik(); teken(); } }, d < 0 ? '↺' : '↻');
   const draaiRij = h('div.knop-rij.zw-draai', h('span.doe-stil', 'Zonnewijzer'), draaiKnop(-1), draaiKnop(1));
-  const knoppen = h('div.knop-rij');
+  const knoppen = acties();
 
   function zonNu() {
     const z = zon(moment(staat), BREEDTE, LENGTE);

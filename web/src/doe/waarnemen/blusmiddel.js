@@ -1,6 +1,7 @@
 // Kies het blusmiddel: a small fire, and seven choices. Some fires have more than one good answer; some have one
 // that makes it much worse. After brandweer.nl (Het juiste blusmiddel, Vlam in de pan).
 import { h } from '../../dom.js';
+import { actie, acties } from '../knoppen.js';
 import { schud } from './hulp.js';
 import './wn.css';
 import './blusmiddel.css';
@@ -38,8 +39,8 @@ export default function blusmiddel() {
   const knoppen = MIDDELEN.map(([k, n]) => h('button.knop.bm-keuze', { type: 'button', 'data-k': k, onclick: () => kies(k) }, n));
   const melding = h('p.doe-melding', { 'aria-live': 'polite' });
   const score = h('p.wn-score');
-  const verder = h('button.knop.hoofd.klein', { type: 'button', hidden: true, onclick: nieuw }, 'Volgende brand');
-  const el = h('div.wn.doe-blusmiddel', vraag, h('div.bm-keuzes', { role: 'group', 'aria-label': 'Blusmiddel' }, knoppen), melding, h('div.knop-rij', verder), score);
+  const verder = actie('Volgende brand', 'verder', nieuw, { hoofd: true, klein: true, hidden: true });
+  const el = h('div.wn.doe-blusmiddel', vraag, h('div.bm-keuzes', { role: 'group', 'aria-label': 'Blusmiddel' }, knoppen), acties(verder), melding, score);
 
   function kies(k) {
     if (klaar) return;

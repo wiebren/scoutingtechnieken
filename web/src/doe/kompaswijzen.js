@@ -108,7 +108,7 @@ export default function kompaswijzen() {
   const oefen = h('div.kd-oefen', { hidden: true }, h('div.kd-beeld', svg), h('div.kd-tekst', vraagTekst, melding, score));
   const bekijk = h('div.kd-namen', kompasMetNamen());
   const plek = h('div.kd-draai', { hidden: true }, h('p.leeg', 'Even laden…'));
-  const chips = keuze([['bekijk', 'Bekijk de delen'], ['wijs', 'Wijs de delen aan'], ['draai', 'Draai het kompas']], 'bekijk', (w) => {
+  const chips = keuze([['bekijk', 'Bekijken'], ['wijs', 'Aanwijzen'], ['draai', 'Draaien']], 'bekijk', (w) => {
     bekijk.hidden = w !== 'bekijk'; oefen.hidden = w !== 'wijs'; plek.hidden = w !== 'draai';
     if (w === 'draai' && !draaien) {
       draaien = import('./kompas.js').then(({ default: kompas }) => plek.replaceChildren(kompas()));

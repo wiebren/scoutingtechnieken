@@ -4,7 +4,7 @@
 // tekens to type a message in code back into letters. `code` picks the code to start with, so the piece can open on
 // the right code on each blad; you can always pick another.
 import { h } from '../../dom.js';
-import { keuze } from '../knoppen.js';
+import { actie, acties, keuze } from '../knoppen.js';
 import { CODES, standaardSleutels } from './lib/geheim.js';
 import { TEKENSCHRIFT } from './lib/tekens.js';
 import { BREED, HOOG, SEMAFOOR, armen, pop } from './lib/seinpop.js';
@@ -53,12 +53,12 @@ export default function codeermachine({ code: beginCode = 'verschuiving' } = {})
   geheim.setAttribute('aria-labelledby', geheimLabel.id);
   const geheimKant = h('div.doe-label', geheimLabel, geheim, tekenVeld);
   const opmerking = h('p.doe-stil', { 'aria-live': 'polite' });
-  const kopieer = h('button.knop.klein', { type: 'button', onclick: () => kopieren() }, 'Kopieer de code');
-  const wissel = h('button.knop.klein', { type: 'button', onclick: () => { gewoon.value = ''; geheim.value = ''; laatst = 'gewoon'; werkBij(); gewoon.focus(); } }, 'Wis');
+  const kopieer = actie('Kopieer de code', null, () => kopieren(), { klein: true });
+  const wissel = actie('Wis', 'wis', () => { gewoon.value = ''; geheim.value = ''; laatst = 'gewoon'; werkBij(); gewoon.focus(); }, { klein: true });
   const toetsenbord = h('div.cm-toetsen', { role: 'group', 'aria-label': 'Typ in tekens' });
   const toetsPlek = h('div.cm-toetsplek',
     h('div.cm-toetskop', h('span', 'Typ een boodschap in tekens:'), h('div.chips', h('button.chip', { type: 'button', 'aria-pressed': 'false',
-      onclick: (e) => { metLetters = !metLetters; e.currentTarget.setAttribute('aria-pressed', String(metLetters)); bouwToetsen(); } }, 'Toon de letters'))),
+      onclick: (e) => { metLetters = !metLetters; e.currentTarget.setAttribute('aria-pressed', String(metLetters)); bouwToetsen(); } }, 'Met letters'))),
     toetsenbord);
   const hoe = h('div.cm-hoe');
 
@@ -66,8 +66,8 @@ export default function codeermachine({ code: beginCode = 'verschuiving' } = {})
     h('label.doe-label', 'Code', kies),
     sleutelPlek,
     h('div.cm-velden', h('label.doe-label', 'Gewone tekst', gewoon), geheimKant),
+    acties(kopieer, wissel),
     opmerking,
-    h('div.knop-rij', kopieer, wissel),
     toetsPlek,
     hoe);
 

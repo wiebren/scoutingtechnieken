@@ -3,7 +3,7 @@
 import { h } from '../../dom.js';
 import { willekeurig } from '../codes.js';
 import { geluid, speel } from '../klank.js';
-import { keuze } from '../knoppen.js';
+import { actie, acties, keuze } from '../knoppen.js';
 import '../vorm.css';
 import './fluit.css';
 
@@ -56,9 +56,9 @@ export default function fluit() {
   // -- the quiz
   const opties = h('div.fl-opties', { role: 'group', 'aria-label': 'Wat betekent dit signaal?' });
   const score = h('p.doe-stil');
-  const nogEens = h('button.knop', { type: 'button', onclick: () => vraag && blaas(vraag) }, '▶ Nog eens');
-  const volgende = h('button.knop.hoofd', { type: 'button', onclick: () => nieuweVraag() }, '▶ Volgend signaal');
-  const raden = h('div.fl-paneel', h('p', 'Luister. Wat betekent dit signaal?'), h('div.knop-rij', volgende, nogEens), opties, score);
+  const nogEens = actie('Nog eens', 'geluid', () => vraag && blaas(vraag));
+  const volgende = actie('Volgend signaal', 'verder', () => nieuweVraag(), { hoofd: true });
+  const raden = h('div.fl-paneel', h('p', 'Luister. Wat betekent dit signaal?'), opties, acties(volgende, nogEens), score);
 
   function nieuweVraag() {
     let s;
@@ -84,7 +84,7 @@ export default function fluit() {
   }
 
   const el = h('div.doe-fluit',
-    h('div.chips', { role: 'group', 'aria-label': 'Wat wil je doen?' }, keuze([['luisteren', 'Luister'], ['raden', 'Raad het signaal']], 'luisteren', (m) => {
+    h('div.chips', { role: 'group', 'aria-label': 'Wat wil je doen?' }, keuze([['luisteren', 'Luisteren'], ['raden', 'Raden']], 'luisteren', (m) => {
       lijst.hidden = m !== 'luisteren';
       raden.hidden = m !== 'raden';
       melding.textContent = '';

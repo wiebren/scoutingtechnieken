@@ -4,7 +4,7 @@
 // - veranderd: eight things; cloth over, one is moved to another place; tap it.
 // The things are drawn here, each in a box of 40 by 40.
 import { h } from '../../dom.js';
-import { keuze } from '../knoppen.js';
+import { actie, acties, keuze, zetActie } from '../knoppen.js';
 import { s, schud } from './hulp.js';
 import './wn.css';
 import './kim.css';
@@ -55,15 +55,18 @@ export default function kim({ soort = 'noemen' } = {}) {
   const teller = h('p.wn-groot', { 'aria-live': 'off' });
   const melding = h('p', { 'aria-live': 'polite' });
   const keuzes = h('div.km-keuzes', { role: 'group', 'aria-label': 'Wat lag er?' });
-  const startKnop = h('button.knop.hoofd', { type: 'button', onclick: start }, 'Haal de doek eraf');
-  const klaarKnop = h('button.knop.klein', { type: 'button', hidden: true, onclick: dekToe }, 'Ik heb het onthouden');
-  const nakijk = h('button.knop.hoofd.klein', { type: 'button', hidden: true, onclick: kijkNa }, 'Kijk na');
+  const startKnop = actie('Haal de doek eraf', 'start', start, { hoofd: true });
+  const klaarKnop = actie('Leg de doek erover', 'stop', dekToe, { klein: true, hidden: true });
+  const nakijk = actie('Kijk na', 'vink', kijkNa, { hoofd: true, klein: true, hidden: true });
   const tijdChips = soort === 'noemen' && keuze([[30, '30 seconden'], [60, '1 minuut']], tijd, (t) => { tijd = t; });
 
+  // the actions below the drawing and the things to tap, with the seconds you have left to look
+  const rij = acties(startKnop, klaarKnop, nakijk, teller);
+  rij.classList.add('wn-rij');
   const el = h('div.wn.doe-kim',
     h('p', { noemen: `Er liggen ${aantal} dingen onder de doek. Onthoud er zoveel mogelijk.`, weg: 'Onthoud wat er ligt. Daarna haalt iemand er één weg.', veranderd: 'Onthoud waar alles ligt. Daarna legt iemand één ding ergens anders.' }[soort]),
     tijdChips && h('div.chips', { role: 'group', 'aria-label': 'Hoe lang kijken' }, tijdChips),
-    svg, h('div.wn-rij', startKnop, klaarKnop, teller), melding, keuzes, h('div.knop-rij', nakijk));
+    svg, keuzes, rij, melding);
 
   const plekXY = (p) => [8 + (p % VAKKEN[0]) * 78 + 18, 10 + Math.floor(p / VAKKEN[0]) * 68 + 14];
 
@@ -188,7 +191,7 @@ export default function kim({ soort = 'noemen' } = {}) {
     opnieuw();
   }
 
-  function opnieuw() { startKnop.hidden = false; startKnop.textContent = 'Nog een keer'; }
+  function opnieuw() { startKnop.hidden = false; zetActie(startKnop, 'Nog een keer', 'opnieuw'); }
 
   legNeer();
   return el;

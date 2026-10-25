@@ -2,6 +2,7 @@
 // from the Handboek C2000 Brandweer, bijlage C Radioprocedures (reference/vakbronnen/BRONNEN.md); the
 // netcontrolestation of the brandweer (the meldkamer) is the leiding here, and you are a post on a hike.
 import { h } from '../../dom.js';
+import { actie, acties } from '../knoppen.js';
 import '../vorm.css';
 import './portofoon.css';
 
@@ -33,7 +34,7 @@ export default function portofoon() {
   const log = h('ol.pf-log', { 'aria-live': 'polite' });
   const woorden = h('div.pf-woorden', { role: 'group', 'aria-label': 'Welk woord hoort op de streep?' });
   const melding = h('p.doe-melding', { 'aria-live': 'polite' });
-  const opnieuw = h('button.knop.klein', { type: 'button', onclick: () => begin() }, 'Opnieuw');
+  const opnieuw = actie('Opnieuw', 'opnieuw', () => begin(), { klein: true });
 
   const regel = (wie, tekst, invul) => {
     const delen = tekst.split('___');
@@ -91,7 +92,7 @@ export default function portofoon() {
   }
 
   woorden.append(...WOORDEN.map((w) => h('button.knop.klein.pf-woord', { type: 'button', onclick: (e) => kies(w, e.currentTarget) }, w)));
-  const el = h('div.doe-portofoon', log, melding, woorden, h('div.knop-rij', opnieuw),
+  const el = h('div.doe-portofoon', log, melding, woorden, acties(opnieuw),
     h('p.doe-stil', 'Druk de zendknop in, wacht één seconde en praat dan pas. Rustig en duidelijk, nooit schreeuwen.'));
   begin();
   return el;

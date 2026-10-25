@@ -3,6 +3,7 @@
 // real life the leiding helps: hold the paper above a lamp or iron it, never above a flame.
 import { h } from '../../dom.js';
 import { willekeurig } from '../codes.js';
+import { actie, acties } from '../knoppen.js';
 import '../vorm.css';
 import './inkt.css';
 
@@ -67,9 +68,9 @@ export default function inkt() {
   const el = h('div.doe-inkt',
     papier,
     h('p.doe-stil', 'Wrijf met je vinger of de muis (ingedrukt) over het papier om het te verwarmen.'),
-    h('div.knop-rij',
-      h('button.knop.klein', { type: 'button', onclick: () => strijk() }, 'Strijk het hele papier'),
-      h('button.knop.klein', { type: 'button', onclick: () => { clearInterval(tik); nieuw(); } }, 'Nieuw papiertje')),
+    acties(
+      actie('Strijk het hele papier', null, () => strijk(), { klein: true }),
+      actie('Nieuw papiertje', 'opnieuw', () => { clearInterval(tik); nieuw(); }, { klein: true })),
     melding);
   nieuw();
   return el;

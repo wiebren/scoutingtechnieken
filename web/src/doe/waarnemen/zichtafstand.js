@@ -2,7 +2,7 @@
 // details you can still see there (the table Baden-Powell took from the German army in 1908, in metres). Kijk: slide
 // the distance and see what goes. Schat: guess how far someone is; within 25 % counts, as for the NPV in 1916.
 import { h } from '../../dom.js';
-import { keuze } from '../knoppen.js';
+import { actie, acties, keuze } from '../knoppen.js';
 import { getal, s, tussen } from './hulp.js';
 import '../vorm.css';
 import './wn.css';
@@ -58,14 +58,15 @@ export default function zichtAfstand() {
     onkeydown: (e) => { if (e.key === 'Enter') { e.preventDefault(); controleer(); } } });
   const melding = h('p.doe-melding', { 'aria-live': 'polite' });
   const score = h('p.wn-score');
-  const volgende = h('button.knop.klein', { type: 'button', onclick: nieuw }, 'Nog een');
+  const volgende = actie('Nog een', 'opnieuw', nieuw, { klein: true });
   const schatDeel = h('div.wn-tekst',
     h('p', 'Hoe ver staat deze persoon? Binnen 25 % is goed.'),
-    h('div.wn-rij', veld, h('span', 'meter'), h('button.knop.hoofd.klein', { type: 'button', onclick: controleer }, 'Kijk na'), volgende),
+    h('div.wn-rij', veld, h('span', 'meter')),
+    acties(actie('Kijk na', 'vink', controleer, { hoofd: true, klein: true }), volgende),
     melding, score);
 
   const omschrijving = h('p.doe-sr', { 'aria-live': 'polite' });
-  const chips = keuze([['kijk', 'Kijk'], ['schat', 'Schat zelf']], modus, (m) => { modus = m; wissel(); });
+  const chips = keuze([['kijk', 'Kijken'], ['schat', 'Zelf schatten']], modus, (m) => { modus = m; wissel(); });
   const el = h('div.wn.doe-zicht', h('div.chips', { role: 'group', 'aria-label': 'Kies' }, chips), svg, omschrijving, kijkDeel, schatDeel);
 
   function teken() {

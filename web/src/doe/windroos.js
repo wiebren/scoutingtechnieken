@@ -4,6 +4,7 @@
 // 32 points a point is too small to hit, so a tap counts by its angle: the point nearest to it, and a finger can
 // slide to another before it lets go.
 import { h } from '../dom.js';
+import { actie, acties } from './knoppen.js';
 import { STREKEN } from '../plaatjes.js';
 import './vorm.css';
 import './windroos.css';
@@ -65,20 +66,19 @@ export default function windroos({ n = 16 } = {}) {
   // -- the words beside it
   const chip = (wat, tekst) => h('button.chip', { type: 'button', 'aria-pressed': String(modus === wat), onclick: () => zetModus(wat) }, tekst);
   const MODI = ['bekijk', 'wijs', 'benoem'];
-  const chips = [chip('bekijk', 'Bekijk'), chip('wijs', 'Wijs aan'), chip('benoem', 'Benoem')];
+  const chips = [chip('bekijk', 'Bekijken'), chip('wijs', 'Aanwijzen'), chip('benoem', 'Benoemen')];
   const vraagRegel = h('p.wr-vraag', { 'aria-live': 'polite' });
   const keuzeVak = h('div.wr-keuzes');
   const melding = h('p.doe-melding', { 'aria-live': 'polite' });
   const stand = h('p.doe-sr', { 'aria-live': 'polite' });          // where the arrow keys point, for a screen reader
   const score = h('p.wr-score');
-  const volgende = h('button.knop.klein.hoofd', { type: 'button', hidden: true, onclick: () => nieuweVraag() }, 'Volgende');
+  const volgende = actie('Volgende', 'verder', () => nieuweVraag(), { hoofd: true, klein: true, hidden: true });
 
   const el = h('div.doe-windroos',
     h('div.wr-beeld', svg),
     h('div.wr-tekst',
       h('div.chips', { role: 'group', 'aria-label': 'Kies wat je oefent' }, chips),
-      vraagRegel, keuzeVak, melding, stand, score,
-      h('div.knop-rij', volgende)));
+      vraagRegel, keuzeVak, acties(volgende), melding, stand, score));
 
   // -- drawing
   function teken() {

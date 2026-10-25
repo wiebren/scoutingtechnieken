@@ -3,6 +3,7 @@
 // the km-line), then the stairs up. "Zoek het punt" gives a coordinate to find, and says how far off a tap was.
 import { BEELDEN, BRONNEN } from '../data/beelden.js';
 import { h } from '../dom.js';
+import { actie, acties } from './knoppen.js';
 import './rdkaart.css';
 
 const NS = 'http://www.w3.org/2000/svg';
@@ -53,19 +54,19 @@ export default function rdkaart() {
 
   // -- the words under it
   const chip = (wat, tekst) => h('button.chip', { type: 'button', 'aria-pressed': String(modus === wat), onclick: () => zetModus(wat) }, tekst);
-  const chips = [chip('waar', 'Waar ben ik?'), chip('zoek', 'Zoek het punt')];
+  const chips = [chip('waar', 'Waar ben ik?'), chip('zoek', 'Punt zoeken')];
   const opdracht = h('p.rk-opdracht');
   const uitkomst = h('p.rk-uitkomst', { 'aria-live': 'polite' });
   const uitleg = h('p.rk-uitleg');
   const score = h('p.rk-score');
-  const volgende = h('button.knop.klein.hoofd', { type: 'button', hidden: true, onclick: () => nieuwDoel() }, 'Volgende');
+  const volgende = actie('Volgende', 'verder', () => nieuwDoel(), { hoofd: true, klein: true, hidden: true });
 
   const el = h('div.doe-rdkaart',
     h('div.chips', { role: 'group', 'aria-label': 'Kies wat je oefent' }, chips),
     opdracht,
     h('figure.rk-figuur', beeld, h('figcaption.rk-bron', BRONNEN.kadaster)),
-    uitkomst, uitleg, score,
-    h('div.knop-rij', volgende));
+    acties(volgende),
+    uitkomst, uitleg, score);
 
   // -- drawing
   function teken() {

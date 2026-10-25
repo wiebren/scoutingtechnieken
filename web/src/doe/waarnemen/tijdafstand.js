@@ -1,7 +1,7 @@
 // Tijd en afstand: pick a tempo (with a rucksack, brisk walking, verkennerspas) or your own, and turn minutes into
 // kilometres and back. Below, a stopwatch for a stretch you know: walk it, and the piece gives your own tempo.
 import { h } from '../../dom.js';
-import { keuze } from '../knoppen.js';
+import { actie, acties, keuze, zetActie } from '../knoppen.js';
 import { getal } from './hulp.js';
 import '../vorm.css';
 import './wn.css';
@@ -30,7 +30,7 @@ export default function tijdAfstand() {
 
   const klok = h('p.wn-groot.ta-klok', '0:00');
   const meters = h('input.doe-veld', { type: 'number', min: 50, step: 50, inputmode: 'numeric', value: 1000, 'aria-label': 'Afstand die je loopt, in meters' });
-  const startKnop = h('button.knop.hoofd.klein', { type: 'button', onclick: () => (begin == null ? start() : stop()) }, 'Start');
+  const startKnop = actie('Start', 'start', () => (begin == null ? start() : stop()), { hoofd: true, klein: true });
   const klokTekst = h('p', { 'aria-live': 'polite' });
 
   const el = h('div.wn.doe-tijdafstand',
@@ -46,7 +46,8 @@ export default function tijdAfstand() {
     h('section.ta-blok',
       h('h4', 'Meet je eigen tempo'),
       h('p.doe-stil', 'Loop een stuk dat je zeker weet, bijvoorbeeld tien stukken tussen de hectometerpaaltjes langs de weg (1 km). Start bij het begin en stop aan het eind.'),
-      h('div.wn-rij', meters, h('span', 'meter'), startKnop),
+      h('div.wn-rij', meters, h('span', 'meter')),
+      acties(startKnop),
       klok, klokTekst));
 
   function reken(van) {
@@ -70,14 +71,14 @@ export default function tijdAfstand() {
   }
   function start() {
     begin = performance.now();
-    startKnop.textContent = 'Stop';
+    zetActie(startKnop, 'Stop', 'stop');
     klokTekst.textContent = 'De klok loopt.';
     tik();
   }
   function stop() {
     const min = (performance.now() - begin) / 60000;
     begin = null; cancelAnimationFrame(frame);
-    startKnop.textContent = 'Start';
+    zetActie(startKnop, 'Start', 'start');
     const m = Number(meters.value) || 1000;
     if (min < 0.05) { klokTekst.textContent = 'Dat was wel heel snel. Probeer het nog eens.'; return; }
     const kmu = (m / 1000) / (min / 60);

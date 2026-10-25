@@ -3,7 +3,7 @@
 // about 175 °C (350 °F), two-thirds on the lid and one-third under it for baking; two briquettes more or less is about
 // 25 °F (some 15 °C). Heat rises, so coals underneath heat the bottom more than coals on the lid heat the top.
 import { h } from '../../dom.js';
-import { keuze } from '../knoppen.js';
+import { actie, acties, keuze } from '../knoppen.js';
 import { s } from '../kompasdelen.js';
 import '../vorm.css';
 import './vuur.css';
@@ -42,8 +42,8 @@ export default function dutchOven() {
       h('div.vk-rij', { role: 'group', 'aria-label': 'Maat van de pan' }, h('p.vk-kop', 'Maat van de pan'),
         keuze(MATEN.map(([i, cm]) => [i, `${cm} cm (${i} inch)`]), inch, (i) => { inch = i; teken(); })),
       tOp.el, tOnder.el,
-      h('div.knop-rij', h('button.knop.klein', { type: 'button', onclick: () => { op = Math.round((4 * inch) / 3); onder = 2 * inch - op; teken(); } }, 'Leg volgens de vuistregel'),
-        h('button.knop.klein', { type: 'button', onclick: () => { op = 0; onder = 0; teken(); } }, 'Alles eraf')),
+      acties(actie('Leg volgens de vuistregel', null, () => { op = Math.round((4 * inch) / 3); onder = 2 * inch - op; teken(); }, { klein: true }),
+        actie('Haal alles eraf', 'wis', () => { op = 0; onder = 0; teken(); }, { klein: true })),
       temp, melding));
 
   function teken() {

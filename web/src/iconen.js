@@ -1,5 +1,5 @@
-// Line icons on a 24 grid, drawn in currentColor: the four pages of the navigation and the fourteen categories
-// (their groepen: src/groepiconen.js).
+// Line icons on a 24 grid, drawn in currentColor: the four pages of the navigation, the fourteen categories (their
+// groepen: src/groepiconen.js), and the actions in the pieces.
 // Plain shapes only: no emblem or logo of an organisation.
 
 const PADEN = {
@@ -29,6 +29,14 @@ const PADEN = {
   sluit: '<path d="M6 6l12 12M18 6 6 18"/>',
   extern: '<path d="M14 4h6v6M20 4l-9 9"/><path d="M18 14v5a1 1 0 0 1-1 1H5a1 1 0 0 1-1-1V7a1 1 0 0 1 1-1h5"/>',
   vink: '<path d="M5 12.5l4.5 4.5L19 7.5"/>',
+  // actions in the pieces (src/doe/knoppen.js, actie)
+  start: '<path d="M7 4.5v15l12-7.5z"/>',
+  stop: '<rect x="6" y="6" width="12" height="12" rx="1.5"/>',
+  opnieuw: '<path d="M4.5 12a7.5 7.5 0 1 0 2.3-5.4"/><path d="M4.5 3.5v4.2h4.2"/>',
+  oog: '<path d="M2.5 12S6 5.5 12 5.5 21.5 12 21.5 12 18 18.5 12 18.5 2.5 12 2.5 12z"/><circle cx="12" cy="12" r="3"/>',
+  wis: '<path d="M6 6l12 12M18 6 6 18"/>',
+  klok: '<circle cx="12" cy="12" r="8.5"/><path d="M12 7v5l3.5 2"/>',
+  geluid: '<path d="M4 9.5h3.5L12 5.5v13l-4.5-4H4z"/><path d="M15.5 9a4 4 0 0 1 0 6M18 6.5a7.5 7.5 0 0 1 0 11"/>',
   // the insignes: all done (a hopman's hat: ask your leiding) and received (the insigne badge, as in the menu)
   hoed: '<path d="M2.5 16.2c0-1.5 4.3-2.6 9.5-2.6s9.5 1.1 9.5 2.6-4.3 2.6-9.5 2.6-9.5-1.1-9.5-2.6z"/><path d="M6.6 14.4C7 9.6 9 6.3 12 6c3 .3 5 3.6 5.4 8.4"/><path d="M12 6v3.6M9.6 7.6l1.2 2.9M14.4 7.6l-1.2 2.9"/><path d="M6.8 12.8c3.4.8 7 .8 10.4 0"/>',
   // received: the same badge as Insignes in the menu, in gold

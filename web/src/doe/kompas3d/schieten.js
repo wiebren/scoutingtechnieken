@@ -6,7 +6,7 @@
 // (the plaatkompas held flat: look along the direction arrow). The plaatkompas gets a little more room (kijker.js
 // SOORT), as on the blad: it is less precise from the hand. opties.opdracht: 'peilen' or 'koers' to start with.
 import { h } from '../../dom.js';
-import { keuze, schakel } from '../knoppen.js';
+import { actie, acties, keuze, schakel } from '../knoppen.js';
 import { BAKENS, maakVeld, zijde } from './veld.js';
 import { maakKijker, opruimen, SOORT } from './kijker.js';
 
@@ -27,7 +27,7 @@ export default function kompasSchieten({ kompas = 'spiegel', opdracht = 'peilen'
     onkeydown: (e) => { if (e.key === 'Enter') { e.preventDefault(); leesAf(); } } });
   const peilAntwoord = h('div.k3-antwoord',
     h('label.doe-label', { for: `${id}-lees` }, h('span', 'Wat lees je af bij de index?'), h('span.k3-graden', invoer, h('span', { 'aria-hidden': 'true' }, '°'))),
-    h('button.knop.hoofd', { type: 'button', onclick: () => leesAf() }, 'Lees af'));
+    actie('Lees af', 'vink', () => leesAf(), { hoofd: true }));
   const koersAntwoord = h('div.k3-antwoord.k3-kies', h('p.doe-stil', S.kijkVraag),
     h('div.chips', { role: 'group', 'aria-label': S.kijkVraag },
       Object.entries(BAKENS).map(([soort, b]) => h('button.chip', { type: 'button', onclick: () => kiesBaken(soort) }, b.naam)),
@@ -40,10 +40,11 @@ export default function kompasSchieten({ kompas = 'spiegel', opdracht = 'peilen'
       schakel('Namen', true, (v) => kijker.zetNamen(v))),
     opdrachtRegel, stappen,
     kijker.el, kijker.bediening,
-    peilAntwoord, koersAntwoord, melding, kijker.stand,
-    h('div.knop-rij',
-      h('button.knop.klein', { type: 'button', onclick: () => nieuweTaak() }, 'Nieuwe opdracht'),
-      h('button.knop.klein', { type: 'button', onclick: () => { veld = maakVeld(1 + Math.floor(Math.random() * 99999)); kijker.zetVeld(veld); nieuweTaak(); } }, 'Ander landschap')),
+    peilAntwoord, koersAntwoord,
+    acties(
+      actie('Nieuwe opdracht', 'opnieuw', () => nieuweTaak(), { klein: true }),
+      actie('Ander landschap', 'opnieuw', () => { veld = maakVeld(1 + Math.floor(Math.random() * 99999)); kijker.zetVeld(veld); nieuweTaak(); }, { klein: true })),
+    melding, kijker.stand,
     h('p.doe-stil.k3-hulp', S.hulp));
 
   // -- the tasks

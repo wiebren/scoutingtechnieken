@@ -2,6 +2,7 @@
 // and hears why. After brandweer.nl (Elektrische apparaten; Opladers, batterijen en accu's; Op kamers en
 // studentenwoningen; Rookmelders; December brandveilige feestmaand; Doe de deur dicht), read 16-10-2026.
 import { h } from '../../dom.js';
+import { actie, acties } from '../knoppen.js';
 import { schud } from './hulp.js';
 import './wn.css';
 import './brandgevaar.css';
@@ -26,9 +27,9 @@ const SITUATIES = [
     uitleg: 'Goed. Van alle apparaten is de wasdroger het brandgevaarlijkst. Maak de filters steeds schoon.' },
   { wat: 'De tv staat de hele nacht op standby.', gevaar: true,
     uitleg: 'Op standby blijft een deel van het apparaat aan en warm. Zet apparaten helemaal uit.' },
-  { wat: 'Je e-step is gevallen en de accu is een beetje vervormd. Je zet hem toch aan de lader.', gevaar: true,
+  { wat: 'Je e-step is gevallen en de accu is een beetje vervormd. Je zet hem aan de lader.', gevaar: true,
     uitleg: 'Een accu die gevallen, kapot of vervormd is, leg je buiten neer en lever je zo snel mogelijk in.' },
-  { wat: 'Een kaars staat in een stevige houder, ver van de kerstversiering.', gevaar: false,
+  { wat: 'Een kaars staat in een houder op tafel. De kerstversiering hangt aan de andere kant van de kamer.', gevaar: false,
     uitleg: 'Zo kan het: een stevige houder, niet bij iets dat kan branden, en niet bij een warmtebron. Geen echte kaarsen in kerststukjes.' },
   { wat: 'Je drukt op de testknop van de rookmelder, en hij piept niet.', gevaar: true,
     uitleg: 'Dan werkt hij niet. Test elke maand. Op elke verdieping moet een rookmelder hangen die het doet.' },
@@ -47,10 +48,10 @@ export default function brandgevaar() {
     h(`button.knop.bg-keuze${g ? '.bg-gevaar' : ''}`, { type: 'button', onclick: () => kies(g) }, naam));
   const melding = h('p.doe-melding', { 'aria-live': 'polite' });
   const score = h('p.wn-score');
-  const verder = h('button.knop.hoofd.klein', { type: 'button', hidden: true, onclick: nieuw }, 'Volgende');
+  const verder = actie('Volgende', 'verder', nieuw, { hoofd: true, klein: true, hidden: true });
   const el = h('div.wn.doe-brandgevaar',
     h('p', 'Is dit veilig, of is het brandgevaar?'),
-    vraag, h('div.bg-keuzes', { role: 'group', 'aria-label': 'Veilig of brandgevaar' }, keuzes), melding, h('div.knop-rij', verder), score);
+    vraag, h('div.bg-keuzes', { role: 'group', 'aria-label': 'Veilig of brandgevaar' }, keuzes), acties(verder), melding, score);
 
   function kies(g) {
     if (klaar) return;

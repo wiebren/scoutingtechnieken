@@ -9,7 +9,7 @@
 //    junction on the line; which one?
 // Then tap where you think you are, and see where you were and what went wrong with each line.
 import { h } from '../../dom.js';
-import { keuze, schakel } from '../knoppen.js';
+import { actie, acties, keuze, schakel } from '../knoppen.js';
 import { kompasDelen, s, p } from '../kompasdelen.js';
 import { wegenLaag } from '../route/kaart2d.js';
 import { BAKENS, maakVeld, zijde, graden } from './veld.js';
@@ -75,7 +75,7 @@ export default function peilkaart({ modus: start = 'twee', stil = false } = {}) 
     kijker.el, kijker.bediening,
     h('div.k3-antwoord',
       h('label.doe-label', { for: `${id}-lees` }, h('span', 'Wat lees je af bij de index? Schrijf het op.'), h('span.k3-graden', lees, h('span', { 'aria-hidden': 'true' }, '°'))),
-      h('button.knop.hoofd', { type: 'button', onclick: () => naarKaart() }, 'Naar de kaart')),
+      actie('Naar de kaart', 'verder', () => naarKaart(), { hoofd: true })),
     kijker.stand);
 
   // -- step 2: the map
@@ -91,7 +91,7 @@ export default function peilkaart({ modus: start = 'twee', stil = false } = {}) 
   const kaartKnoppen = h('div.pk-knoppen',
     h('div.k3-antwoord',
       h('label.doe-label', { for: `${id}-terug` }, h('span', 'Terugkoers'), h('span.k3-graden', terug, h('span', { 'aria-hidden': 'true' }, '°'))),
-      h('button.knop.klein', { type: 'button', onclick: () => zetTerug() }, 'Zet op het huis')),
+      actie('Zet op het huis', null, () => zetTerug(), { klein: true })),
     h('div.k3-bediening',
       h('div.k3-groep', { role: 'group', 'aria-label': 'Draai het hele kompas' }, h('span.k3-groep-label', 'Kompas'),
         houdKnop(timers, 'Draai het hele kompas tegen de klok in', '↺', () => zetPlaat(plaatHoek - 1)),
@@ -99,8 +99,8 @@ export default function peilkaart({ modus: start = 'twee', stil = false } = {}) 
       h('div.k3-groep', { role: 'group', 'aria-label': 'Draai het huis' }, h('span.k3-groep-label', 'Huis'),
         houdKnop(timers, 'Draai het huis tegen de klok in', '↺', () => zetKaartHuis(kaartHuis + 1)),
         houdKnop(timers, 'Draai het huis met de klok mee', '↻', () => zetKaartHuis(kaartHuis - 1)))),
-    h('button.knop.hoofd', { type: 'button', onclick: () => trekLijn() }, 'Trek de lijn'));
-  const tikKnoppen = h('div.knop-rij', h('button.knop.hoofd', { type: 'button', onclick: () => plaatsCursor() }, 'Hier sta ik'));
+    actie('Trek de lijn', 'vink', () => trekLijn(), { hoofd: true }));
+  const tikKnoppen = acties(actie('Hier sta ik', 'vink', () => plaatsCursor(), { hoofd: true }));
   const huisWaarde = h('p.pk-huiswaarde', { 'aria-hidden': 'true' });
   const kaartDeel = h('div.pk-deel', h('div.pk-kaartvak', svg), huisWaarde, kaartStand, kaartKnoppen, tikKnoppen);
 
@@ -109,10 +109,11 @@ export default function peilkaart({ modus: start = 'twee', stil = false } = {}) 
       h('div.chips', { role: 'group', 'aria-label': 'Hoeveel peilingen?' },
         keuze([['een', 'Eén peiling'], ['twee', 'Twee peilingen']], modus, (m) => { modus = m; nieuw(); })),
       schakel('Namen', true, (v) => kijker.zetNamen(v))),
-    opdrachtRegel, stappen, peilDeel, kaartDeel, melding, uitslag,
-    h('div.knop-rij',
-      h('button.knop.klein', { type: 'button', onclick: () => nieuw() }, 'Opnieuw, ergens anders'),
-      h('button.knop.klein', { type: 'button', onclick: () => { veld = maakVeld(1 + Math.floor(Math.random() * 99999)); kijker.zetVeld(veld); tekenKaart(); nieuw(); } }, 'Ander landschap')),
+    opdrachtRegel, stappen, peilDeel, kaartDeel,
+    acties(
+      actie('Opnieuw, ergens anders', 'opnieuw', () => nieuw(), { klein: true }),
+      actie('Ander landschap', 'opnieuw', () => { veld = maakVeld(1 + Math.floor(Math.random() * 99999)); kijker.zetVeld(veld); tekenKaart(); nieuw(); }, { klein: true })),
+    melding, uitslag,
     h('p.doe-stil.k3-hulp', 'Op de kaart doet de naald niet mee: je legt het kompas met de noordlijnen langs de blauwe noord-zuidlijnen. De lijn loopt van het baken naar jou, dus je zet de terugkoers uit: je peiling plus of min 180°. Hier wijst de naald precies langs de noord-zuidlijnen; in het echt wijst hij in Nederland ongeveer 3° oostelijker (declinatie), en dat merk je over een paar honderd meter nauwelijks.'));
 
   // -- the map: roads, grid, landmarks; north up, y flipped

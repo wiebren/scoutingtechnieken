@@ -2,7 +2,7 @@
 // text, the signs as small SVG pictures, so both stay sharp at any size. "Bekijk" lists one group; "Raad" shows a
 // sign and you choose its name out of four from the same group.
 import { h } from '../dom.js';
-import { keuze } from './knoppen.js';
+import { actie, acties, keuze } from './knoppen.js';
 import { GROEPEN } from './legenda/index.js';
 import './vorm.css';
 import './legenda.css';
@@ -43,7 +43,7 @@ export default function legenda() {
     const vraag = groep.tekens[Math.floor(Math.random() * groep.tekens.length)];
     const opties = schud([vraag.naam, ...schud(namen.filter((n) => n !== vraag.naam)).slice(0, 3)]);
     const melding = h('p.doe-melding', { 'aria-live': 'polite' });
-    const verder = h('button.knop.klein.hoofd', { type: 'button', hidden: true, onclick: raad }, 'Volgende');
+    const verder = actie('Volgende', 'verder', raad, { hoofd: true, klein: true, hidden: true });
     const knoppen = opties.map((naam) => h('button.knop.klein.lg-optie', { type: 'button', onclick: () => {
       gehad += 1;
       if (naam === vraag.naam) goed += 1;
@@ -60,12 +60,12 @@ export default function legenda() {
     plek.replaceChildren(h('div.lg-raad',
       h('div.lg-groot', teken(vraag, 4)),
       h('p.doe-sr', 'Welk teken is dit?'),
-      h('div.lg-opties', knoppen), melding, h('div.knop-rij', verder)));
+      h('div.lg-opties', knoppen), acties(verder), melding));
   }
 
   const toon = () => (modus === 'bekijk' ? bekijk() : raad());
   const modi = h('div.chips', { role: 'group', 'aria-label': 'Bekijken of raden' },
-    keuze([['bekijk', 'Bekijk'], ['raad', 'Raad']], modus, (m) => { modus = m; toon(); }));
+    keuze([['bekijk', 'Bekijken'], ['raad', 'Raden']], modus, (m) => { modus = m; toon(); }));
   const groepen = h('div.chips', { role: 'group', 'aria-label': 'Kies een groep' },
     keuze(GROEPEN.map((g) => [g, g.titel]), groep, (g) => { groep = g; toon(); }));
 

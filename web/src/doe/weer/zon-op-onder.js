@@ -2,6 +2,7 @@
 // seen from above, with you in the middle and the horizon round the edge. The higher the sun, the closer to the
 // middle. Slide the time to see where the sun is, and which way the shadow of a stick falls.
 import { h } from '../../dom.js';
+import { actie, acties } from '../knoppen.js';
 import { p, pol, s } from '../kompasdelen.js';
 import { beginStaat, datum, datumSchuif, moment, plaatsKeuze, plaatsVan, tijdNaam, tijdSchuif, zetNu } from './bediening.js';
 import { klok, klokNL, richtingTekst, windstreek, zon, zonOpOnder } from './hemel.js';
@@ -46,7 +47,7 @@ export default function opEnOnderStuk() {
   const opnieuw = () => teken();
   const datumS = datumSchuif(staat, opnieuw);
   const tijdS = tijdSchuif(staat, opnieuw);
-  const nuKnop = h('button.knop.klein', { type: 'button', onclick: () => { zetNu(staat); datumS.zet(); tijdS.zet(); teken(); } }, 'Nu');
+  const nuKnop = actie('Zet op nu', 'klok', () => { zetNu(staat); datumS.zet(); tijdS.zet(); teken(); }, { klein: true });
 
   const merk = (groep, hoogte, richting, tekst) => {
     const [x, y] = naar(hoogte, richting);
@@ -105,7 +106,7 @@ export default function opEnOnderStuk() {
   teken();
   return h('div.hm.doe-zon',
     h('div.hm-beeld', svg),
-    h('div.hm-tekst', plaatsKeuze(staat, opnieuw), datumS.el, tijdS.el, h('div.knop-rij', nuKnop),
+    h('div.hm-tekst', plaatsKeuze(staat, opnieuw), datumS.el, tijdS.el, acties(nuKnop),
       uitkomst, tabel, nu,
       h('p.hm-noot', 'Van bovenaf: jij staat in het midden, de rand is de horizon. Hoe hoger de zon, hoe dichter bij het midden. De grijze streep is de schaduw van een stok. Tijden in de klok van Nederland.')));
 }

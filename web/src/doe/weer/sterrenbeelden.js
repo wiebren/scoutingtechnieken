@@ -2,7 +2,7 @@
 // evening; "Raad" shows the stars and their lines without a name, and you choose the name out of four. Drawn as you
 // see them when they stand in the south: north up, east to the left. The stars around them are drawn too.
 import { h } from '../../dom.js';
-import { keuze } from '../knoppen.js';
+import { actie, acties, keuze } from '../knoppen.js';
 import { p, s } from '../kompasdelen.js';
 import { momentNL, PLAATS } from './hemel.js';
 import { BEELDEN, kleur, midden, NAMEN, PLEJADEN, STERREN, straal, sterrenVan } from './sterren.js';
@@ -105,7 +105,7 @@ export default function sterrenbeelden() {
     const vraag = BEELDEN[Math.floor(Math.random() * BEELDEN.length)];
     const opties = schud([vraag, ...schud(BEELDEN.filter((b) => b !== vraag)).slice(0, 3)]);
     const melding = h('p.doe-melding', { 'aria-live': 'polite' });
-    const verder = h('button.knop.klein.hoofd', { type: 'button', hidden: true, onclick: raad }, 'Volgende');
+    const verder = actie('Volgende', 'verder', raad, { hoofd: true, klein: true, hidden: true });
     const knoppen = opties.map((b) => h('button.knop.klein.sb-optie', { type: 'button', onclick: () => {
       gehad += 1; if (b === vraag) goed += 1;
       knoppen.forEach((k, i) => { k.disabled = true; if (opties[i] === vraag) k.classList.add('goed'); else if (opties[i] === b) k.classList.add('fout'); });
@@ -114,11 +114,11 @@ export default function sterrenbeelden() {
       verder.hidden = false; verder.focus();
     } }, b.naam));
     plek.replaceChildren(svg(vraag, false, 'Een sterrenbeeld. Welk is het?'), h('p.doe-sr', 'Welk sterrenbeeld is dit?'),
-      h('div.sb-opties', knoppen), melding, h('div.knop-rij', verder));
+      h('div.sb-opties', knoppen), acties(verder), melding);
   }
 
   const modi = h('div.chips', { role: 'group', 'aria-label': 'Bekijken of raden' },
-    keuze([['bekijk', 'Bekijk'], ['raad', 'Raad']], modus, (m) => { modus = m; if (m === 'raad') raad(); else bekijk(); }));
+    keuze([['bekijk', 'Bekijken'], ['raad', 'Raden']], modus, (m) => { modus = m; if (m === 'raad') raad(); else bekijk(); }));
   bekijk();
   return h('div.doe-sterrenbeelden', modi, plek,
     h('p.hm-noot', 'Zoals je ze ziet als ze in het zuiden staan: noord boven, oost links. Sterren uit de Yale Bright Star Catalogue.'));

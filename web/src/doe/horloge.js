@@ -3,6 +3,7 @@
 // the 2 (zomertijd) is south. The real north, east, south and west show once you have done it, with how far the
 // watch is out: little in winter, up to 20° and more on a summer afternoon.
 import { h } from '../dom.js';
+import { actie, acties } from './knoppen.js';
 import './horloge.css';
 
 const NS = 'http://www.w3.org/2000/svg';
@@ -121,7 +122,7 @@ export default function horloge() {
   const tijdIn = h('input.hw-schuif', { type: 'range', min: 360, max: 1200, step: 5, value: minuten,
     oninput: () => { minuten = Number(tijdIn.value); teken(); } });
   const tijdUit = h('output.hw-tijd');
-  const nuKnop = h('button.knop.klein', { type: 'button', onclick: () => zetNu() }, 'Nu');
+  const nuKnop = actie('Zet op nu', 'klok', () => zetNu(), { klein: true });
   const stappen = h('ol.hw-stappen');
   const stand = h('p.hw-stand', { 'aria-live': 'polite' });
   const melding = h('p.hw-melding', { 'aria-live': 'polite' });
@@ -133,7 +134,7 @@ export default function horloge() {
     h('div.hw-beeld', svg),
     h('div.hw-tekst',
       h('div.chips', { role: 'group', 'aria-label': 'Zomertijd of wintertijd' }, chips),
-      h('label.hw-klok', h('span.hw-label', 'Tijd'), tijdIn, tijdUit), h('div.knop-rij', nuKnop),
+      h('label.hw-klok', h('span.hw-label', 'Tijd'), tijdIn, tijdUit), acties(nuKnop),
       stappen, stand, melding,
       h('div.hw-knoppen', h('span.hw-knoplabel', 'Horloge'), draaiKnop(-1), draaiKnop(1)),
       noot));

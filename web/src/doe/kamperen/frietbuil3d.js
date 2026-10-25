@@ -4,6 +4,7 @@
 // projection, no 3D library. Facts: Scoutwiki Frietbuil and Scouting Leonardus (B about 1 m high, foot end into
 // the wind); see notities/technieken/kamperen-uitwerking.md.
 import { h } from '../../dom.js';
+import { actie, acties, zetActie } from '../knoppen.js';
 import { stappenBalk } from '../stappen.js';
 import { s } from '../kompasdelen.js';
 import '../vorm.css';
@@ -109,7 +110,7 @@ export default function frietbuil3d() {
   const zicht = h('p.doe-stil.fb-zicht', { 'aria-live': 'polite' });
   const balk = stappenBalk({ stappen: STAPPEN.map((st) => st.naam), vloeiend: true, label: 'Van plat plastic naar staande frietbuil',
     zet: (w) => { stop(); zet(tVan(w)); } });
-  const speelKnop = h('button.knop.klein.hoofd', { type: 'button', onclick: () => (speel ? stop() : speelAf()) }, 'Speel af');
+  const speelKnop = actie('Speel af', 'start', () => (speel ? stop() : speelAf()), { hoofd: true, klein: true });
   const zichtKnop = (tekst, d, a) => h('button.chip', { type: 'button', onclick: () => { draai = d; hoek = a; teken(); zeg(); } }, tekst);
 
   const verminder = () => matchMedia('(prefers-reduced-motion: reduce)').matches;
@@ -225,7 +226,7 @@ export default function frietbuil3d() {
 
   function stop() {
     if (speel) cancelAnimationFrame(speel);
-    speel = 0; speelKnop.textContent = 'Speel af';
+    speel = 0; zetActie(speelKnop, 'Speel af', 'start');
   }
 
   function speelAf() {
@@ -236,7 +237,7 @@ export default function frietbuil3d() {
     }
     if (t >= 0.999) t = 0;
     let vorige = null;
-    speelKnop.textContent = 'Stop';
+    zetActie(speelKnop, 'Stop', 'stop');
     const tik = (nu) => {
       if (!svg.isConnected) { speel = 0; return; }
       if (vorige != null) zet(t + (nu - vorige) / 6000);
@@ -279,7 +280,7 @@ export default function frietbuil3d() {
     h('div.kd-tekst',
       stap,
       h('div.doe-label', h('span', 'Van plat naar staand'), balk.el),
-      h('div.knop-rij', speelKnop),
       h('div.knop-rij.fb-zichten', zichtKnop('Ingang', -1.25, 0.14), zichtKnop('Opzij', 0, 0.3), zichtKnop('Voeteneinde', 1.45, 0.4), zichtKnop('Bovenaf', -0.3, 1.38)),
+      acties(speelKnop),
       zicht));
 }

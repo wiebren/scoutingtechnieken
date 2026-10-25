@@ -2,7 +2,7 @@
 // one says why it cannot come yet. "Bekijk" goes through the steps on a stappenbalk (../stappen.js). The drawing
 // follows the steps that are done, so the tent grows as you go. Facts: TKN §3.1 (tent opzetten), SN-K niveau 1.
 import { h } from '../../dom.js';
-import { keuze } from '../knoppen.js';
+import { actie, acties, keuze } from '../knoppen.js';
 import { s } from '../kompasdelen.js';
 import { stappenBalk } from '../stappen.js';
 import '../vorm.css';
@@ -76,14 +76,14 @@ export default function tentopzetten() {
   const melding = h('p.doe-melding', { 'aria-live': 'polite' });
   const gedaan = h('ol.kd-lijst');
   const keuzes = h('div.kd-keuzes');
-  const opnieuw = h('button.knop.klein.hoofd', { type: 'button', hidden: true, onclick: () => begin() }, 'Nog een keer');
+  const opnieuw = actie('Nog een keer', 'opnieuw', () => begin(), { hoofd: true, klein: true, hidden: true });
   const balk = stappenBalk({ stappen: STAPPEN.map((x) => x.kort), label: 'De tent opzetten, stap voor stap',
     zet: (w) => { stand = w; teken(); } });
   const bijschrift = h('p', { 'aria-live': 'polite' });
-  const oefenVak = h('div.kd-tekst', vraag, keuzes, melding, gedaan, h('div.knop-rij', opnieuw));
+  const oefenVak = h('div.kd-tekst', vraag, keuzes, acties(opnieuw), melding, gedaan);
   const bekijkVak = h('div.kd-tekst', { hidden: true }, bijschrift);
   const balkVak = h('div.kd-stappen', { hidden: true }, balk.el);
-  const chips = keuze([['oefen', 'Zet in volgorde'], ['bekijk', 'Bekijk de stappen']], modus, (m) => { modus = m; begin(); });
+  const chips = keuze([['oefen', 'Oefenen'], ['bekijk', 'Stap voor stap']], modus, (m) => { modus = m; begin(); });
 
   function teken() {
     if (modus === 'bekijk') {

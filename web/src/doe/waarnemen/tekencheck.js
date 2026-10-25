@@ -2,6 +2,7 @@
 // where ticks like to hide (Scouting Nederland, Teken 2026): tap them on the body, or use the buttons. A place you
 // check lights up, and shows the tick if there is one there.
 import { h } from '../../dom.js';
+import { actie, acties } from '../knoppen.js';
 import { s, schud } from './hulp.js';
 import './wn.css';
 import './tekencheck.css';
@@ -43,13 +44,13 @@ export default function tekencheck() {
 
   const knoppen = PLEKKEN.map((p) => h('button.chip', { type: 'button', 'aria-pressed': 'false', onclick: () => bekijk(p.id) }, p.naam));
   const melding = h('p', { 'aria-live': 'polite' });
-  const toon = h('button.knop.klein', { type: 'button', onclick: () => PLEKKEN.forEach((p) => bekijk(p.id, true)) }, 'Laat alle plekken zien');
+  const toon = actie('Laat alle plekken zien', 'oog', () => PLEKKEN.forEach((p) => bekijk(p.id, true)), { klein: true });
   const el = h('div.wn.naast.doe-tekencheck', svg,
     h('div.wn-tekst',
       h('p', 'Na een dag in het bos zitten er drie teken op deze scout. Waar kijk je? Tik op het lijf, of op een plek hieronder.'),
       h('div.chips', { role: 'group', 'aria-label': 'Plekken om te controleren' }, knoppen),
-      melding,
-      h('div.knop-rij', toon, h('button.knop.klein', { type: 'button', onclick: nieuw }, 'Opnieuw'))));
+      acties(toon, actie('Opnieuw', 'opnieuw', nieuw, { klein: true })),
+      melding));
 
   svg.addEventListener('click', (e) => {
     const pt = svg.createSVGPoint(); pt.x = e.clientX; pt.y = e.clientY;

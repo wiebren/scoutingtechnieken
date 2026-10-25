@@ -1,6 +1,7 @@
 // Why a triangle is strong: a square of four poles, lashed at the corners, falls over sideways when you push it -
 // no pole gets longer or shorter. Put in a schoor and it makes two triangles, and the square stands.
 import { h } from '../dom.js';
+import { actie, acties, zetActie } from './knoppen.js';
 import { p, s } from './kompasdelen.js';
 import './driehoek.css';
 
@@ -19,7 +20,7 @@ export default function driehoek() {
     s('path', { d: 'M20 252 H300', class: 'dh-grond' }), schuin, links, rechts, boven, knopen, greep);
 
   const melding = h('p.dh-melding', { 'aria-live': 'polite' });
-  const schoorKnop = h('button.knop.klein', { type: 'button', 'aria-pressed': 'false', onclick: () => zetSchoor(!schoor) }, 'Zet er een schoor in');
+  const schoorKnop = actie('Zet er een schoor in', null, () => zetSchoor(!schoor), { klein: true, 'aria-pressed': 'false' });
 
   function teken() {
     const dx = L * Math.sin((hoek * Math.PI) / 180); const dy = L * Math.cos((hoek * Math.PI) / 180);
@@ -44,7 +45,7 @@ export default function driehoek() {
     schoor = aan;
     if (aan) hoek = 0;
     schoorKnop.setAttribute('aria-pressed', String(aan));
-    schoorKnop.textContent = aan ? 'Haal de schoor weg' : 'Zet er een schoor in';
+    zetActie(schoorKnop, aan ? 'Haal de schoor weg' : 'Zet er een schoor in', null);
     teken();
   }
 
@@ -65,5 +66,5 @@ export default function driehoek() {
   });
 
   teken();
-  return h('div.doe-driehoek', svg, h('div.dh-tekst', melding, h('div.knop-rij', schoorKnop)));
+  return h('div.doe-driehoek', svg, h('div.dh-tekst', acties(schoorKnop), melding));
 }

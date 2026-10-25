@@ -1,6 +1,7 @@
 // Dobbelsteentocht: throw the die at a crossing and read what to do, with the key of Jong Nederland (blad
 // dobbelsteentocht). Not an exercise: a die to take along. The last throws stay in a short list.
 import { h } from '../../dom.js';
+import { actie, acties } from '../knoppen.js';
 import { s } from '../kompasdelen.js';
 import '../vorm.css';
 import './dobbel.css';
@@ -13,7 +14,7 @@ export default function dobbelsteentocht() {
   const steen = s('svg', { viewBox: '0 0 100 100', class: 'db-steen', role: 'img', 'aria-label': 'Een dobbelsteen' });
   const uitslag = h('p.doe-melding', { 'aria-live': 'polite' }, 'Je staat op een kruispunt. Gooi de dobbelsteen.');
   const lijst = h('ol.db-lijst');
-  const knop = h('button.knop.hoofd', { type: 'button', onclick: gooi }, 'Gooi');
+  const knop = actie('Gooi', 'start', gooi, { hoofd: true });
   let timer = 0; let kruispunt = 0;
 
   function toon(n) {
@@ -44,5 +45,5 @@ export default function dobbelsteentocht() {
 
   toon(6);
   const sleutel = h('ul.db-sleutel', BETEKENIS.map((t, i) => h('li', h('b', `${i + 1}`), ` ${t}`)));
-  return h('div.doe-dobbel', h('div.db-boven', steen, h('div.db-rechts', knop, uitslag)), sleutel, lijst);
+  return h('div.doe-dobbel', h('div.db-boven', steen, h('div.db-rechts', acties(knop), uitslag)), sleutel, lijst);
 }

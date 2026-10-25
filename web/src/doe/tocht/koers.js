@@ -7,6 +7,7 @@
 // For a vliegkoers and a kompasroute the numbers are given; there you aim on the terrain. Each piece is walked as
 // you set it, so mistakes add up, as they do outside. The post is hidden until the end.
 import { h } from '../../dom.js';
+import { actie, acties } from '../knoppen.js';
 import { norm, pol, s } from '../kompasdelen.js';
 import '../vorm.css';
 import './koers.css';
@@ -142,8 +143,8 @@ export default function koers({ soort = 'helikopter' } = {}) {
   const terrein = s('svg', { viewBox: `0 0 ${B} ${H}`, class: 'ko-terrein', role: 'application', tabindex: '0' });
   const veldG = h('input.doe-veld.ko-getal', { type: 'number', inputmode: 'numeric', min: 0, max: 359, step: 1, 'aria-label': 'Koers in graden' });
   const veldM = h('input.doe-veld.ko-getal', { type: 'number', inputmode: 'numeric', min: 10, max: 900, step: 10, 'aria-label': 'Afstand in meters' });
-  const loop = h('button.knop.hoofd', { type: 'button', onclick: () => loopStuk() }, 'Loop dit stuk');
-  const opnieuw = h('button.knop', { type: 'button', onclick: () => begin() }, 'Nieuwe route');
+  const loop = actie('Loop dit stuk', 'verder', () => loopStuk(), { hoofd: true });
+  const opnieuw = actie('Nieuwe route', 'opnieuw', () => begin());
   const opdracht = h('p.ko-opdracht');
   const melding = h('p.doe-melding', { 'aria-live': 'polite' });
   const stand = h('p.doe-sr', { 'aria-live': 'polite' });
@@ -154,8 +155,8 @@ export default function koers({ soort = 'helikopter' } = {}) {
       h('p.doe-stil', 'Het terrein, noord is boven. Tik of sleep vanaf je plek om te mikken, of typ de koers.'),
       terrein,
       opdracht,
-      h('div.ko-velden', h('label.doe-label', h('span', 'Koers (°)'), veldG), h('label.doe-label', h('span', 'Afstand (m)'), veldM), loop),
-      melding, stand, h('div.knop-rij', opnieuw)));
+      h('div.ko-velden', h('label.doe-label', h('span', 'Koers (°)'), veldG), h('label.doe-label', h('span', 'Afstand (m)'), veldM)),
+      acties(loop, opnieuw), melding, stand));
 
   // -- the terrain: a grid of 100 m, a few woods and a fen, a scale bar
   function tekenTerrein() {

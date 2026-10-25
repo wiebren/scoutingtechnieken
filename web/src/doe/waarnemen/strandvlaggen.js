@@ -1,5 +1,6 @@
 // Welke vlag is dit? A beach flag on its pole, and six meanings to choose from (Reddingsbrigade Nederland, the set of 2025).
 import { h } from '../../dom.js';
+import { actie, acties } from '../knoppen.js';
 import { STRANDVLAGGEN, strandvlag } from '../../plaatjes/veiligheid.js';
 import { schud } from './hulp.js';
 import './wn.css';
@@ -13,9 +14,9 @@ export default function strandvlaggen() {
   const melding = h('p.doe-melding', { 'aria-live': 'polite' });
   const score = h('p.wn-score');
   const knoppen = STRANDVLAGGEN.map((v) => h('button.knop.sv-keuze', { type: 'button', 'data-k': v.id, onclick: () => kies(v.id) }, v.kort));
-  const verder = h('button.knop.hoofd.klein', { type: 'button', hidden: true, onclick: nieuw }, 'Volgende vlag');
+  const verder = actie('Volgende vlag', 'verder', nieuw, { hoofd: true, klein: true, hidden: true });
   const el = h('div.wn.naast.doe-strandvlaggen', vlag,
-    h('div.wn-tekst', h('p', 'Wat betekent deze vlag?'), h('div.sv-keuzes', { role: 'group', 'aria-label': 'Betekenis' }, knoppen), melding, h('div.knop-rij', verder), score));
+    h('div.wn-tekst', h('p', 'Wat betekent deze vlag?'), h('div.sv-keuzes', { role: 'group', 'aria-label': 'Betekenis' }, knoppen), acties(verder), melding, score));
 
   function kies(k) {
     if (!verder.hidden) return;

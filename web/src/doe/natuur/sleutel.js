@@ -2,6 +2,7 @@
 // question or a tree. You can go back a step, and the trail of answers stays in view, so you see why you ended up
 // at a tree. It works on the leaf, so it is a summer key.
 import { h } from '../../dom.js';
+import { actie, acties } from '../knoppen.js';
 import { BLAD } from '../../data/bladen/index.js';
 import { PLAATJES } from '../../plaatjes.js';
 import { bladIcoon } from '../../plaatjes/natuur.js';
@@ -85,8 +86,8 @@ export default function sleutel() {
   const spoor = h('ol.nt-spoor', { 'aria-label': 'Je antwoorden tot nu toe' });
   const plek = h('div.nt-plek');
   const melding = h('p.doe-sr', { 'aria-live': 'polite' });
-  const terug = h('button.knop.klein', { type: 'button', onclick: () => { const vorige = pad.pop(); if (vorige) { nu = vorige.vraag; toon(); } } }, 'Terug');
-  const opnieuw = h('button.knop.klein', { type: 'button', onclick: () => { pad.length = 0; nu = 'start'; toon(); } }, 'Opnieuw');
+  const terug = actie('Terug', 'terug', () => { const vorige = pad.pop(); if (vorige) { nu = vorige.vraag; toon(); } }, { klein: true });
+  const opnieuw = actie('Opnieuw', 'opnieuw', () => { pad.length = 0; nu = 'start'; toon(); }, { klein: true });
 
   function kies(optie) {
     pad.push({ vraag: nu, antwoord: optie.tekst });
@@ -121,6 +122,6 @@ export default function sleutel() {
   }
 
   toon();
-  return h('div.doe-nt-sleutel', spoor, plek, melding, h('div.knop-rij', terug, opnieuw),
+  return h('div.doe-nt-sleutel', spoor, plek, melding, acties(terug, opnieuw),
     h('p.doe-stil', 'De plaatjes bij de antwoorden zijn voorbeelden: kijk vooral naar wat er staat.'));
 }

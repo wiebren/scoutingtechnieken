@@ -4,7 +4,7 @@
 import { h } from '../../dom.js';
 import { BLAD } from '../../data/bladen/index.js';
 import { BOMEN, bladIcoon, PRENTEN, prentIcoon, VOGELS, vogelIcoon } from '../../plaatjes/natuur.js';
-import { keuze } from '../knoppen.js';
+import { actie, acties, keuze } from '../knoppen.js';
 import { beeld, bladLink, schud } from './gedeeld.js';
 import '../vorm.css';
 import './natuur.css';
@@ -46,7 +46,7 @@ export default function quiz({ soort = 'bomen' } = {}) {
     const opties = schud([vraag, ...schud(items.filter((i) => i.naam !== vraag.naam && !samenApart(i.id, vraag.id))).slice(0, 3)]);
     const melding = h('p.doe-melding', { 'aria-live': 'polite' });
     const meer = h('p.doe-stil.nt-meer', { hidden: true });
-    const verder = h('button.knop.klein.hoofd', { type: 'button', hidden: true, onclick: volgende }, 'Volgende');
+    const verder = actie('Volgende', 'verder', volgende, { hoofd: true, klein: true, hidden: true });
     const knoppen = opties.map((o) => h('button.knop.klein.nt-optie', { type: 'button', onclick: () => {
       gehad += 1;
       const raak = o === vraag;
@@ -65,7 +65,7 @@ export default function quiz({ soort = 'bomen' } = {}) {
     } }, o.naam));
     plek.replaceChildren(h('div.nt-raad',
       beeld(vraag.svg, 'groot'),
-      h('div.nt-raad-kant', h('p.nt-vraag', s.vraag), h('div.nt-opties', knoppen), melding, meer, h('div.knop-rij', verder))));
+      h('div.nt-raad-kant', h('p.nt-vraag', s.vraag), h('div.nt-opties', knoppen), acties(verder), melding, meer)));
   }
 
   function bekijk() {
@@ -76,7 +76,7 @@ export default function quiz({ soort = 'bomen' } = {}) {
   const toon = () => (modus === 'raad' ? volgende() : bekijk());
   toon();
   return h('div.doe-nt-quiz',
-    h('div.chips', { role: 'group', 'aria-label': 'Raden of bekijken' }, keuze([['raad', 'Raad'], ['bekijk', 'Bekijk ze allemaal']], modus, (m) => { modus = m; toon(); })),
+    h('div.chips', { role: 'group', 'aria-label': 'Raden of overzicht' }, keuze([['raad', 'Raden'], ['bekijk', 'Overzicht']], modus, (m) => { modus = m; toon(); })),
     plek,
     soort === 'vogels' && h('p.doe-stil', 'De vogels zijn niet op schaal getekend. Zien het mannetje en het vrouwtje er anders uit? Dan is het mannetje getekend.'),
     soort === 'prenten' && h('p.doe-stil', 'Echte prenten zijn bijna nooit zo scherp. Vaak zie je maar een deel. Of de prenten van de voor- en de achterpoot liggen door elkaar.'));

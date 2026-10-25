@@ -21,6 +21,19 @@
 .vk-uitleg { color: var(--stil); font-size: 0.875rem; }
 .vk-rij { display: flex; flex-wrap: wrap; gap: 6px; align-items: center; }
 .vk-rij > .vk-kop { width: 100%; margin: 0; font-size: 0.8125rem; font-weight: 600; color: var(--stil); }
+/* Bouw een vuur, stokbrood: the drawing on top, the choices below it as a form; the name of each row beside it when
+   there is room */
+.vk-beeld { margin: 0; }
+.vk-beeld .vk-uitleg { display: flex; align-items: center; justify-content: space-between; gap: 8px 12px; max-width: 420px; min-height: 2.6rem; margin: 6px auto 0; }
+.vk-beeld .vk-uitleg .knop { flex: none; }
+.vk-velden { display: grid; gap: 10px; padding-top: 10px; border-top: 1px solid var(--lijn); }
+.vk-veld { display: grid; gap: 4px; }
+.vk-veld > .vk-kop { margin: 0; font-size: 0.8125rem; font-weight: 600; color: var(--stil); }
+.vk-veld > div { display: flex; flex-wrap: wrap; gap: 6px; }
+.vk-veld .doe-schuif { flex: 1 1 140px; width: auto; }
+.vk-veld output { min-width: 11em; font-size: 0.875rem; }
+.vk-svg .tekst.sb-klok { font-size: 22px; font-weight: 700; font-variant-numeric: tabular-nums; }
+@container (min-width: 440px) { .vk-veld { grid-template-columns: 6.5rem minmax(0, 1fr); align-items: center; gap: 10px; } }
 .vk-stand { font-variant-numeric: tabular-nums; }
 .vk-oordeel { margin: 0; padding: 10px 12px; border-radius: 10px; border: 1px solid var(--lijn); background: var(--zacht); }
 .vk-oordeel.goed { border-color: var(--accent); background: color-mix(in srgb, var(--accent) 12%, var(--paneel)); }
@@ -61,6 +74,7 @@
 .vk-svg [role="button"]:focus-visible .focus-ring { stroke: var(--accent); stroke-width: 3; stroke-dasharray: 4 3; fill: none; }
 
 @media (prefers-reduced-motion: no-preference) {
+  .vk-svg .sb-stok { transition: transform 0.8s ease-in-out; }
   .vk-svg .groei { transform-box: fill-box; transform-origin: 50% 100%; animation: vk-groei 0.7s ease-out both; }
   .vk-svg .flakker { transform-box: fill-box; transform-origin: 50% 100%; animation: vk-flakker 0.8s ease-in-out infinite alternate; }
   .vk-svg .opstijgen { animation: vk-op 1.6s ease-out both; }

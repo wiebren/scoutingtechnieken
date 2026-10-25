@@ -9,8 +9,6 @@
 .ko-terrein:focus-visible { outline: 3px solid var(--accent); outline-offset: 2px; }
 .ko-opdracht { font-weight: 600; }
 .ko-velden { display: grid; grid-template-columns: 1fr 1fr; gap: 8px; align-items: end; }
-.ko-velden .knop { grid-column: 1 / -1; }
-@container (min-width: 680px) { .ko-velden { grid-template-columns: 1fr 1fr auto; } .ko-velden .knop { grid-column: auto; } }
 
 /* the notation */
 .ko-noord path { fill: none; stroke: var(--inkt); stroke-width: 1.6; }

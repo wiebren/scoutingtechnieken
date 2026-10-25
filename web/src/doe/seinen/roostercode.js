@@ -3,7 +3,7 @@
 // piece makes a new square and sjabloon for it.
 import { h } from '../../dom.js';
 import { kaal } from '../codes.js';
-import { schakel } from '../knoppen.js';
+import { actie, acties, schakel } from '../knoppen.js';
 import '../vorm.css';
 import './roostercode.css';
 
@@ -29,7 +29,7 @@ export default function roostercode() {
   const uitkomst = h('p.rc-uitkomst', { 'aria-live': 'polite' });
   const invoer = h('input.doe-veld', { type: 'text', value: 'Zoek bij de eik', maxlength: 40, spellcheck: 'false',
     onkeydown: (e) => { if (e.key === 'Enter') { e.preventDefault(); nieuw(); } } });
-  const knop = schakel('Leg het sjabloon erop', erop, (aan) => { erop = aan; toon(); });
+  const knop = schakel('Sjabloon erop', erop, (aan) => { erop = aan; toon(); });
 
   function toon() {
     rooster.classList.toggle('erop', erop);
@@ -48,7 +48,7 @@ export default function roostercode() {
     h('div.rc-plek', rooster),
     h('div.chips', knop), uitkomst,
     h('label.doe-label', `Je eigen boodschap (hooguit ${N * N - 6} letters)`, invoer),
-    h('div.knop-rij', h('button.knop.klein', { type: 'button', onclick: () => nieuw() }, 'Maak een rooster')),
+    acties(actie('Maak een rooster', 'opnieuw', () => nieuw(), { klein: true })),
     h('p.doe-stil', 'Echt maken: knip de gaten uit een stuk karton. De ontvanger heeft hetzelfde sjabloon.'));
   toon();
   return el;

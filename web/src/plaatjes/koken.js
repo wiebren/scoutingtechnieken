@@ -84,7 +84,7 @@ function dutchOven() {
   return svg(380, 214, 'Dutch oven: een gietijzeren pan met een deksel met een opstaande rand. Voor een pan van 30 cm 24 briketten: 16 op het deksel, 8 eronder', uit);
 }
 
-/** Washing up in three tubs, from left to right. */
+/** Washing up in three tubs, from left to right (rinse, wash, rinse the soap off), after scraping the plate into the bin bag. */
 function drieTeilen() {
   let uit = '';
   const teil = (x, t1, t2, warm) => {
@@ -93,10 +93,16 @@ function drieTeilen() {
     if (warm) s += `<path d="M${x - 14} 62q-6 -10 0 -18q6 -8 0 -16M${x + 8} 62q-6 -10 0 -18q6 -8 0 -16" class="vk-rook"/>`;
     return s + tekst(x, 150, t1, { maat: 11.5, klasse: 'vet' }) + tekst(x, 165, t2, { maat: 10.5, klasse: 'stil' });
   };
-  uit += teil(62, '1 wassen', 'heet sop', true) + teil(180, '2 spoelen', 'schoon, heet', true) + teil(298, '3 naspoelen', 'schoon water', false);
-  for (const [x, y] of [[48, 76], [60, 72], [74, 77], [56, 80]]) uit += `<circle cx="${x}" cy="${y}" r="4" fill="#fff" opacity="0.8"/>`;
-  uit += pijl(110, 98, 132, 98) + pijl(228, 98, 250, 98);
-  return svg(360, 176, 'Afwassen in drie teilen naast elkaar: 1 wassen in heet sop, 2 spoelen in schoon heet water, 3 naspoelen in schoon water', uit);
+  // the bin bag, tied at the top, with a plate tipped over it and the scraps falling in
+  uit += '<path d="M30 128Q22 102 32 84L44 76L38 64L50 69L56 62L62 69L74 64L68 76L80 84Q90 102 82 128Z" fill="#363d39" stroke="#69716b" stroke-width="1.5" stroke-linejoin="round"/>';
+  uit += '<path d="M40 92Q36 106 40 120" stroke="#fff" stroke-width="2" opacity="0.25" fill="none" stroke-linecap="round"/>';
+  uit += '<ellipse cx="80" cy="36" rx="20" ry="5.5" transform="rotate(-28 80 36)" fill="#f4f2ec" stroke="#8a8f8a" stroke-width="1.5"/>';
+  for (const [x, y] of [[66, 46], [60, 53], [68, 55]]) uit += `<circle cx="${x}" cy="${y}" r="2.6" fill="#b06a2c"/>`;
+  uit += tekst(56, 150, 'eerst schrapen', { maat: 11.5, klasse: 'vet' }) + tekst(56, 165, 'in de afvalzak', { maat: 10.5, klasse: 'stil' });
+  uit += teil(172, '1 voorspoelen', 'schoon water', false) + teil(290, '2 wassen', 'heet sop', true) + teil(408, '3 naspoelen', 'schoon, heet', true);
+  for (const [x, y] of [[276, 76], [288, 72], [302, 77], [284, 80]]) uit += `<circle cx="${x}" cy="${y}" r="4" fill="#fff" opacity="0.8"/>`;
+  uit += pijl(96, 98, 120, 98) + pijl(220, 98, 242, 98) + pijl(338, 98, 360, 98);
+  return svg(470, 176, 'Afwassen: eerst de etensresten van je bord in de afvalzak schrapen, dan drie teilen naast elkaar: 1 voorspoelen in schoon water, 2 wassen in heet sop, 3 naspoelen in schoon heet water', uit);
 }
 
 /** Cook on glowing coals, not on high flames. */

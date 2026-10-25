@@ -4,6 +4,7 @@
 import { h } from '../../dom.js';
 import { symbolen } from '../codes.js';
 import { geluid } from '../klank.js';
+import { actie, acties } from '../knoppen.js';
 import { BOOM_BREED, BOOM_HOOG, boom, letterVan } from './lib/boom.js';
 import '../vorm.css';
 import './morseboom.css';
@@ -33,9 +34,10 @@ export default function morseboom() {
       sleutel,
       h('div.mb-knoppen',
         h('button.knop', { type: 'button', onclick: () => voegToe('.') }, '· Punt'),
-        h('button.knop', { type: 'button', onclick: () => voegToe('-') }, '– Streep'),
-        h('button.knop.klein', { type: 'button', onclick: () => klaar() }, 'Letter klaar'),
-        h('button.knop.klein', { type: 'button', onclick: () => { pad = ''; zin = ''; clearTimeout(wacht); toon(); teken(); } }, 'Wis'))),
+        h('button.knop', { type: 'button', onclick: () => voegToe('-') }, '– Streep'))),
+    acties(
+      actie('Sluit de letter af', 'vink', () => klaar(), { klein: true }),
+      actie('Wis', 'wis', () => { pad = ''; zin = ''; clearTimeout(wacht); toon(); teken(); }, { klein: true })),
     regel,
     h('p.doe-stil', 'Kort tikken is een punt, lang (even vasthouden) een streep. Wacht even en de letter is klaar.'));
 

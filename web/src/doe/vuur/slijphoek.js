@@ -2,7 +2,7 @@
 // gives 15-20° per side for its pocket knives, which makes an edge of 30-40°. Then practise: draw the blade over the
 // stone ten good strokes per side, keeping the angle while your hand wobbles a little after each stroke.
 import { h } from '../../dom.js';
-import { keuze } from '../knoppen.js';
+import { actie, acties, keuze } from '../knoppen.js';
 import { s } from '../kompasdelen.js';
 import '../vorm.css';
 import './vuur.css';
@@ -34,15 +34,15 @@ export default function slijphoek() {
   const label = h('output');
   const melding = h('div.vk-oordeel', { 'aria-live': 'polite' });
   const telling = h('p.vk-stand', { 'aria-live': 'polite' });
-  const haal = h('button.knop.hoofd', { type: 'button', onclick: () => trek() }, 'Haal over de steen');
+  const haal = actie('Haal over de steen', null, () => trek(), { hoofd: true });
   const kantChips = keuze([['links', 'kant 1'], ['rechts', 'kant 2']], kant, (k) => { kant = k; teken(); });
   const oefen = h('div.vk-tekst', { hidden: true },
     h('div.vk-rij', { role: 'group', 'aria-label': 'Welke kant' }, h('p.vk-kop', 'Je slijpt'), kantChips),
-    h('div.knop-rij', haal, h('button.knop.klein', { type: 'button', onclick: () => begin() }, 'Opnieuw')), telling);
+    acties(haal, actie('Opnieuw', 'opnieuw', () => begin(), { klein: true })), telling);
   const el = h('div.doe-vk.naast', svg,
     h('div.vk-tekst',
       h('div.vk-rij', { role: 'group', 'aria-label': 'Wat wil je doen' },
-        keuze([['kijk', 'Zoek de hoek'], ['oefen', 'Oefen: 10 halen per kant']], modus, (m) => { modus = m; begin(); })),
+        keuze([['kijk', 'De hoek zoeken'], ['oefen', '10 halen per kant']], modus, (m) => { modus = m; begin(); })),
       h('label.doe-label', h('span', 'Hoek per kant: ', label), schuif),
       oefen, melding));
 

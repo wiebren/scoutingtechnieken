@@ -2,6 +2,7 @@
 // list of a complete EHBO-set, with a coldpack, something against itching, and for scouting a tick remover and a
 // tick form. The rest is handy on a hike, but it is not first aid.
 import { h } from '../../dom.js';
+import { actie, acties } from '../knoppen.js';
 import { schud } from './hulp.js';
 import './wn.css';
 import './ehboset.css';
@@ -31,13 +32,13 @@ export default function ehboSet() {
     b.dataset.hoort = hoort ? 'ja' : 'nee';
     return b;
   });
-  const nakijk = h('button.knop.hoofd.klein', { type: 'button', onclick: kijkNa }, 'Kijk na');
-  const opnieuw = h('button.knop.klein', { type: 'button', hidden: true, onclick: reset }, 'Opnieuw');
+  const nakijk = actie('Kijk na', 'vink', kijkNa, { hoofd: true, klein: true });
+  const opnieuw = actie('Opnieuw', 'opnieuw', reset, { klein: true, hidden: true });
   const el = h('div.wn.doe-ehboset',
     h('p', 'Wat stop je in de EHBO-set voor een dagtocht? Tik alles aan wat erin hoort.'),
     h('div.es-doos', h('span.es-kruis', { 'aria-hidden': 'true' }), teller),
     h('div.chips', { role: 'group', 'aria-label': 'Spullen' }, knoppen),
-    h('div.knop-rij', nakijk, opnieuw), melding);
+    acties(nakijk, opnieuw), melding);
 
   function tel() { teller.textContent = `${gekozen.size} ${gekozen.size === 1 ? 'ding' : 'dingen'} in de set`; }
 

@@ -18,7 +18,7 @@ export default [
       'De tabel volgt de internationale norm, van de ITU (de wereldorganisatie voor telecommunicatie). Leer de letters niet als rijtje punten en strepen, maar als een ritme: zo herken je ze als je ze hoort.',
       'SOS sein je als één teken, zonder pauze tussen de letters: · · · – – – · · ·.',
     ],
-    letOp: 'In sommige morsetabellen op internet, ook van scoutingsites, staan fouten (bij de haakjes, de puntkomma en het foutteken). Deze tabel volgt de norm.',
+    letOp: 'In sommige morsetabellen op internet, ook van scoutingsites, staan fouten (bij de haakjes, de puntkomma en het foutteken).',
     naar: [{ blad: 'morse-hulpwoorden' }, { blad: 'morse-leren' }, { blad: 'morseboom' }, { blad: 'morse-tijd' }, { blad: 'morse-procedure' }] },
   { id: 'morse-hulpwoorden', naam: 'Morse-hulpwoorden', ook: ['ezelsbruggetjes', 'woordjesmethode', 'o-methode', 'Coca-cola'], groep: 'morse', bron: 'NAV §4a (IND, EZB)',
     doe: 'morse-hulpwoorden',

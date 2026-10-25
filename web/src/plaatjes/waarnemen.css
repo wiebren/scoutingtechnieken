@@ -40,3 +40,6 @@
 .plaatje .wn-pop.ver { stroke: var(--stil); }
 .plaatje .wn-kop { fill: var(--inkt); }
 .plaatje .wn-spriet { fill: none; stroke: var(--fam-natuur); stroke-width: 1.2; stroke-linecap: round; }
+/* a sketch drawn by hand (situatieschets, plattegrond op schaal): larger, and the words in handwriting (--hand) */
+.plaatje.wn-schets { max-width: 600px; }
+.plaatje.wn-schets .tekst { font-family: var(--hand); }

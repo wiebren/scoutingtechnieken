@@ -3,6 +3,7 @@
 // know where the route goes. Drag the sheet with a finger or the mouse, turn it with the buttons; or use the arrow
 // keys to slide and [ and ] to turn.
 import { h } from '../../dom.js';
+import { actie, acties } from '../knoppen.js';
 import { s } from '../kompasdelen.js';
 import '../vorm.css';
 import './oleaat.css';
@@ -41,13 +42,13 @@ export default function oleaat() {
   const melding = h('p.doe-melding', { 'aria-live': 'polite' });
   const stand = h('p.doe-sr', { 'aria-live': 'polite' });
   const draai = (d) => () => { if (!klaar) { hoek = (hoek + d + 360) % 360; tekenVel(); meld(); } };
-  const opnieuw = h('button.knop', { type: 'button', onclick: () => begin() }, 'Nieuwe oleaat');
+  const opnieuw = actie('Nieuwe oleaat', 'opnieuw', () => begin());
 
   const el = h('div.doe-oleaat',
     h('p.doe-stil', 'De blauwe oleaat ligt nog verkeerd. Draai hem tot zijn noordpijl naar boven wijst, en schuif hem tot de rode lijn precies over de wegen valt.'),
     svg,
-    h('div.knop-rij', h('button.knop', { type: 'button', onclick: draai(-5) }, '↺ Draai'), h('button.knop', { type: 'button', onclick: draai(5) }, 'Draai ↻'), opnieuw),
-    melding, stand);
+    h('div.knop-rij', h('button.knop', { type: 'button', onclick: draai(-5) }, '↺ Draai'), h('button.knop', { type: 'button', onclick: draai(5) }, 'Draai ↻')),
+    acties(opnieuw), melding, stand);
 
   // the route on the sheet, relative to its first crossing
   const routePunten = () => route.map((i) => [PUNTEN[i][0] - PUNTEN[route[0]][0], PUNTEN[i][1] - PUNTEN[route[0]][1]]);

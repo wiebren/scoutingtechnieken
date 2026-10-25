@@ -2,6 +2,7 @@
 // shadow stick, midday shadow), the moon (maankompas), the Pole Star (dark enough), seen from above for a place and a
 // time you choose. For the blad noorden-zonder-kompas of Kaart en kompas.
 import { h } from '../../dom.js';
+import { actie, acties } from '../knoppen.js';
 import { p, pol, s } from '../kompasdelen.js';
 import { beginStaat, datum, datumSchuif, moment, plaatsKeuze, plaatsVan, tijdNaam, tijdSchuif, zetNu } from './bediening.js';
 import { faseNaam, klok, klokNL, maan, maanfase, maanPad, richtingTekst, zon, zonOpOnder } from './hemel.js';
@@ -29,7 +30,7 @@ export default function hemelNu() {
   const opnieuw = () => teken();
   const datumS = datumSchuif(staat, opnieuw);
   const tijdS = tijdSchuif(staat, opnieuw);
-  const nuKnop = h('button.knop.klein', { type: 'button', onclick: () => { zetNu(staat); datumS.zet(); tijdS.zet(); teken(); } }, 'Nu');
+  const nuKnop = actie('Zet op nu', 'klok', () => { zetNu(staat); datumS.zet(); tijdS.zet(); teken(); }, { klein: true });
 
   function teken() {
     const pl = plaatsVan(staat);
@@ -74,6 +75,6 @@ export default function hemelNu() {
   teken();
   return h('div.hm.doe-hemelnu',
     h('div.hm-beeld', svg),
-    h('div.hm-tekst', plaatsKeuze(staat, opnieuw), datumS.el, tijdS.el, h('div.knop-rij', nuKnop), stand, lijst,
+    h('div.hm-tekst', plaatsKeuze(staat, opnieuw), datumS.el, tijdS.el, acties(nuKnop), stand, lijst,
       h('p.hm-noot', 'Van bovenaf: het midden is recht boven je, de rand de horizon. Bewolking kan de hemelrekenaar niet zien: kijk zelf.')));
 }

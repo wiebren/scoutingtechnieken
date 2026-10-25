@@ -1,9 +1,9 @@
 // Put a fire out for real. Sprinkle water, pull the coals apart, stir, put sand on, and feel whether it is cold:
 // out is only out when you can touch the remains with your bare hand. Coals deep down stay hidden until you spread
 // or stir them, sand smothers the glow but keeps the heat in, and a whole bucket on a fire makes hot steam.
-// With "één mok" you have three splashes: only enough if you spread the coals first.
+// With "fles water" you have three splashes: only enough if you spread the coals first.
 import { h } from '../../dom.js';
-import { keuze } from '../knoppen.js';
+import { actie, acties, keuze } from '../knoppen.js';
 import { s } from '../kompasdelen.js';
 import '../vorm.css';
 import './vuur.css';
@@ -21,7 +21,7 @@ function nieuwVuur() {
 }
 
 export default function vuurDoven() {
-  let kolen = nieuwVuur(); let verspreid = false; let zand = false; let water = 0; let modus = 'genoeg'; let uit = false;
+  let kolen = nieuwVuur(); let verspreid = false; let zand = false; let water = 0; let modus = 'emmer'; let uit = false;
 
   const kolenG = s('g'); const effect = s('g');
   const zandLaag = s('ellipse', { cx: CX, cy: CY, rx: 112, ry: 70, class: 'zand', opacity: 0.92 });
@@ -33,15 +33,15 @@ export default function vuurDoven() {
 
   const stand = h('p.vk-uitleg.vk-stand', { 'aria-live': 'polite' });
   const melding = h('div.vk-oordeel', { 'aria-live': 'polite' });
-  const daad = (t, f) => h('button.knop.klein', { type: 'button', onclick: f }, t);
-  const emmer = daad('Hele emmer erover', () => sprenkel(4));
-  const knoppen = [daad('Sprenkel water', () => sprenkel(1)), daad('Uit elkaar halen', spreid), daad('Roeren', roer), daad('Zand erop', zandErop), emmer];
-  const voel = h('button.knop.hoofd', { type: 'button', onclick: voelen }, 'Voel of het koud is');
+  const daad = (t, f) => actie(t, null, f, { klein: true });
+  const emmer = daad('Gooi de hele emmer erover', () => sprenkel(4));
+  const knoppen = [daad('Sprenkel water', () => sprenkel(1)), daad('Haal uit elkaar', spreid), daad('Roer', roer), daad('Strooi zand erop', zandErop), emmer];
+  const voel = actie('Voel of het koud is', 'vink', voelen, { hoofd: true });
   const el = h('div.doe-vk.naast', svg,
     h('div.vk-tekst',
       h('div.vk-rij', { role: 'group', 'aria-label': 'Hoeveel water' }, h('p.vk-kop', 'Water'),
-        keuze([['genoeg', 'genoeg water'], ['mok', 'maar één mok']], modus, (m) => { modus = m; opnieuw(); })),
-      h('div.vk-rij', knoppen), h('div.knop-rij', voel, daad('Nieuw vuur', opnieuw)),
+        keuze([['emmer', 'emmer water'], ['fles', 'fles water']], modus, (m) => { modus = m; opnieuw(); })),
+      acties(...knoppen), h('div.knop-rij', voel, actie('Nieuw vuur', 'opnieuw', opnieuw, { klein: true })),
       stand, melding));
 
   const zichtbaar = () => kolen.filter((k) => !k.onder);
@@ -61,10 +61,10 @@ export default function vuurDoven() {
       vlammen.append(s('path', { class: 'vlam flakker', d: `M${CX} ${CY - 46}C${CX - 18} ${CY - 26} ${CX - 22} ${CY - 6} ${CX - 12} ${CY + 2}C${CX - 6} ${CY + 6} ${CX + 6} ${CY + 6} ${CX + 12} ${CY + 2}C${CX + 22} ${CY - 6} ${CX + 18} ${CY - 26} ${CX} ${CY - 46}Z` }));
     }
     const z = zichtbaar();
-    const over = modus === 'mok' ? ` Nog ${SCHEUTJES - water} van de ${SCHEUTJES} scheutjes in je mok.` : ` ${water} keer water gebruikt.`;
+    const over = modus === 'fles' ? ` Nog ${SCHEUTJES - water} van de ${SCHEUTJES} scheutjes in je fles.` : ` ${water} keer water gebruikt.`;
     stand.textContent = `Je ziet ${heet(z)} gloeiende, ${warm(z)} warme en ${z.length - heet(z) - warm(z)} koude kooltjes${zand ? ', onder het zand' : ''}.${over}`;
     svg.setAttribute('aria-label', `De stookplek van boven. ${stand.textContent}`);
-    emmer.disabled = modus === 'mok';
+    emmer.disabled = modus === 'fles';
   }
 
   function zeg(tekst, soort = '') { melding.className = `vk-oordeel ${soort}`; melding.textContent = tekst; }
@@ -75,7 +75,7 @@ export default function vuurDoven() {
 
   function sprenkel(n) {
     if (uit) return;
-    if (modus === 'mok' && water >= SCHEUTJES) { zeg('Je mok is leeg. Lukt het niet? Haal de kooltjes eerst uit elkaar, en probeer opnieuw.', 'fout'); return; }
+    if (modus === 'fles' && water >= SCHEUTJES) { zeg('Je fles is leeg. Lukt het niet? Haal de kooltjes eerst uit elkaar, en probeer opnieuw.', 'fout'); return; }
     water += n;
     for (const k of zichtbaar()) k.temp = Math.max(4, k.temp - (verspreid ? 45 : 18) * (n > 1 ? 1.6 : 1));
     stoom();
@@ -120,7 +120,7 @@ export default function vuurDoven() {
       teken(); return;
     }
     uit = true;
-    zeg(`Koud, ook onderin: je kunt alles met je blote hand aanraken. Nu is het uit.${modus === 'mok' ? ` Met maar ${water} scheutje${water === 1 ? '' : 's'} water!` : ` Je gebruikte ${water} keer water.`} De afgekoelde resten gaan in de container.`, 'goed');
+    zeg(`Koud, ook onderin: je kunt alles met je blote hand aanraken. Nu is het uit.${modus === 'fles' ? ` Met maar ${water} scheutje${water === 1 ? '' : 's'} water!` : ` Je gebruikte ${water} keer water.`} De afgekoelde resten gaan in de container.`, 'goed');
     knoppen.forEach((b) => { b.disabled = true; }); voel.disabled = true;
   }
 
@@ -128,7 +128,7 @@ export default function vuurDoven() {
     kolen = nieuwVuur(); verspreid = false; zand = false; water = 0; uit = false;
     knoppen.forEach((b) => { b.disabled = false; }); voel.disabled = false;
     effect.replaceChildren();
-    zeg(modus === 'mok' ? 'Maak dit vuur uit met maar één mok water: drie scheutjes.' : 'Het vuur is bijna op. Maak het helemaal uit.');
+    zeg(modus === 'fles' ? 'Maak dit vuur uit met één fles water: drie scheutjes.' : 'Het vuur is bijna op. Maak het helemaal uit.');
     teken();
   }
 

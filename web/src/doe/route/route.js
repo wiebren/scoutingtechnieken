@@ -7,7 +7,7 @@
 // opties.techniek: one of notaties.js VOLGORDE, or 'vertaler' (choose a technique, and see the same route in a
 // second one next to it).
 import { h } from '../../dom.js';
-import { keuze, schakel } from '../knoppen.js';
+import { actie, acties, keuze, schakel } from '../knoppen.js';
 import { s } from './svg.js';
 import '../vorm.css';
 import './route.css';
@@ -61,7 +61,8 @@ export default function routeLoper({ techniek = 'kruispunten', stil = false } = 
   const knoppen = h('div.rw-knoppen', { role: 'group', 'aria-label': 'Kies een weg' });
   const waar = h('p.rw-waar', { 'aria-live': 'polite' });
   const melding = h('p.doe-melding', { 'aria-live': 'polite' });
-  const acties = h('div.knop-rij');
+  const actieRij = acties(); actieRij.hidden = true;
+  const zetActies = (...k) => { actieRij.replaceChildren(...k); actieRij.hidden = !k.length; };   // no line while it is empty
   const einde = h('div.rw-einde', { hidden: true });
   const notatie = h('div.rw-notatie');
 
@@ -82,13 +83,13 @@ export default function routeLoper({ techniek = 'kruispunten', stil = false } = 
   };
   kop.append(h('div.rw-opties',
     h('div.chips', { role: 'group', 'aria-label': 'Lengte van de route' }, lengteChips),
-    h('button.knop.klein', { type: 'button', onclick: () => { seed = 1 + Math.floor(Math.random() * 99999); nieuw(); } }, 'Nieuwe route'),
+    actie('Nieuwe route', 'opnieuw', () => { seed = 1 + Math.floor(Math.random() * 99999); nieuw(); }, { klein: true }),
     webgl ? schakel('Van bovenaf', plat, (v) => { plat = v; maakView().then(herstel); }) : null));
 
   const el = h('div.rw',
     kop,
     h('div.rw-hoofd',
-      h('div.rw-links', wereldBox, knoppen, waar, melding, acties, einde),
+      h('div.rw-links', wereldBox, knoppen, waar, actieRij, melding, einde),
       h('div.rw-rechts', h('div.rw-notatie-kop', h('strong', 'De route')), extraChips, notatie)));
   el.addEventListener('keydown', toets);
 
@@ -185,7 +186,7 @@ export default function routeLoper({ techniek = 'kruispunten', stil = false } = 
       h('span.rw-keuze-nr', String(j + 1)), pijl, h('span.rw-keuze-tekst', draaiWoord(w.draai), namen ? h('small', w.naam) : null));
     }));
     waar.textContent = waarRegel(st, i, route.stappen.length);
-    acties.replaceChildren();
+    zetActies();
     tekenNotaties();
   }
 
@@ -222,15 +223,15 @@ export default function routeLoper({ techniek = 'kruispunten', stil = false } = 
       const t = TECHNIEKEN[tA];
       melding.classList.add('fout');
       melding.textContent = `Hmm, dit is niet de goede weg${w.doodlopend ? ' (en hij loopt ook nog dood)' : ''}. ${t.uitleg(codesA, i, st, variant, stijl)} Loop terug en kies opnieuw.`;
-      const terugKnop = h('button.knop.hoofd', { type: 'button', onclick: terug }, 'Loop terug');
-      acties.replaceChildren(terugKnop);
+      const terugKnop = actie('Loop terug', 'terug', terug, { hoofd: true });
+      zetActies(terugKnop);
       terugKnop.focus({ preventScroll: true });
     }
   }
   async function terug() {
     if (status !== 'fout' || !view) return;
     const st = stap(); const k = net.knopen[st.knoop];
-    status = 'lopen'; acties.replaceChildren();
+    status = 'lopen'; zetActies();
     const plek = standplek(st);
     gelopen.push({ x: k.x, y: k.y }, plek);
     if (!await loopIn([fout, k, plek], st.koers)) return;
@@ -255,9 +256,9 @@ export default function routeLoper({ techniek = 'kruispunten', stil = false } = 
     einde.hidden = false;
     einde.replaceChildren(h('p.doe-stil', oordeel), overzicht(net, route, gelopen),
       h('p.rw-legenda-regel', h('span.rw-lijn-groen'), 'route  ', h('span.rw-lijn-blauw'), 'jij'));
-    acties.replaceChildren(
-      h('button.knop.hoofd', { type: 'button', onclick: () => { seed = 1 + Math.floor(Math.random() * 99999); nieuw(); } }, 'Nieuwe route'),
-      h('button.knop', { type: 'button', onclick: () => nieuw() }, 'Deze nog een keer'));
+    zetActies(
+      actie('Nieuwe route', 'opnieuw', () => { seed = 1 + Math.floor(Math.random() * 99999); nieuw(); }, { hoofd: true }),
+      actie('Deze nog een keer', 'opnieuw', () => nieuw()));
     tekenNotaties();
   }
 

@@ -3,6 +3,7 @@
 // infoblad Veilig en verantwoord stoken 2026; putting it out is on the blad vuur-doven). The phases are steps in order, on the shared stappenbalk; each phase
 // is a list of ticks with why. It ends with what is still open, and who gives the go-ahead.
 import { h } from '../../dom.js';
+import { actie, acties } from '../knoppen.js';
 import { stappenBalk } from '../stappen.js';
 import '../vorm.css';
 import './veilig.css';
@@ -84,9 +85,9 @@ export default function veiligCheck({ set = 'pionieren' } = {}) {
   const lijst = h('ul.vg-lijst');
   const kop = h('p.vg-kop');
   const stand = h('p.vg-stand', { 'aria-live': 'polite' });
-  const vorige = h('button.knop.klein', { type: 'button', onclick: () => naar(fase - 1) }, 'Vorige');
-  const volgende = h('button.knop.klein.hoofd', { type: 'button', onclick: () => naar(fase + 1) }, 'Volgende');
-  const opnieuw = h('button.knop.klein', { type: 'button', onclick: () => { vinkjes.forEach((v) => v.fill(false)); naar(0); } }, 'Opnieuw');
+  const vorige = actie('Vorige', 'terug', () => naar(fase - 1), { klein: true });
+  const volgende = actie('Volgende', 'verder', () => naar(fase + 1), { hoofd: true, klein: true });
+  const opnieuw = actie('Opnieuw', 'opnieuw', () => { vinkjes.forEach((v) => v.fill(false)); naar(0); }, { klein: true });
   const balk = stappenBalk({ stappen: fasen.map((f) => f[1]), label, zet: (w) => { fase = Math.round(w); teken(); } });
 
   function naar(i) {
@@ -125,5 +126,5 @@ export default function veiligCheck({ set = 'pionieren' } = {}) {
   }
 
   teken();
-  return h('div.doe-vg', balk.el, kop, lijst, stand, h('div.knop-rij', vorige, volgende, opnieuw));
+  return h('div.doe-vg', balk.el, kop, lijst, acties(vorige, volgende, opnieuw), stand);
 }

@@ -20,4 +20,3 @@
 .tq-keuze.goed, .tq-tegel.goed { opacity: 1; border-color: var(--accent); background: color-mix(in srgb, var(--accent) 14%, var(--paneel)); }
 .tq-keuze.fout, .tq-tegel.fout { opacity: 1; border-color: var(--rood); background: color-mix(in srgb, var(--rood) 12%, var(--paneel)); }
 .tq-keuze:disabled:not(.goed):not(.fout) { opacity: 0.55; }
-.tq-voet { display: flex; align-items: center; justify-content: space-between; gap: 8px; min-height: 36px; }

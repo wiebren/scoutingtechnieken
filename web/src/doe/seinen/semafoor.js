@@ -5,7 +5,7 @@
 // arm. Data and figure: ./lib/seinpop.js (NAV §4b; Vreede: reference/boeken).
 import { h } from '../../dom.js';
 import { WOORDEN, willekeurig } from '../codes.js';
-import { keuze } from '../knoppen.js';
+import { actie, acties, keuze } from '../knoppen.js';
 import {
   BREED, HOOG, SCHOUDERS, SEMAFOOR, SEMAFOOR_CIJFER, SEMAFOOR_TEKEN, VREEDE, VREEDE_HOEK, VREEDE_STANDEN,
   armen, inWoorden, pop, semafoorLetter, vreedeNaam, vreedeStand,
@@ -99,10 +99,10 @@ export default function semafoor({ stelsel = 'semafoor', modus: beginModus = 'se
     'aria-label': 'Een eigen woord om te seinen', onkeydown: (e) => { if (e.key === 'Enter') { e.preventDefault(); nieuwWoord(eigen.value); } } });
   const woordPaneel = h('div.sf-paneel',
     woordRij, woordMelding, hint,
-    h('div.knop-rij',
-      h('button.knop.klein', { type: 'button', onclick: () => toonHint() }, 'Hoe?'),
-      h('button.knop.klein', { type: 'button', onclick: () => nieuwWoord() }, 'Ander woord')),
-    h('div.sf-eigenrij', eigen, h('button.knop.klein', { type: 'button', onclick: () => nieuwWoord(eigen.value) }, 'Sein dit')));
+    acties(
+      actie('Hoe?', 'oog', () => toonHint(), { klein: true }),
+      actie('Ander woord', 'opnieuw', () => nieuwWoord(), { klein: true })),
+    h('div.sf-eigenrij', eigen, actie('Sein dit', 'start', () => nieuwWoord(eigen.value), { klein: true })));
 
   // -- Sein een bericht
   const stappenLijst = h('ol.sf-stappen', { 'aria-label': 'De stappen' });
@@ -116,16 +116,16 @@ export default function semafoor({ stelsel = 'semafoor', modus: beginModus = 'se
   anderFiguur.setAttribute('role', 'img');
   const anderTekst = h('p.doe-stil');
   const anderBand = h('p.sf-band');
-  const ontvang = h('button.knop.klein', { type: 'button', onclick: () => speelAntwoord() }, 'Ontvang het antwoord');
-  const nogEens = h('button.knop.klein', { type: 'button', onclick: () => speelAntwoord() }, 'Nog eens');
-  const ander = h('div.sf-ander', anderFiguur, h('div.sf-paneel', h('p', h('b', 'De ander')), anderTekst, anderBand, h('div.knop-rij', ontvang, nogEens)));
+  const ontvang = actie('Ontvang het antwoord', 'start', () => speelAntwoord(), { klein: true });
+  const nogEens = actie('Nog eens', 'opnieuw', () => speelAntwoord(), { klein: true });
+  const ander = h('div.sf-ander', anderFiguur, h('div.sf-paneel', h('p', h('b', 'De ander')), anderTekst, anderBand, acties(ontvang, nogEens)));
   const berichtPaneel = h('div.sf-paneel',
     stappenLijst,
     h('div', h('p.doe-stil', 'Jouw bericht:'), briefje),
     band, berichtMelding, berichtHint, ander,
-    h('div.knop-rij',
-      h('button.knop.klein', { type: 'button', onclick: () => toonBerichtHint() }, 'Hoe?'),
-      h('button.knop.klein', { type: 'button', onclick: () => nieuwBericht() }, 'Ander bericht')));
+    acties(
+      actie('Hoe?', 'oog', () => toonBerichtHint(), { klein: true }),
+      actie('Ander bericht', 'opnieuw', () => nieuwBericht(), { klein: true })));
 
   // -- Lees het teken
   const leesFiguur = document.createElementNS(NS, 'svg');
@@ -135,9 +135,9 @@ export default function semafoor({ stelsel = 'semafoor', modus: beginModus = 'se
   const opties = h('div.sf-opties', { role: 'group', 'aria-label': 'Welke letter is dit?' });
   const leesMelding = h('p.doe-melding', { 'aria-live': 'polite' });
   const score = h('p.doe-stil');
-  const volgende = h('button.knop.klein', { type: 'button', onclick: () => nieuweVraag(true) }, 'Volgende');
+  const volgende = actie('Volgende', 'verder', () => nieuweVraag(true), { klein: true });
   const leesPaneel = h('div.sf-lees', leesFiguur,
-    h('div.sf-paneel', h('p', 'Welke letter seint deze seiner?'), opties, leesMelding, h('div.knop-rij', volgende), score));
+    h('div.sf-paneel', h('p', 'Welke letter seint deze seiner?'), opties, acties(volgende), leesMelding, score));
   leesPaneel.addEventListener('keydown', (e) => {
     const k = Number(e.key);
     if (k >= 1 && k <= 4 && !vraag?.klaar) { e.preventDefault(); opties.children[k - 1]?.click(); }
@@ -146,7 +146,7 @@ export default function semafoor({ stelsel = 'semafoor', modus: beginModus = 'se
   const zelf = h('div.sf-zelf', h('div.sf-links', figuur, bediening), h('div.sf-paneel', uitkomst, standTekst, lezer, woordPaneel, berichtPaneel));
   const el = h('div.doe-semafoor',
     h('div.chips', { role: 'group', 'aria-label': 'Wat wil je doen?' },
-      keuze([['seinen', 'Zelf seinen'], ['woord', 'Sein een woord'], ...(vreede ? [] : [['bericht', 'Sein een bericht']]), ['lezen', 'Lees het teken']], modus, zetModus)),
+      keuze([['seinen', 'Zelf seinen'], ['woord', 'Een woord'], ...(vreede ? [] : [['bericht', 'Een bericht']]), ['lezen', 'Aflezen']], modus, zetModus)),
     zelf, leesPaneel,
     h('p.doe-stil', 'Je kijkt naar de seiner: zijn rechterarm zie je links.'));
 

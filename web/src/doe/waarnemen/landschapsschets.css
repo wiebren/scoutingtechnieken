@@ -1,11 +1,12 @@
 /* Eén landschap, drie schetsen (landschapsschets.js) */
-.ls-svg { max-width: 560px; border: 1px solid var(--lijn); border-radius: 10px; }
+.ls-svg { max-width: 600px; border: 1px solid var(--lijn); border-radius: 10px; }
 .ls-papier { fill: var(--paneel); }
 .ls-horizon { stroke: var(--inkt); stroke-width: 1.4; }
 .ls-punt circle { fill: var(--paneel); stroke: var(--rood); stroke-width: 1.5; }
-.ls-punt text { fill: var(--rood); font-size: 10px; font-weight: 700; }
+.ls-punt text { fill: var(--rood); font-size: 10px; font-weight: 700; font-family: var(--hand); }
 .ls-tabel { font-size: 0.875rem; }
 .ls-tabel td, .ls-tabel th { padding: 4px 10px 4px 0; }
+.ls-tabel td { font-family: var(--hand); font-size: 1.1em; }   /* what you write next to the sketch yourself */
 
 /* lines, as drawn with a pencil */
 .ls-svg path, .ls-svg ellipse, .ls-svg circle:not(.ls-punt circle) { stroke: var(--inkt); stroke-width: 1.2; stroke-linejoin: round; stroke-linecap: round; fill: none; }

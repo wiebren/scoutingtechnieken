@@ -155,7 +155,7 @@ export const INSIGNES = [
         delen: [
           { titel: 'Mes', bladen: ['zakmes', 'mes-doorgeven', 'van-je-af-snijden', 'scouting-messen', 'stokbrood'] },
           { titel: 'Bijl', bladen: ['bijl-doorgeven', 'bloedcirkel'] },
-          { titel: 'Zaag', bladen: ['zagen-soorten'] },
+          { titel: 'Zaag', bladen: ['zagen-houtbewerking'] },
           { titel: 'Kennis en onderhoud', bladen: ['hout-voor-snijwerk', 'mes-onderhoud'] },
           { titel: 'Sierwerk', bladen: ['snijwerk'] },
         ] },

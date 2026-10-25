@@ -2,7 +2,7 @@
 // paths, drag one to move it, and read per stretch how far it is and how long it takes at your pace. With the
 // keyboard the arrow keys move a cross over the map (Shift: 100 m) and Enter sets a point there.
 import { h } from '../dom.js';
-import { keuze } from './knoppen.js';
+import { actie, acties, keuze } from './knoppen.js';
 import { s } from './kompasdelen.js';
 import './vorm.css';
 import './tochtplanner.css';
@@ -30,8 +30,8 @@ export default function tochtplanner() {
     s('image', { href: KAART, x: 0, y: 0, width: W, height: H, preserveAspectRatio: 'none' }), lijn, groep, kruis);
   const tabel = h('tbody');
   const totaal = h('p.tp-totaal', { 'aria-live': 'polite' });
-  const terug = h('button.knop.klein', { type: 'button', onclick: () => { punten.pop(); teken(); } }, 'Haal het laatste punt weg');
-  const opnieuw = h('button.knop.klein', { type: 'button', onclick: () => { punten.length = 0; teken(); } }, 'Begin opnieuw');
+  const terug = actie('Haal het laatste punt weg', 'terug', () => { punten.pop(); teken(); }, { klein: true });
+  const opnieuw = actie('Begin opnieuw', 'opnieuw', () => { punten.length = 0; teken(); }, { klein: true });
   const pauzeVeld = h('input.doe-veld.tp-pauze', { type: 'number', min: 0, max: 600, step: 5, value: 0, inputmode: 'numeric',
     oninput: () => { pauze = Math.max(0, Number(pauzeVeld.value) || 0); teken(); } });
 
@@ -94,6 +94,6 @@ export default function tochtplanner() {
         h('label.doe-label', h('span', 'Pauze (minuten)'), pauzeVeld)),
       totaal,
       h('div.tabel-wrap', h('table.tp-tabel', h('thead', h('tr', h('th', 'Stuk'), h('th', 'Afstand'), h('th', 'Tijd'), h('th', 'Tot hier'))), tabel)),
-      h('div.knop-rij', terug, opnieuw),
+      acties(terug, opnieuw),
       h('p.doe-stil', 'Je meet in rechte lijnen. Een pad slingert: zet een punt op elke bocht, anders kom je te kort uit.')));
 }

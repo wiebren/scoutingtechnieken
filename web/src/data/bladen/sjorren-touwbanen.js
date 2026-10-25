@@ -20,7 +20,7 @@ export default [
     doe: 'bouwwerk-apenbrug',
     waarvoor: 'Met twee touwen over een sloot, een beek of een stuk veld komen: op het ene loop je, het andere houd je vast.',
     uitleg: [
-      'Een apenbrug heeft twee touwen boven elkaar. Op het onderste, het looptouw, loop je. Het bovenste, het handtouw, houd je vast. Het hangt zo’n 1,2 meter hoger: op borsthoogte als je op het looptouw staat.',
+      'Een apenbrug heeft twee touwen boven elkaar: onder het looptouw, boven het handtouw. Het handtouw hangt zo’n 1,2 meter hoger: op borsthoogte als je op het looptouw staat.',
       'Tussen twee bomen:',
       '- Kies dikke, levende bomen, niet vlak aan de waterkant. Leg jute of een oude slaapmat om de stam.',
       '- Zet het looptouw aan de ene boom vast met een rondtorn met twee halve steken.',
@@ -78,7 +78,7 @@ export default [
     plaatje: 'tb-buikschuif',
     waarvoor: 'Met één touw over het water of een greppel komen, op je buik over het touw.',
     uitleg: [
-      'Bij een buikschuif lig je op je buik bovenop één strak touw. Het ene been haak je over het touw, het andere hangt omlaag voor je evenwicht. Zo trek je jezelf met je handen naar de overkant.',
+      'Het touw is strak gespannen. Het ene been haak je eroverheen, het andere hangt omlaag voor je evenwicht. Zo trek je jezelf met je handen naar de overkant.',
       'Hang je onder het touw, met je handen en benen eromheen, dan heet het een apenhang.',
       'Gebruik een dik touw: dat ligt beter en het is sterk genoeg. Je kunt het op twee manieren spannen:',
       '- Tussen twee dikke bomen: aan de ene boom vast, aan de andere gespannen met een vierloper, dan vastzetten met een spanknoop en de takel eraf. Dat is een eis van niveau 3 van het insigne Pionieren.',
@@ -94,7 +94,7 @@ export default [
     doe: 'bouwwerk-postman-walk',
     waarvoor: 'Een apenbrug met een uitdaging: het handtouw hangt slap.',
     uitleg: [
-      'Een postman walk is een apenbrug waarvan het bovenste touw slap hangt, een meter of zo langer dan de afstand tussen de bomen. Onderweg houd je het zelf strak: je neemt een lus van het touw in je handen en schuift die mee terwijl je loopt.',
+      'Het handtouw is een meter of zo langer dan de afstand tussen de bomen. Onderweg houd je het zelf strak: je neemt een lus van het touw in je handen en schuift die mee terwijl je loopt.',
       'Het lijkt makkelijk, maar alles wat je met je handen doet, voel je in je voeten. Hoe slapper het touw, hoe moeilijker.',
       'Is de afstand kort, dan kun je in plaats van een looptouw ook een paal nemen. Die kun je ook laten hangen: weer een nieuwe uitdaging.',
     ],
@@ -107,7 +107,7 @@ export default [
     doe: 'bouwwerk-lianenbrug',
     waarvoor: 'Over een looptouw lopen terwijl je de ene liaan na de andere grijpt.',
     uitleg: [
-      'Een lianenbrug heeft een looptouw laag boven de grond en een boventouw hoog erboven. Aan het boventouw hangen korte touwen, de lianen, met een knoop of lus aan het eind. Je loopt over het looptouw en grijpt de ene liaan, dan de volgende.',
+      'Een lianenbrug heeft een looptouw laag boven de grond en een boventouw hoog erboven. Aan het boventouw hangen korte touwen, de lianen, met een knoop of lus aan het eind.',
       '- Looptouw op zo’n halve meter, gespannen als bij een apenbrug.',
       '- Boventouw op zo’n 3 meter. Dat zet de leiding vast, vanaf een ladder.',
       '- Om de 60 tot 80 centimeter een liaan, met het eind zo’n 1,2 meter boven het looptouw.',
@@ -127,7 +127,7 @@ export default [
       '- Begin vlak bij een boom: eerst alleen blijven staan, dan een paar stapjes.',
       'Lukt het op de band, probeer het dan op een touw. Dat is een stuk lastiger, want een touw draait onder je voeten.',
     ],
-    letOp: 'Niet hoger dan een halve meter, en niet boven een harde vloer of iets waar je op kunt vallen. In een hoge touwbaan laat je een slackline weg: daar is hij te moeilijk.',
+    letOp: 'In een hoge touwbaan laat je een slackline weg: daar is hij te moeilijk.',
     verwijs: [AB('Koorddansen', '1179-koorddansen')],
     naar: [{ blad: 'bouw-evenwichtsbalk' }, { blad: 'boombescherming' }, { blad: 'bouw-touwbrug-varianten' }] },
 
@@ -155,7 +155,7 @@ export default [
     doe: 'bouwwerk-kruipgang',
     waarvoor: 'Een stuk van de stormbaan waar je laag onderdoor moet kruipen.',
     uitleg: [
-      'Een kruipgang is een stuk terrein dat afgedekt is met een zeil of met touwen, waar je onderdoor kruipt. Je kunt hem op twee manieren bouwen:',
+      'Een kruipgang is afgedekt met een zeil of met touwen. Je kunt hem op twee manieren bouwen:',
       '- Onder een zeil: twee lage bokjes met een nokbalk, en een zeil eroverheen dat aan de zijkanten met haringen laag bij de grond vastzit. Je kruipt op je buik door de tunnel.',
       '- Onder touw: twee rijen korte paaltjes, met een touw dat zigzag op 30 tot 40 centimeter van paaltje naar paaltje loopt. Wie het touw raakt, gaat terug naar het begin.',
       'Een kruipgang over modder of door een greppel maakt het spannender. Onder een zeil is het donker: bij een nachtspel is dat extra spannend.',
@@ -168,7 +168,7 @@ export default [
     doe: 'bouwwerk-balkenhindernis',
     waarvoor: 'Een rij balken: eroverheen, eronderdoor, en weer eroverheen.',
     uitleg: [
-      'Drie balken achter elkaar, om en om hoog en laag. Over de eerste klim je heen, onder de tweede kruip je door, over de derde weer heen.',
+      'Drie balken achter elkaar, om en om hoog en laag.',
       '- Graaf voor elke balk twee staanders van 1,5 meter een halve meter diep in, zo’n 2,2 meter uit elkaar.',
       '- Sjor de balken van 3 meter met kruissjorringen aan de staanders: de hoge op zo’n 1 meter, de lage op zo’n 55 centimeter.',
       'Kun je niet graven, zet de balken dan op lage bokjes of driepoten. Pas de hoogte aan op wie de baan doet.',
@@ -224,7 +224,7 @@ export default [
     doe: 'bouwwerk-hangladder',
     waarvoor: 'Aan je handen van sport naar sport slingeren, onder een ladder door.',
     uitleg: [
-      'Een ladder die plat boven je hangt. Je hangt aan de sporten en slingert van de ene naar de volgende. Hij heet ook apenhang.',
+      'Een ladder die plat boven je hangt. Hij heet ook apenhang.',
       'Sjor eerst een ladder: twee palen met sporten om de 35 centimeter, elk met een kruissjorring. Ronde stelen, zoals bezemstelen, pak je fijn vast. Dan zijn er twee manieren:',
       '- Vast: de zijpalen (de bomen) van de ladder zijn met kruissjorringen aan twee bokken gesjord, op zo’n 2 meter. Een schoor aan elke kant houdt het rek recht.',
       '- Hangend: de ladder hangt aan vier touwen aan twee bomen. Hij beweegt mee als je slingert, en dat maakt het lastig.',
@@ -239,7 +239,7 @@ export default [
     doe: 'bouwwerk-wokkel',
     waarvoor: 'Een paal met sporten als een wenteltrap, die draait als je erover klimt.',
     uitleg: [
-      'Een wokkel is een lange paal met korte sporten eraan, elk een stukje verder gedraaid dan de vorige. Samen vormen ze een spiraal. De paal hangt aan beide uiteinden los in een lus van touw aan een boom. Klim je erover, dan draait hij onder je weg.',
+      'Een wokkel is een lange paal met korte sporten eraan, elk een stukje verder gedraaid dan de vorige. Samen vormen ze een spiraal. De paal hangt aan beide uiteinden los in een lus van touw aan een boom.',
       '- De as: een paal van 4 tot 5 meter.',
       '- Acht sporten van zo’n 90 centimeter, elk met een kruissjorring aan de as, telkens een achtste slag gedraaid.',
       '- Aan elk eind een lus van touw om de as, met een rondtorn aan een boom (met jute). De lus moet los zitten, anders draait de wokkel niet.',
@@ -272,9 +272,9 @@ export default [
       '- Aan beide bomen een ankerpunt: boombescherming, een hijsband om de stam en een sluiting. Het bovenste zit op stahoogte boven de vloer van het platform.',
       '- Statisch klimtouw dat wat doorhangt, en aan het eind een rem.',
       '- Een zak zand aan de tokkelkatrol: daarmee test je de baan eerst.',
-      'Een kabelbaan bouw je niet zelf. Dat doet leiding die ervoor is opgeleid, met goedgekeurd materiaal. Voor de baan zelf: hijsbanden en sluitingen met de werklast erop, statisch touw en een rem. Voor wie tokkelt: klimmateriaal, zoals een klimgordel, een tokkelkatrol en karabiners met een schroefsluiting. Iedereen blijft gezekerd van het opklimmen tot het afstappen.',
+      'Een kabelbaan bouw je niet zelf. Dat doet leiding die ervoor is opgeleid, met goedgekeurd materiaal: hijsbanden en sluitingen met de werklast erop, en voor wie tokkelt klimmateriaal, zoals een klimgordel, een tokkelkatrol en karabiners met een schroefsluiting. Iedereen blijft gezekerd van het opklimmen tot het afstappen.',
     ],
-    letOp: 'Een kabelbaan is levensgevaarlijk als er iets misgaat, ook voor wie hem bedient. Alleen bouwen en gebruiken onder leiding van iemand met kennis van zaken, met gekeurd materiaal, nooit over een weg of pad, en nooit zonder toezicht. Blijf uit de buurt van het gespannen touw.',
+    letOp: 'Een kabelbaan is levensgevaarlijk als er iets misgaat, ook voor wie hem bedient. Span hem nooit over een weg of pad, gebruik hem nooit zonder toezicht, en blijf uit de buurt van het gespannen touw.',
     naar: [{ blad: 'veilig-touwbanen' }, { blad: 'zekeren-touwbanen' }, { blad: 'touw-onder-spanning' }, { blad: 'kracht-strak-touw' }] },
 
   // ---- Touw spannen
@@ -305,7 +305,7 @@ export default [
       'Twee manieren die je bij touwbanen ziet:',
       '- Toprope: het touw loopt boven je naar iemand die je zekert. Fijn voor jongere scouts, maar bij elke overstap moet er iemand zijn die je los- en vastklikt.',
       '- Via ferrata: je klikt jezelf met twee lijnen aan een staalkabel boven de baan, en verplaatst ze om de beurt. Uitdagender, maar je moet het zelf goed doen: oefen het eerst op de grond.',
-      'Wat je nodig hebt is klimmateriaal: een klimgordel, karabiners met een schroef- of dubbele sluiting, bandlussen en klimtouw. Gebruik het alleen om mee te klimmen en te zekeren, niet om de baan zelf mee te bouwen of te spannen. Pioniertouw is nooit goed om iemand mee te zekeren.',
+      'Wat je nodig hebt is klimmateriaal: een klimgordel, karabiners, bandlussen en klimtouw. Pioniertouw is nooit goed om iemand mee te zekeren.',
       'De regels van Scouting Nederland voor klimactiviteiten:',
       '- „Begeleiders van klimactiviteiten zijn aantoonbaar opgeleid.”',
       '- „Gebruik het materiaal alleen om mee te klimmen en niet voor andere toepassingen zoals touwbanen, hijsen, etc.”',
@@ -332,7 +332,6 @@ export default [
       '- Kun je meer dan 60 centimeter vallen, dan hoort er een valdempende laag onder.',
       '- Val je tussen 0,6 en 1,5 meter, dan is het valgebied 1,5 meter rondom het toestel.',
       '- Val je tussen 1,5 en 3 meter, dan is het valgebied 2/3 × de valhoogte + 0,5 meter rondom.',
-      '- In het valgebied staat of ligt niets waaraan je je kunt bezeren.',
       'De regel van Scouting Nederland voor touwbanen:',
       '„Vermijd obstakels onder een baan of dek deze af.”',
     ],

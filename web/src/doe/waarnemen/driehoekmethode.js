@@ -2,7 +2,7 @@
 // half as far again. Walk from D away from the river (drag yourself, or use the arrow keys) until C and A are in one
 // line. Then D to E is half of B to A. With "CD even lang" D is as far from C as B is, and DE is AB itself.
 import { h } from '../../dom.js';
-import { keuze } from '../knoppen.js';
+import { actie, acties, keuze } from '../knoppen.js';
 import { getal, s, sleep, tussen } from './hulp.js';
 import '../vorm.css';
 import './wn.css';
@@ -50,10 +50,8 @@ export default function driehoekmethode() {
     h('div.wn-tekst',
       h('p', `B staat recht tegenover boom A. Van B naar C is ${BC} passen langs de oever, en dan nog een stuk naar D. Loop van D haaks van de oever weg, tot je C en A precies achter elkaar ziet.`),
       h('div.chips', { role: 'group', 'aria-label': 'Hoe ver is D van C?' }, deelChips),
+      acties(actie('Reken uit', 'vink', reken, { hoofd: true, klein: true }), actie('Andere rivier', 'opnieuw', nieuw, { klein: true })),
       melding, uitkomst,
-      h('div.knop-rij',
-        h('button.knop.hoofd.klein', { type: 'button', onclick: reken }, 'Reken uit'),
-        h('button.knop.klein', { type: 'button', onclick: nieuw }, 'Andere rivier')),
       h('p.doe-stil', `Eén pas is hier ${getal(PAS * 100)} cm.`)));
 
   function zet(p) {

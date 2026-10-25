@@ -3,6 +3,7 @@
 // pull it straight against the ruler, read its length in cm and reckon it over with the scale. The answer counts
 // within 10% of the real road; the feedback says whether the string, the reading or the sum went wrong.
 import { h } from '../dom.js';
+import { actie, acties } from './knoppen.js';
 import './vorm.css';
 import './kronkelweg.css';
 
@@ -85,26 +86,26 @@ export default function kronkelweg() {
 
   const opdracht = h('p.kw-opdracht');
   const stand = h('p.doe-sr', { 'aria-live': 'polite' });
-  const terug = h('button.knop.klein', { type: 'button', onclick: () => haalTerug() }, 'Stukje terug');
-  const opnieuw = h('button.knop.klein', { type: 'button', onclick: () => { if (!strak) { touw = [weg[0]]; halen = []; klaar = false; teken(); } } }, 'Touwtje opnieuw');
-  const trek = h('button.knop.klein.hoofd', { type: 'button', disabled: true, onclick: () => trekStrak() }, 'Trek het touwtje strak');
-  const leggen = h('div.knop-rij', terug, opnieuw, trek);
+  const terug = actie('Stukje terug', 'terug', () => haalTerug(), { klein: true });
+  const opnieuw = actie('Touwtje opnieuw', 'opnieuw', () => { if (!strak) { touw = [weg[0]]; halen = []; klaar = false; teken(); } }, { klein: true });
+  const trek = actie('Trek het touwtje strak', null, () => trekStrak(), { hoofd: true, klein: true, disabled: true });
+  const leggen = acties(terug, opnieuw, trek);
 
   const cmVeld = h('input.doe-veld.kw-getal', { type: 'text', inputmode: 'decimal', autocomplete: 'off', spellcheck: 'false' });
   const mVeld = h('input.doe-veld.kw-getal', { type: 'text', inputmode: 'decimal', autocomplete: 'off', spellcheck: 'false' });
   for (const v of [cmVeld, mVeld]) v.addEventListener('keydown', (e) => { if (e.key === 'Enter') { e.preventDefault(); kijkNa(); } });
   const schaalTekst = h('strong');
-  const naKijken = h('button.knop.hoofd', { type: 'button', onclick: () => kijkNa() }, 'Kijk na');
+  const naKijken = actie('Kijk na', 'vink', () => kijkNa(), { hoofd: true });
   const antwoord = h('div.kw-antwoord', { hidden: true },
     h('div.kw-velden',
       h('label.doe-label', h('span', 'Het touwtje is (cm)'), cmVeld),
       h('label.doe-label', h('span', 'De weg is in het echt (m)'), mVeld)),
-    h('div.knop-rij', naKijken));
+    acties(naKijken));
   const melding = h('p.doe-melding', { 'aria-live': 'polite' });
   const uitleg = h('p.kw-uitleg');
-  const nieuw = h('button.knop', { type: 'button', onclick: () => begin() }, 'Nieuwe weg');
+  const nieuw = actie('Nieuwe weg', 'opnieuw', () => begin());
 
-  const el = h('div.doe-kronkelweg', opdracht, h('div.kw-beeld', svg), leggen, antwoord, melding, uitleg, stand, h('div.knop-rij', nieuw));
+  const el = h('div.doe-kronkelweg', opdracht, h('div.kw-beeld', svg), leggen, antwoord, melding, uitleg, stand, acties(nieuw));
 
   // -- drawing
   function tekenKaart() {

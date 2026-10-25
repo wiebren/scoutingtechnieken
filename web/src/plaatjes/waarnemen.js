@@ -148,7 +148,9 @@ export default {
     d += tekst(268, 82, 'na 300 m links', { maat: 9, klasse: 'stil' }) + tekst(268, 93, 'het zandpad op', { maat: 9, klasse: 'stil' });
     // north arrow
     d += '<path d="M40 50 L48 26 L56 50 L48 44Z" class="vol"/>' + tekst(48, 20, 'N', { maat: 12, klasse: 'vet' });
-    return svg(380, 260, 'Een situatieschets van het station naar het kampterrein: de wegen die je neemt, de afslagen, en de kerk, de brug en een wegwijzer als herkenningspunten, met een noordpijl', d);
+    // drawn by hand: shown larger than the other drawings, the words in handwriting (wn-schets in waarnemen.css)
+    return svg(380, 260, 'Een situatieschets van het station naar het kampterrein: de wegen die je neemt, de afslagen, en de kerk, de brug en een wegwijzer als herkenningspunten, met een noordpijl', d)
+      .replace('class="plaatje"', 'class="plaatje wn-schets"');
   },
 
   routeschets: () => {
@@ -313,7 +315,8 @@ export default {
     d += '<rect x="286" y="182" width="74" height="64" class="vlak"/><rect x="286" y="182" width="74" height="64" class="lijn dun"/>';
     d += '<path d="M292 193h14" class="wn-muur"/><rect x="292" y="204" width="14" height="5" class="vlak"/><path d="M292 204h14M292 209h14M294 225v-8A8 8 0 0 1 302 225" class="lijn dun"/><circle cx="299" cy="236" r="4" class="wn-boom"/>';
     d += [['muur', 196], ['raam', 210], ['deur', 225], ['boom', 239]].map(([t, y]) => tekst(312, y, t, { maat: 8.5, anker: 'start' })).join('');
-    return svg(380, 260, 'Een plattegrond op schaal. Links de klad: een clubhuis van 12 bij 8 m met een keuken van 4 m, een deur van 1 m en een boom 3 m ervoor, met alle maten erbij. Rechts hetzelfde netjes op millimeterpapier, op schaal 1:200, met een noordpijl, een lijnschaal en een legenda', d);
+    return svg(380, 260, 'Een plattegrond op schaal. Links de klad: een clubhuis van 12 bij 8 m met een keuken van 4 m, een deur van 1 m en een boom 3 m ervoor, met alle maten erbij. Rechts hetzelfde netjes op millimeterpapier, op schaal 1:200, met een noordpijl, een lijnschaal en een legenda', d)
+      .replace('class="plaatje"', 'class="plaatje wn-schets"');
   },
 
   sluipen: () => {

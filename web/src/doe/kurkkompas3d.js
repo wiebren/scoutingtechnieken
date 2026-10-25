@@ -3,6 +3,7 @@
 // picture (or use the arrow keys) to look from another side. A small hand-made projection as in
 // kamperen/frietbuil3d.js, no 3D library; everything in cm, z up, north is +y.
 import { h } from '../dom.js';
+import { actie, acties, zetActie } from './knoppen.js';
 import { stappenBalk } from './stappen.js';
 import { s } from './kompasdelen.js';
 import './vorm.css';
@@ -113,7 +114,7 @@ export default function kurkkompas3d() {
   const svg = s('svg', { viewBox: `0 0 ${W} ${H}`, class: 'kd-svg kc-svg', role: 'img', tabindex: '0', 'aria-roledescription': '3D-beeld' });
   const stap = h('p.kd-vraag', { 'aria-live': 'polite' });
   const balk = stappenBalk({ stappen: STAPPEN, vloeiend: true, label: 'Een kompas van kurk en naald maken', zet: (v) => { stop(); zet(v); } });
-  const speelKnop = h('button.knop.klein.hoofd', { type: 'button', onclick: () => (speel ? stop() : speelAf()) }, 'Speel af');
+  const speelKnop = actie('Speel af', 'start', () => (speel ? stop() : speelAf()), { hoofd: true, klein: true });
   const verminder = () => matchMedia('(prefers-reduced-motion: reduce)').matches;
 
   function teken() {
@@ -226,7 +227,7 @@ export default function kurkkompas3d() {
 
   function stop() {
     if (speel) cancelAnimationFrame(speel);
-    speel = 0; speelKnop.textContent = 'Speel af';
+    speel = 0; zetActie(speelKnop, 'Speel af', 'start');
   }
 
   function speelAf() {
@@ -234,7 +235,7 @@ export default function kurkkompas3d() {
     if (verminder()) { zet(w >= eind ? 0 : Math.floor(w + 0.001) + 1); return; }   // no movement: the next step
     if (w >= eind) w = 0;
     let vorige = null;
-    speelKnop.textContent = 'Stop';
+    zetActie(speelKnop, 'Stop', 'stop');
     const tik = (nu) => {
       if (!svg.isConnected) { speel = 0; return; }
       if (vorige != null) zet(w + (nu - vorige) / 3600);
@@ -274,5 +275,5 @@ export default function kurkkompas3d() {
   zet(0);
   return h('div.kd.naast.doe-kurkkompas',
     h('div.kc-beeld', svg, h('p.doe-stil.kc-hint', 'Sleep het beeld om rond te kijken (of gebruik de pijltjestoetsen).')),
-    h('div.kd-tekst', stap, h('div.doe-label', h('span', 'Stap voor stap'), balk.el), h('div.knop-rij', speelKnop)));
+    h('div.kd-tekst', stap, h('div.doe-label', h('span', 'Stap voor stap'), balk.el), acties(speelKnop)));
 }

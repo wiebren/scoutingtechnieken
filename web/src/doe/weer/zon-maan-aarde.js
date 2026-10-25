@@ -3,6 +3,7 @@
 // Tap (or choose with Tab and Enter) the place of the moon. Blad getijden and blad verduisteringen: `over` ('getij'
 // or 'verduistering') leaves out the questions of the other blad; the phases are asked on both.
 import { h } from '../../dom.js';
+import { actie, acties } from '../knoppen.js';
 import { pol, s } from '../kompasdelen.js';
 import '../vorm.css';
 import './zon-maan-aarde.css';
@@ -58,7 +59,7 @@ export default function zonMaanAarde({ over = null } = {}) {
   const vraag = h('p.zma-vraag');
   const melding = h('p.doe-melding', { 'aria-live': 'polite' });
   const stand = h('p.doe-stil');
-  const verder = h('button.knop.klein', { type: 'button', hidden: true, onclick: () => { volgende(); manen[0].focus(); } }, 'Volgende vraag');
+  const verder = actie('Volgende vraag', 'verder', () => { volgende(); manen[0].focus(); }, { klein: true, hidden: true });
 
   function volgende() {
     if (!volgorde.length) volgorde = [...vragen].sort(() => Math.random() - 0.5);
@@ -88,5 +89,5 @@ export default function zonMaanAarde({ over = null } = {}) {
 
   volgende();
   stand.textContent = 'Tik de plek van de maan aan.';
-  return h('div.doe-zma', vraag, h('div.zma-beeld', svg), melding, h('div.knop-rij', verder), stand);
+  return h('div.doe-zma', vraag, h('div.zma-beeld', svg), acties(verder), melding, stand);
 }

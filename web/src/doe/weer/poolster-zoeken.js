@@ -3,7 +3,7 @@
 // when the Steelpan stands low behind the trees: the Pole Star stands between the two, about halfway. Straight
 // below the Pole Star, on the horizon, is north; its height is about your latitude.
 import { h } from '../../dom.js';
-import { keuze, schakel } from '../knoppen.js';
+import { actie, acties, keuze, schakel } from '../knoppen.js';
 import { p, s } from '../kompasdelen.js';
 import { momentNL, PLAATS } from './hemel.js';
 import { BEELD, kleur, NAMEN, posities, STERREN, straal } from './sterren.js';
@@ -154,7 +154,7 @@ export default function poolsterZoeken() {
     melding.classList.add('fout');
     const naam = NAMEN[i];
     melding.textContent = (naam ? `Dat is ${naam}. ` : 'Die niet. ')
-      + (fouten >= 2 && !figuren ? 'Zet "Toon de figuren" aan als hulp.' : stap === 1 ? 'De Poolster is niet heel fel; hij staat alleen.' : 'Kijk nog eens.');
+      + (fouten >= 2 && !figuren ? 'Zet "Figuren" aan als hulp.' : stap === 1 ? 'De Poolster is niet heel fel; hij staat alleen.' : 'Kijk nog eens.');
   }
 
   /** Show the answer of this step (also the way without a mouse). */
@@ -183,7 +183,9 @@ export default function poolsterZoeken() {
   teken();
   return h('div.doe-poolster', manierKeuze, nachtKeuze,
     h('div.pz-beeld', svg),
-    opdracht, melding,
-    h('div.knop-rij', schakel('Toon de figuren', figuren, (a) => { figuren = a; teken(); }), h('button.knop.klein', { type: 'button', onclick: laatZien }, 'Laat zien'), h('button.knop.klein', { type: 'button', onclick: opnieuw }, 'Opnieuw')),
+    opdracht,
+    h('div.chips', schakel('Figuren', figuren, (a) => { figuren = a; teken(); })),
+    acties(actie('Laat zien', 'oog', laatZien, { klein: true }), actie('Opnieuw', 'opnieuw', opnieuw, { klein: true })),
+    melding,
     h('p.hm-noot', 'Zo zie je de hemel als je naar het noorden kijkt, vanuit Amersfoort, op de 15e van de maand. Met een muis of vinger: tik op een ster.'));
 }

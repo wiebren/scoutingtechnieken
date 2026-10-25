@@ -6,6 +6,7 @@
 import { BEELDEN, BRONNEN } from '../data/beelden.js';
 import { h } from '../dom.js';
 import { HOEK, kaartje } from '../plaatjes/kaarthoekmeter.js';
+import { actie, acties } from './knoppen.js';
 import './vorm.css';
 import './kaarthoekmeter.css';
 
@@ -96,7 +97,7 @@ export default function kaarthoekmeter() {
     schuif(-4, 0, 'links'), schuif(0, -4, 'omhoog'), schuif(0, 4, 'omlaag'), schuif(4, 0, 'rechts'));
   const plekTekst = h('p.doe-stil.kh-plek', { 'aria-live': 'polite' });
   const vergroot = h('button.chip', { type: 'button', 'aria-pressed': String(groot),
-    onclick: () => { groot = !groot; vergroot.setAttribute('aria-pressed', String(groot)); kiesVak(); if (!klaar) { hoek = binnenVak(hoek); teken(); meldPlek(); } } }, 'Vergroot');
+    onclick: () => { groot = !groot; vergroot.setAttribute('aria-pressed', String(groot)); kiesVak(); if (!klaar) { hoek = binnenVak(hoek); teken(); meldPlek(); } } }, 'Groter');
 
   // -- the answer
   const veld = (as, uitleg) => {
@@ -106,8 +107,8 @@ export default function kaarthoekmeter() {
   };
   const [xVeld, xLabel] = veld('x', '(eerst: naar rechts)');
   const [yVeld, yLabel] = veld('y', '(dan: omhoog)');
-  const naKijken = h('button.knop.klein.hoofd', { type: 'button', onclick: () => kijkNa() }, 'Kijk na');
-  const volgende = h('button.knop.klein.hoofd', { type: 'button', hidden: true, onclick: () => nieuwDoel() }, 'Volgende');
+  const naKijken = actie('Kijk na', 'vink', () => kijkNa(), { hoofd: true, klein: true });
+  const volgende = actie('Volgende', 'verder', () => nieuwDoel(), { hoofd: true, klein: true, hidden: true });
   const uitkomst = h('p.kh-uitkomst', { 'aria-live': 'polite' });
   const uitleg = h('p.kh-uitleg');
   const score = h('p.kh-score');
@@ -117,7 +118,7 @@ export default function kaarthoekmeter() {
     h('figure.kh-figuur', beeld, h('figcaption.kh-bron', BRONNEN.kadaster)),
     h('div.kh-onder', pijlen, vergroot, plekTekst),
     h('div.kh-velden', xLabel, yLabel),
-    h('div.knop-rij', naKijken, volgende),
+    acties(naKijken, volgende),
     uitkomst, uitleg, score);
 
   // -- drawing

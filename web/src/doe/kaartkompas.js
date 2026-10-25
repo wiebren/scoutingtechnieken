@@ -5,6 +5,7 @@
 //   what you saw appears;
 // - orienteren: turn the map (with the compass on it) until the needle points to the top of the map.
 import { h } from '../dom.js';
+import { actie, acties } from './knoppen.js';
 import { kompasDelen, norm, p, pol, R, s, streek16, verschil } from './kompasdelen.js';
 import './kompas.css';
 import './kaartkompas.css';
@@ -78,7 +79,7 @@ export default function kaartkompas({ greep = 3 } = {}) {
   const beeld = h('div.kkk-beeld', svg, h('p.kkk-bron', 'Kaart: Kadaster, TOPraster via PDOK (CC BY 4.0)'));
   const el = h('div.doe-kaartkompas', beeld,
     h('div.kk-tekst', opdrachtRegel, stappen, stand, melding, knoppen,
-      h('div.knop-rij', h('button.knop.klein', { type: 'button', onclick: () => nieuweTaak() }, 'Nieuwe opdracht'))));
+      acties(actie('Nieuwe opdracht', 'opnieuw', () => nieuweTaak(), { klein: true }))));
 
   function draaiMet(wat, d) {
     if (wat === 'Huis') koers = norm(koers + d);

@@ -2,7 +2,7 @@
 // how loosely you stack and how dry the wood is; then strike the match. The fire tells you why it does not burn:
 // each layer has to light the next one, it needs air, dry wood, and a way in for the match on the windward side.
 import { h } from '../../dom.js';
-import { keuze } from '../knoppen.js';
+import { actie, acties, keuze } from '../knoppen.js';
 import { s } from '../kompasdelen.js';
 import '../vorm.css';
 import './vuur.css';
@@ -59,26 +59,26 @@ export default function vuurBouwen() {
     s('text', { x: 14, y: 140, class: 'tekst stil' }, 'wind'),
     lagenG, vuurG);
 
-  const opbouw = h('p.vk-uitleg', { 'aria-live': 'polite' });
+  const opbouw = h('span', { 'aria-live': 'polite' });
   const oordeel = h('div.vk-oordeel', { hidden: true, 'aria-live': 'polite' });
   const leg = (t, wat) => h('button.knop.klein', { type: 'button', onclick: () => { if (staat.lagen.length < 4) { staat.lagen.push(wat); wijzig(); } } }, t);
   const legKnoppen = [leg('+ Tondel', 'tondel'), leg('+ Aanmaakhout', 'aanmaak'), leg('+ Brandhout', 'brand')];
-  const weg = h('button.knop.klein', { type: 'button', onclick: () => { staat.lagen.pop(); wijzig(); } }, 'Haal laatste weg');
-  const aan = h('button.knop.hoofd', { type: 'button', onclick: () => steekAan() }, 'Steek aan');
+  const weg = actie('Haal laatste weg', 'terug', () => { staat.lagen.pop(); wijzig(); }, { klein: true });
+  const aan = actie('Steek aan', 'vuur', () => steekAan(), { hoofd: true });
   const zet = (veld) => (w) => { staat[veld] = w; wijzig(); };
+  const veld = (kop, knoppen) => h('div.vk-veld', { role: 'group', 'aria-label': kop }, h('p.vk-kop', kop), h('div', knoppen));
 
-  const el = h('div.doe-vk.naast',
-    svg,
-    h('div.vk-tekst',
-      h('p.vk-vraag', 'Bouw van binnen naar buiten, en steek dan aan.'),
-      h('div.vk-rij', h('p.vk-kop', 'Leg erbij (van binnen naar buiten)'), legKnoppen, weg),
-      h('div.vk-rij', { role: 'group', 'aria-label': 'Opening' }, h('p.vk-kop', 'Opening'),
-        keuze([['wind', 'aan de windkant'], ['lij', 'aan de andere kant'], ['geen', 'geen']], staat.opening, zet('opening'))),
-      h('div.vk-rij', { role: 'group', 'aria-label': 'Stapelen' }, h('p.vk-kop', 'Stapelen'), keuze([['los', 'los'], ['strak', 'strak op elkaar']], staat.stapel, zet('stapel'))),
-      h('div.vk-rij', { role: 'group', 'aria-label': 'Het hout is' }, h('p.vk-kop', 'Het hout is'), keuze([['droog', 'droog'], ['nat', 'nat']], staat.hout, zet('hout'))),
-      opbouw,
-      h('div.knop-rij', aan),
-      oordeel));
+  // The drawing on top, with what lies on the fire under it; the choices below, one row each.
+  const el = h('div.doe-vk.vk-bouw',
+    h('p.vk-vraag', 'Bouw van binnen naar buiten, en steek dan aan.'),
+    h('figure.vk-beeld', svg, h('figcaption.vk-uitleg', opbouw, weg)),
+    h('div.vk-velden',
+      veld('Leg erbij', legKnoppen),
+      veld('Opening', keuze([['wind', 'aan de windkant'], ['lij', 'aan de andere kant'], ['geen', 'geen']], staat.opening, zet('opening'))),
+      veld('Stapelen', keuze([['los', 'los'], ['strak', 'strak op elkaar']], staat.stapel, zet('stapel'))),
+      veld('Het hout is', keuze([['droog', 'droog'], ['nat', 'nat']], staat.hout, zet('hout')))),
+    acties(aan),
+    oordeel);
 
   function teken() {
     lagenG.replaceChildren();
@@ -125,10 +125,9 @@ export default function vuurBouwen() {
     for (const k of legKnoppen) k.disabled = staat.lagen.length >= 4;
     weg.disabled = !staat.lagen.length;
     const opening = { wind: 'een opening aan de windkant', lij: 'een opening aan de kant waar de wind naartoe gaat', geen: 'geen opening' }[staat.opening];
-    opbouw.textContent = staat.lagen.length
-      ? `Van binnen naar buiten: ${staat.lagen.map((x) => NAAM[x]).join(', ')}. ${staat.stapel === 'los' ? 'Los' : 'Strak'} gestapeld, ${staat.hout} hout, ${opening}.`
-      : 'Er ligt nog niets.';
-    svg.setAttribute('aria-label', `Je vuur van opzij. ${opbouw.textContent} De wind komt van links.`);
+    // Under the drawing only the layers: the choices below already show the rest.
+    opbouw.textContent = staat.lagen.length ? `Van binnen naar buiten: ${staat.lagen.map((x) => NAAM[x]).join(', ')}.` : 'Er ligt nog niets.';
+    svg.setAttribute('aria-label', `Je vuur van opzij. ${opbouw.textContent} ${staat.stapel === 'los' ? 'Los' : 'Strak'} gestapeld, ${staat.hout} hout, ${opening}. De wind komt van links.`);
     teken(); tekenVuur();
   }
 

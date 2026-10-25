@@ -5,7 +5,7 @@
 // board only once (the rule of Pub. 102, ch. 1 sec. 5 §6: see hijsVan).
 import { h } from '../../dom.js';
 import { kaal, willekeurig } from '../codes.js';
-import { keuze } from '../knoppen.js';
+import { actie, acties, keuze } from '../knoppen.js';
 import { CIJFERWIMPELS, LETTERVLAG, LETTERVLAGGEN, OVERIGE_WIMPELS, breedte, vlag } from './lib/vlaggen.js';
 import '../vorm.css';
 import './seinvlaggen.css';
@@ -71,8 +71,8 @@ export default function seinvlaggen({ modus: beginModus = 'letter' } = {}) {
   const opties = h('div.sv-opties', { role: 'group' });
   const melding = h('p.doe-melding', { 'aria-live': 'polite' });
   const score = h('p.doe-stil');
-  const volgende = h('button.knop.klein', { type: 'button', onclick: () => nieuweVraag(true) }, 'Volgende');
-  const quiz = h('div.sv-quiz', plaat, h('div.sv-paneel', vraagTekst, opties, melding, h('div.knop-rij', volgende), score));
+  const volgende = actie('Volgende', 'verder', () => nieuweVraag(true), { klein: true });
+  const quiz = h('div.sv-quiz', plaat, h('div.sv-paneel', vraagTekst, opties, acties(volgende), melding, score));
   quiz.addEventListener('keydown', (e) => {
     const k = Number(e.key);
     if (k >= 1 && k <= 4 && !vraag?.klaar) { e.preventDefault(); opties.children[k - 1]?.click(); }
@@ -174,7 +174,7 @@ export default function seinvlaggen({ modus: beginModus = 'letter' } = {}) {
 
   const el = h('div.doe-seinvlaggen',
     h('div.chips', { role: 'group', 'aria-label': 'Wat wil je doen?' },
-      keuze([['letter', 'Welke letter?'], ['betekenis', 'Wat betekent hij?'], ['cijfer', 'Welk cijfer?'], ['spellen', 'Spel een woord']], modus, zetModus)),
+      keuze([['letter', 'Welke letter?'], ['betekenis', 'Wat betekent hij?'], ['cijfer', 'Welk cijfer?'], ['spellen', 'Woord spellen']], modus, zetModus)),
     quiz, spellen);
 
   function zetModus(m) {

@@ -2,6 +2,7 @@
 // huisartsenpost, the huisarts (no rush, but a doctor should look), or helping yourself. The answers follow the
 // Nederlandse Richtlijnen Eerste Hulp 2026 (versie 2); what to do then is in the EHBO-app, not here.
 import { h } from '../../dom.js';
+import { actie, acties } from '../knoppen.js';
 import { schud } from './hulp.js';
 import './wn.css';
 import './huisartsof112.css';
@@ -40,9 +41,9 @@ export default function huisartsOf112() {
   const melding = h('p.doe-melding', { 'aria-live': 'polite' });
   const score = h('p.wn-score');
   const knoppen = KEUZES.map(([k, n]) => h('button.knop.ho-keuze', { type: 'button', 'data-k': k, onclick: () => kies(k) }, n));
-  const verder = h('button.knop.hoofd.klein', { type: 'button', onclick: nieuw, hidden: true }, 'Volgende');
+  const verder = actie('Volgende', 'verder', nieuw, { hoofd: true, klein: true, hidden: true });
   const el = h('div.wn.doe-huisartsof112',
-    vraag, h('div.ho-keuzes', { role: 'group', 'aria-label': 'Wat doe je?' }, knoppen), melding, h('div.knop-rij', verder), score,
+    vraag, h('div.ho-keuzes', { role: 'group', 'aria-label': 'Wat doe je?' }, knoppen), acties(verder), melding, score,
     h('p.doe-stil', 'Twijfel je, bel dan: de huisarts of 112 helpt je kiezen.'));
 
   function kies(k) {

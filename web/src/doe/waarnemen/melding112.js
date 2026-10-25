@@ -3,6 +3,7 @@
 // many are hurt. Each time you pick what you say; the best answer is the one help can act on. Built on the KNRM
 // poster "Alarmeren doe je zó!", Rijksoverheid (wat gebeurt er als ik 112 bel) and the Pooltochten-boekje.
 import { h } from '../../dom.js';
+import { actie, acties } from '../knoppen.js';
 import { schud } from './hulp.js';
 import './wn.css';
 import './melding112.css';
@@ -20,7 +21,7 @@ const SITUATIES = [
     ],
     gebeurd: [
       ['Een meisje van 13 is uit een boom gevallen, ongeveer 3 meter. Ze reageert niet, maar ze ademt.', true, 'Kort en duidelijk: wat er gebeurde, en hoe het met haar gaat.'],
-      ['Er is iets heel ergs gebeurd, kom snel!', false, 'De meldkamer moet weten wat er aan de hand is om de goede hulp te sturen.'],
+      ['Een meisje is gewond.', false, 'Zeg ook wat er gebeurde, en hoe het nu met haar gaat: reageert ze, ademt ze?'],
       ['We waren aan het klimmen en toen viel ze en nu ligt ze daar en ik schrok heel erg…', false, 'Begrijpelijk, maar probeer het kort te houden: wat is er gebeurd, hoe is het nu met haar.'],
     ],
     hoeveel: 'één',
@@ -33,7 +34,7 @@ const SITUATIES = [
     waar: [
       ['Aan de N302 bij hectometerpaaltje 34,2, rijrichting Harderwijk. De brand is op de heide naast de weg.', true, 'Goed: het wegnummer, het paaltje en de rijrichting wijzen de plek precies aan.'],
       ['Op de heide bij Harderwijk.', false, 'Er is veel heide bij Harderwijk. Het hectometerpaaltje langs de weg zegt precies waar je bent.'],
-      ['Volg de rook maar.', false, 'Rook zie je van ver, maar de brandweer moet weten langs welke weg ze moeten komen.'],
+      ['Aan de N302, bij Harderwijk.', false, 'De N302 is lang. Noem ook het nummer van het hectometerpaaltje en de rijrichting.'],
     ],
     gebeurd: [
       ['Er brandt een stuk heide, zo groot als een voetbalveld, en het vuur gaat met de wind mee naar het oosten. Er zijn geen mensen in gevaar, wij staan veilig aan de weg.', true, 'Precies wat de brandweer wil weten: hoe groot, welke kant op, en of er mensen in gevaar zijn.'],
@@ -50,7 +51,7 @@ const SITUATIES = [
     waar: [
       ['Dorpsstraat 14 in Nunspeet, op de weg voor het huis.', true, 'Een adres is het allerbeste: straat, huisnummer en plaats.'],
       ['In de grote straat van het dorp.', false, 'Welke straat, en welk dorp? Kijk naar de bordjes en de huisnummers.'],
-      ['Bij de bakker.', false, 'Er zijn veel bakkers. Een adres is beter.'],
+      ['In de Dorpsstraat in Nunspeet.', false, 'Bijna. Noem ook het huisnummer, dan weten ze precies waar.'],
     ],
     gebeurd: [
       ['Een fietser is aangereden door een auto. Hij is wakker, zijn been staat raar en hij bloedt.', true, 'Duidelijk: wat er gebeurde en wat je ziet.'],
@@ -71,7 +72,7 @@ const SITUATIES = [
     ],
     gebeurd: [
       ['Een jongen is door het ijs gezakt en houdt zich vast aan de rand. Hij is bij bewustzijn.', true, 'Precies: wat er gebeurde en hoe het met hem is.'],
-      ['Er ligt iemand in het water, hij gaat dood!', false, 'Blijf rustig, en vertel wat je ziet.'],
+      ['Er is iemand in het water gevallen.', false, 'Zeg ook dat hij door het ijs is gezakt, en hoe het met hem is: houdt hij zich vast, is hij bij bewustzijn?'],
       ['Het ijs is veel te dun.', false, 'Zeg wat er met iemand gebeurd is.'],
     ],
     hoeveel: 'één',
@@ -90,11 +91,11 @@ export default function melding112() {
   const zie = h('ul.m1-zie');
   const gesprek = h('div.m1-gesprek', { 'aria-live': 'polite' });
   const keuzes = h('div.m1-keuzes', { role: 'group', 'aria-label': 'Wat zeg je?' });
-  const verder = h('button.knop.klein', { type: 'button', onclick: nieuw }, 'Andere situatie');
+  const verder = actie('Andere situatie', 'opnieuw', nieuw, { klein: true });
   const el = h('div.wn.doe-melding112',
     h('p.doe-stil', 'Dit is een oefening: er wordt niet echt gebeld. Bel 112 nooit om te oefenen.'),
     h('div.m1-situatie', kop, verhaal, h('p.m1-zie-kop', 'Wat je om je heen ziet:'), zie),
-    gesprek, keuzes, h('div.knop-rij', verder));
+    gesprek, keuzes, acties(verder));
 
   const zeg = (wie, tekst, klasse = '') => gesprek.append(h(`p.m1-zin.${wie}${klasse ? `.${klasse}` : ''}`, h('strong', wie === 'centrale' ? 'Centralist: ' : wie === 'jij' ? 'Jij: ' : ''), tekst));
 
@@ -133,7 +134,7 @@ export default function melding112() {
       vraag('Er komt hulp. Wat doet u nu?', [
         ['Ik zet mijn telefoon op de luidspreker en blijf aan de lijn. Ik doe wat u zegt.', true, 'Goed: zo heb je je handen vrij, en de meldkamer kan je helpen tot de hulp er is.'],
         ['Ik hang op en ga helpen.', false, 'Hang pas op als de meldkamer dat zegt. Zet de luidspreker aan, dan kun je tegelijk helpen.'],
-        ['Ik bel mijn ouders even.', false, 'Blijf aan de lijn met de meldkamer. Je ouders of de leiding bel je later, of laat iemand anders bellen.'],
+        ['Ik hang op, dan blijft de lijn vrij.', false, 'Hang pas op als de meldkamer dat zegt. Zo kan de meldkamer je helpen tot de hulp er is.'],
       ], volgende);
     } else {
       zeg('centrale', 'De hulp is onderweg.', 'stil');

@@ -3,6 +3,7 @@
 // not. The rule: heavy things in the middle, close to your back; the sleeping bag at the bottom; what you need on
 // the way at the top or in the lid. Facts: TKN §3.5 and kamperen-uitwerking.md (DEUTER, EE).
 import { h } from '../../dom.js';
+import { actie, acties } from '../knoppen.js';
 import { s } from '../kompasdelen.js';
 import '../vorm.css';
 import './kamp.css';
@@ -55,8 +56,8 @@ export default function rugzak() {
   const melding = h('p.doe-melding', { 'aria-live': 'polite' });
   const meter = h('p.kd-score', { 'aria-live': 'polite' });
   const lijst = h('ul.kd-lijst');
-  const kijk = h('button.knop.klein.hoofd', { type: 'button', onclick: () => { nagekeken = true; teken(); } }, 'Kijk het na');
-  const leeg = h('button.knop.klein', { type: 'button', onclick: () => { waar = {}; nagekeken = false; gekozen = DINGEN[0].id; melding.textContent = ''; teken(); } }, 'Alles eruit');
+  const kijk = actie('Kijk het na', 'vink', () => { nagekeken = true; teken(); }, { hoofd: true, klein: true });
+  const leeg = actie('Haal alles eruit', 'wis', () => { waar = {}; nagekeken = false; gekozen = DINGEN[0].id; melding.textContent = ''; teken(); }, { klein: true });
 
   function leg(vak) {
     if (!gekozen) { melding.textContent = 'Kies eerst wat je inpakt.'; return; }
@@ -105,5 +106,5 @@ export default function rugzak() {
 
   teken();
   return h('div.kd.naast.doe-rugzak', svg,
-    h('div.kd-tekst', h('p', 'Kies wat je inpakt, en tik op het vak waar het in gaat.'), keuzeRij, melding, meter, h('div.knop-rij', kijk, leeg), lijst));
+    h('div.kd-tekst', h('p', 'Kies wat je inpakt, en tik op het vak waar het in gaat.'), keuzeRij, acties(kijk, leeg), melding, meter, lijst));
 }

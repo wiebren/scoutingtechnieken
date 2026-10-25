@@ -3,7 +3,7 @@
 // shows where you are in the two minutes. It goes on until you stop it, or leave the card.
 import { h } from '../dom.js';
 import { geluid, speel } from './klank.js';
-import { keuze, schakel } from './knoppen.js';
+import { actie, acties, keuze, schakel, zetActie } from './knoppen.js';
 import './vorm.css';
 import './noodsein.css';
 
@@ -19,7 +19,7 @@ export default function noodsein() {
   let stop = null;
 
   const lamp = h('div.doe-lamp.ns-lamp', { 'aria-hidden': 'true' });
-  const knop = h('button.knop.hoofd', { type: 'button', onclick: () => (stop ? stoppen() : start()) });
+  const knop = actie('Start', 'start', () => (stop ? stoppen() : start()), { hoofd: true });
   const regel = h('p.ns-regel');
   const klok = h('p.ns-klok', { 'aria-hidden': 'true' });
   const melding = h('p.doe-melding', { 'aria-live': 'polite' });
@@ -40,7 +40,7 @@ export default function noodsein() {
         schakel('Geluid', metGeluid, (aan) => { metGeluid = aan; if (stop) start(); }),
         schakel('Licht', metLicht, (aan) => { metLicht = aan; lamp.hidden = !aan; lamp.classList.remove('aan'); if (stop && !aan && !metGeluid) start(); }))),
     regel,
-    h('div.ns-speler', lamp, h('div.ns-bediening', h('div.knop-rij', knop), klok)),
+    h('div.ns-speler', lamp, h('div.ns-bediening', acties(knop), klok)),
     balk, schaal, melding);
   el.addEventListener('keydown', (e) => { if (e.key === 'Escape' && stop) { e.preventDefault(); stoppen(); } });
 
@@ -62,7 +62,7 @@ export default function noodsein() {
     if (stop) { const s = stop; stop = null; s(); }
     melding.textContent = metGeluid && !geluid() ? 'Deze browser maakt geen geluid; kijk naar het licht.' : '';
     rondje();
-    knop.textContent = '■ Stop';
+    zetActie(knop, 'Stop', 'stop');
   }
 
   function rondje() {
@@ -96,13 +96,12 @@ export default function noodsein() {
 
   function stoppen() {
     if (stop) { const s = stop; stop = null; s(); }
-    knop.textContent = '▶ Start';
+    zetActie(knop, 'Start', 'start');
     klok.textContent = '';
     nu.style.left = '0%';
     melding.textContent = 'Gestopt.';
   }
 
-  knop.textContent = '▶ Start';
   toonSoort();
   return el;
 }

@@ -2,7 +2,7 @@
 // of the blad (with what the hulpdiensten write for J and W). Oefenen shows a letter and four words to choose from.
 import { h } from '../dom.js';
 import { C2000, SPELALFABET, kaal, willekeurig } from './codes.js';
-import { keuze } from './knoppen.js';
+import { actie, acties, keuze } from './knoppen.js';
 import './vorm.css';
 import './spelalfabet.css';
 
@@ -38,8 +38,8 @@ export default function spelalfabet() {
   const opties = h('div.sa-opties', { role: 'group', 'aria-label': 'Kies het woord' });
   const melding = h('p.doe-melding', { 'aria-live': 'polite' });
   const score = h('p.doe-stil');
-  const volgende = h('button.knop.klein', { type: 'button', onclick: () => nieuweVraag(true) }, 'Volgende');
-  const oefenen = h('div.sa-paneel', vraagLetter, opties, melding, h('div.knop-rij', volgende), score);
+  const volgende = actie('Volgende', 'verder', () => nieuweVraag(true), { klein: true });
+  const oefenen = h('div.sa-paneel', vraagLetter, opties, acties(volgende), melding, score);
   oefenen.addEventListener('keydown', (e) => {
     const k = Number(e.key);
     if (k >= 1 && k <= 4 && !vraag?.klaar) { e.preventDefault(); opties.children[k - 1]?.click(); }

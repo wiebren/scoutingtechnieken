@@ -3,7 +3,7 @@
 // a kind of ground, and you choose the peg for it. Facts: ScoutWiki Tentharing, Big Agnes, Kampeermeneer, MSR
 // (kamperen-uitwerking.md).
 import { h } from '../../dom.js';
-import { keuze } from '../knoppen.js';
+import { actie, acties, keuze } from '../knoppen.js';
 import { s } from '../kompasdelen.js';
 import '../vorm.css';
 import './kamp.css';
@@ -91,9 +91,9 @@ export default function haring() {
   const grondTekst = h('p.kd-vraag', { 'aria-live': 'polite' });
   const keuzes = h('div.knop-rij');
   const grondMelding = h('p.doe-melding', { 'aria-live': 'polite' });
-  const volgende = h('button.knop.klein.hoofd', { type: 'button', hidden: true, onclick: () => { grond = (grond + 1) % GRONDEN.length; nieuweGrond(); } }, 'Andere grond');
+  const volgende = actie('Andere grond', 'opnieuw', () => { grond = (grond + 1) % GRONDEN.length; nieuweGrond(); }, { hoofd: true, klein: true, hidden: true });
   const score = h('p.kd-score');
-  const grondVak = h('div.kd-tekst', { hidden: true }, grondTekst, keuzes, grondMelding, h('div.knop-rij', volgende), score);
+  const grondVak = h('div.kd-tekst', { hidden: true }, grondTekst, keuzes, acties(volgende), grondMelding, score);
 
   function nieuweGrond() {
     gekozen = null;
