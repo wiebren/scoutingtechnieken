@@ -1,10 +1,11 @@
 // Drawings for the cards, made here as SVG: no licences to look after, sharp at any size, and in the colours of
-// the theme (style.css, .plaatje). A blad names one with `plaatje: 'windroos-16'`; scripts/check.mjs checks that
-// it exists. They are strings, not elements, so the check can run them without a browser. The drawings of kaart
+// the theme (style.css, .plaatje). A blad names one with `plaatje: 'windroos-16'`, or a few in a list; scripts/check.mjs
+// checks that they exist. They are strings, not elements, so the check can run them without a browser. The drawings of kaart
 // and kompas are here (their small tile drawings in ./plaatjes/kaart.js); the other categories each have their own
 // file in ./plaatjes/.
 
 import { pol, r1, svg, tekst } from './plaatjes/basis.js';
+export { ruimeBreedte } from './plaatjes/basis.js';
 import { HOEK, KAART, kaartje } from './plaatjes/kaarthoekmeter.js';
 import tocht from './plaatjes/tocht.js';
 import waarnemen from './plaatjes/waarnemen.js';

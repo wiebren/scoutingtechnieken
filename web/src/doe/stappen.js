@@ -1,6 +1,6 @@
 // The steps of a piece as one control: numbered dots on a line, the name of each step under its dot, and the line
-// filled up to where you are. Tap a dot (or its name) to go there; drag along the line to go through the steps; the
-// arrow keys go one step, Home and End to the first and the last. With `vloeiend` the value may lie between two steps
+// filled up to where you are. Tap a step (its dot or its name) to go there; drag along the line to go through the
+// steps; the arrow keys go one step, Home and End to the first and the last. With `vloeiend` the value may lie between two steps
 // (1.5 is half way from step 2 to step 3), for a piece that shows the movement in between; otherwise it snaps.
 // For a screen reader it is one slider, with the name of the step as its value. Use it wherever a piece has steps
 // in order (build, fold, set up), instead of chips that look like a free choice.
@@ -53,16 +53,19 @@ export function stappenBalk({ stappen, waarde = 0, vloeiend = false, label = 'St
     const kolom = r.width / n;
     return ((x - r.left - kolom / 2) / (r.width - kolom)) * max;
   };
-  let sleept = false;
+  // A tap on a step (its dot, its name, or anywhere in its column) goes to that step, wherever on it you tap. Only
+  // once the pointer has moved a little does it follow the pointer, and only then between two steps.
+  let sleept = false; let beginX = 0; let bewogen = false;
   el.addEventListener('pointerdown', (e) => {
     if (e.button !== 0) return;
-    sleept = true;
+    sleept = true; bewogen = false; beginX = e.clientX;
     el.setPointerCapture(e.pointerId);
-    const v = waardeBij(e.clientX);
-    naar(vloeiend ? v : Math.round(v));
+    naar(Math.round(waardeBij(e.clientX)));
   });
   el.addEventListener('pointermove', (e) => {
     if (!sleept) return;
+    if (!bewogen && Math.abs(e.clientX - beginX) < 6) return;
+    bewogen = true;
     const v = waardeBij(e.clientX);
     naar(vloeiend ? v : Math.round(v));
   });

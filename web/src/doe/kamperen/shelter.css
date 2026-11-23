@@ -1,0 +1,17 @@
+/* The shelters of branches in 3D (shelter3d.js); the ground, the wind and the view buttons come from frietbuil.css. */
+.doe-shelter { --sh-blad: #6b4f22; --sh-bed: #a8813f; --sh-zak: #b4673f; --sh-licht: #e8c77e; }
+@media (prefers-color-scheme: dark) {
+  :root:not([data-theme="light"]) .doe-shelter { --sh-blad: #5f4a26; --sh-bed: #8c6c38; --sh-zak: #9a5a3a; --sh-licht: #f0d79a; }
+}
+:root[data-theme="dark"] .doe-shelter { --sh-blad: #5f4a26; --sh-bed: #8c6c38; --sh-zak: #9a5a3a; --sh-licht: #f0d79a; }
+
+.sh-stok path { fill: none; stroke: color-mix(in srgb, var(--bruin) 80%, #000); stroke-linecap: round; }
+.sh-stok path.sh-glans { stroke: color-mix(in srgb, var(--bruin) 55%, #fff); opacity: 0.55; }
+.sh-stok.boom path { stroke: color-mix(in srgb, var(--bruin) 55%, #000); }
+.sh-stok.boom path.sh-glans { stroke: color-mix(in srgb, var(--bruin) 80%, #fff); }
+.sh-vlak { stroke: color-mix(in srgb, var(--sh-blad) 65%, #000); stroke-width: 0.7; stroke-linejoin: round; }
+.sh-vlak.zak { stroke: var(--inkt); stroke-width: 0.8; }
+.sh-steen { fill: color-mix(in srgb, var(--stil) 45%, var(--paneel)); stroke: var(--stil); stroke-width: 0.8; }
+.sh-vuur { fill: var(--oranje); }
+.sh-vuur-hart { fill: #ffd34d; }
+.sh-vlak.hoop { stroke-opacity: 0.25; }

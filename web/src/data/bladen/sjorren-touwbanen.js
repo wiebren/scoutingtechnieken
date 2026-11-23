@@ -11,7 +11,7 @@ const SN_KA = { naam: 'Scouting Nederland: Veiligheid bij klimactiviteiten (pdf)
 const SN_WAS = { naam: 'Scouting Nederland: infoblad Speeltoestellenbesluit (pdf)', url: 'https://www.scouting.nl/assets/uploads/doorzoekbareBestanden/06.Ondersteuning/Regelgeving/Speeltoestellenbesluit.pdf' };
 
 /** The safety lines every touwbaan shares (SN-VT, in our own words). */
-const VEILIG = 'Laat er niet meer mensen tegelijk op dan afgesproken, blijf uit de buurt van touwen onder spanning, en gebruik de baan nooit zonder toezicht.';
+const VEILIG = 'Laat er niet meer mensen tegelijk op dan afgesproken: elke persoon erbij trekt harder aan de touwen en de ankers. Blijf uit de buurt van touwen onder spanning: knapt er een, dan zwiept hij hard weg. En gebruik de baan nooit zonder toezicht, zodat er altijd iemand ziet als er iets losraakt of als iemand valt.';
 
 export default [
   // ---- Touwbruggen
@@ -188,7 +188,7 @@ export default [
       '- Leg een klimtouw met knopen over de bovenste paal en zet het achter de wand vast aan een anker.',
       'Het mooiste is samenwerken: elkaar een opstapje geven en de laatste omhoog trekken.',
     ],
-    letOp: 'Niet springen van de bovenkant: klim aan de achterkant naar beneden. Leg zand of houtsnippers voor en achter de wand, en laat iemand van de leiding erbij staan.',
+    letOp: 'Niet springen van de bovenkant: dat is te hoog om goed te landen. Klim aan de achterkant naar beneden. Leg zand of houtsnippers voor en achter de wand, en laat iemand van de leiding erbij staan.',
     naar: [{ blad: 'bouw-stormbaan' }, { blad: 'diagonaalsjorring' }, { blad: 'valdemping-toezicht' }] },
 
   { id: 'bouw-evenwichtsbalk', naam: 'Evenwichtsbalk', ook: ['zwevende evenwichtsbalk', 'hangende balk', 'boegspriet vechten', 'kussengevecht'], en: 'balance beam', groep: 'touwbanen',
@@ -291,7 +291,7 @@ export default [
       'Niet strak genoeg? Laat de eerste spanknoop zitten, zet een prusik op het touw en trek nog eens met een tweede touw.',
       'Struikel je over de spanknoop? Buig het touw dan via een derde boom af (een omloop), dan zit de knoop uit de weg.',
     ],
-    letOp: 'Span met spierkracht, nooit met een auto, lier of ratel: die trekken zo hard dat touw of anker het kan begeven, en je voelt niet wanneer het te veel is. Een spanband lijkt handig, maar ook daar is de kracht moeilijk te schatten. Laat altijd wat doorhang, en ga nooit in het verlengde van een touw staan dat je spant.',
+    letOp: 'Span met spierkracht, nooit met een auto, lier of ratel: die trekken zo hard dat touw of anker het kan begeven, en je voelt niet wanneer het te veel is. Een spanband lijkt handig, maar ook daar is de kracht moeilijk te schatten. Laat altijd wat doorhang: hoe strakker het touw, hoe harder het aan de ankers trekt. En ga nooit in het verlengde van een touw staan dat je spant: knapt het, dan schiet het die kant op.',
     verwijs: [SW('Touw opspannen', 'Touw_opspannen')],
     naar: [{ blad: 'vrachtrijdersteek' }, { blad: 'prusikknoop' }, { blad: 'vierlopertakel' }, { blad: 'rondtorn' }, { blad: 'boomanker' }, { blad: 'boombescherming' }, { blad: 'kracht-strak-touw' }, { blad: 'touw-onder-spanning' }] },
 

@@ -117,7 +117,7 @@ export default [
       'Een losse paal hijs je met een killicksteek: een timmersteek ergens voorbij het midden, en een halve steek vlak bij het eind dat voorop gaat. Zo hangt de paal recht in de lijn van het touw en draait hij niet weg.',
       'Er is één iemand die de commando’s geeft. Spreek ze vooraf af, bijvoorbeeld: klaar, trekken, stop, vieren.',
     ],
-    letOp: 'Niemand staat onder het bouwwerk of op de plek waar het kan vallen. Houd een tegenhoudtouw aan de andere kant, en zet de tuien vast zodra het staat. Laat nooit zomaar los: vier het touw rustig als het terug moet.',
+    letOp: 'Niemand staat onder het bouwwerk of op de plek waar het kan vallen. Houd een tegenhoudtouw aan de andere kant, en zet de tuien vast zodra het staat. Laat nooit zomaar los, want dan valt het bouwwerk terug. Vier het touw rustig als het terug moet.',
     naar: [{ blad: 'bouw-zandlopertoren' }, { blad: 'werken-op-hoogte' }, { blad: 'vierlopertakel' }, { blad: 'timmersteek' }, { blad: 'bouw-vlaggenmast' }] },
 
   { id: 'bouw-ophaalbrug', naam: 'Ophaalbrug', ook: ['kasteelbrug', 'brug met contragewicht', 'wipbrug'], en: 'drawbridge', groep: 'constructies',

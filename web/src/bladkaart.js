@@ -80,17 +80,22 @@ function beelden(lijst) {
 
 /** The drawings are a chunk of their own (several hundred kB of SVG), loaded with the first card that has one. */
 let PLAATJES = null;
+let ruimeBreedte = null;
 let plaatjesLaden = null;
 function metPlaatjes(teken) {
   if (PLAATJES) teken();
   else {
-    plaatjesLaden ??= import('./plaatjes.js').then((m) => { PLAATJES = m.PLAATJES; });
+    plaatjesLaden ??= import('./plaatjes.js').then((m) => { PLAATJES = m.PLAATJES; ruimeBreedte = m.ruimeBreedte; });
     plaatjesLaden.then(teken).catch(() => { plaatjesLaden = null; dispatchEvent(new Event('laadfout')); });
   }
 }
 function plaatje(naam) {
   const fig = h('figure.figuur');
-  metPlaatjes(() => { fig.innerHTML = PLAATJES[naam](); });
+  metPlaatjes(() => {
+    fig.innerHTML = PLAATJES[naam]();
+    const breed = ruimeBreedte(fig.innerHTML);
+    if (breed) fig.firstElementChild.style.maxWidth = `${breed}px`;
+  });
   return fig;
 }
 
@@ -159,7 +164,7 @@ function bronnen(blad) {
  * @param blad the blad
  * @param linkNaar (id) => the address of another blad in the same view
  */
-/** "Ik kan dit" ("Ik ken dit" on a blad about knowing, `ken`), with the insignes the blad is in: the same tick as there (by the blad's id), so it shows there too. */
+/** "Ik kan dit" ("Ik ken dit" on a blad about knowing, `ken`), on every blad; with the insignes the blad is in, if any: the same tick as there (by the blad's id), so it shows there too. */
 function kanIk(blad) {
   const box = h('input', { type: 'checkbox', checked: isAfgevinkt(blad.id), onchange: () => zetAfgevinkt(blad.id, box.checked) });
   const el = h('label.vink.kan-ik', box, h('span.vinkje', icoon('vink')), h('span', blad.ken ? 'Ik ken dit' : 'Ik kan dit'));
@@ -183,7 +188,7 @@ export function bladKaart(blad, { linkNaar }) {
     blad.waarvoor && h('section.waarvoor', h('h3', 'Waarvoor'), h('p', links(blad.waarvoor))),
     blad.uitleg && h('section.uitleg', blad.waarvoor && h('h3', 'Uitleg'), alinea(blad.uitleg, links)),
     blad.soorten?.length > 0 && soorten(blad.soorten, blad.naam, linkNaar),
-    blad.plaatje && plaatje(blad.plaatje),
+    blad.plaatje && [blad.plaatje].flat().map(plaatje),
     blad.beelden?.length > 0 && beelden(blad.beelden),
     blad.doe && doe(blad.doe),
     blad.tabel && h('div.tabel-wrap', h('table',
@@ -198,8 +203,9 @@ export function bladKaart(blad, { linkNaar }) {
       h('ul', blad.verwijs.map((v) => h('li', h('a', { href: v.url, target: '_blank', rel: 'noopener' }, v.naam, icoon('extern', 'icoon klein')))))),
     naar.length > 0 && h('section.zieook', h('h3', 'Zie ook'),
       h('ul.chips', naar.map((n) => h('li', h('a.chip', { href: linkNaar(n.blad) }, BLAD[n.blad].naam))))),
-    laag.length > 0 && h('section.inlaag', h('h3', 'Bij de insignes'), kanIk(blad),
-      h('ul.chips', laag.map(({ insigne, niveau }) => h('li', h('a.chip.niveau', { href: href('insignes', { i: insigne.id, n: niveau }), 'data-niveau': niveau },
+    // every blad can be ticked off; one in the insignelaag also shows its insignes
+    h('section.inlaag', laag.length > 0 && h('h3', 'Bij de insignes'), kanIk(blad),
+      laag.length > 0 && h('ul.chips', laag.map(({ insigne, niveau }) => h('li', h('a.chip.niveau', { href: href('insignes', { i: insigne.id, n: niveau }), 'data-niveau': niveau },
         h('img.chip-badge', { src: insigneBeeld(insigne.id, niveau), alt: '', width: 240, height: 208 }),
         insigne.naam, h('span.niveau-nr', niveau)))))),
     // other names and the sources: at the foot, small

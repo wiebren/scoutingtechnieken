@@ -96,8 +96,8 @@ export default function tentplek() {
 
   const windPijl = s('g');
   const tent = s('g', { visibility: 'hidden' });
-  const tentVlak = s('rect', { x: -20, y: -13, width: 40, height: 26, rx: 4, class: 'kd-tent' });
-  const deurVlak = s('path', { d: 'M-7 -13L0 -21L7 -13Z', class: 'kd-deur' });
+  const tentVlak = s('rect', { x: -16, y: -16, width: 32, height: 32, rx: 4, class: 'kd-tent' });
+  const deurVlak = s('path', { d: 'M-7 -16L0 -24L7 -16Z', class: 'kd-deur' });
   tent.append(tentVlak, deurVlak);
   const kruis = s('g', { visibility: 'hidden' }, s('circle', { r: 16, class: 'kd-cursor' }), s('path', { d: 'M-5 0h10M0 -5v10', class: 'kd-touw' }));
   const svg = s('svg', { viewBox: `0 0 ${W} ${H}`, class: 'kd-svg', role: 'img', tabindex: '0' }, terrein, windPijl, tent, kruis);
@@ -110,7 +110,6 @@ export default function tentplek() {
   const draaiL = h('button.knop.klein', { type: 'button', onclick: () => draai(-1), 'aria-label': 'Draai de deur linksom' }, '↺ draai');
   const draaiR = h('button.knop.klein', { type: 'button', onclick: () => draai(1), 'aria-label': 'Draai de deur rechtsom' }, 'draai ↻');
   const zet = actie('Zet hem neer', 'vink', () => oordeel(), { hoofd: true, klein: true });
-  const anders = actie('Andere plek', 'opnieuw', () => { fase = 'plek'; teken(); }, { klein: true });
   const opnieuw = actie('Nog een keer', 'opnieuw', () => nieuweRonde(), { hoofd: true, klein: true });
   const knoppen = acties();
 
@@ -122,7 +121,7 @@ export default function tentplek() {
       s('text', { x: wind % 2 ? x : x + 26, y: wind % 2 ? y + 30 : y + 4, 'text-anchor': 'middle', class: 'kd-label blauw' }, 'wind'));
   }
 
-  const DEURVORM = ['M-7 -13L0 -21L7 -13Z', 'M20 -7L28 0L20 7Z', 'M-7 13L0 21L7 13Z', 'M-20 -7L-28 0L-20 7Z'];
+  const DEURVORM = ['M-7 -16L0 -24L7 -16Z', 'M16 -7L24 0L16 7Z', 'M-7 16L0 24L7 16Z', 'M-16 -7L-24 0L-16 7Z'];
   function plaatsTent([x, y]) {
     tent.setAttribute('transform', `translate(${x} ${y})`);
     deurVlak.setAttribute('d', DEURVORM[deur]);
@@ -142,7 +141,7 @@ export default function tentplek() {
       if (nieuw) { knoppen.replaceChildren(); lijst.replaceChildren(); }
     } else if (fase === 'deur') {
       vraag.textContent = `Draai de deur goed. Hij wijst nu ${DEUR[deur]}. De wind komt uit het ${RICHTING[wind]}.`;
-      if (nieuw) { knoppen.replaceChildren(draaiL, draaiR, zet, anders); lijst.replaceChildren(); }
+      if (nieuw) { knoppen.replaceChildren(draaiL, draaiR, zet); lijst.replaceChildren(); }
     } else if (nieuw) {
       knoppen.replaceChildren(opnieuw);
     }
@@ -153,7 +152,7 @@ export default function tentplek() {
 
   function kies([x, y]) {
     if (fase === 'klaar') return;
-    plek = [Math.max(22, Math.min(W - 22, x)), Math.max(22, Math.min(H - 16, y))];
+    plek = [Math.max(22, Math.min(W - 22, x)), Math.max(22, Math.min(H - 20, y))];
     fase = 'deur';
     teken();
   }

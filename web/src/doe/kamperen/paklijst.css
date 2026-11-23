@@ -7,3 +7,13 @@
 .pk-naam { font-weight: 600; }
 .pk-waarom { color: var(--stil); font-size: 0.8125rem; }
 .pk-lijst input:checked + span .pk-naam { color: var(--stil); text-decoration: line-through; }
+.pk-lijst li { display: flex; align-items: flex-start; }
+.pk-lijst li > label { flex: 1; min-width: 0; }
+.pk-weg { flex: none; display: grid; place-items: center; width: 44px; min-height: 44px; border: 0; background: none; color: var(--stil); cursor: pointer; }
+.pk-weg:hover { color: var(--rood); }
+.pk-toevoegen { display: flex; gap: 8px; flex-wrap: wrap; }
+.pk-toevoegen .doe-veld { flex: 1 1 200px; width: auto; }
+.pk-meer > summary { color: var(--accent); font-weight: 600; min-height: 44px; }
+.pk-ideeen { display: flex; flex-direction: column; gap: 10px; padding-top: 4px; }
+.pk-groep { display: flex; flex-direction: column; gap: 6px; }
+.pk-kop { color: var(--stil); font-size: 0.8125rem; font-weight: 600; }

@@ -7,7 +7,7 @@ let teller = 0;
 /** The beach flags of Reddingsbrigade Nederland (the set of 2025: reddingsbrigade.nl, Vlaggen voor vlaggenmast and
  * Vlaggen voor vlaggenstokken): what they look like and what they mean. Also used by the piece. */
 export const STRANDVLAGGEN = [
-  { id: 'roodgeel', naam: 'Rood-gele vlag', kort: 'Lifeguards: hier zwemmen', uitleg: 'de reddingspost is open en lifeguards houden toezicht. Tussen twee rood-gele vlaggen aan de waterlijn letten ze extra op: daar zwem je het veiligst. Watersport mag daar niet.' },
+  { id: 'roodgeel', naam: 'Rood-gele vlag', kort: 'Strandwacht: hier zwemmen', uitleg: 'de reddingspost is open en de strandwacht houdt toezicht. Tussen twee rood-gele vlaggen aan de waterlijn let die extra op: daar zwem je het veiligst. Watersport mag daar niet.' },
   { id: 'geel', naam: 'Gele vlag', kort: 'Gevaarlijk zwemmen', uitleg: 'het water is gevaarlijk, door wind, golven of stroming. Zwemmen wordt afgeraden. Kun je niet goed zwemmen, blijf dan uit het water.' },
   { id: 'rood', naam: 'Rode vlag', kort: 'Niet zwemmen', uitleg: 'niet zwemmen, het is zeer gevaarlijk. Ook niet pootjebaden of watersporten.' },
   { id: 'oranje', naam: 'Oranje vlag', kort: 'Geen luchtbedden', uitleg: 'geen luchtbedden, opblaasbootjes of andere drijfdingen: de wind waait van het land de zee op en blaast je weg van de kust.' },
@@ -85,17 +85,196 @@ function stappen(lijst, hoog, titel) {
   return svg(380, hoog, titel, d);
 }
 
-/** A forearm lying across, from x0 to x1, its top at y (about 30 thick). */
-const onderarm = (x0, x1, y) => `<path d="M${x0} ${y + 2} Q${(x0 + x1) / 2} ${y - 3} ${x1} ${y} L${x1} ${y + 30} Q${(x0 + x1) / 2} ${y + 32} ${x0} ${y + 36} Z" class="vh-huid"/>`;
-/** Turns of a bandage over an arm: slanted bands from x0, `n` of them `stap` apart, from y to y + h. */
-const slagen = (x0, n, stap, y, h, klasse = 'vh-zwachtel') => Array.from({ length: n }, (_, k) => {
-  const x = x0 + k * stap;
-  return `<path d="M${x} ${y} L${x + 9} ${y - 1} L${x + 13} ${y + h} L${x + 4} ${y + h + 1} Z" class="${klasse}"/>`;
-}).join('');
+/** A band of bandage from a to b, `breed` wide: one turn, seen from the side. */
+function band([x1, y1], [x2, y2], breed, klasse) {
+  const l = Math.hypot(x2 - x1, y2 - y1); const nx = (-(y2 - y1) / l) * (breed / 2); const ny = ((x2 - x1) / l) * (breed / 2);
+  const p = [[x1 + nx, y1 + ny], [x2 + nx, y2 + ny], [x2 - nx, y2 - ny], [x1 - nx, y1 - ny]];
+  return `<path d="M${p.map(([x, y]) => `${r1(x)} ${r1(y)}`).join(' L')} Z" class="${klasse}"/>`;
+}
+/** `inhoud` cut off at the edge of `vorm` (an element), so turns of a bandage stop where the arm or foot does. */
+function binnen(vorm, inhoud) {
+  const id = `vh-klem-${(teller += 1)}`;
+  return `<clipPath id="${id}">${vorm}</clipPath><g clip-path="url(#${id})">${inhoud}</g>`;
+}
+/** Turns round an arm, each `stap` further towards the elbow, so each covers two thirds of the one before. */
+const wikkel = (x0, n, stap, klasse) => Array.from({ length: n }, (_, k) => band([x0 - k * stap, -16], [x0 - k * stap - 8, 50], 16, klasse)).join('');
+
+// A forearm lying across, the hand on the right with the back up, in its own frame: the elbow side at x = 0, the
+// wrist at x = 112, the arm 40 thick. `inhoud` is drawn on the arm (and stops at its edge); `boven` is the top edge.
+const ARM_BOVEN = 'M-4 0 C40 -1 84 2 112 6';
+const ARM_BULT = 'M-4 0 C24 -1 34 0 40 0 C46 -16 80 -16 86 2 C98 3 106 4 112 6';
+const ARM_ONDER = 'C80 35 40 39 -4 40';
+function arm(x, y, s, inhoud = '', boven = ARM_BOVEN) {
+  const d = `${boven} C122 3 132 1 140 2 C152 3 158 9 158 16 C158 24 152 29 144 30 C134 31 120 32 112 32 ${ARM_ONDER}Z`;
+  const duim = 'M114 31 C124 39 138 43 146 38 C150 34 144 30 132 30Z';
+  return `<g transform="translate(${x} ${y}) scale(${s})">`
+    + `<path d="${duim}" class="vh-huid"/><path d="${duim}" class="vh-huidrand"/>`
+    + `<path d="${d}" class="vh-huid"/><path d="${d}" class="vh-huidrand"/>`
+    + binnen(`<path d="${d}"/>`, inhoud)
+    + `<path d="${boven} M112 32 ${ARM_ONDER}" class="vh-huidrand"/>`
+    + '<path d="M138 10 H156 M139 17 H158 M138 24 H155" class="vh-huidrand"/></g>';
+}
+/** A gauze pad, its weave in faint lines. */
+function kompres(x, y, w, h) {
+  let d = `<rect x="${x}" y="${y}" width="${w}" height="${h}" rx="1.5" class="vh-kompres"/>`;
+  for (let i = 5; i < w; i += 5) d += `<path d="M${x + i} ${y + 1.5} V${y + h - 1.5}" class="vh-gaas"/>`;
+  for (let j = 5; j < h; j += 5) d += `<path d="M${x + 1.5} ${y + j} H${x + w - 1.5}" class="vh-gaas"/>`;
+  return d;
+}
+/** The helper's gloved hand, its fingertips at `hand`, the sleeve coming from `van`. */
+function handschoen([x, y], [vx, vy]) {
+  const draai = r1((Math.atan2(vx - x, vy - y) * -180) / Math.PI);
+  return mens(null, [[[x, y], [vx, vy]]], { dikte: 9 })
+    + `<g transform="translate(${x} ${y}) rotate(${draai})"><rect x="-6.5" y="10" width="13" height="5" rx="1.5" class="vh-handschoen"/>`
+    + '<path d="M-7 -1 Q-8 -8 -2 -8 L3 -8 Q7 -8 7 -2 L7 9 Q7 12 4 12 L-4 12 Q-7 12 -7 9 Z" class="vh-handschoen"/>'
+    + '<path d="M7 1 Q13 -1 12 5 Q11 9 7 9" class="vh-handschoen"/></g>';
+}
+/** A limb or a strap: a thick line through the points with a darker edge. */
+function deel(punten, dikte, kleur, rand = '#26332c') {
+  const p = `M${punten.map(([x, y]) => `${x} ${y}`).join(' L')}`;
+  return `<path d="${p}" stroke="${rand}" stroke-width="${dikte + 2.4}" stroke-linecap="round" stroke-linejoin="round" fill="none"/>`
+    + `<path d="${p}" stroke="${kleur}" stroke-width="${dikte}" stroke-linecap="round" stroke-linejoin="round" fill="none"/>`;
+}
 /** A reef knot with two short ends, seen from above. */
 const knoopje = (x, y) => `<path d="M${x} ${y} q8 2 14 10 M${x} ${y} q11 -3 17 2" class="vh-slip"/><circle cx="${x}" cy="${y}" r="4.5" class="vh-zwachtel"/>`;
 /** A roll of bandage, end on. */
 const rol = (x, y, r = 7) => `<circle cx="${x}" cy="${y}" r="${r}" class="vh-zwachtel"/><circle cx="${x}" cy="${y}" r="${r * 0.4}" class="lijn dun stil"/>`;
+
+// -- vluchtplan: a plan as it hangs on the wall, with the green and red signs ---------------------------------------
+const GROEN = '#11904a';
+const ROOD = '#d7262b';
+const WIT = 'stroke="#ffffff" fill="none" stroke-linecap="round" stroke-linejoin="round"';
+/** The white pictograms on a sign, in a box of 14 around (0, 0). */
+const PICTO = {
+  poppetje: `<circle cx="1.6" cy="-4.4" r="1.4" fill="#ffffff"/><path d="M1 -2.6 L-0.4 1.2 L1.8 2.8 L0.8 5.4 M-0.4 1.2 L-2.2 4.8 L-4.4 4.6 M1 -2.6 L3 -0.4 L4.6 -1.4 M1 -2.6 L-1.6 -1.8 L-2.8 -3.6" ${WIT} stroke-width="1.4"/>`,
+  blusser: `<rect x="-2.4" y="-2.6" width="4.8" height="7.8" rx="1.6" fill="#ffffff"/><path d="M0 -2.6 V-4.4 H3.4 M3.4 -4.4 Q5 -2 4.2 1.4" ${WIT} stroke-width="1.1"/>`,
+  ehbo: '<path d="M-1.8 -5 h3.6 v3.2 h3.2 v3.6 h-3.2 v3.2 h-3.6 v-3.2 h-3.2 v-3.6 h3.2z" fill="#ffffff"/>',
+  verzamel: [45, 135, 225, 315].map((g) => {
+    const [ax, ay] = pol(0, 0, 6.2, g); const [bx, by] = pol(0, 0, 3.4, g); const [lx, ly] = pol(bx, by, 1.6, g + 140); const [rx, ry] = pol(bx, by, 1.6, g - 140);
+    return `<path d="M${ax} ${ay} L${bx} ${by} M${lx} ${ly} L${bx} ${by} L${rx} ${ry}" ${WIT} stroke-width="1.1"/>`;
+  }).join('') + '<circle cx="0" cy="0" r="1.5" fill="#ffffff"/>',
+};
+/** A square sign of size s, centred on (x, y). */
+const bord = (x, y, kleur, picto, s = 14) =>
+  `<g transform="translate(${x} ${y})"><rect x="${-s / 2}" y="${-s / 2}" width="${s}" height="${s}" rx="1.5" fill="${kleur}"/><g transform="scale(${r1(s / 14)})">${PICTO[picto]}</g></g>`;
+/** The sign of an emergency exit: a running man at a door, and an arrow pointing (in degrees, 0 = right) the way out. */
+const nooduitgang = (x, y, pijl, schaal = 1) =>
+  `<g transform="translate(${x} ${y}) scale(${schaal})"><rect x="-17" y="-7" width="34" height="14" rx="1.5" fill="${GROEN}"/>`
+  + `<rect x="-14.5" y="-5" width="5.5" height="10" stroke="#ffffff" stroke-width="1" fill="none"/><g transform="translate(-3 0)">${PICTO.poppetje}</g>`
+  + `<g transform="translate(9.5 0) rotate(${pijl})"><path d="M-4.5 0 H4.5 M1 -3.5 L4.5 0 L1 3.5" ${WIT} stroke-width="1.6"/></g></g>`;
+/** An escape route: a dashed line through the points, with an arrowhead at the end. */
+function vluchtroute(punten, klasse = 'vh-route') {
+  const [[ax, ay], [bx, by]] = punten.slice(-2);
+  const hoek = (Math.atan2(by - ay, bx - ax) * 180) / Math.PI;
+  return `<path d="M${punten.map((p) => p.join(' ')).join(' L')}" class="${klasse}"/>`
+    + `<path d="M0 0 L-8 -4.5 L-8 4.5Z" class="${klasse}-kop" transform="translate(${bx} ${by}) rotate(${r1(hoek)})"/>`;
+}
+/**
+ * A door in a wall: the opening from the hinge h to o, painted in the colour of the floor (vloer: gang, kamer or
+ * buiten), and the door leaf and its swing on side s (1 or -1, to the left or right of the line from h to o).
+ */
+function deur([hx, hy], [ox, oy], s, vloer = 'gang') {
+  const [dx, dy] = [ox - hx, oy - hy];
+  const [lx, ly] = [r1(hx - dy * s), r1(hy + dx * s)];
+  const L = r1(Math.hypot(dx, dy));
+  return `<path d="M${hx} ${hy} L${ox} ${oy}" class="vh-opening-${vloer}"/>`
+    + `<path d="M${hx} ${hy} L${lx} ${ly}" class="vh-deurblad"/><path d="M${lx} ${ly} A${L} ${L} 0 0 ${s > 0 ? 0 : 1} ${ox} ${oy}" class="vh-zwaai"/>`;
+}
+/** A smoke alarm on the ceiling, seen from below. */
+const rookmelder = (x, y) => `<circle cx="${x}" cy="${y}" r="5.5" class="vh-melder"/><circle cx="${x}" cy="${y}" r="1.6" fill="${ROOD}"/>`;
+/** The bar at the top and the one at the bottom of a plan. */
+const kopBalk = (w, titel, onder) => `<rect width="${w}" height="30" fill="${GROEN}"/>`
+  + `<text x="12" y="21" fill="#ffffff" font-size="15" font-weight="700" class="tekst" style="fill:#ffffff">VLUCHTPLAN</text>`
+  + `<text x="${w - 12}" y="20" font-size="11.5" text-anchor="end" class="tekst" style="fill:#ffffff">${titel}</text>`;
+const voetBalk = (w, y, t) => `<rect y="${y}" width="${w}" height="22" fill="${ROOD}"/><text x="${w / 2}" y="${y + 15}" font-size="10" text-anchor="middle" class="tekst vet" style="fill:#ffffff">${t}</text>`;
+
+/** The evacuation plan of a scout hut, ground floor, as it hangs by the door: routes, exits, extinguishers, first aid. */
+function vluchtplanClubhuis() {
+  const W = 480;
+  let d = kopBalk(W, 'Clubhuis · begane grond');
+  // the floor: the rooms grey, the corridor and the hall green (that is the way out)
+  d += '<rect x="44" y="52" width="296" height="238" class="vh-kamer"/>';
+  d += '<rect x="44" y="170" width="296" height="36" class="vh-gang"/><rect x="172" y="206" width="54" height="84" class="vh-gang"/>';
+  // the walls
+  d += '<path d="M44 52 H340 V290 H44Z" class="vh-muur dik"/>';
+  d += '<path d="M44 170 H340 M44 206 H172 M226 206 H340 M170 52 V170 M255 52 V170 M118 206 V290 M172 206 V290 M226 206 V290 M288 206 V290 M145 206 V238 H118" class="vh-muur"/>';
+  // the doors of the rooms open into the room; the doors to outside open outwards
+  d += deur([110, 170], [128, 170], -1) + deur([212, 170], [230, 170], -1) + deur([298, 170], [316, 170], -1);
+  d += deur([66, 206], [84, 206], 1) + deur([124, 206], [140, 206], 1) + deur([248, 206], [266, 206], 1) + deur([304, 206], [322, 206], 1);
+  d += deur([44, 176], [44, 200], 1, 'buiten') + deur([340, 200], [340, 176], 1, 'buiten');
+  d += deur([183, 290], [199, 290], 1, 'buiten') + deur([215, 290], [199, 290], -1, 'buiten');
+  // the names of the rooms
+  const naam = (x, y, t) => tekst(x, y, t, { maat: 9.5, klasse: 'stil' });
+  d += naam(107, 116, 'zaal') + naam(212, 116, 'bevers') + naam(297, 116, 'welpen');
+  d += naam(81, 254, 'keuken') + naam(145, 270, 'wc') + naam(257, 254, 'materiaal') + naam(314, 254, 'leiding');
+  // the routes: from the middle of the corridor to the nearest exit
+  d += vluchtroute([[140, 188], [50, 188]]) + vluchtroute([[262, 188], [199, 188], [199, 282]]) + vluchtroute([[280, 188], [334, 188]]);
+  d += nooduitgang(22, 188, 180, 0.62) + nooduitgang(362, 188, 0, 0.62) + nooduitgang(199, 306, 90, 0.62);
+  // extinguishers, first aid, and where you are
+  d += bord(60, 156, ROOD, 'blusser', 12) + bord(60, 222, ROOD, 'blusser', 12) + bord(326, 156, ROOD, 'blusser', 12);
+  d += bord(214, 220, GROEN, 'ehbo', 12) + bord(214, 236, ROOD, 'blusser', 12);
+  d += `<circle cx="186" cy="258" r="4" fill="${ROOD}"/><path d="M182 260 L136 300" class="vh-hier-lijn"/>`;
+  d += '<rect x="66" y="294" width="72" height="16" rx="2" class="vh-hier"/>' + `<text x="102" y="305.5" font-size="9" text-anchor="middle" class="tekst vet" style="fill:#ffffff">je bent hier</text>`;
+  // the meeting point, outside
+  d += bord(268, 304, GROEN, 'verzamel', 14) + tekst(280, 307.5, 'verzamelplaats', { maat: 9, anker: 'start', klasse: 'vet' });
+  // the legend, and north
+  d += '<rect x="380" y="42" width="94" height="168" rx="2" class="vlak lijn dun"/>' + tekst(427, 58, 'Legenda', { maat: 10, klasse: 'vet' });
+  const legenda = [
+    [vluchtroute([[386, 0], [400, 0]]), 'vluchtroute'], [nooduitgang(393, 0, 0, 0.42), 'nooduitgang'],
+    [bord(393, 0, ROOD, 'blusser', 12), 'brandblusser'], [bord(393, 0, GROEN, 'ehbo', 12), 'EHBO'],
+    [bord(393, 0, GROEN, 'verzamel', 12), 'verzamelplaats'], [`<circle cx="393" cy="0" r="4" fill="${ROOD}"/>`, 'je bent hier'],
+  ];
+  legenda.forEach(([teken, t], i) => {
+    const y = 78 + i * 22;
+    d += `<g transform="translate(0 ${y})">${teken}</g>` + tekst(406, y + 3, t, { maat: 8.5, anker: 'start' });
+  });
+  d += `<path d="M427 236 L433 262 L427 256 L421 262Z" class="vol"/>` + tekst(427, 230, 'N', { maat: 10, klasse: 'vet' });
+  d += voetBalk(W, 318, 'Brand? Waarschuw iedereen, volg de groene route naar buiten en bel 112.');
+  return svg(W, 340, 'Een vluchtplan van een clubhuis, zoals het bij de deur hangt: een plattegrond van de begane grond met de zaal, de lokalen van de bevers en de welpen, de keuken, de wc, het materiaalhok en de leidingkamer. Groene pijlen wijzen door de gang naar drie nooduitgangen met een groen bordje. Er staat waar de brandblussers en de EHBO-doos zijn, waar je nu bent, en waar de verzamelplaats buiten is.', d);
+}
+
+/** A home escape plan: both floors, the way out over the stairs, the smoke alarms, and where you wait if you can't get out. */
+function vluchtplanThuis() {
+  const W = 480;
+  let d = kopBalk(W, 'Thuis');
+  const naam = (x, y, t) => tekst(x, y, t, { maat: 9.5, klasse: 'stil' });
+  d += tekst(122, 47, 'begane grond', { maat: 10.5, klasse: 'vet' }) + tekst(352, 47, 'eerste verdieping', { maat: 10.5, klasse: 'vet' });
+  // downstairs: the living room on the left, the kitchen at the back, the hall with the stairs and the front door
+  d += '<rect x="24" y="54" width="196" height="196" class="vh-kamer"/><rect x="134" y="140" width="86" height="110" class="vh-gang"/>';
+  d += '<path d="M24 54 H220 V250 H24Z" class="vh-muur dik"/><path d="M134 54 V250 M134 140 H220" class="vh-muur"/>';
+  // upstairs: two bedrooms at the back, one at the front, and the landing between them up to the stairs
+  d += '<rect x="254" y="54" width="196" height="196" class="vh-kamer"/><path d="M254 140 H450 V250 H416 V196 H254Z" class="vh-gang"/>';
+  d += '<path d="M254 54 H450 V250 H254Z" class="vh-muur dik"/><path d="M352 54 V140 M254 140 H450 M254 196 H416 V250" class="vh-muur"/>';
+  // the stairs, in the same place on both floors: down from the landing (top) to the hall (bottom)
+  for (const x0 of [192, 422]) {
+    d += `<rect x="${x0}" y="146" width="24" height="90" class="vh-trap"/>`;
+    for (let y = 154; y < 236; y += 8) d += `<path d="M${x0} ${y} h24" class="vh-trede"/>`;
+  }
+  d += naam(79, 130, 'woonkamer') + naam(177, 100, 'keuken') + naam(303, 100, 'slaapkamer') + naam(401, 100, 'slaapkamer') + naam(335, 230, 'slaapkamer');
+  // the doors: downstairs into the hall, the back door and the front door; upstairs onto the landing
+  d += deur([134, 222], [134, 202], -1) + deur([150, 140], [168, 140], 1);
+  d += deur([40, 54], [60, 54], -1, 'buiten') + deur([150, 250], [172, 250], 1, 'buiten');
+  d += deur([292, 140], [310, 140], -1) + deur([384, 140], [402, 140], -1) + deur([352, 196], [370, 196], 1);
+  d += '<path d="M60 250 H96 M286 250 H330" class="vh-raam"/>';
+  // the way out: from every room to the stairs, down, and out at the front; or out at the back
+  d += vluchtroute([[301, 116], [301, 168], [428, 168]]) + vluchtroute([[393, 116], [393, 160]]) + vluchtroute([[361, 214], [361, 176]]);
+  d += vluchtroute([[434, 176], [434, 230]]);
+  d += vluchtroute([[204, 222], [204, 243], [161, 243], [161, 262]]) + vluchtroute([[84, 186], [110, 212], [146, 212]]) + vluchtroute([[177, 112], [159, 152]]);
+  d += vluchtroute([[50, 100], [50, 64], [50, 44]], 'vh-noodroute');
+  // the smoke alarms: on every floor, in the hall and on the landing
+  d += rookmelder(160, 182) + rookmelder(350, 154);
+  // the street, and the meeting point across it
+  d += '<rect x="0" y="258" width="480" height="26" class="vh-straat"/>';
+  d += bord(196, 271, GROEN, 'verzamel', 14) + tekst(208, 274.5, 'verzamelplek: bij de lantaarnpaal aan de overkant', { maat: 9, anker: 'start', klasse: 'vet' });
+  // the legend in one row
+  const legenda = [
+    [vluchtroute([[14, 0], [28, 0]]), 32, 'vluchtroute'], [vluchtroute([[120, 0], [134, 0]], 'vh-noodroute'), 138, 'tweede route'],
+    [rookmelder(232, 0), 242, 'rookmelder'], ['<path d="M320 0 H338" class="vh-raam"/>', 344, 'raam aan de straatkant'],
+  ];
+  for (const [teken, x, t] of legenda) d += `<g transform="translate(0 299)">${teken}</g>` + tekst(x, 302, t, { maat: 8.5, anker: 'start' });
+  d += voetBalk(W, 318, 'Bel 112 als je buiten bent, en ga nooit terug naar binnen.');
+  return svg(W, 340, 'Een vluchtplan van een huis, de begane grond en de eerste verdieping. Groene pijlen gaan uit elke slaapkamer over de overloop naar de trap, beneden door de hal en via de voordeur naar buiten. Een tweede route gaat via de achterdeur. In de hal en op de overloop hangt een rookmelder. De ramen aan de straatkant zijn aangegeven. Buiten is de verzamelplek bij de lantaarnpaal aan de overkant.', d);
+}
 
 export default {
   strandvlaggen: () => {
@@ -106,7 +285,7 @@ export default {
       d += `<g transform="translate(${x + 4} ${y}) scale(0.6)">${binnen}</g>`;
       d += tekst(x + 64, y + 140, v.kort, { maat: v.kort.length > 20 ? 8.4 : 9.5, klasse: 'vet' });
     });
-    return svg(380, 300, 'De vlaggen op het strand: rood-geel voor lifeguards, geel voor gevaarlijk zwemmen, rood voor niet zwemmen, oranje voor geen luchtbedden, paars voor gevaarlijke zeedieren of vies water, en zwart-wit geblokt voor watersport', d);
+    return svg(380, 300, 'De vlaggen op het strand: rood-geel voor de strandwacht, geel voor gevaarlijk zwemmen, rood voor niet zwemmen, oranje voor geen luchtbedden, paars voor gevaarlijke zeedieren of vies water, en zwart-wit geblokt voor watersport', d);
   },
 
   colonne: () => {
@@ -145,29 +324,8 @@ export default {
     return svg(380, 200, 'Iemand is door het ijs gezakt. Een helper blijft op de kant, gaat laag liggen en reikt een lange tak aan. Niet zelf het ijs op, en bel 112', d);
   },
 
-  vluchtplan: () => {
-    let d = '<rect x="0" y="0" width="380" height="260" class="vh-buiten"/>';
-    // the building: a hall, two rooms, a kitchen, a corridor
-    d += '<rect x="30" y="30" width="250" height="190" class="vlak lijn dik"/>';
-    d += '<path d="M30 120 H120 M120 30 V220 M120 150 H180 M180 150 V220 M200 30 V120 M200 120 H280" class="lijn"/>';
-    d += tekst(75, 78, 'lokaal', { maat: 11 }) + tekst(75, 172, 'lokaal', { maat: 11 }) + tekst(160, 78, 'zaal', { maat: 11 }) + tekst(240, 78, 'keuken', { maat: 11 }) + tekst(230, 172, 'gang', { maat: 11 });
-    // doors: gaps with a swing
-    const deur = (x, y, w, h) => `<path d="M${x} ${y} h${w} v${h} h${-w}z" class="vlak"/>`;
-    d += deur(118, 55, 4, 22) + deur(118, 160, 4, 22) + deur(205, 118, 24, 4) + deur(150, 148, 22, 4);
-    // the exits: green signs
-    const uit = (x, y) => `<rect x="${x - 10}" y="${y - 7}" width="20" height="14" rx="2" fill="#11904a"/><path d="M${x - 5} ${y} h8 m-3 -3 l3 3 l-3 3" stroke="#ffffff" stroke-width="1.6" fill="none"/>`;
-    d += '<path d="M280 180 v24" class="vh-gat"/>' + uit(296, 192);
-    d += '<path d="M60 220 h26" class="vh-gat"/>' + uit(73, 236);
-    // escape routes
-    d += '<path d="M75 92 Q100 100 120 70 Q150 100 160 130 Q196 140 230 190 Q260 194 284 192" class="vh-route"/>';
-    d += '<path d="M75 186 L73 214" class="vh-route"/>';
-    // fire extinguisher
-    d += '<rect x="186" y="96" width="8" height="16" rx="3" fill="#d23b3b"/><path d="M190 96 v-4 h5" class="lijn"/>' + tekst(178, 116, 'blusser', { maat: 8.5, anker: 'end' });
-    // meeting point outside
-    d += '<circle cx="340" cy="60" r="16" fill="#11904a"/><path d="M332 54 h16 M334 60 h12 M336 66 h8" stroke="#ffffff" stroke-width="2"/>' + tekst(340, 92, 'verzamelplek', { maat: 9.5, klasse: 'vet' });
-    d += tekst(330, 248, 'nooduitgang', { maat: 9, klasse: 'stil' });
-    return svg(380, 260, 'Een plattegrond van een clubhuis met de vluchtroutes naar twee nooduitgangen met groene bordjes, de plek van de brandblusser en de verzamelplek buiten', d);
-  },
+  'vluchtplan-clubhuis': vluchtplanClubhuis,
+  'vluchtplan-thuis': vluchtplanThuis,
 
   'vlam-in-de-pan': () => {
     let d = '<rect x="0" y="0" width="380" height="190" class="vlak2"/>';
@@ -355,16 +513,27 @@ export default {
   },
 
   'blaren-voet': () => {
-    // a foot from the side and a sole from below, with the places where shoes rub
+    // a foot from the inside, toes to the right, and a sole from below, with the places where shoes rub
     let d = '<rect x="0" y="0" width="380" height="190" class="vlak2"/>';
-    d += '<path d="M20 150 Q18 120 40 108 L70 60 Q76 46 92 48 L100 52 Q108 90 140 112 Q190 126 210 140 Q218 154 200 160 L40 162 Q22 160 20 150Z" class="vh-huid"/>';
-    d += '<path d="M248 30 Q228 40 232 80 Q236 110 246 130 Q250 168 280 170 Q306 170 306 136 Q304 100 316 72 Q324 36 296 22 Q270 14 248 30Z" class="vh-huid"/>';
-    for (const [x, y, r] of [[26, 140, 10], [196, 148, 9], [262, 38, 9], [296, 34, 8], [284, 80, 11], [276, 150, 12]]) d += `<circle cx="${x}" cy="${y}" r="${r}" class="vh-plek"/>`;
-    d += tekst(26, 176, 'hiel', { maat: 10, klasse: 'vet' }) + tekst(196, 178, 'tenen', { maat: 10, klasse: 'vet' });
-    d += tekst(340, 40, 'tenen', { maat: 10, anker: 'start', klasse: 'vet' }) + '<path d="M306 36 H336" class="lijn dun"/>';
-    d += tekst(330, 84, 'bal van', { maat: 10, anker: 'start', klasse: 'vet' }) + tekst(330, 96, 'de voet', { maat: 10, anker: 'start', klasse: 'vet' }) + '<path d="M296 82 H326" class="lijn dun"/>';
-    d += tekst(330, 154, 'hiel', { maat: 10, anker: 'start', klasse: 'vet' }) + '<path d="M289 152 H326" class="lijn dun"/>';
-    d += tekst(110, 22, 'van opzij', { maat: 9.5, klasse: 'stil' }) + tekst(276, 12, 'van onderen', { maat: 9.5, klasse: 'stil' });
+    const voet = 'M62 14 L64 94 C62 112 40 120 40 142 C40 158 52 164 70 164 C96 164 108 156 130 156 C150 156 164 164 186 164 '
+      + 'L210 164 C224 164 228 154 222 148 C214 140 200 138 180 132 C150 122 124 104 112 86 L108 14Z';
+    d += `<path d="${voet}" class="vh-huid"/><path d="${voet}" class="vh-huidrand"/>`;
+    d += '<ellipse cx="88" cy="100" rx="7" ry="6" class="vh-huidrand"/>';                 // the ankle bone
+    d += '<path d="M206 146 Q214 144 220 150" class="vh-huidrand"/><path d="M196 140 Q200 152 196 162" class="vh-huidrand"/>'; // nail, big toe
+    // the sole: heel, arch on the inside, ball, and five toes
+    const zool = 'M258 70 C248 82 248 100 256 114 C262 126 262 140 260 152 C258 170 268 180 282 180 C298 180 308 170 306 152 '
+      + 'C304 132 310 112 318 92 C324 74 318 62 300 60 C284 58 268 62 258 70Z';
+    d += `<path d="${zool}" class="vh-huid"/><path d="${zool}" class="vh-huidrand"/>`;
+    for (const [x, y, rx, ry] of [[264, 46, 9, 11], [283, 40, 6, 7.5], [296, 42, 5.5, 7], [307, 47, 5, 6.5], [316, 56, 4.5, 5.5]]) {
+      d += `<ellipse cx="${x}" cy="${y}" rx="${rx}" ry="${ry}" class="vh-huid"/><ellipse cx="${x}" cy="${y}" rx="${rx}" ry="${ry}" class="vh-huidrand"/>`;
+    }
+    // where blisters come: heel, toes, ball
+    for (const [x, y, r] of [[52, 140, 9], [212, 152, 8], [264, 46, 8], [272, 82, 11], [283, 164, 12]]) d += `<circle cx="${x}" cy="${y}" r="${r}" class="vh-plek"/>`;
+    d += tekst(52, 182, 'hiel', { maat: 10, klasse: 'vet' }) + tekst(212, 182, 'tenen', { maat: 10, klasse: 'vet' });
+    d += tekst(334, 40, 'tenen', { maat: 10, anker: 'start', klasse: 'vet' }) + '<path d="M321 44 H330" class="lijn dun"/>';
+    d += tekst(334, 80, 'bal van', { maat: 10, anker: 'start', klasse: 'vet' }) + tekst(334, 92, 'de voet', { maat: 10, anker: 'start', klasse: 'vet' }) + '<path d="M284 84 H330" class="lijn dun"/>';
+    d += tekst(334, 166, 'hiel', { maat: 10, anker: 'start', klasse: 'vet' }) + '<path d="M296 163 H330" class="lijn dun"/>';
+    d += tekst(160, 44, 'van opzij', { maat: 9.5, klasse: 'stil' }) + tekst(286, 16, 'van onderen', { maat: 9.5, klasse: 'stil' });
     return svg(380, 190, 'Een voet van opzij en van onderen. Blaren komen waar je schoen schuurt: op de hiel, op en tussen de tenen en op de bal van de voet', d);
   },
 
@@ -530,20 +699,29 @@ export default {
 
   'tand-kroon': () => {
     let d = '<rect x="0" y="0" width="380" height="190" class="vlak2"/>';
-    // a front tooth, lying on its side: the crown on the left, the root to the right
-    d += '<g transform="rotate(-12 150 100)">'
-      + '<path d="M150 82 Q206 80 252 96 Q262 100 252 104 Q206 120 150 118 Z" class="vh-wortel"/>'
-      + '<path d="M150 82 Q120 76 90 84 Q80 100 90 116 Q120 124 150 118 Z" class="vh-tand"/>'
-      + '<path d="M150 82 Q144 100 150 118" class="lijn dun stil"/></g>';
-    // two fingers holding the crown
-    d += `<ellipse cx="114" cy="80" rx="16" ry="10" fill="${HUID}" stroke="#a8745a"/><ellipse cx="124" cy="132" rx="16" ry="10" fill="${HUID}" stroke="#a8745a"/>`;
-    d += tekst(100, 30, 'pak hem bij de kroon', { maat: 11, klasse: 'vet accent-tekst' }) + '<path d="M100 36 L108 66" class="lijn dun"/>';
-    d += tekst(222, 160, 'niet aan de wortel', { maat: 11, klasse: 'vet rood-tekst' }) + '<path d="M222 148 L218 106" class="lijn dun"/>';
+    // a front tooth as big as it really is next to a hand (both a little enlarged): the crown (left) held between the fingertips, the root
+    // sticking out to the right
+    d += '<g transform="translate(-34 -20) scale(1.2)">';
+    d += '<path d="M182 93.5 Q194 94 204 98 Q206 98.5 204 99 Q194 103 182 103.5 Z" class="vh-wortel"/>'
+      + '<path d="M182 93.5 Q172 92.5 165 95 Q162 98.5 165 102 Q172 104.5 182 103.5 Z" class="vh-tand"/>'
+      + '<path d="M182 93.5 Q180 98.5 182 103.5" class="lijn dun stil"/>';
+    // a hand from below, seen from the thumb side, in a pinch grip; the other three fingers up behind it. Drawn over
+    // the tooth, so the crown shows only between and just past the thumb and the index finger
+    const RANDHUID = '#a8745a';
+    const hand = 'M44 190 C48 168 52 146 58 126 C62 108 70 92 86 84 C110 78 146 75 170 76 C182 77 186 86 178 92 '
+      + 'C160 94 140 96 128 98 C116 100 108 106 108 112 C126 110 148 106 166 104 C180 103 184 112 176 116 '
+      + 'C160 120 140 128 124 140 C112 154 108 172 106 190 Z';
+    d += deel([[72, 100], [77, 72], [82, 54]], 13, HUID, RANDHUID) + deel([[80, 92], [92, 58], [102, 36]], 14, HUID, RANDHUID)
+      + deel([[90, 86], [108, 50], [122, 26]], 15, HUID, RANDHUID);
+    d += `<path d="${hand}" fill="${HUID}" stroke="${RANDHUID}" stroke-width="1.4"/>`;
+    d += `<path d="M160 78 Q170 77 176 83" fill="none" stroke="${RANDHUID}" stroke-width="1"/></g>`;
+    d += tekst(236, 30, 'pak hem bij de kroon', { maat: 11, klasse: 'vet accent-tekst' }) + '<path d="M230 36 L184 96" class="lijn dun"/>';
+    d += tekst(222, 160, 'niet aan de wortel', { maat: 11, klasse: 'vet rood-tekst' }) + '<path d="M222 148 L202 101" class="lijn dun"/>';
     // a glass of milk
     d += '<g transform="translate(326 100)"><path d="M-22 -40 h44 l-5 72 h-34 z" class="vlak lijn"/><path d="M-20.5 -18 h41 l-3.5 50 h-34 z" class="vh-melk"/>'
       + '<path d="M-6 6 Q0 2 6 6 Q8 14 4 18 Q0 16 -4 18 Q-8 14 -6 6Z" class="vh-tand"/></g>';
     d += tekst(326, 152, 'niet terug te zetten?', { maat: 9.5 }) + tekst(326, 165, 'bewaar hem in melk', { maat: 10.5, klasse: 'vet' }) + tekst(326, 178, 'nooit droog', { maat: 9.5 });
-    return svg(380, 190, 'Een tand die eruit is: pak hem bij de kroon, het deel waarmee je bijt, en niet bij de wortel. Kun je hem niet terugzetten, bewaar hem dan in melk, nooit droog', d);
+    return svg(380, 190, 'Een tand die eruit is: pak hem tussen duim en wijsvinger bij de kroon, het deel waarmee je bijt, en niet bij de wortel. Kun je hem niet terugzetten, bewaar hem dan in melk, nooit droog', d);
   },
 
   'stroom-uit': () => drieTegels([
@@ -585,57 +763,89 @@ export default {
   ], 'Vergiftiging. Ingeslikt: laat de mond spoelen en uitspugen. Ingeademd: naar de frisse lucht. Op de huid: spoel 45 minuten met lauw water'),
 
   // Bandages: each kind finished, as a tile, and the snelverband step by step.
-  'verband-snel': () => svg(160, 120, 'Een snelverband om een onderarm, met de knoop naast het kompres',
-    onderarm(6, 154, 40) + '<rect x="50" y="34" width="56" height="48" rx="3" class="vh-kompres"/>' + slagen(46, 7, 8.5, 37, 44) + knoopje(124, 38)),
+  'verband-snel': () => svg(160, 120, 'Een snelverband om een onderarm: de zwachtel in slagen over het kompres, en de knoop naast de wond',
+    arm(2, 40, 0.98, wikkel(96, 9, 6, 'vh-zwachtel')) + knoopje(102, 44)),
   'verband-wonddruk': () => {
-    // the turns go over the pad on the wound, so they bulge up in the middle
-    let d = onderarm(6, 154, 44);
-    for (let k = 0; k < 10; k++) {
-      const x = 40 + k * 7; const t = Math.max(0, 1 - ((x + 6 - 80) / 30) ** 2);
-      const y = r1(42 - 12 * Math.sqrt(t));
-      d += `<path d="M${x} ${y} L${x + 9} ${y - 1} L${x + 13} 84 L${x + 4} 85 Z" class="vh-elastisch"/>`;
-    }
-    d += '<path d="M80 2 v18 M74 14 l6 6 l6 -6" class="lijn accent-lijn" stroke-width="2"/>';
-    return svg(160, 120, 'Een wonddrukverband: een stevig pakje op het kompres op de wond, en daar strak een zwachtel omheen', d);
+    // the arm with a bulge where the pad is, and below it the arm cut through at the dashed line
+    let d = arm(2, 26, 0.98, wikkel(100, 12, 6, 'vh-elastisch'), ARM_BULT);
+    d += '<path d="M64 8 V70" class="lijn dun stil" stroke-dasharray="3 3"/>';
+    d += '<circle cx="64" cy="100" r="14" class="vh-huid"/><circle cx="64" cy="100" r="14" class="vh-huidrand"/>';
+    d += '<rect x="54" y="82" width="20" height="4" rx="1" class="vh-kompres"/><rect x="56" y="73" width="16" height="9" rx="3" class="vh-pakje"/>';
+    const ring = 'M47 100 A17 17 0 0 0 81 100 L77 84 Q74 70 64 70 Q54 70 51 84 Z';
+    d += `<path d="${ring}" fill="none" stroke="#9a7d4a" stroke-width="5"/><path d="${ring}" fill="none" stroke="#e6cfa6" stroke-width="3"/>`;
+    d += tekst(92, 76, 'pakje', { maat: 9, anker: 'start', klasse: 'stil' }) + tekst(92, 88, 'kompres', { maat: 9, anker: 'start', klasse: 'stil' });
+    d += '<path d="M90 73 H74 M90 85 H76" class="lijn dun stil"/>';
+    return svg(160, 120, 'Een wonddrukverband: op het kompres op de wond een stevig pakje, en daar strak een zwachtel omheen. Daaronder de arm doorgesneden: het pakje drukt op de wond', d);
   },
   'verband-steun': () => {
-    let d = `<path d="M54 0 H82 L86 62 Q92 76 120 84 L148 92 Q156 100 146 106 L66 108 Q50 104 54 86 Z" class="vh-huid"/>`;
-    // turns round the ankle, and the figure of eight over the instep and under the foot
-    d += '<path d="M52 30 L84 28 L85 38 L53 41 Z M53 41 L85 38 L86 48 L54 52 Z M54 52 L86 48 L87 58 L55 62 Z" class="vh-elastisch"/>';
-    d += '<path d="M86 58 L118 104 L106 106 L76 62 Z M56 64 L112 84 L106 94 L54 76 Z" class="vh-elastisch"/>';
-    d += '<path d="M104 80 L122 84 L118 104 L100 104 Z" class="vh-elastisch"/>';
-    return svg(160, 120, 'Een steunverband om een verstuikte enkel: een elastische zwachtel om de enkel en in een acht over de voet', d);
+    // the foot of blaren-voet, smaller: turns round the middle of the foot, an eight over the ankle, turns round the leg
+    const voet = 'M62 14 L64 94 C62 112 40 120 40 142 C40 158 52 164 70 164 C96 164 108 156 130 156 C150 156 164 164 186 164 '
+      + 'L210 164 C224 164 228 154 222 148 C214 140 200 138 180 132 C150 122 124 104 112 86 L108 14Z';
+    let w = band([150, 110], [144, 172], 20, 'vh-elastisch') + band([166, 118], [160, 172], 20, 'vh-elastisch');
+    w += band([72, 166], [134, 84], 20, 'vh-elastisch') + band([52, 100], [154, 168], 20, 'vh-elastisch');
+    for (const y of [88, 72, 56, 40]) w += band([50, y + 2], [120, y - 2], 20, 'vh-elastisch');
+    let d = `<g transform="translate(-14 2) scale(0.7)"><path d="${voet}" class="vh-huid"/><path d="${voet}" class="vh-huidrand"/>`;
+    d += binnen(`<path d="${voet}"/>`, w) + `<path d="${voet}" class="vh-huidrand"/>`;
+    d += '<path d="M206 146 Q214 144 220 150" class="vh-huidrand"/><rect x="74" y="30" width="18" height="12" rx="1" class="vh-tape" transform="rotate(-3 83 36)"/></g>';
+    return svg(160, 120, 'Een steunverband om een verstuikte enkel: een elastische zwachtel om de voet, in een acht over de enkel en dan om het been. De hiel en de tenen blijven vrij', d);
   },
   'verband-vinger': () => {
-    let d = `<path d="M40 118 V70 Q40 58 52 58 H108 Q120 58 120 70 V118 Z" fill="${HUID}"/>`;
-    for (const [x, top] of [[66, 22], [86, 18], [106, 26]]) d += `<rect x="${x - 7}" y="${top}" width="14" height="${70 - top}" rx="7" fill="${HUID}"/>`;
-    d += `<path d="M40 86 Q24 74 22 58 Q26 52 32 58 Q40 70 46 74" fill="${HUID}"/>`;
-    // the index finger, bandaged: a cap over the top and turns round it
-    d += '<rect x="38" y="12" width="18" height="52" rx="9" class="vh-zwachtel"/>';
-    d += '<path d="M39 30 L55 24 M39 40 L55 34 M39 50 L55 44 M39 60 L55 54" class="lijn dun stil"/>';
-    return svg(160, 120, 'Een vingerverband: een zwachtel over de top van de vinger en daarna in slagen om de vinger', d);
+    // the back of a right hand, fingers up; the index finger bandaged, the bandage over the hand and round the wrist
+    const vormen = ['<rect x="54" y="50" width="64" height="56" rx="14"/>', '<rect x="62" y="96" width="50" height="30"/>',
+      '<rect x="57" y="12" width="15" height="54" rx="7.5"/>', '<rect x="74" y="4" width="15" height="56" rx="7.5"/>',
+      '<rect x="90" y="10" width="14" height="52" rx="7"/>', '<rect x="105" y="24" width="12" height="42" rx="6"/>',
+      '<rect x="-8.5" y="-38" width="17" height="38" rx="8.5" transform="translate(60 96) rotate(-48)"/>'];
+    let d = vormen.map((v) => v.replace('/>', ` fill="${HUID}" stroke="#a8745a" stroke-width="2.8"/>`)).join('');
+    d += vormen.map((v) => v.replace('/>', ` fill="${HUID}"/>`)).join('');
+    // the fingers' own edges, down to the knuckles, so they don't run into each other
+    d += binnen('<rect x="0" y="0" width="160" height="55"/>', vormen.slice(3, 6).map((v) => v.replace('/>', ' class="vh-huidrand"/>')).join(''));
+    for (const [x, y, b] of [[81.5, 10, 9], [97, 16, 8], [111, 29, 7]]) d += `<rect x="${x - b / 2}" y="${y}" width="${b}" height="8" rx="3.5" class="vh-huidrand"/>`;
+    d += band([70, 60], [104, 102], 9, 'vh-zwachtel');
+    const vinger = '<rect x="55" y="9" width="19" height="58" rx="9.5"/>';
+    let w = band([61, 2], [61, 38], 7, 'vh-zwachtel') + band([68, 2], [68, 38], 7, 'vh-zwachtel');
+    for (let y = 30; y <= 68; y += 6) w += band([52, y + 4], [78, y - 3], 9, 'vh-zwachtel');
+    d += vinger.replace('/>', ' class="vh-zwachtel"/>') + binnen(vinger, w) + vinger.replace('/>', ' fill="none" stroke="#8a8578" stroke-width="1"/>');
+    d += binnen('<rect x="62" y="96" width="50" height="30"/>', [100, 108, 116].map((y) => band([56, y + 1], [118, y - 1], 9, 'vh-zwachtel')).join(''));
+    d += '<path d="M62 96 V120 M112 96 V120" class="vh-huidrand"/><rect x="92" y="101" width="12" height="9" rx="1" class="vh-tape"/>';
+    return svg(160, 120, 'Een vingerverband: de zwachtel een paar keer over de top heen en weer, dan in slagen om de vinger, en over de hand vast om de pols', d);
   },
   mitella: () => {
-    let d = mens([80, 16], [[[80, 28], [80, 36]]], { kleur: GEWONDE, dikte: 8, r: 12 });
-    d += '<path d="M48 40 Q80 32 112 40 L114 118 H46 Z" class="vh-shirt"/>';
-    // the hurt arm: upper arm down, forearm across the chest, a little up
-    d += mens(null, [[[50, 42], [46, 84], [100, 70]]], { kleur: GEWONDE, dikte: 12 });
-    d += `<circle cx="104" cy="68" r="6" fill="${HUID}"/>`;
-    // the triangular cloth under the forearm, up round the neck, knotted on the good shoulder
-    d += '<path d="M38 70 L40 96 L112 78 L108 60 Z" class="vh-doek"/><path d="M38 70 Q44 44 60 36 Q80 26 100 34 L108 60" class="vh-mitella-slip"/>';
-    d += knoopje(104, 40);
-    return svg(160, 120, 'Een mitella: een driekante doek als draagdoek onder de onderarm, om de nek en geknoopt op de goede schouder', d);
+    // from the front, the right arm hurt (on the left of the drawing). A broad sling: the cloth under the forearm, its
+    // point at the elbow, the front flap up to the hurt shoulder, the other end up from the hand; knotted at the side
+    // of the neck on the good side. The hand is a little higher than the elbow and the fingertips stick out.
+    const SHIRT = GEWONDE; const RAND = '#26332c'; const DOEK = '#f6f4ee'; const DOEKRAND = '#9a968a';
+    let d = `<path d="M50 40 Q80 31 110 40 Q120 44 121 58 L124 120 H36 L39 58 Q40 44 50 40 Z" fill="${SHIRT}" stroke="${RAND}" stroke-width="1.2"/>`;
+    d += deel([[114, 46], [121, 84], [123, 121]], 13, SHIRT);
+    d += deel([[62, 38], [78, 31], [93, 35]], 6, DOEK, DOEKRAND);
+    d += `<rect x="75" y="24" width="10" height="13" fill="${HUID}" stroke="#a8745a" stroke-width="1"/>`;
+    d += `<circle cx="80" cy="16" r="11" fill="${HUID}" stroke="${RAND}" stroke-width="1.2"/>`;
+    const [ax, ay] = pol(80, 16, 11, 285); const [bx, by] = pol(80, 16, 11, 75);
+    d += `<path d="M${ax} ${ay} A11 11 0 0 1 ${bx} ${by} Q80 9 ${ax} ${ay}Z" fill="#5a3b22"/>`;
+    d += deel([[46, 46], [40, 90]], 13, SHIRT) + deel([[40, 90], [100, 70]], 12, SHIRT);
+    d += `<ellipse cx="110" cy="69" rx="8" ry="5.5" fill="${HUID}" stroke="#a8745a" stroke-width="1" transform="rotate(-16 110 69)"/>`
+      + '<path d="M110 67 L117 65 M110 70.5 L117.5 68.5" stroke="#a8745a" stroke-width="0.8"/>';
+    d += deel([[101, 64], [95, 37]], 7, DOEK, DOEKRAND);
+    const flap = 'M56 40 Q60 31 73 29 L75 34 Q84 52 104 61 L107 79 Q76 96 44 101 Q35 101 33 94 Q36 88 48 82 Q54 58 56 40 Z';
+    d += `<path d="${flap}" fill="${DOEK}" stroke="${DOEKRAND}" stroke-width="1.2" stroke-linejoin="round"/>`;
+    d += `<path d="M50 84 Q76 74 104 66 M47 95 Q76 88 106 75" fill="none" stroke="${DOEKRAND}" stroke-width="0.8"/>`;
+    d += `<circle cx="35" cy="95" r="3" fill="${DOEK}" stroke="${DOEKRAND}" stroke-width="1"/>`;
+    d += `<path d="M95 36 q7 1 10 8 M95 36 q8 -4 13 -1" stroke="${DOEKRAND}" stroke-width="5.4" stroke-linecap="round" fill="none"/>`
+      + `<path d="M95 36 q7 1 10 8 M95 36 q8 -4 13 -1" stroke="${DOEK}" stroke-width="3" stroke-linecap="round" fill="none"/>`
+      + `<circle cx="95" cy="36" r="5" fill="${DOEK}" stroke="${DOEKRAND}" stroke-width="1.2"/>`;
+    return svg(160, 120, 'Een mitella: een driekante doek als brede draagdoek onder de onderarm, de hand iets hoger dan de elleboog, de punt bij de elleboog, en geknoopt aan de zijkant van de nek aan de goede kant', d);
   },
   'snelverband-stappen': () => stappen([
-    ['<rect x="22" y="40" width="48" height="44" rx="3" class="vh-kompres"/>' + rol(34, 50) + rol(58, 50)
-      + '<path d="M38 66 l16 12 M54 66 l-16 12" class="lijn rood-lijn" stroke-width="2.4"/>', 'pak de rolletjes,', 'niet het kompres'],
-    [`<circle cx="12" cy="40" r="7" fill="${HUID}"/><circle cx="80" cy="40" r="7" fill="${HUID}"/>` + rol(19, 42, 5) + rol(73, 42, 5)
-      + '<path d="M22 44 L34 64 M70 44 L58 64" class="vh-slip"/><rect x="30" y="62" width="32" height="30" rx="2" class="vh-kompres"/>'
-      + '<path d="M30 28 h-14 m4 -4 l-4 4 l4 4 M62 28 h14 m-4 -4 l4 4 l-4 4" class="lijn accent-lijn" stroke-width="2"/>', 'uit elkaar trekken:', 'hij klapt open'],
-    [onderarm(0, 92, 52) + '<rect x="36" y="48" width="26" height="40" rx="2" class="vh-kompres"/>' + slagen(28, 1, 0, 48, 40)
-      + '<path d="M41 88 Q36 104 20 108" class="vh-slip"/>' + rol(16, 108, 5), 'op de wond, dan', 'om en om wikkelen'],
-    [onderarm(0, 92, 52) + '<rect x="34" y="48" width="28" height="40" rx="2" class="vh-kompres"/>' + slagen(26, 5, 8, 49, 38) + knoopje(76, 52), 'knoop naast', 'de wond, niet erop'],
-  ], 152, 'Een snelverband aanleggen. 1: pak de twee rolletjes, raak het kompres niet aan. 2: trek ze uit elkaar, dan klapt het kompres open. 3: leg het meteen op de wond en wikkel de einden er om en om overheen. 4: knoop ze vast naast de wond, niet erop'),
+    [handschoen([18, 70], [8, 112]) + handschoen([74, 74], [86, 112])
+      + '<rect x="18" y="58" width="56" height="8" class="vh-zwachtel"/>' + kompres(32, 48, 28, 28) + rol(18, 62, 5) + rol(74, 62, 9)
+      + '<path d="M38 54 l16 16 M54 54 l-16 16" class="lijn rood-lijn" stroke-width="2.4"/>', 'pak de rolletjes,', 'niet het kompres'],
+    [handschoen([12, 66], [4, 112]) + handschoen([80, 68], [88, 112])
+      + '<rect x="10" y="54" width="72" height="8" class="vh-zwachtel"/>' + kompres(29, 44, 34, 28) + rol(10, 58, 5) + rol(82, 58, 8)
+      + '<path d="M30 34 h-14 m4 -4 l-4 4 l4 4 M62 34 h14 m-4 -4 l4 4 l-4 4" class="lijn accent-lijn" stroke-width="2"/>', 'uit elkaar trekken:', 'hij klapt open'],
+    [arm(2, 44, 0.56, kompres(52, -4, 40, 48)) + '<path d="M31 46 Q24 36 16 36" class="vh-slip"/>' + rol(14, 36, 4)
+      + '<path d="M48 63 L59 94" class="vh-slip"/>' + handschoen([58, 104], [74, 116]) + rol(60, 98, 6)
+      + '<path d="M76 46 Q90 58 78 74 M78 74 l1 -7 M78 74 l6 -3" class="lijn accent-lijn" stroke-width="2"/>', 'op de wond, dan', 'om en om wikkelen'],
+    [arm(2, 44, 0.56, wikkel(98, 10, 6, 'vh-zwachtel')) + knoopje(62, 46), 'knoop naast', 'de wond, niet erop'],
+  ], 152, 'Een snelverband aanleggen, met handschoenen aan. 1: pak de twee rolletjes, raak het kompres niet aan. 2: trek ze uit elkaar, dan klapt het kompres open. 3: leg het meteen op de wond en wikkel de einden er om en om overheen. 4: knoop ze vast naast de wond, niet erop'),
 
   // Moving someone out of danger, in the order of NREH 2026.
   'verplaats-ondersteunen': () => svg(160, 120, 'Iemand ondersteunen die nog kan hinkelen: hij slaat een arm om je schouders, jij een arm om zijn middel',
@@ -652,34 +862,37 @@ export default {
     mens([58, 96], [[[68, 100], [112, 102]], [[112, 102], [154, 104]], [[112, 102], [152, 108]]], { kleur: GEWONDE })
     + mens([46, 36], [[[28, 70], [40, 44]], [[28, 70], [20, 110]], [[28, 70], [38, 110]], [[40, 48], [60, 74], [72, 98]]])
     + '<path d="M40 14 H8 M14 8 l-6 6 l6 6" class="lijn accent-lijn" stroke-width="2"/>'),
-  'rautekgreep-stappen': () => stappen([
-    [mens([42, 104], [[[54, 106], [92, 106]], [[92, 106], [120, 108]], [[92, 106], [118, 112]]], { kleur: GEWONDE })
-      + mens([24, 42], [[[16, 84], [22, 54]], [[16, 84], [26, 112], [6, 112]], [[22, 60], [38, 84], [48, 98]]]), 'kniel achter', 'het hoofd'],
-    [mens([30, 30], [[[24, 76], [28, 42]], [[24, 76], [16, 112], [4, 112]], [[24, 76], [48, 76], [50, 112]]])
-      + mens([56, 58], [[[58, 70], [76, 110]], [[76, 110], [120, 112]], [[76, 110], [118, 116]], [[60, 76], [72, 88], [62, 94]]], { kleur: GEWONDE })
-      + mens(null, [[[28, 48], [56, 76], [66, 90]]]), 'zet hem rechtop,', 'pak één onderarm'],
-    [mens([58, 20], [[[52, 62], [56, 32]], [[52, 62], [42, 84], [48, 112]], [[52, 62], [66, 84], [60, 112]]])
-      + mens([66, 50], [[[70, 62], [96, 102]], [[96, 102], [122, 106]], [[96, 102], [120, 112]], [[72, 66], [86, 78], [76, 84]]], { kleur: GEWONDE })
-      + mens(null, [[[56, 38], [70, 66], [82, 80]]])
-      + '<path d="M36 118 H8 M14 112 l-6 6 l6 6" class="lijn accent-lijn" stroke-width="2"/>', 'kom overeind en', 'loop achteruit'],
-  ], 160, 'De Rautekgreep. 1: kniel achter het hoofd van de gewonde. 2: zet hem rechtop tegen je aan, steek je armen onder zijn oksels door en pak één van zijn onderarmen voor zijn borst. 3: kom overeind en sleep hem achteruit lopend uit het gevaar'),
-
   zijligging: () => {
-    // seen from above: lying on the side, the front of the body towards the bottom of the drawing
-    let d = '<rect x="0" y="0" width="380" height="200" class="vlak2"/>';
-    const o = { kleur: GEWONDE, dikte: 11 };
-    d += mens(null, [[[100, 100], [100, 154], [62, 156]]], o); // the bottom arm, on the ground, bent
-    d += mens(null, [[[200, 92], [322, 94]]], o); // the bottom leg, straight
-    d += mens(null, [[[90, 92], [204, 92]]], { kleur: GEWONDE, dikte: 18 }); // the body
-    d += mens(null, [[[204, 98], [228, 144], [296, 146]]], o); // the top leg, bent at hip and knee
-    d += mens(null, [[[108, 96], [138, 128], [82, 116]]], o); // the top arm, the hand under the cheek
-    d += `<circle cx="66" cy="96" r="18" fill="${HUID}"/><circle cx="80" cy="116" r="6" fill="${HUID}"/><circle cx="58" cy="156" r="6" fill="${HUID}"/>`;
-    d += '<path d="M52 108 q8 6 16 4" class="lijn dun"/>';
-    d += tekst(66, 34, 'hoofd licht achterover,', { maat: 10.5, klasse: 'vet' }) + tekst(66, 47, 'mond naar beneden', { maat: 10.5, klasse: 'vet' }) + '<path d="M66 54 V74" class="lijn dun"/>';
-    d += tekst(196, 190, 'hand onder de wang', { maat: 10.5, klasse: 'vet' }) + '<path d="M160 180 L86 122" class="lijn dun"/>';
-    d += tekst(300, 172, 'bovenste been gebogen:', { maat: 10.5, klasse: 'vet' }) + tekst(300, 185, 'zo rolt hij niet door', { maat: 10.5 }) + '<path d="M270 162 L256 150" class="lijn dun"/>';
-    d += tekst(270, 60, 'onderste been gestrekt', { maat: 10.5, klasse: 'vet' }) + '<path d="M270 66 L282 86" class="lijn dun"/>';
+    // seen from above: lying on the left side, the head on the left, the front of the body towards the bottom of the
+    // drawing. Each part is a thick line with a darker edge (deel), drawn from the floor up, so the top arm and leg lie on top.
+    let d = '<rect x="0" y="0" width="380" height="210" class="vlak2"/>';
+    const SHIRT = GEWONDE; const BROEK = '#34506e'; const SCHOEN = '#3b2f28'; const RAND = '#26332c';
+    const vorm = (x, y, rx, ry, kleur, draai = 0) =>
+      `<ellipse cx="${x}" cy="${y}" rx="${rx}" ry="${ry}" fill="${kleur}" stroke="${RAND}" stroke-width="1.2" transform="rotate(${draai} ${x} ${y})"/>`;
+    // the bottom leg, straight, and the bottom arm: out in front, elbow bent, the hand towards the head
+    d += deel([[206, 92], [262, 91], [318, 90]], 16, BROEK) + vorm(328, 90, 11, 6, SCHOEN);
+    d += deel([[104, 108], [104, 154]], 12, SHIRT) + deel([[104, 154], [66, 158]], 9, HUID) + vorm(58, 158, 7, 5.5, HUID);
+    // the body: the shirt, then the hips
+    d += deel([[100, 95], [178, 96]], 30, SHIRT) + deel([[180, 96], [204, 97]], 28, BROEK);
+    // the top leg, bent at hip and knee so he can't roll onto his belly
+    d += deel([[208, 104], [234, 150]], 17, BROEK) + deel([[234, 150], [296, 153]], 13, BROEK) + vorm(306, 153, 10, 6, SCHOEN);
+    // the top arm across the chest, the back of the hand under the cheek
+    d += deel([[114, 90], [142, 128]], 12, SHIRT) + deel([[142, 128], [92, 122]], 9, HUID) + vorm(84, 120, 8, 6, HUID, -10);
+    // the head, a little back: hair at the back of the head (top), the ear, the face to the front, the mouth down
+    const [hx, hy, r] = [64, 96, 19];
+    d += `<circle cx="${hx}" cy="${hy}" r="${r}" fill="${HUID}" stroke="${RAND}" stroke-width="1.2"/>`;
+    const [ax, ay] = pol(hx, hy, r, 245); const [bx, by] = pol(hx, hy, r, 95);
+    d += `<path d="M${ax} ${ay} A${r} ${r} 0 1 1 ${bx} ${by} Q${hx + 2} ${hy - 4} ${ax} ${ay}Z" fill="#5a3b22"/>`;
+    d += `<ellipse cx="${hx + 3}" cy="${hy + 2}" rx="3.5" ry="5" fill="${HUID}" stroke="#a8745a" stroke-width="1"/>`;
+    const [nx, ny] = pol(hx, hy, r, 218);
+    d += `<circle cx="${nx}" cy="${ny}" r="3.2" fill="${HUID}" stroke="${RAND}" stroke-width="1"/>`;
+    // the labels
+    d += tekst(64, 30, 'hoofd licht achterover,', { maat: 10.5, klasse: 'vet' }) + tekst(64, 43, 'mond naar beneden', { maat: 10.5, klasse: 'vet' }) + '<path d="M64 50 V72" class="lijn dun"/>';
+    d += tekst(196, 198, 'hand onder de wang', { maat: 10.5, klasse: 'vet' }) + '<path d="M150 188 L90 128" class="lijn dun"/>';
+    d += tekst(300, 182, 'bovenste been gebogen:', { maat: 10.5, klasse: 'vet' }) + tekst(300, 195, 'zo rolt hij niet door', { maat: 10.5 }) + '<path d="M268 172 L256 160" class="lijn dun"/>';
+    d += tekst(272, 56, 'onderste been gestrekt', { maat: 10.5, klasse: 'vet' }) + '<path d="M272 62 L284 80" class="lijn dun"/>';
+    d += tekst(14, 198, 'onderste arm haaks', { maat: 10.5, anker: 'start', klasse: 'vet' }) + '<path d="M44 186 L60 166" class="lijn dun"/>';
     d += tekst(372, 18, 'van bovenaf', { maat: 9.5, anker: 'end', klasse: 'stil' });
-    return svg(380, 200, 'De zijligging van bovenaf: op de zij, het hoofd licht achterover met de mond naar beneden, de bovenste hand onder de wang, de onderste arm gebogen op de grond, het onderste been gestrekt en het bovenste gebogen, zodat hij niet doorrolt', d);
+    return svg(380, 210, 'De zijligging van bovenaf: op de zij, het hoofd licht achterover met de mond naar beneden, de bovenste hand onder de wang, de onderste arm haaks naar voren met de elleboog gebogen, het onderste been gestrekt en het bovenste gebogen, zodat hij niet doorrolt', d);
   },
 };

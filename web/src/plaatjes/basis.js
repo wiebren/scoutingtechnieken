@@ -9,6 +9,21 @@ export const pol = (cx, cy, r, graden) => [r1(cx + r * Math.sin((graden * Math.P
 /** A drawing: width, height, what it shows (for a screen reader), and the inside. */
 export const svg = (w, h, titel, inhoud) =>
   `<svg class="plaatje" viewBox="0 0 ${w} ${h}" role="img" aria-label="${titel}" xmlns="http://www.w3.org/2000/svg">${inhoud}</svg>`;
+/**
+ * How wide a drawing may be on a wide screen, in px, when that is more than the usual 380: a drawing whose smallest
+ * text would come out under 11 px at 380 wide (13 px for handwriting, which reads smaller), with at least six texts,
+ * may grow to the width of the card, but not taller than about 620 px. Null for the others.
+ */
+export function ruimeBreedte(plaatje) {
+  const vak = plaatje.match(/viewBox="0 0 ([\d.]+) ([\d.]+)"/);
+  const maten = [...plaatje.matchAll(/font-size="([\d.]+)"/g)].map((m) => +m[1]);
+  if (!vak || maten.length < 6) return null;
+  const [w, hoog] = [+vak[1], +vak[2]];
+  const hand = /class="plaatje (w-hand|wn-schets)/.test(plaatje);
+  if ((Math.min(...maten) * 380) / w >= (hand ? 13 : 11)) return null;
+  const breed = Math.min(720, (620 * w) / hoog);
+  return breed > 380 ? Math.round(breed) : null;
+}
 /** A line of text in the drawing. */
 export const tekst = (x, y, t, { maat = 11, anker = 'middle', klasse = '' } = {}) =>
   `<text x="${x}" y="${y}" class="tekst ${klasse}" font-size="${maat}" text-anchor="${anker}">${t}</text>`;

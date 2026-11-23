@@ -1,11 +1,12 @@
 // The recognising quiz of natuur: a drawing (a leaf, a print, a bird) and four names to choose from, or all of them
-// side by side to learn first. opties.soort: bomen, prenten or vogels. The drawings are the ones of the cards
+// side by side to learn first. For trees also a third mode: find the tree you see by its features (boomzoeker.js). opties.soort: bomen, prenten or vogels. The drawings are the ones of the cards
 // (src/plaatjes/natuur.js), so what you learn on a card is what you are asked here.
 import { h } from '../../dom.js';
 import { BLAD } from '../../data/bladen/index.js';
 import { BOMEN, bladIcoon, PRENTEN, prentIcoon, VOGELS, vogelIcoon } from '../../plaatjes/natuur.js';
 import { actie, acties, keuze } from '../knoppen.js';
 import { beeld, bladLink, schud } from './gedeeld.js';
+import { boomZoeker } from './boomzoeker.js';
 import '../vorm.css';
 import './natuur.css';
 
@@ -73,10 +74,10 @@ export default function quiz({ soort = 'bomen' } = {}) {
       soort === 'prenten' && h('span.doe-stil', i.info)))));
   }
 
-  const toon = () => (modus === 'raad' ? volgende() : bekijk());
+  const toon = () => (modus === 'raad' ? volgende() : modus === 'zoek' ? plek.replaceChildren(boomZoeker()) : bekijk());
   toon();
   return h('div.doe-nt-quiz',
-    h('div.chips', { role: 'group', 'aria-label': 'Raden of overzicht' }, keuze([['raad', 'Raden'], ['bekijk', 'Overzicht']], modus, (m) => { modus = m; toon(); })),
+    h('div.chips', { role: 'group', 'aria-label': soort === 'bomen' ? 'Raden, overzicht of zoeken' : 'Raden of overzicht' }, keuze([['raad', 'Raden'], ['bekijk', 'Overzicht'], ...(soort === 'bomen' ? [['zoek', 'Zoeken']] : [])], modus, (m) => { modus = m; toon(); })),
     plek,
     soort === 'vogels' && h('p.doe-stil', 'De vogels zijn niet op schaal getekend. Zien het mannetje en het vrouwtje er anders uit? Dan is het mannetje getekend.'),
     soort === 'prenten' && h('p.doe-stil', 'Echte prenten zijn bijna nooit zo scherp. Vaak zie je maar een deel. Of de prenten van de voor- en de achterpoot liggen door elkaar.'));

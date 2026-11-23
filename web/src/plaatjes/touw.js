@@ -644,17 +644,18 @@ export const TEKENINGEN = {
     });
   },
   // Rondtorn met twee halve steken: the rope goes twice around the pole (a round turn) and then makes two half
-  // hitches around its own standing part, which together are a mastworp around it (ABOK #1720).
+  // hitches around its own standing part, which together are a mastworp around it (ABOK #1720). The first half
+  // hitch lies next to the pole, the second further away, and the end points away from the pole.
   'touw-rondtorn': {
     w: 300, h: 218, titel: 'Rondtorn met twee halve steken: twee keer om de paal, en dan met twee halve steken om het eigen staande part.',
     strengen: [
       paal(40, 8, 292, 26),
       { p: [[120, 216, 0], [120, 170, 0], [120, 110, 0], [120, 70, 0.5], [120, 40, 1], [121, 22, 0.5], [128, 13, 0], [135, 21, -0.5], [136, 40, -1],
         [138, 60, -0.5], [144, 68, 0], [150, 60, 0.5], [152, 40, 1], [153, 22, 0.5], [160, 13, 0], [167, 21, -0.5], [168, 40, -1], [170, 60, -0.5],
-        [178, 84, 0], [188, 120, 0.5], [190, 146, 1],
-        ...zet(MASTWORP.slice(0, -1).reverse(), [0, 0.55, 120 - 96 * 0.55, 0.55, 0, 150 - 165 * 0.55])], begin: 'staand', eind: 'eind' },
+        [176, 84, 0], [178, 104, 0.5], [168, 114, 1],
+        ...zet(MASTWORP.slice(3, -1).reverse(), [0, 0.55, 120 - 96 * 0.55, -0.55, 0, 210]), [100, 128, 1], [86, 134, 0.5], [80, 150, 0], [79, 178, 0]], begin: 'staand', eind: 'eind' },
     ],
-    labels: [{ t: 'rondtorn', x: 232, y: 16, naar: [172, 24] }, { t: 'twee halve steken', x: 214, y: 196, naar: [150, 168] }, { t: 'staand part', x: 108, y: 212, anker: 'end', naar: [115, 198] }],
+    labels: [{ t: 'rondtorn', x: 232, y: 16, naar: [172, 24] }, { t: 'twee halve steken', x: 214, y: 196, naar: [146, 150] }, { t: 'staand part', x: 108, y: 212, anker: 'end', naar: [115, 198] }],
   },
   // Timmersteek, as in the public-domain figure "EB1911 - Knot - Fig. 20 - Timber Hitch" (Encyclopaedia Britannica
   // 1911) and ABOK #1665: the standing part goes down behind the log, round it and up the front; above the log the
@@ -807,7 +808,8 @@ export const TEKENINGEN = {
     labels: [{ t: 'lus', x: 186, y: 22, naar: [170, 30] }],
   },
   // Werpankersteek: the rondtorn, then the end round the standing part (in front of it) and under both turns, so it
-  // wraps the standing part; then a half hitch. As described by Van Kampen, De zeilsport (1923), p. 94.
+  // wraps the standing part; then a half hitch, its end pointing away from the pole. As described by Van Kampen,
+  // De zeilsport (1923), p. 94.
   'touw-werpankersteek': {
     w: 300, h: 218, titel: 'Werpankersteek: twee slagen om de paal, het eind om het staande part en onder beide slagen door, en dan een halve steek.',
     strengen: [
@@ -815,10 +817,10 @@ export const TEKENINGEN = {
       { p: [[120, 216, 0], [120, 170, 0], [120, 110, 0], [120, 70, 0.5], [120, 40, 1], [121, 22, 0.5], [128, 13, 0], [135, 21, -0.5], [136, 40, -1],
         [138, 60, -0.5], [144, 68, 0], [150, 60, 0.5], [152, 40, 1], [153, 22, 0.5], [160, 13, 0], [167, 21, -0.5], [168, 40, -1], [170, 60, -0.5],
         [176, 74, 0], [150, 84, 0.5], [120, 87, 1], [98, 80, 0.5], [90, 64, 0], [96, 46, 0.3], [110, 41, 0.5], [120, 40, 0.5], [152, 40, 0.5],
-        [176, 41, 0.5], [192, 48, 0.5], [202, 66, 0.5], [200, 92, 0.5], [184, 108, 0.2], [150, 111, -0.3], [120, 111, -1], [102, 118, 0], [104, 130, 0.5],
-        [120, 132, 1], [136, 126, 1], [146, 112, -1], [152, 100, -1]], begin: 'staand', eind: 'eind' },
+        [176, 41, 0.5], [192, 48, 0.5], [202, 66, 0.5], [202, 100, 0.5], [194, 122, 0.5], [176, 130, 0.5], [150, 132, 0.5], [120, 133, -1], [102, 128, 0],
+        [99, 116, 0.3], [108, 110, 0.6], [120, 109, 1], [136, 113, 1], [148, 123, 0], [155, 134, -1], [161, 150, -1], [164, 166, -0.5]], begin: 'staand', eind: 'eind' },
     ],
-    labels: [{ t: 'onder beide slagen door', x: 230, y: 16, naar: [184, 42] }, { t: 'halve steek', x: 222, y: 150, naar: [140, 128] }, { t: 'staand part', x: 108, y: 212, anker: 'end', naar: [115, 198] }],
+    labels: [{ t: 'onder beide slagen door', x: 230, y: 16, naar: [184, 42] }, { t: 'halve steek', x: 222, y: 170, naar: [164, 150] }, { t: 'staand part', x: 108, y: 212, anker: 'end', naar: [115, 198] }],
   },
   // Prusikknoop, from the side of the legs: three turns above and three below, the legs coming out in the middle;
   // the bridge that joins them lies on the back.
@@ -877,11 +879,24 @@ export const TEKENINGEN = {
     strengen: [
       { p: [[8, 96], [312, 96]], soort: 'paal', dik: 56 },
       { p: (() => {
-        const p = [[4, 96, 1]];
-        for (const x of [64, 150, 236]) p.push([x - 20, 96, 1], [x - 8, 96, 1], [x + 6, 96, 1], [x + 16, 98, 1], [x + 18, 112, 1], [x + 17, 126, 0.5], [x + 12, 134, 0],
-          [x + 5, 128, -0.5], [x + 1, 100, -1], [x - 4, 72, -0.5], [x - 8, 62, 0], [x - 12, 70, 0.5], [x - 8, 96, 2], [x - 5, 110, 1.5], [x + 1, 114, 1],
-          [x + 6, 108, 0.6], [x + 6, 96, 0.5], [x + 8, 86, 0.8], [x + 20, 82, 1], [x + 34, 88, 1]);
-        p.push([300, 92, 1]);
+        // Each turn has two square corners: the line comes in and turns down round the boom (at x + 14); the
+        // turn comes back over the top, straight down over the line and turns along the boom (at x - 6, lower),
+        // under the part going down. From there the line runs straight to the corner of the next turn.
+        const [Y1, Y2] = [89, 103];
+        const k = (Y2 - Y1) / 98; // how much the line rises per unit along the boom, from one corner to the next
+        const lijn = ([x1, y1], [x2, y2], z1, z2) => [0.15, 0.35, 0.55, 0.75, 0.9].map((t) => [x1 + (x2 - x1) * t, y1 + (y2 - y1) * t, z1 + (z2 - z1) * t]);
+        const xs = [64, 150, 236];
+        const begin = [4, Y1 + k * 70];
+        const p = [[...begin, 1], ...lijn(begin, [xs[0] + 10, Y1], 1, 1)];
+        xs.forEach((x, i) => {
+          const [R, G] = [x + 14, x - 6];
+          p.push([R - 4, Y1, 1], [R - 1.2, Y1 + 1.2, 1], [R, Y1 + 4, 1], [R, 116, 1], [R, 126, 0.7], [R - 4, 134, 0], [R - 10, 130, -0.5], [x + 2, 100, -1],
+            [G + 4, 70, -0.5], [G + 2, 61, 0], [G - 2, 63, 0.5], [G, 72, 1], [G, Y1, 2], [G, Y2 - 4, 1.5], [G + 1.2, Y2 - 1.2, 1], [G + 4, Y2, 0.6],
+            [G + 12, Y2 - k * 8, 0.3], [R, Y2 - k * 16, 0.3]);
+          const naar = i < xs.length - 1 ? [xs[i + 1] + 10, Y1] : [300, Y2 - k * 66];
+          p.push(...lijn([R, Y2 - k * 16], naar, 0.3, 1));
+          if (i === xs.length - 1) p.push([...naar, 1]);
+        });
         return p;
       })(), dik: 8, begin: 'staand', eind: 'eind' },
     ],

@@ -115,3 +115,15 @@
 .plaatje .w-meteoor { stroke: #fff8d6; stroke-width: 1.6; stroke-linecap: round; opacity: 0.85; }
 .plaatje .w-radiantlijn { stroke: rgb(255 255 255 / 0.5); stroke-width: 1; stroke-dasharray: 2 3; }
 .plaatje .w-nachtvlak { fill: #0f1b2d; }
+
+/* the weather log: a page of a spiral notebook, written by hand in ballpoint and pencil */
+.plaatje.w-hand .tekst { font-family: var(--hand); }
+.plaatje.w-hand .tekst.w-druk { font-family: inherit; }
+.plaatje .w-papier { fill: color-mix(in srgb, #f3e7c0 22%, var(--paneel)); }
+.plaatje .w-regel { stroke: color-mix(in srgb, var(--blauw) 30%, var(--paneel)); stroke-width: 0.7; }
+.plaatje .w-kantlijn { stroke: color-mix(in srgb, var(--rood) 55%, var(--paneel)); stroke-width: 0.9; }
+.plaatje .w-gat { fill: var(--zacht); stroke: var(--lijn-sterk); stroke-width: 0.6; }
+.plaatje .w-ring { fill: none; stroke: var(--stil); stroke-width: 1.6; stroke-linecap: round; }
+.plaatje .w-pen { fill: color-mix(in srgb, var(--blauw) 75%, var(--inkt)); }
+.plaatje .w-pen-lijn { fill: none; stroke: color-mix(in srgb, var(--blauw) 75%, var(--inkt)); stroke-width: 1.2; stroke-linecap: round; stroke-linejoin: round; }
+.plaatje .w-vink { fill: none; stroke: var(--rood); stroke-width: 2; stroke-linecap: round; stroke-linejoin: round; }

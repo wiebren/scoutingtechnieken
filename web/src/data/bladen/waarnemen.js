@@ -143,7 +143,7 @@ export default [
       '- Zet de metingen op schaal uit op millimeterpapier en verbind de punten.',
       '- Schrijf de schaal en de plek van de meting erbij.',
     ],
-    letOp: 'Ga niet zelf het water in om te meten. Is de beek diep of stroomt hij hard, meet dan vanaf de kant of een brug.',
+    letOp: 'Ga niet zelf het water in om te meten: een beek kan dieper zijn en harder stromen dan je ziet, en de bodem kan wegzakken. Is de beek diep of stroomt hij hard, meet dan vanaf de kant of een brug.',
     naar: [{ blad: 'stroomsnelheid' }, { blad: 'veilig-bij-water' }] },
   { id: 'stroomsnelheid', naam: 'Stroomsnelheid', ook: ['stroomsnelheid meten', 'drijvermethode'], en: 'flow speed', groep: 'water', bron: 'WU NVON',
     doe: 'stroomsnelheid',

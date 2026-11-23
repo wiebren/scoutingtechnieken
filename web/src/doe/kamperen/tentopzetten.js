@@ -23,7 +23,7 @@ const STAPPEN = [
     waarom: 'De haringen gaan door de hoeken van de binnentent. Die moet dan wel eerst liggen.' },
   { id: 'buiten', kort: 'Buiten\u00adtent', rang: 5, tekst: 'Gooi de buitentent eroverheen en maak hem vast',
     waarom: 'De buitentent gaat over de staande binnentent heen. Zet die eerst op en vast.' },
-  { id: 'lijnen', kort: 'Scheer\u00adlijnen', rang: 6, tekst: 'Zet de scheerlijnen vast en span alles strak',
+  { id: 'lijnen', kort: 'Scheer\u00adlijnen', rang: 6, tekst: 'Zet de haringen van de scheerlijnen vast, en span dan alles strak',
     waarom: 'De scheerlijnen zitten aan de buitentent. Die moet er dus eerst overheen.' },
 ];
 

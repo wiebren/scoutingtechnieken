@@ -120,7 +120,7 @@ export default [
     },
     verwijs: [{ naam: 'Windschaal van Beaufort (KNMI)', url: 'https://www.knmi.nl/kennis-en-datacentrum/uitleg/windschaal-van-beaufort' }],
     naar: [{ blad: 'windrichting' }, { blad: 'storm' }] },
-  { id: 'windrichting', naam: 'Windrichting', ook: ['waar komt de wind vandaan', 'zuidwestenwind', 'windvaan', 'windhaan'], en: 'wind direction', groep: 'wind', ken: true,
+  { id: 'windrichting', naam: 'Windrichting', ook: ['waar komt de wind vandaan', 'zuidwestenwind', 'windvaan', 'windhaan', 'natte vinger'], en: 'wind direction', groep: 'wind', ken: true,
     bron: 'KNMI (neerslag en windrichting, De Bilt); NAV §1g', plaatje: 'windrichting', doe: 'windrichting',
     uitleg: [
       'Een wind krijgt de naam van de kant waar hij vandaan komt. Een zuidwestenwind komt uit het zuidwesten. Hij waait naar het noordoosten.',
@@ -128,6 +128,7 @@ export default [
       '- Rook, een vlag en gras waaien met de wind mee. De wind komt dus van de andere kant.',
       '- Een windvaan of windhaan draait met zijn pijl naar de wind toe. De pijl wijst naar de kant waar de wind vandaan komt.',
       '- Draai je hoofd tot je de wind op allebei je wangen even hard voelt. Nu kijk je naar de kant waar de wind vandaan komt.',
+      '- Maak een vinger nat en steek hem omhoog. De kant die koud aanvoelt, is de kant waar de wind vandaan komt. Zo voel je ook een zwak windje.',
       'Met je kompas zie je welke windrichting het is. In Nederland komt de wind het vaakst uit het zuidwesten. Die wind brengt ook de meeste regen.',
     ],
     naar: [{ blad: 'beaufort' }, { blad: 'buys-ballot' }, { blad: 'windrichtingen-8' }, { blad: 'zeewind' }] },

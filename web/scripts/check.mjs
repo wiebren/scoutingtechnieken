@@ -36,7 +36,7 @@ for (const b of BLADEN) {
   }
   for (const v of b.verwijs ?? []) if (!/^https:\/\//.test(v.url ?? '') || !v.naam) fout(waar, 'verwijs heeft een naam en een https-adres nodig');
   if (b.letterlijk && (!b.bron || !b.bronDatum)) fout(waar, 'een regel toont zijn bron en datum: geef ze allebei');
-  if (b.plaatje && !PLAATJES[b.plaatje]) fout(waar, `plaatje bestaat niet: ${b.plaatje}`);
+  for (const naam of [b.plaatje ?? []].flat()) if (!PLAATJES[naam]) fout(waar, `plaatje bestaat niet: ${naam}`);
   if (b.letOpPlaatje && !PLAATJES[b.letOpPlaatje]) fout(waar, `plaatje bij let op bestaat niet: ${b.letOpPlaatje}`);
   if (b.letOpPlaatje && !b.letOp) fout(waar, 'een plaatje bij let op, maar geen let op');
   for (const x of b.soorten ?? []) {
@@ -112,7 +112,7 @@ for (const map of readdirSync(new URL('../src/doe/', import.meta.url), { withFil
 }
 for (const naam of new Set(doeNamen.filter((n, k) => doeNamen.indexOf(n) !== k))) fout(`doe ${naam}`, 'deze naam staat in twee lijsten van src/doe/');
 
-const gebruikt = (veld) => new Set(BLADEN.map((b) => b[veld]).filter(Boolean));
+const gebruikt = (veld) => new Set(BLADEN.flatMap((b) => b[veld] ?? []));
 const doeGebruikt = gebruikt('doe');
 const plaatjeGebruikt = new Set([...gebruikt('plaatje'), ...gebruikt('letOpPlaatje'), ...BLADEN.flatMap((b) => (b.soorten ?? []).map((x) => x.plaatje))]);
 const beeldGebruikt = new Set(BLADEN.flatMap((b) => (b.beelden ?? []).map((x) => x.beeld)));

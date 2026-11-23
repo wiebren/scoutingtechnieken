@@ -1015,14 +1015,28 @@ function hoornaars() {
 function processierups() {
   let uit = '<path d="M60 250 C66 180 62 100 70 0 L130 0 C124 100 128 180 136 250Z" class="nt-stam"/>';
   for (let y = 20; y < 240; y += 16) uit += `<path d="M${74 + (y % 3) * 6} ${y} q8 6 2 14 M${108 + (y % 4) * 4} ${y + 6} q-6 6 0 12" class="nt-schors"/>`;
-  uit += '<path d="M96 70 C70 74 66 120 86 132 C104 140 122 126 120 98 C118 78 110 68 96 70Z" class="nt-spinsel"/>';
-  for (let i = 0; i < 9; i++) {
-    const t = i / 8; const x = 100 + 200 * t; const y = 210 - 30 * Math.sin(t * 3); const k = i * 1.3;
-    uit += g(x - 30 * (i === 0), y, -10 + k, '<ellipse cx="0" cy="0" rx="10" ry="4.5" class="nt-rups"/>' + [-6, -2, 2, 6].map((dx) => `<path d="M${dx} -4 l-2 -5 M${dx} -4 l2 -5" class="nt-rupshaar"/>`).join(''));
+  // a thick branch out to the right, toward the leaves the caterpillars go to eat
+  uit += '<path d="M124 64 C190 52 262 34 336 22 L336 34 C264 46 194 66 126 86Z" class="nt-stam"/>';
+  uit += '<path d="M96 120 C70 124 66 170 86 182 C104 190 122 176 120 148 C118 128 110 118 96 120Z" class="nt-spinsel"/>';
+  // the procession: out of the nest, up the stam and along the top of the branch, head to tail
+  const rij = [[104, 122], [108, 100], [112, 82]];
+  for (let k = 0; k <= 12; k++) {
+    const s = k / 12; const z = 1 - s;
+    rij.push([z ** 3 * 126 + 3 * z * z * s * 190 + 3 * z * s * s * 262 + s ** 3 * 336, z ** 3 * 64 + 3 * z * z * s * 52 + 3 * z * s * s * 34 + s ** 3 * 22 - 5]);
   }
-  uit += tekst(240, 70, 'nest van spinsel', { maat: 10.5, anker: 'start', klasse: 'stil' }).replace('x="240"', 'x="136"') + '<path d="M134 66 L118 92" class="lijn dun"/>';
-  uit += tekst(240, 170, 'rupsen in een rij', { maat: 10.5, klasse: 'stil' });
-  return svg(340, 262, 'Eikenprocessierups: een nest van spinsel op de stam van een eik, en rupsen die in een rij achter elkaar lopen', uit);
+  const lengte = []; let som = 0;
+  rij.forEach(([x, y], i) => { if (i) som += Math.hypot(x - rij[i - 1][0], y - rij[i - 1][1]); lengte.push(som); });
+  const op = (d) => {
+    const i = Math.max(1, lengte.findIndex((l) => l >= d)); const f = (d - lengte[i - 1]) / (lengte[i] - lengte[i - 1]);
+    const [ax, ay] = rij[i - 1]; const [bx, by] = rij[i];
+    return [ax + (bx - ax) * f, ay + (by - ay) * f, (Math.atan2(by - ay, bx - ax) * 180) / Math.PI];
+  };
+  const rups = '<ellipse cx="0" cy="0" rx="9" ry="4" class="nt-processie"/><circle cx="8.5" cy="0" r="3" class="nt-processiekop"/>'
+    + [-6, -2, 2].map((dx) => `<path d="M${dx} -3.5 l-2 -5 M${dx} -3.5 l2 -5" class="nt-rupshaar"/>`).join('');
+  for (let d = 14; d < som - 40; d += 20) { const [x, y, hoek] = op(d); uit += g(x, y, hoek, rups); }
+  uit += tekst(146, 196, 'nest van spinsel', { maat: 10.5, anker: 'start', klasse: 'stil' }) + '<path d="M144 192 L120 166" class="lijn dun"/>';
+  uit += tekst(232, 92, 'rupsen in een rij,', { maat: 10.5, klasse: 'stil' }) + tekst(232, 106, 'kop aan staart', { maat: 10.5, klasse: 'stil' });
+  return svg(340, 262, 'Eikenprocessierups: een nest van spinsel op de stam van een eik, en rupsen die kop aan staart in een rij uit het nest omhoog en over een tak lopen', uit);
 }
 
 // -- mushrooms ------------------------------------------------------------------------------------------------------

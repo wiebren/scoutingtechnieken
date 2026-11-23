@@ -390,15 +390,16 @@ function tarpOpstellingen() {
 function afdak() {
   let uit = grond(0, 340, 170);
   uit += boom(84, 170, 130, 30);
-  uit += '<path d="M90 88L232 170H210L92 102Z" class="kp-bladdek"/>';
-  for (const d of [0, 8, 16]) uit += `<path d="M90 92L${222 - d} 170" class="kp-tak"/>`;
-  uit += '<circle cx="90" cy="92" r="6" class="kp-paalkop"/>';
+  for (const d of [0, 8, 16]) uit += `<path d="M94 96L${222 - d} 170" class="kp-tak"/>`;
+  uit += '<path d="M90 84L250 170H204L98 101Z" class="kp-bladdek"/>';
+  uit += '<path d="M87 108L114 79" class="kp-tak dik"/>';          // the side branch: the pole lies in its crook
+  uit += '<circle cx="94" cy="94" r="6" class="kp-paalkop"/>';
   uit += '<path d="M22 166l10 -16l10 16z" class="kp-vlam"/><path d="M14 168h36" class="kp-tak"/>';
   uit += wind(320, 104, -54, 'wind');
-  uit += wijs(124, 44, 'dwarspaal tussen twee bomen', 92, 86);
+  uit += wijs(124, 44, 'dwarspaal in de oksels van zijtakken', 96, 88);
   uit += wijs(334, 196, 'takken en blad, de rug in de wind', 196, 150, 'end');
   uit += wijs(6, 196, 'vuur aan de open kant', 32, 168);
-  return svg(340, 206, 'Een afdak van opzij: takken en blad schuin van een dwarspaal naar de grond, met de rug in de wind en de open kant naar het vuur', uit);
+  return svg(340, 206, 'Een afdak van opzij: de dwarspaal ligt in de oksel van een zijtak, takken en een dikke laag blad lopen schuin naar de grond, met de rug in de wind en de open kant naar het vuur', uit);
 }
 
 /** An A-frame shelter: a ridge pole from a fork to the ground, sticks on both sides. */

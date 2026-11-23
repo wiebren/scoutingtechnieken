@@ -232,7 +232,7 @@ export default [
       'Let bij het inscheren op dat het touw niet kriskras door zichzelf loopt: gebruik steeds de schijven die recht tegenover elkaar zitten.',
       'Komt de haalkant uit het blok dat beweegt, en trek je de kant op waar de last heen moet, dan telt de haalkant mee als touwpart. Zo heb je één touwpart meer: met een dubbele jol trek je dan een derde, met een vierloper een vijfde. Zo span je bijvoorbeeld het touw van een kabelbaan. Eén los blok aan de last, met het hondsend vast aan het ophangpunt, heet een klaploper: twee touwparten.',
     ],
-    letOp: 'Werk alleen met blokken en takels als je het geleerd hebt, en onder leiding. Er komen grote krachten op, ook op het ophangpunt. Ga nooit onder een hangende last staan.',
+    letOp: 'Werk alleen met blokken en takels als je het geleerd hebt, en onder leiding. Er komen grote krachten op, ook op het ophangpunt. Ga nooit onder een hangende last staan: schiet er iets los, dan valt hij op je.',
     naar: [{ blad: 'blok-onderdelen' }, { blad: 'derdehandtakel' }, { blad: 'vierlopertakel' }] },
 
   { id: 'derdehandtakel', naam: 'Derdehandtakel', ook: ['derde hand', 'derde handje', 'drieloper', 'derdelast'], groep: 'takels', bron: 'SW Katrol, WP-NL Katrol',
@@ -283,7 +283,7 @@ export default [
       ['D-sluiting', 'Een rechte, smalle beugel met een schroefpen.', 'Twee dingen in één rechte lijn verbinden.'],
       ['Hijsband', 'Een sterke, platte band van kunststof, als lus of met ogen.', 'Om een boom of paal leggen, als ankerpunt.'],
     ] },
-    letOp: 'Werk met hijsmateriaal alleen als je het geleerd hebt, en onder leiding. Er komen grote krachten op. Ga nooit onder een hangende last staan.',
+    letOp: 'Werk met hijsmateriaal alleen als je het geleerd hebt, en onder leiding. Er komen grote krachten op. Ga nooit onder een hangende last staan: schiet er iets los, dan valt hij op je.',
     naar: [{ blad: 'blok-onderdelen' }, { blad: 'veilige-belasting' }, { blad: 'boomanker' }, { blad: 'materiaalkeuring' }, { blad: 'katteklauw' }, { blad: 'haaksteek' }, { blad: 'strop' }] },
 
   { id: 'katteklauw', naam: 'Katteklauw', ook: ['Engelse kink'], en: 'cat’s paw', groep: 'takels', bron: 'VIA08 §2.5',
@@ -426,7 +426,7 @@ export default [
       '- Span ze allemaal even strak, zodat het bouwwerk recht blijft staan.',
       'Gebruik voor tuien dikker touw dan voor sjorringen. Kunststof (polypropyleen) rot niet en is dus goed voor tuien die lang blijven staan.',
     ],
-    letOp: 'Een tui is een struikeldraad: maak hem zichtbaar met een lintje. Gebruik geen staalkabel.',
+    letOp: 'Een tui is een struikeldraad: maak hem zichtbaar met een lintje. Gebruik geen staalkabel: die kun je niet goed knopen, en hij snijdt in hout en in handen.',
     naar: [{ blad: 'haringen-in-serie' }, { blad: 'bouw-vlaggenmast' }, { blad: 'bomen-tuien' }] },
 
   { id: 'bomen-tuien', naam: 'Bomen tuien', ook: ['boom tuien', 'boom verankeren'], groep: 'verankeren', bron: 'SW Touw opspannen, SN-P25',
@@ -596,7 +596,7 @@ export default [
       '- Op twee driepoten: aan elk eind een driepoot met een achtsjorring. Die staat in alle richtingen stevig, dus een schoor in de lengte is niet nodig.',
       'Zet de dragers aan beide kanten even hoog, anders wordt het blad scheef. Kijk het na met een waterpas of een strak gespannen touwtje.',
     ],
-    letOp: 'Ga niet op het uiteinde van een bankdrager zitten: dan draai je de sjorringen los. En niemand staat of springt op de tafel.',
+    letOp: 'Ga niet op het uiteinde van een bankdrager zitten: dan draai je de sjorringen los. En niemand staat of springt op de tafel: daar is hij niet op gebouwd.',
     verwijs: [{ naam: 'Activiteitenbank: kamptafel pionieren', url: 'https://activiteitenbank.scouting.nl/component/k2/item/14149-kamptafel-pionieren' }],
     naar: [{ blad: 'kruissjorring' }, { blad: 'bouw-driepoot' }, { blad: 'bouw-bok' }, { blad: 'driehoek' }, { blad: 'bouw-kampkeuken' }] },
 

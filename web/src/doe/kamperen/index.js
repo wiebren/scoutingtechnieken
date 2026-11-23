@@ -11,5 +11,8 @@ export default {
   'rugzak-inpakken': { titel: 'Pak je rugzak in', laad: () => import('./rugzak.js') },
   'paklijst-afvinken': { titel: 'Vink je paklijst af', laad: () => import('./paklijst.js'), bekijk: true },
   'frietbuil-3d': { titel: 'Vouw een frietbuil', laad: () => import('./frietbuil3d.js'), bekijk: true },
+  'afdak-3d': { titel: 'Bouw een afdak van takken', laad: () => import('./shelter3d.js'), opties: { soort: 'afdak' }, bekijk: true },
+  'a-frame-3d': { titel: 'Bouw een A-frame-shelter', laad: () => import('./shelter3d.js'), opties: { soort: 'a-frame' }, bekijk: true },
+  'bladhut-3d': { titel: 'Bouw een bladhut', laad: () => import('./shelter3d.js'), opties: { soort: 'bladhut' }, bekijk: true },
   'paklijst-dagtas': { titel: 'Vink je dagtas af', laad: () => import('./paklijst.js'), opties: { lijst: 'dagtas' }, bekijk: true },
 };

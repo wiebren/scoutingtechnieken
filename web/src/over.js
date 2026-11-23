@@ -16,7 +16,7 @@ export function overView({ installeer }) {
   const gegevens = h('div');
   const wisDialoog = h('dialog.dialoog', { 'aria-labelledby': 'wis-titel' },
     h('h2', { id: 'wis-titel' }, 'Alles uitvinken?'),
-    h('p', 'Dan wis je alles wat je bij de insignes hebt afgevinkt, op dit toestel. Dat kun je niet terugdraaien.'),
+    h('p', 'Dan wis je alles wat je hebt afgevinkt, bij de onderwerpen en bij de insignes, op dit toestel. Dat kun je niet terugdraaien.'),
     h('div.knoppen',
       h('button.knop', { type: 'button', onclick: () => wisDialoog.close() }, 'Annuleren'),
       h('button.knop.hoofd', { type: 'button', onclick: () => { wisAfgevinkt(); wisDialoog.close(); } }, 'Wissen')));

@@ -408,32 +408,54 @@ function weerstation() {
   return svg(340, 224, 'Een eigen weerstation: een thermometer in de schaduw, een regenmeter met een trechter, een barometer en een hygrometer, en een mast met een windmeter en een windvaan', uit);
 }
 
-/** A page of a weather log, and the cloud cover in eighths. */
+/** A page of a weather log, written by hand in a spiral notebook, and under it the cloud cover in eighths. */
 function weerlogboek() {
-  const kol = [[14, 'dag'], [52, '°C'], [86, 'luchtdruk'], [160, 'wind'], [220, 'wolken'], [276, 'neerslag']];
-  let uit = '<rect x="4" y="4" width="332" height="138" rx="8" class="vlak"/><rect x="4" y="4" width="332" height="138" rx="8" class="lijn dun"/>';
-  for (const [x, t] of kol) uit += tekst(x, 24, t, { maat: 10, anker: 'start', klasse: 'vet' });
-  uit += '<path d="M10 32 H330" class="lijn dun"/>';
-  /** A circle with k eighths filled: the cloud cover. */
-  const achtsten = (x, y, r, k) => {
-    let c = `<circle cx="${x}" cy="${y}" r="${r}" class="vlak"/>`;
-    if (k >= 8) c += `<circle cx="${x}" cy="${y}" r="${r}" class="vol"/>`;
-    else if (k > 0) { const [ex, ey] = pol(x, y, r, k * 45); c += `<path d="M${x} ${y} V${r1(y - r)} A${r} ${r} 0 ${k > 4 ? 1 : 0} 1 ${ex} ${ey}Z" class="vol"/>`; }
-    return c + `<circle cx="${x}" cy="${y}" r="${r}" class="lijn dun"/>`;
+  const regel = 22;
+  let uit = '<rect x="8" y="16" width="324" height="240" rx="3" class="w-papier"/><rect x="8" y="16" width="324" height="240" rx="3" class="lijn dun"/>';
+  for (let y = 52; y <= 250; y += regel) uit += `<path d="M8 ${y} H332" class="w-regel"/>`;
+  uit += '<path d="M50 16 V256" class="w-kantlijn"/>';
+  // the spiral: a hole in the page and a ring through it
+  for (let x = 24; x <= 316; x += 18) uit += `<circle cx="${x}" cy="26" r="2.6" class="w-gat"/><path d="M${x} 26 C${x - 2} 16 ${x + 6} 6 ${x + 4} 14" class="w-ring"/>`;
+  const pen = (x, y, t, maat = 12, anker = 'start') => tekst(x, y, t, { maat, anker, klasse: 'w-pen' });
+  const potlood = (x, y, t, maat = 11, anker = 'start') => tekst(x, y, t, { maat, anker, klasse: 'stil' });
+  uit += pen(58, 46, 'Weerlogboek', 16) + potlood(324, 46, 'zomerkamp', 11, 'end');
+  for (const [x, t] of [[58, '°C'], [88, 'luchtdruk'], [160, 'wind'], [210, 'wolken'], [278, 'regen']]) uit += potlood(x, 70, t);
+  /** A circle with k eighths filled: the cloud cover, in pen (the log) or in print (the scale). */
+  const achtsten = (x, y, r, k, [vol, rand] = ['w-pen', 'w-pen-lijn']) => {
+    let c = '';
+    if (k >= 8) c += `<circle cx="${x}" cy="${y}" r="${r}" class="${vol}"/>`;
+    else if (k > 0) { const [ex, ey] = pol(x, y, r, k * 45); c += `<path d="M${x} ${y} V${r1(y - r)} A${r} ${r} 0 ${k > 4 ? 1 : 0} 1 ${ex} ${ey}Z" class="${vol}"/>`; }
+    return c + `<circle cx="${x}" cy="${y}" r="${r}" class="${rand}"/>`;
   };
-  const rijen = [['ma', '14', '1021', '→', 'ZW 3', 2, '–'], ['di', '12', '1012', '↓', 'Z 4', 6, '2 mm'], ['wo', '10', '1004', '↓', 'ZW 6', 8, '9 mm']];
-  rijen.forEach(([dag, temp, druk, gaat, wind, wolken, regen], i) => {
-    const y = 54 + i * 28;
-    uit += tekst(14, y, dag, { anker: 'start' }) + tekst(52, y, temp, { anker: 'start' }) + tekst(86, y, `${druk} ${gaat}`, { anker: 'start' });
-    uit += tekst(160, y, wind, { anker: 'start' }) + achtsten(230, y - 4, 8, wolken) + tekst(276, y, regen, { anker: 'start' });
-    if (i < 2) uit += `<path d="M10 ${y + 10} H330" class="lijn haar"/>`;
+  /** A doodle of the weather: the sun, a cloud, or a cloud with rain. */
+  const wolkje = (x, y) => `<path d="M${x - 7} ${y + 3} a3.5 3.5 0 0 1 2 -6.5 a4.5 4.5 0 0 1 8.5 -1 a3.5 3.5 0 0 1 3.5 7.5Z" class="w-pen-lijn"/>`;
+  const krabbel = {
+    zon: (x, y) => `<circle cx="${x}" cy="${y}" r="3.5" class="w-pen-lijn"/>` + [0, 45, 90, 135, 180, 225, 270, 315].map((g) => {
+      const [ax, ay] = pol(x, y, 5.5, g); const [bx, by] = pol(x, y, 8, g); return `<path d="M${ax} ${ay} L${bx} ${by}" class="w-pen-lijn"/>`;
+    }).join(''),
+    wolk: (x, y) => wolkje(x, y),
+    regen: (x, y) => wolkje(x, y - 2) + [-4, 0, 4].map((d) => `<path d="M${x + d} ${y + 4} l-1.5 4" class="w-pen-lijn"/>`).join(''),
+  };
+  // each day what was measured, and on the line under it what you think tomorrow brings; ticked when it came true
+  const dagen = [
+    ['ma 8u', '14', '1021 →', 'ZW 3', 2, 'zon', '–', 'di: meer wolken, beetje regen', true],
+    ['di 8u', '12', '1012 ↓', 'Z 4', 6, 'wolk', '2 mm', 'wo: regen, meer wind', true],
+    ['wo 8u', '10', '1004 ↓', 'ZW 6', 8, 'regen', '9 mm', 'do: regen, harde wind', false],
+  ];
+  dagen.forEach(([dag, temp, druk, wind, wolken, weer, regen, morgen, klopte], i) => {
+    const y = 92 + i * 2 * regel;
+    uit += pen(14, y, dag, 11) + pen(60, y, temp) + pen(88, y, druk) + pen(160, y, wind);
+    uit += achtsten(218, y - 4, 7, wolken) + krabbel[weer](244, y - 5) + pen(278, y, regen);
+    uit += potlood(60, y + regel, `verwachting ${morgen}`);
+    if (klopte) uit += `<path d="M${296} ${y + regel - 6} l4 5 l9 -11" class="w-vink"/>`;
   });
-  uit += tekst(14, 132, 'Voorspelling voor do: regen, harde wind. Klopte het?', { maat: 10, anker: 'start', klasse: 'stil' });
-  // the scale of eighths
-  for (let k = 0; k <= 8; k++) { const x = 26 + k * 36; uit += achtsten(x, 170, 10, k) + tekst(x, 194, String(k), { maat: 10 }); }
-  uit += tekst(26, 212, 'onbewolkt', { maat: 9.5, klasse: 'stil' }) + tekst(314, 212, 'helemaal dicht', { maat: 9.5, klasse: 'stil', anker: 'end' });
-  uit += tekst(170, 212, 'bewolking in achtsten', { maat: 10, klasse: 'vet' });
-  return svg(340, 220, 'Een bladzijde uit een weerlogboek met per dag de temperatuur, de luchtdruk en of die daalt, de wind, de bewolking en de neerslag. Daaronder de bewolking in achtsten: 0 is onbewolkt, 8 is helemaal dicht.', uit);
+  // under the notebook: the scale of eighths, in print
+  const druk = (x, y, t, o = {}) => tekst(x, y, t, { ...o, klasse: `w-druk ${o.klasse ?? ''}` });
+  uit += druk(170, 284, 'bewolking in achtsten', { maat: 10, klasse: 'vet' });
+  for (let k = 0; k <= 8; k++) { const x = 26 + k * 36; uit += achtsten(x, 306, 10, k, ['vol', 'lijn dun']) + druk(x, 332, String(k), { maat: 10 }); }
+  uit += druk(16, 350, 'onbewolkt', { maat: 9.5, anker: 'start', klasse: 'stil' }) + druk(324, 350, 'helemaal dicht', { maat: 9.5, anker: 'end', klasse: 'stil' });
+  const plaatje = svg(340, 356, 'Een bladzijde uit een weerlogboek, met de hand geschreven in een schrift met een spiraal: per dag de temperatuur, de luchtdruk en of die daalt, de wind, de bewolking en de neerslag, en op de regel eronder de verwachting voor de volgende dag, met een vinkje als die klopte. Onder het schrift de bewolking in achtsten: 0 is onbewolkt, 8 is helemaal dicht.', uit);
+  return plaatje.replace('class="plaatje"', 'class="plaatje w-hand"');
 }
 
 // -- the station model and the weather signs (WMO, as on the KNMI weather maps) ------------------------------------
@@ -689,13 +711,14 @@ function maanAchterkant() {
   let uit = `<circle cx="${c[0]}" cy="${c[1]}" r="${R}" class="lijn haar" stroke-dasharray="3 4"/>`;
   uit += `<circle cx="${c[0]}" cy="${c[1]}" r="18" class="blauw"/>` + tekst(c[0], c[1] + 34, 'aarde', { maat: 10, klasse: 'stil' });
   for (const g of [0, 90, 180, 270, 45, 135, 225, 315]) {
-    const [x, y] = pol(c[0], c[1], R, g); const klein = g % 90 !== 0; const r = klein ? 9 : 14;
+    const [x, y] = pol(c[0], c[1], R, g); const r = 12;
     uit += `<circle cx="${x}" cy="${y}" r="${r}" class="w-maan"/><circle cx="${x}" cy="${y}" r="${r}" class="lijn dun"/>`;
     // the same face: a dark patch on the side towards the earth
     const [vx, vy] = pol(x, y, r * 0.45, g + 180);
     uit += `<circle cx="${vx}" cy="${vy}" r="${r1(r * 0.42)}" class="w-maanzee"/>`;
   }
-  uit += `<path d="M${c[0] + 52} ${c[1] - 76} A92 92 0 0 0 ${c[0] - 52} ${c[1] - 76}" class="lijn stil" fill="none"/><path d="M${c[0] - 44} ${c[1] - 84} L${c[0] - 54} ${c[1] - 76} L${c[0] - 42} ${c[1] - 70}" class="lijn stil" fill="none"/>`;
+  // which way it goes: an arrow outside the orbit, clear of the moons
+  uit += `<path d="M${c[0] + 56} ${c[1] - 97} A112 112 0 0 0 ${c[0] - 56} ${c[1] - 97}" class="lijn stil" fill="none"/><path d="M${c[0] - 44.3} ${c[1] - 96.8} L${c[0] - 56} ${c[1] - 97} L${c[0] - 50.3} ${c[1] - 107.2}" class="lijn stil" fill="none"/>`;
   uit += tekst(c[0], 250, 'de donkere vlek wijst steeds naar de aarde', { maat: 11, klasse: 'vet' });
   return svg(320, 258, 'De maan op acht plekken van zijn rondje om de aarde. De donkere vlek, de kant die wij zien, wijst steeds naar de aarde: de maan draait in één rondje ook één keer om zichzelf.', uit);
 }

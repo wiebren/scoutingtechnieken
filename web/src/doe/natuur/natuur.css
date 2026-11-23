@@ -53,3 +53,14 @@
 .md-kaart { display: flex; flex-direction: column; gap: 10px; padding: 14px; border-radius: 12px; background: var(--zacht); }
 .md-situatie { margin: 0; font-size: 1.0625rem; font-weight: 600; }
 @container (min-width: 420px) { .md-opties { grid-template-columns: 1fr 1fr 1fr; } }
+
+/* finding a tree by its features (boomzoeker.js) */
+.nt-zoek { display: flex; flex-direction: column; gap: 12px; }
+.nt-zoek-vragen { display: flex; flex-direction: column; gap: 12px; }
+.nt-zoek-vraag { display: flex; flex-direction: column; gap: 6px; }
+.nt-zoek-kop { margin: 0; font-weight: 600; }
+.nt-tel { margin-left: 6px; padding: 0 6px; border-radius: 999px; background: var(--zacht); color: var(--stil); font-size: 0.75rem; font-variant-numeric: tabular-nums; }
+.chip[aria-pressed="true"] .nt-tel { background: color-mix(in srgb, var(--paneel) 25%, transparent); color: inherit; }
+.nt-zoek .chip:disabled { opacity: 0.4; cursor: default; }
+.nt-zoek-bomen .nt-link { font-size: 0.8125rem; }
+.nt-zoek-boven { margin: 0; }

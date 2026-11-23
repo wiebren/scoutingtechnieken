@@ -4,9 +4,6 @@
 .plaatje .vh-oever { fill: color-mix(in srgb, var(--fam-natuur) 35%, var(--paneel)); }
 .plaatje .vh-wak { fill: color-mix(in srgb, #1d4f7a 80%, var(--paneel)); }
 .plaatje .vh-tak { fill: none; stroke: #8a5a2b; stroke-width: 4; stroke-linecap: round; }
-.plaatje .vh-buiten { fill: color-mix(in srgb, var(--fam-natuur) 14%, var(--paneel)); }
-.plaatje .vh-gat { stroke: var(--paneel); stroke-width: 6; }
-.plaatje .vh-route { fill: none; stroke: #11904a; stroke-width: 3; stroke-dasharray: 8 5; stroke-linecap: round; }
 .vh-strandvlag { max-width: 200px; }
 .plaatje .vh-zand { fill: color-mix(in srgb, #d9b56a 45%, var(--paneel)); }
 .plaatje .vh-golf { fill: none; stroke: #ffffff; stroke-width: 2.4; stroke-linecap: round; opacity: 0.85; }
@@ -60,3 +57,29 @@
 .plaatje .vh-slip { fill: none; stroke: #b9b3a2; stroke-width: 4; stroke-linecap: round; }
 .plaatje .vh-mitella-slip { fill: none; stroke: #e2ded2; stroke-width: 7; stroke-linecap: round; }
 .plaatje .vh-shirt { fill: color-mix(in srgb, #3f8f5a 45%, var(--paneel)); }
+
+/* the vluchtplan: grey rooms, the way out in green, the signs in their own colours */
+.plaatje .vh-kamer { fill: color-mix(in srgb, var(--lijn-sterk) 30%, var(--paneel)); }
+.plaatje .vh-gang { fill: color-mix(in srgb, #11904a 24%, var(--paneel)); }
+.plaatje .vh-muur { fill: none; stroke: color-mix(in srgb, var(--inkt) 72%, var(--paneel)); stroke-width: 2.4; stroke-linecap: square; }
+.plaatje .vh-muur.dik { stroke-width: 4; }
+.plaatje .vh-opening-gang { stroke: color-mix(in srgb, #11904a 24%, var(--paneel)); stroke-width: 5; }
+.plaatje .vh-opening-kamer { stroke: color-mix(in srgb, var(--lijn-sterk) 30%, var(--paneel)); stroke-width: 5; }
+.plaatje .vh-opening-buiten { stroke: var(--paneel); stroke-width: 6; }
+.plaatje .vh-deurblad { stroke: var(--inkt); stroke-width: 1.2; }
+.plaatje .vh-zwaai { fill: none; stroke: var(--stil); stroke-width: 0.7; }
+.plaatje .vh-route { fill: none; stroke: #11904a; stroke-width: 2.6; stroke-dasharray: 6 4; stroke-linecap: round; stroke-linejoin: round; }
+.plaatje .vh-route-kop { fill: #11904a; }
+.plaatje .vh-noodroute { fill: none; stroke: #ec7414; stroke-width: 2.6; stroke-dasharray: 6 4; stroke-linecap: round; stroke-linejoin: round; }
+.plaatje .vh-noodroute-kop { fill: #ec7414; }
+.plaatje .vh-hier { fill: #1f5fa8; }
+.plaatje .vh-hier-lijn { stroke: #1f5fa8; stroke-width: 1.4; }
+.plaatje .vh-melder { fill: #ffffff; stroke: var(--stil); stroke-width: 1.2; }
+.plaatje .vh-trap { fill: var(--paneel); stroke: var(--stil); stroke-width: 0.8; }
+.plaatje .vh-trede { stroke: var(--stil); stroke-width: 0.8; }
+.plaatje .vh-raam { stroke: #3c78c8; stroke-width: 4; }
+.plaatje .vh-straat { fill: color-mix(in srgb, var(--lijn-sterk) 45%, var(--paneel)); }
+.plaatje .vh-gaas { fill: none; stroke: #e2ded2; stroke-width: 0.6; }
+.plaatje .vh-pakje { fill: #d9c49a; stroke: #8f7a4c; stroke-width: 1; }
+.plaatje .vh-tape { fill: #f4ead0; stroke: #b8a77a; stroke-width: 0.8; }
+.plaatje .vh-handschoen { fill: #a9d4f2; stroke: #3c78c8; stroke-width: 1.2; }
